@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Payroll2", "Payroll2\Payroll2.vbproj", "{D4299647-DD71-43EF-ADD1-FC127D291C62}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{64EF6706-6A36-4BE6-B58D-CEE3F6688643}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4299647-DD71-43EF-ADD1-FC127D291C62}.Debug|x86.ActiveCfg = Debug|x86
+		{D4299647-DD71-43EF-ADD1-FC127D291C62}.Debug|x86.Build.0 = Debug|x86
+		{D4299647-DD71-43EF-ADD1-FC127D291C62}.Release|x86.ActiveCfg = Release|x86
+		{D4299647-DD71-43EF-ADD1-FC127D291C62}.Release|x86.Build.0 = Release|x86
+		{64EF6706-6A36-4BE6-B58D-CEE3F6688643}.Debug|x86.ActiveCfg = Debug
+		{64EF6706-6A36-4BE6-B58D-CEE3F6688643}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

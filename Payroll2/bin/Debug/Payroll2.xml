@@ -1,0 +1,64 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Payroll2
+</name>
+</assembly>
+<members>
+<member name="P:Payroll2.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Payroll2.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:Payroll2.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="T:Payroll2.DataSet1.payDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Payroll2.DataSet1.paid_leaveDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Payroll2.DataSet1.paid_overtimeDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Payroll2.DataSet1.payRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Payroll2.DataSet1.paid_leaveRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Payroll2.DataSet1.paid_overtimeRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Payroll2.DataSet1.payRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Payroll2.DataSet1.paid_leaveRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Payroll2.DataSet1.paid_overtimeRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Payroll2.DataSet1">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+</members>
+</doc>
