@@ -1,6 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.Configuration
 Imports System.Collections.Specialized
+Imports System.Security.Cryptography
+Imports System.Text
+
 Module modConnect
     Public conn, conn2 As New MySqlConnection
     Public cmd, cmd2 As New MySqlCommand
@@ -16,6 +19,7 @@ Module modConnect
     Public numMatched, numNotMatched As Integer
     Public occurence As String
     Public num_occurence, payslip_id As Integer
+    Public md5Hash As MD5 = MD5.Create()
 
     Sub SaveSystemSettings(ByVal HR_Connect() As String, ByVal Payroll_Connect() As String)
         'hr connection settings
@@ -107,6 +111,27 @@ Module modConnect
         adpt = New MySqlDataAdapter(StrSql, conn)
         cmd = New MySqlCommand(StrSql, conn)
     End Sub
+
+    Function GetMd5Hash(ByVal md5Hash As MD5, ByVal input As String) As String
+
+        ' Convert the input string to a byte array and compute the hash.
+        Dim data As Byte() = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input))
+
+        ' Create a new Stringbuilder to collect the bytes
+        ' and create a string.
+        Dim sBuilder As New StringBuilder()
+
+        ' Loop through each byte of the hashed data 
+        ' and format each one as a hexadecimal string.
+        Dim i As Integer
+        For i = 0 To data.Length - 1
+            sBuilder.Append(data(i).ToString("x2"))
+        Next i
+
+        ' Return the hexadecimal string.
+        Return sBuilder.ToString()
+
+    End Function 'GetMd5Hash
 
     Sub GetOccurences()
         StrSql = "SELECT * FROM tblref_occurences"

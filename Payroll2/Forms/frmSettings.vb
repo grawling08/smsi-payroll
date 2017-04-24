@@ -281,20 +281,48 @@ Public Class frmSettings
     Private Sub load_users()
         StrSql = "SELECT * FROM tbl_user"
         QryReadP()
-        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
-        If dtareader.HasRows Then
-            While dtareader.Read()
-                Dim row As String() = New String() {dtareader("employee_id").ToString, dtareader("username").ToString, dtareader("password").ToString, dtareader("role").ToString, dtareader("status").ToString}
-                dgv_users.Rows.Add(row)
-            End While
-        End If
-        'dgv_users.Columns(4)
+        ds = New DataSet
+        adpt.Fill(ds, "users")
+        dgv_users.DataSource = ds.Tables(0)
+        Dim col = dgv_users.Columns.Count
+        For i As Integer = 0 To col
+            If i = 0 Then
+                dgv_users.Columns(0).Visible = False
+            End If
+            dgv_users.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            dgv_users.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            i = i + i
+        Next
+        'Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        'If dtareader.HasRows Then
+        '    While dtareader.Read()
+        '        Dim row As String() = New String() {dtareader("employee_id").ToString, dtareader("username").ToString, dtareader("password").ToString, dtareader("role").ToString, dtareader("status").ToString}
+        '        dgv_users.Rows.Add(row)
+        '    End While
+        'End If
     End Sub
-    'add new user row
-    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
-        dgv_users.Rows.Add()
-    End Sub
+    'save user row
+    Private Sub dgv_users_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_users.CellEndEdit
+        If dgv_users.CurrentRow.Cells(0).Value.ToString <> "" Then
+            StrSql = "UPDATE tbl_user SET " _
+                        & "employee_id = '" & dgv_users.CurrentRow.Cells(1).Value.ToString & "' AND " _
+                        & "username = '" & dgv_users.CurrentRow.Cells(2).Value.ToString & "' AND " _
+                        & "password = '" & dgv_users.CurrentRow.Cells(3).Value.ToString & "' AND " _
+                        & "role = '" & dgv_users.CurrentRow.Cells(4).Value.ToString & "' AND " _
+                        & "status = '" & dgv_users.CurrentRow.Cells(5).Value.ToString & "' AND " _
+                        & "WHERE user_id = " & dgv_users.CurrentRow.Cells(0).Value.ToString
 
+        Else
+            StrSql = "INSERT INTO tbl_user(employee_id,username,password,role,status) " _
+                        & "VALUES('" & dgv_users.CurrentRow.Cells(1).Value.ToString & "','" _
+                                     & dgv_users.CurrentRow.Cells(2).Value.ToString & "','" _
+                                     & GetMd5Hash(md5Hash, dgv_users.CurrentRow.Cells(3).Value.ToString) & "','" _
+                                     & dgv_users.CurrentRow.Cells(4).Value.ToString & "')"
+
+        End If
+        Console.Write(StrSql)
+    End Sub
+#Region "sync employees, loans, overtime, leaves"
     Private Sub btn_syncemployees_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncemployees.Click
         If SyncEmployee() Then
             MessageBox.Show("Synced Employees")
@@ -318,4 +346,5 @@ Public Class frmSettings
             MessageBox.Show("Synced Leaves")
         End If
     End Sub
+#End Region
 End Class
