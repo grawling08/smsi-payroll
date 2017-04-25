@@ -200,7 +200,7 @@ Public Class frmSettings
         cmd.ExecuteNonQuery()
     End Sub
 #End Region
-
+    'export payslip
     Private Sub btn_exportpayslip_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportpayslip.Click
         Dim exportpayopt = cb_exportpayslipopt.SelectedIndex
         Select Case exportpayopt
@@ -245,7 +245,7 @@ Public Class frmSettings
                 cb_exportpayslipopt.Focus()
         End Select
     End Sub
-
+    'export timesheet
     Private Sub btn_exporttimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_exporttimesheet.Click
         Dim exportattopt = cb_exportoptions.SelectedIndex
         Select Case exportattopt
@@ -266,7 +266,7 @@ Public Class frmSettings
                 cb_exportpayslipopt.Focus()
         End Select
     End Sub
-
+    'export cutoff
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportcutoff.Click
         StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y/%m/%d'), DATE_FORMAT(tbl_cutoff.to_date,'%Y/%m/%d') FROM tbl_cutoff, tblref_occurences WHERE tbl_cutoff.occurence_id = tblref_occurences.occurence_id"
         QryReadP()
@@ -278,7 +278,7 @@ Public Class frmSettings
         MessageBox.Show("Exported!")
     End Sub
     'load users
-    Private Sub load_users()
+    Public Sub load_users()
         StrSql = "SELECT * FROM tbl_user"
         QryReadP()
         ds = New DataSet
@@ -293,34 +293,6 @@ Public Class frmSettings
             dgv_users.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + i
         Next
-        'Dim dtareader As MySqlDataReader = cmd.ExecuteReader
-        'If dtareader.HasRows Then
-        '    While dtareader.Read()
-        '        Dim row As String() = New String() {dtareader("employee_id").ToString, dtareader("username").ToString, dtareader("password").ToString, dtareader("role").ToString, dtareader("status").ToString}
-        '        dgv_users.Rows.Add(row)
-        '    End While
-        'End If
-    End Sub
-    'save user row
-    Private Sub dgv_users_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_users.CellEndEdit
-        If dgv_users.CurrentRow.Cells(0).Value.ToString <> "" Then
-            StrSql = "UPDATE tbl_user SET " _
-                        & "employee_id = '" & dgv_users.CurrentRow.Cells(1).Value.ToString & "' AND " _
-                        & "username = '" & dgv_users.CurrentRow.Cells(2).Value.ToString & "' AND " _
-                        & "password = '" & dgv_users.CurrentRow.Cells(3).Value.ToString & "' AND " _
-                        & "role = '" & dgv_users.CurrentRow.Cells(4).Value.ToString & "' AND " _
-                        & "status = '" & dgv_users.CurrentRow.Cells(5).Value.ToString & "' AND " _
-                        & "WHERE user_id = " & dgv_users.CurrentRow.Cells(0).Value.ToString
-
-        Else
-            StrSql = "INSERT INTO tbl_user(employee_id,username,password,role,status) " _
-                        & "VALUES('" & dgv_users.CurrentRow.Cells(1).Value.ToString & "','" _
-                                     & dgv_users.CurrentRow.Cells(2).Value.ToString & "','" _
-                                     & GetMd5Hash(md5Hash, dgv_users.CurrentRow.Cells(3).Value.ToString) & "','" _
-                                     & dgv_users.CurrentRow.Cells(4).Value.ToString & "')"
-
-        End If
-        Console.Write(StrSql)
     End Sub
 #Region "sync employees, loans, overtime, leaves"
     Private Sub btn_syncemployees_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncemployees.Click
@@ -347,4 +319,14 @@ Public Class frmSettings
         End If
     End Sub
 #End Region
+
+    Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorAddNewItem.Click
+        Dim frmUser As New frmUser("add")
+        frmUser.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
+        Dim frmUser As New frmUser("edit", dgv_users.CurrentRow.Cells(0).Value.ToString, dgv_users.CurrentRow.Cells(1).Value.ToString, dgv_users.CurrentRow.Cells(2).Value.ToString, dgv_users.CurrentRow.Cells(4).Value.ToString, dgv_users.CurrentRow.Cells(5).Value.ToString)
+        frmUser.ShowDialog()
+    End Sub
 End Class

@@ -143,7 +143,6 @@ Module modConnect
 
     'load cutoff
     Sub GetCutoff()
-        Connect_Payroll()
         StrSql = "SELECT * FROM tbl_cutoff LEFT JOIN tblref_occurences ON tbl_cutoff.occurence_id = tblref_occurences.occurence_id"
         QryReadP()
         dt = New DataTable

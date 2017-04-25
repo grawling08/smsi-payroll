@@ -114,8 +114,8 @@ Partial Class frmEmpDetails
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.dgv_shift = New System.Windows.Forms.DataGridView()
         Me.Label37 = New System.Windows.Forms.Label()
+        Me.dgv_shift = New System.Windows.Forms.DataGridView()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -1066,6 +1066,15 @@ Partial Class frmEmpDetails
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Employee Details"
         '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Location = New System.Drawing.Point(6, 294)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(76, 13)
+        Me.Label37.TabIndex = 25
+        Me.Label37.Text = "Shift Schedule"
+        '
         'dgv_shift
         '
         Me.dgv_shift.AllowUserToAddRows = False
@@ -1082,15 +1091,6 @@ Partial Class frmEmpDetails
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
         Me.dgv_shift.TabIndex = 24
-        '
-        'Label37
-        '
-        Me.Label37.AutoSize = True
-        Me.Label37.Location = New System.Drawing.Point(6, 294)
-        Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(76, 13)
-        Me.Label37.TabIndex = 25
-        Me.Label37.Text = "Shift Schedule"
         '
         'frmEmpDetails
         '

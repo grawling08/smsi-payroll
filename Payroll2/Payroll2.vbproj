@@ -200,6 +200,12 @@
     <Compile Include="Forms\frmUploadedTimesheet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmUser.Designer.vb">
+      <DependentUpon>frmUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmAbout.Designer.vb">
       <DependentUpon>frmAbout.vb</DependentUpon>
     </Compile>
@@ -243,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmLeaveConversion.resx">
       <DependentUpon>frmLeaveConversion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmUser.resx">
+      <DependentUpon>frmUser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Report2.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
