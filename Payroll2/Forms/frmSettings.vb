@@ -202,79 +202,123 @@ Public Class frmSettings
 #End Region
     'export payslip
     Private Sub btn_exportpayslip_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportpayslip.Click
-        Dim exportpayopt = cb_exportpayslipopt.SelectedIndex
-        Select Case exportpayopt
-            Case 0
-                'export to excel
-                StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y/%m/%d') as 'From', " _
-                    & "DATE_FORMAT(tbl_cutoff.to_date,'%Y/%m/%d') as 'To', " _
-                    & "company as 'Company'," _
-                    & "CONCAT_WS(' ',lName,fName,mName) as Employee, " _
-                    & "tbl_payslip.totalWorkHours as 'Total Work Hours', " _
-                    & "tbl_payslip.income as 'Quincena', " _
-                    & "tbl_payslip.regot_pay as 'Regular OT', " _
-                    & "tbl_payslip.holot_pay as 'Holiday OT', " _
-                    & "tbl_payslip.ot_pay as 'Total OT', " _
-                    & "tbl_payslip.allowances as 'Additionals', " _
-                    & "tbl_payslip.incentives as 'Incentives', " _
-                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
-                    & "tbl_payslip.undertime_deduct as 'Undertime', " _
-                    & "tbl_payslip.tax as 'Tax', " _
-                    & "tbl_payslip.sss as 'SSS', " _
-                    & "tbl_payslip.phic as 'PHIC', " _
-                    & "tbl_payslip.hdmf as 'HDMF', " _
-                    & "tbl_payslip.gross_income as 'Gross Income', " _
-                    & "tbl_payslip.net_income as 'Net Income' " _
-                    & "FROM tbl_employee " _
-                    & "INNER JOIN tbl_payslip ON tbl_employee.emp_id = tbl_payslip.employee_id " _
-                    & "INNER JOIN tbl_cutoff ON tbl_cutoff.cutoff_id = tbl_payslip.cutoff_id " _
-                    & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
-                    & "AND company = '" & current_company & "' ORDER BY Employee"
-                QryReadP()
-                ds = New DataSet
-                adpt.Fill(ds, "export")
-                Dim lines() As String = Array.ConvertAll(ds.Tables(0).Rows.Cast(Of DataRow).ToArray, Function(dr) String.Join(",", Array.ConvertAll(dr.ItemArray, Function(o) o.ToString)))
-                IO.File.WriteAllLines(Application.StartupPath & "\payslip.csv", lines)
-
-                MessageBox.Show("Exported!")
-            Case 1
-                'direct save to HRIS database
-                MessageBox.Show("Exported!")
-            Case Else
-                MessageBox.Show("Select an option")
-                cb_exportpayslipopt.Focus()
-        End Select
+        'export to excel
+        StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y/%m/%d') as 'From', " _
+            & "DATE_FORMAT(tbl_cutoff.to_date,'%Y/%m/%d') as 'To', " _
+            & "company as 'Company'," _
+            & "CONCAT_WS(' ',lName,fName,mName) as Employee, " _
+            & "tbl_payslip.totalWorkHours as 'Total Work Hours', " _
+            & "tbl_payslip.income as 'Quincena', " _
+            & "tbl_payslip.regot_pay as 'Regular OT', " _
+            & "tbl_payslip.holot_pay as 'Holiday OT', " _
+            & "tbl_payslip.ot_pay as 'Total OT', " _
+            & "tbl_payslip.allowances as 'Additionals', " _
+            & "tbl_payslip.incentives as 'Incentives', " _
+            & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
+            & "tbl_payslip.undertime_deduct as 'Undertime', " _
+            & "tbl_payslip.tax as 'Tax', " _
+            & "tbl_payslip.sss as 'SSS', " _
+            & "tbl_payslip.phic as 'PHIC', " _
+            & "tbl_payslip.hdmf as 'HDMF', " _
+            & "tbl_payslip.gross_income as 'Gross Income', " _
+            & "tbl_payslip.net_income as 'Net Income' " _
+            & "FROM tbl_employee " _
+            & "INNER JOIN tbl_payslip ON tbl_employee.emp_id = tbl_payslip.employee_id " _
+            & "INNER JOIN tbl_cutoff ON tbl_cutoff.cutoff_id = tbl_payslip.cutoff_id " _
+            & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
+            & "AND company = '" & current_company & "' ORDER BY Employee"
+        QryReadP()
+        dt = New DataTable
+        adpt.Fill(dt)
+        Dim txt As String = String.Empty
+        Dim line As String = ""
+        For Each column As DataColumn In dt.Columns
+            'Add the Header row for Text file.
+            line += "," & column.ColumnName
+        Next
+        'Add new line.
+        txt += line.Substring(1) & vbCr & vbLf
+        line = ""
+        For Each row As DataRow In dt.Rows
+            For Each column As DataColumn In dt.Columns
+                'Add the Data rows.
+                line += "," & row(column.ColumnName).ToString()
+            Next
+            'Add new line.
+            txt += line.Substring(1) & vbCr & vbLf
+            line = ""
+        Next
+        If File.Exists(Application.StartupPath & "\payslip.csv") Then
+            Using sw As StreamWriter = New StreamWriter(Application.StartupPath & "\payslip.csv")
+                sw.WriteLine(txt)
+            End Using
+        End If
+        MessageBox.Show("Exported!")
     End Sub
     'export timesheet
     Private Sub btn_exporttimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_exporttimesheet.Click
-        Dim exportattopt = cb_exportoptions.SelectedIndex
-        Select Case exportattopt
-            Case 0
-                'export to excel
-                StrSql = "SELECT * FROM tbl_attendance"
-                QryReadP()
-                ds = New DataSet
-                adpt.Fill(ds, "export")
-                Dim lines() As String = Array.ConvertAll(ds.Tables(0).Rows.Cast(Of DataRow).ToArray, Function(dr) String.Join(",", Array.ConvertAll(dr.ItemArray, Function(o) o.ToString)))
-                IO.File.WriteAllLines(Application.StartupPath & "\attendance.csv", lines)
-                MessageBox.Show("Exported!")
-            Case 1
-                'direct save to HRIS database
-                MessageBox.Show("Exported!")
-            Case Else
-                MessageBox.Show("Select an option")
-                cb_exportpayslipopt.Focus()
-        End Select
+        'export to excel
+        StrSql = "SELECT emp_bio_id, DATE_FORMAT(date,'%Y-%m-%d') as dateLog," _
+                    & "DATE_FORMAT(STR_TO_DATE(time_in, '%c/%e/%Y %r'), '%H:%i:%s') as timein, " _
+                    & "DATE_FORMAT(STR_TO_DATE(time_out, '%c/%e/%Y %r'), '%H:%i:%s') as timeout, " _
+                    & "totalHours, late, undertime, overtime, remarks FROM tbl_attendance"
+        QryReadP()
+        dt = New DataTable
+        adpt.Fill(dt)
+        Dim txt As String = String.Empty
+        Dim line As String = ""
+        For Each column As DataColumn In dt.Columns
+            'Add the Header row for Text file.
+            line += "," & column.ColumnName
+        Next
+        'Add new line.
+        txt += line.Substring(1) & vbCr & vbLf
+        line = ""
+        For Each row As DataRow In dt.Rows
+            For Each column As DataColumn In dt.Columns
+                'Add the Data rows.
+                line += "," & row(column.ColumnName).ToString()
+            Next
+            'Add new line.
+            txt += line.Substring(1) & vbCr & vbLf
+            line = ""
+        Next
+        If File.Exists(Application.StartupPath & "\attendance.csv") Then
+            Using sw As StreamWriter = New StreamWriter(Application.StartupPath & "\attendance.csv")
+                sw.WriteLine(txt)
+            End Using
+        End If
+        MessageBox.Show("Exported!")
     End Sub
     'export cutoff
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportcutoff.Click
-        StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y/%m/%d'), DATE_FORMAT(tbl_cutoff.to_date,'%Y/%m/%d') FROM tbl_cutoff, tblref_occurences WHERE tbl_cutoff.occurence_id = tblref_occurences.occurence_id"
+        StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y-%m-%d') as from_date, DATE_FORMAT(tbl_cutoff.to_date,'%Y-%m-%d') as to_date FROM tbl_cutoff, tblref_occurences WHERE tbl_cutoff.occurence_id = tblref_occurences.occurence_id"
         QryReadP()
-        ds = New DataSet
-        adpt.Fill(ds, "export")
-        Dim lines() As String = Array.ConvertAll(ds.Tables(0).Rows.Cast(Of DataRow).ToArray, Function(dr) String.Join(",", Array.ConvertAll(dr.ItemArray, Function(o) o.ToString)))
-        IO.File.WriteAllLines(Application.StartupPath & "\cutoff.csv", lines)
-
+        dt = New DataTable
+        adpt.Fill(dt)
+        Dim txt As String = String.Empty
+        Dim line As String = ""
+        For Each column As DataColumn In dt.Columns
+            'Add the Header row for Text file.
+            line += "," & column.ColumnName
+        Next
+        'Add new line.
+        txt += line.Substring(1) & vbCr & vbLf
+        line = ""
+        For Each row As DataRow In dt.Rows
+            For Each column As DataColumn In dt.Columns
+                'Add the Data rows.
+                line += "," & row(column.ColumnName).ToString()
+            Next
+            'Add new line.
+            txt += line.Substring(1) & vbCr & vbLf
+            line = ""
+        Next
+        If File.Exists(Application.StartupPath & "\cutoff.csv") Then
+            Using sw As StreamWriter = New StreamWriter(Application.StartupPath & "\cutoff.csv")
+                sw.WriteLine(txt)
+            End Using
+        End If
         MessageBox.Show("Exported!")
     End Sub
     'load users
@@ -328,5 +372,16 @@ Public Class frmSettings
     Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
         Dim frmUser As New frmUser("edit", dgv_users.CurrentRow.Cells(0).Value.ToString, dgv_users.CurrentRow.Cells(1).Value.ToString, dgv_users.CurrentRow.Cells(2).Value.ToString, dgv_users.CurrentRow.Cells(4).Value.ToString, dgv_users.CurrentRow.Cells(5).Value.ToString)
         frmUser.ShowDialog()
+    End Sub
+
+    Private Sub dgv_users_UserDeletingRow(sender As System.Object, e As System.Windows.Forms.DataGridViewRowCancelEventArgs) Handles dgv_users.UserDeletingRow
+        Dim userid As String = dgv_users.CurrentRow.Cells(0).Value.ToString()
+        StrSql = "DELETE FROM tbl_user WHERE user_id = " & userid
+        cmd.ExecuteNonQuery()
+
+    End Sub
+
+    Private Sub BindingNavigatorDeleteItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorDeleteItem.Click
+
     End Sub
 End Class

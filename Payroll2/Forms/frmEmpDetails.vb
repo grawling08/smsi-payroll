@@ -317,6 +317,7 @@ Public Class frmEmpDetails
             dgv_emptimesheet.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + i
         Next
+        dgv_emptimesheet.Columns(0).Visible = False
     End Sub
 
     'load employee shift schedule

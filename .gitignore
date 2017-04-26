@@ -2,3 +2,4 @@
 .gitignore
 /Payroll2/bin/*
 /Setup/
+*.tmp
