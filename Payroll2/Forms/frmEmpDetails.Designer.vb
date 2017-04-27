@@ -272,6 +272,7 @@ Partial Class frmEmpDetails
         Me.Label34.Size = New System.Drawing.Size(45, 13)
         Me.Label34.TabIndex = 12
         Me.Label34.Text = "Label33"
+        Me.Label34.Visible = False
         '
         'Label33
         '
@@ -281,6 +282,7 @@ Partial Class frmEmpDetails
         Me.Label33.Size = New System.Drawing.Size(45, 13)
         Me.Label33.TabIndex = 12
         Me.Label33.Text = "Label33"
+        Me.Label33.Visible = False
         '
         'btn_savepayslip
         '

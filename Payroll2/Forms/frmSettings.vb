@@ -203,26 +203,17 @@ Public Class frmSettings
     'export payslip
     Private Sub btn_exportpayslip_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportpayslip.Click
         'export to excel
-        StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y/%m/%d') as 'From', " _
-            & "DATE_FORMAT(tbl_cutoff.to_date,'%Y/%m/%d') as 'To', " _
-            & "company as 'Company'," _
+        StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y-%m-%d') as 'From', " _
+            & "DATE_FORMAT(tbl_cutoff.to_date,'%Y-%m-%d') as 'To', company as 'Company'," _
             & "CONCAT_WS(' ',lName,fName,mName) as Employee, " _
-            & "tbl_payslip.totalWorkHours as 'Total Work Hours', " _
-            & "tbl_payslip.income as 'Quincena', " _
-            & "tbl_payslip.regot_pay as 'Regular OT', " _
-            & "tbl_payslip.holot_pay as 'Holiday OT', " _
-            & "tbl_payslip.ot_pay as 'Total OT', " _
-            & "tbl_payslip.allowances as 'Additionals', " _
-            & "tbl_payslip.incentives as 'Incentives', " _
-            & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
-            & "tbl_payslip.undertime_deduct as 'Undertime', " _
-            & "tbl_payslip.tax as 'Tax', " _
-            & "tbl_payslip.sss as 'SSS', " _
-            & "tbl_payslip.phic as 'PHIC', " _
-            & "tbl_payslip.hdmf as 'HDMF', " _
-            & "tbl_payslip.gross_income as 'Gross Income', " _
-            & "tbl_payslip.net_income as 'Net Income' " _
-            & "FROM tbl_employee " _
+            & "tbl_payslip.totalWorkHours as 'TotalWorkHours', tbl_payslip.income as 'Quincena', " _
+            & "tbl_payslip.regot_pay as 'RegularOT', tbl_payslip.holot_pay as 'HolidayOT', " _
+            & "tbl_payslip.ot_pay as 'TotalOT', tbl_payslip.allowances as 'Additionals', " _
+            & "tbl_payslip.incentives as 'Incentives', tbl_payslip.lateabsent_deduct as 'LateAbsent', " _
+            & "tbl_payslip.undertime_deduct as 'Undertime', tbl_payslip.tax as 'Tax', " _
+            & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', " _
+            & "tbl_payslip.hdmf as 'HDMF', tbl_payslip.gross_income as 'GrossIncome', " _
+            & "tbl_payslip.net_income as 'NetIncome' FROM tbl_employee " _
             & "INNER JOIN tbl_payslip ON tbl_employee.emp_id = tbl_payslip.employee_id " _
             & "INNER JOIN tbl_cutoff ON tbl_cutoff.cutoff_id = tbl_payslip.cutoff_id " _
             & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
@@ -374,14 +365,12 @@ Public Class frmSettings
         frmUser.ShowDialog()
     End Sub
 
-    Private Sub dgv_users_UserDeletingRow(sender As System.Object, e As System.Windows.Forms.DataGridViewRowCancelEventArgs) Handles dgv_users.UserDeletingRow
+    Private Sub BindingNavigatorDeleteItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorDeleteItem.Click
         Dim userid As String = dgv_users.CurrentRow.Cells(0).Value.ToString()
         StrSql = "DELETE FROM tbl_user WHERE user_id = " & userid
+        QryReadP()
         cmd.ExecuteNonQuery()
-
-    End Sub
-
-    Private Sub BindingNavigatorDeleteItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorDeleteItem.Click
-
+        dgv_users.Rows.Remove(dgv_users.SelectedRows(0))
+        MessageBox.Show("Deleted!")
     End Sub
 End Class

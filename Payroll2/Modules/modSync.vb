@@ -28,6 +28,15 @@ Module modSync
                         & "hris.leaves.name AS 'Leave Type', hris.leaveapp.durFrom AS 'From Date', hris.leaveapp.durTo AS 'To Date', hris.leaveapp.dateFiled AS 'Date Filed', " _
                         & "hris.leaveapp.days_applied AS 'Days Applied', hris.leaveapp.reason AS 'Reason', hris.leaveapp.status AS 'Status' FROM hris.leaveapp, hris.leaves, hris.employees " _
                         & "WHERE hris.leaveapp.leave_id = hris.leaves.id AND hris.leaveapp.employee_id = hris.employees.id AND hris.leaveapp.status = 'Approved by HR'"
+            'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_leaves; " _
+            '            & "LOAD DATA LOCAL INFILE 'C:\\Users\\RA\\Documents\\Visual Studio 2010\\Projects\\Payroll2\\leaves-list.csv' INTO TABLE temporary_table " _
+            '            & "FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'; " _
+            '            & "INSERT INTO tbl_leaves SELECT * FROM temporary_table " _
+            '            & "ON DUPLICATE KEY UPDATE employee_id = VALUES(employee_id), leave_type = VALUES(leave_type), " _
+            '            & "durFrom = VALUES(durFrom),durTo = VALUES(durTo), " _
+            '            & "dateFiled = VALUES(dateFiled),days_applied = VALUES(days_applied), " _
+            '            & "reason = VALUES(reason),status = VALUES(status); " _
+            '            & "DROP TEMPORARY TABLE temporary_table;"
             QryReadP()
             cmd.ExecuteNonQuery()
         Catch e As MySqlException
@@ -86,5 +95,7 @@ Module modSync
         End Try
         Return True
     End Function
+    'SELECT serviceallowance.id, employee_id, allowances.name, amount FROM allowances, serviceallowance
+    'WHERE serviceallowance.allowance_id = allowances.id;
 
 End Module
