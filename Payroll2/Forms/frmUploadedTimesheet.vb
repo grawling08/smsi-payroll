@@ -45,8 +45,8 @@ Public Class frmUploadedTimesheet
                     time_in = row.Cells(2).Value.ToString
                     time_out = row.Cells(3).Value.ToString
                     'retrieve shift details
-                    StrSql = "Select * FROM shifts WHERE shiftgroup_id = (SELECT shiftgroup_id FROM employees WHERE biometric_id = '" & row.Cells(0).Value.ToString & "')"
-                    QryReadH()
+                    StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "')"
+                    QryReadP()
                     Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                     If dtareader.HasRows Then
                         While dtareader.Read()

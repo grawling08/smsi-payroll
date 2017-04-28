@@ -3,16 +3,30 @@
 Module modSync
     Function SyncEmployee() As Boolean
         Try
-            StrSql = "INSERT INTO hris_payroll.tbl_employee SELECT hris.employees.id, hris.employees.employee_id, hris.employees.biometric_id, hris.employees.fName, hris.employees.mi, " _
-                        & "hris.employees.lName, hris.shiftsgroup.shiftName, hris.employees.sssNo, hris.employees.phicNo, hris.employees.hdmfNo, " _
-                        & "hris.employees.taxNo, hris.companies.name as company_name, hris.branches.name as branch_name, hris.positions.name as position_name, " _
-                        & "hris.taxstatus.taxcode, hris.services.employmentStatus, hris.services.basicSalary FROM hris.employees " _
-                        & "LEFT JOIN hris.services ON hris.employees.id = hris.services.employee_id " _
-                        & "LEFT JOIN hris.positions ON hris.services.position_id = hris.positions.id " _
-                        & "LEFT JOIN hris.companies ON hris.services.company_id = hris.companies.id " _
-                        & "LEFT JOIN hris.branches ON hris.services.branch_id = hris.branches.id " _
-                        & "LEFT JOIN hris.taxstatus ON hris.employees.taxstatus_id = hris.taxstatus.id " _
-                        & "LEFT JOIN hris.shiftsgroup ON hris.employees.shiftgroup_id = hris.shiftsgroup.id "
+            'StrSql = "INSERT INTO hris_payroll.tbl_employee SELECT hris.employees.id, hris.employees.employee_id, hris.employees.biometric_id, hris.employees.fName, hris.employees.mi, " _
+            '            & "hris.employees.lName, hris.shiftsgroup.shiftName, hris.employees.sssNo, hris.employees.phicNo, hris.employees.hdmfNo, " _
+            '            & "hris.employees.taxNo, hris.companies.name as company_name, hris.branches.name as branch_name, hris.positions.name as position_name, " _
+            '            & "hris.taxstatus.taxcode, hris.services.employmentStatus, hris.services.basicSalary FROM hris.employees " _
+            '            & "LEFT JOIN hris.services ON hris.employees.id = hris.services.employee_id " _
+            '            & "LEFT JOIN hris.positions ON hris.services.position_id = hris.positions.id " _
+            '            & "LEFT JOIN hris.companies ON hris.services.company_id = hris.companies.id " _
+            '            & "LEFT JOIN hris.branches ON hris.services.branch_id = hris.branches.id " _
+            '            & "LEFT JOIN hris.taxstatus ON hris.employees.taxstatus_id = hris.taxstatus.id " _
+            '            & "LEFT JOIN hris.shiftsgroup ON hris.employees.shiftgroup_id = hris.shiftsgroup.id "
+            StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_employee; " _
+                        & "LOAD DATA LOCAL INFILE 'C:\\Users\\RA\\Downloads\\employee-list.csv' INTO TABLE temporary_table " _
+                        & "FIELDS TERMINATED BY ',' ENCLOSED BY '""' ESCAPED BY '' LINES TERMINATED BY '\n' IGNORE 1 LINES; " _
+                        & "INSERT INTO tbl_employee SELECT * FROM temporary_table " _
+                        & "ON DUPLICATE KEY UPDATE " _
+                        & "emp_id = VALUES(emp_id), emp_bio_id = VALUES(emp_bio_id), " _
+                        & "fName = VALUES(fName), mName = VALUES(mname), " _
+                        & "lname = VALUES(lName), shiftgroup = VALUES(shiftgroup), " _
+                        & "sss_id = VALUES(sss_id), phic_id = VALUES(phic_id), " _
+                        & "hdmf_id = VALUES(hdmf_id), tin = VALUES(tin), " _
+                        & "employment_status = VALUES(employment_status),company = VALUES(company), " _
+                        & "branch = VALUES(branch),position = VALUES(position), " _
+                        & "tax_status = VALUES(tax_status),basic_salary = VALUES(basic_salary); " _
+                        & "DROP TEMPORARY TABLE temporary_table;"
             QryReadP()
             cmd.ExecuteNonQuery()
         Catch e As MySqlException
@@ -24,19 +38,19 @@ Module modSync
 
     Function SyncLeaves() As Boolean
         Try
-            StrSql = "INSERT INTO hris_payroll.tbl_leaves SELECT hris.leaveapp.id, hris.leaveapp.employee_id, " _
-                        & "hris.leaves.name AS 'Leave Type', hris.leaveapp.durFrom AS 'From Date', hris.leaveapp.durTo AS 'To Date', hris.leaveapp.dateFiled AS 'Date Filed', " _
-                        & "hris.leaveapp.days_applied AS 'Days Applied', hris.leaveapp.reason AS 'Reason', hris.leaveapp.status AS 'Status' FROM hris.leaveapp, hris.leaves, hris.employees " _
-                        & "WHERE hris.leaveapp.leave_id = hris.leaves.id AND hris.leaveapp.employee_id = hris.employees.id AND hris.leaveapp.status = 'Approved by HR'"
-            'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_leaves; " _
-            '            & "LOAD DATA LOCAL INFILE 'C:\\Users\\RA\\Documents\\Visual Studio 2010\\Projects\\Payroll2\\leaves-list.csv' INTO TABLE temporary_table " _
-            '            & "FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'; " _
-            '            & "INSERT INTO tbl_leaves SELECT * FROM temporary_table " _
-            '            & "ON DUPLICATE KEY UPDATE employee_id = VALUES(employee_id), leave_type = VALUES(leave_type), " _
-            '            & "durFrom = VALUES(durFrom),durTo = VALUES(durTo), " _
-            '            & "dateFiled = VALUES(dateFiled),days_applied = VALUES(days_applied), " _
-            '            & "reason = VALUES(reason),status = VALUES(status); " _
-            '            & "DROP TEMPORARY TABLE temporary_table;"
+            'StrSql = "INSERT INTO hris_payroll.tbl_leaves SELECT hris.leaveapp.id, hris.leaveapp.employee_id, " _
+            '            & "hris.leaves.name AS 'Leave Type', hris.leaveapp.durFrom AS 'From Date', hris.leaveapp.durTo AS 'To Date', hris.leaveapp.dateFiled AS 'Date Filed', " _
+            '            & "hris.leaveapp.days_applied AS 'Days Applied', hris.leaveapp.reason AS 'Reason', hris.leaveapp.status AS 'Status' FROM hris.leaveapp, hris.leaves, hris.employees " _
+            '            & "WHERE hris.leaveapp.leave_id = hris.leaves.id AND hris.leaveapp.employee_id = hris.employees.id AND hris.leaveapp.status = 'Approved by HR'"
+            StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_leaves; " _
+                        & "LOAD DATA LOCAL INFILE 'C:\\Users\\RA\\Documents\\Visual Studio 2010\\Projects\\Payroll2\\leaves-list.csv' INTO TABLE temporary_table " _
+                        & "FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'; " _
+                        & "INSERT INTO tbl_leaves SELECT * FROM temporary_table " _
+                        & "ON DUPLICATE KEY UPDATE employee_id = VALUES(employee_id), leave_type = VALUES(leave_type), " _
+                        & "durFrom = VALUES(durFrom),durTo = VALUES(durTo), " _
+                        & "dateFiled = VALUES(dateFiled),days_applied = VALUES(days_applied), " _
+                        & "reason = VALUES(reason),status = VALUES(status); " _
+                        & "DROP TEMPORARY TABLE temporary_table;"
             QryReadP()
             cmd.ExecuteNonQuery()
         Catch e As MySqlException
