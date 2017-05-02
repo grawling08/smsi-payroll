@@ -216,15 +216,15 @@ Module modConnect
         Dim rows As Integer = dt.Rows.Count
         Dim counter As Integer = 0
         For i = 0 To dt.Rows.Count - 1
-            buff0 = dt.Rows(i)(0)
-            buff1 = dt.Rows(i)(1)
-            buff2 = dt.Rows(i)(2)
-            buff3 = dt.Rows(i)(3)
-            buff4 = dt.Rows(i)(4)
-            buff5 = dt.Rows(i)(5)
-            buff6 = dt.Rows(i)(6)
+            buff0 = dt.Rows(i)(0).ToString
+            buff1 = dt.Rows(i)(1).ToString
+            buff2 = dt.Rows(i)(2).ToString
+            buff3 = dt.Rows(i)(3).ToString
+            buff4 = dt.Rows(i)(4).ToString
+            buff5 = dt.Rows(i)(5).ToString
+            buff6 = dt.Rows(i)(6).ToString
             'check if timesheet is for the current company
-            StrSql = "SELECT * FROM companies WHERE name ='" & current_company & "'"
+            StrSql = "SELECT * FROM companies WHERE code ='" & current_company & "'"
             QryReadH()
             Dim compreader As MySqlDataReader = cmd.ExecuteReader()
             If compreader.HasRows Then

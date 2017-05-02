@@ -8,6 +8,10 @@ Public Class frm1
             lb_company.DataSource = dt
             lb_company.DisplayMember = "name"
         End If
+        loadCutoff()
+    End Sub
+
+    Public Sub loadCutoff()
         GetCutoff()
         If dt.Rows.Count > 0 Then
             lb_cutoff.DataSource = dt
@@ -47,4 +51,5 @@ Public Class frm1
     Private Sub lbl_newcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lbl_newcutoff.LinkClicked
         frmAddCutoff.ShowDialog()
     End Sub
+
 End Class

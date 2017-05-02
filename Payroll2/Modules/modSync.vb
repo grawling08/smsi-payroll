@@ -109,7 +109,12 @@ Module modSync
         End Try
         Return True
     End Function
-    'SELECT serviceallowance.id, employee_id, allowances.name, amount FROM allowances, serviceallowance
-    'WHERE serviceallowance.allowance_id = allowances.id;
+
+    Function SyncAllowances() As Boolean
+        'SELECT serviceallowance.id, employee_id, allowances.name, amount FROM allowances, serviceallowance
+        'WHERE serviceallowance.allowance_id = allowances.id;
+        Return True
+    End Function
+
 
 End Module

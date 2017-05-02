@@ -187,8 +187,8 @@ Public Class frmEmpDetails
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then
                 'check if current day in loop is not within the shift schedule
-                StrSql = "Select * FROM shifts WHERE shiftgroup_id = (SELECT shiftgroup_id FROM employees WHERE employee_id = '" & tb_empid.Text & "') AND day='" & CurrD.ToString("dddd") & "'"
-                QryReadH()
+                StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_id = '" & tb_empid.Text & "') AND day='" & CurrD.ToString("dddd") & "'"
+                QryReadP()
                 Dim dtareader4 As MySqlDataReader = cmd.ExecuteReader()
                 If dtareader4.HasRows Then
                     'absent 
@@ -196,8 +196,8 @@ Public Class frmEmpDetails
                     'query leave where leave is approved by the hr
                     'if leave is with pay -1 to absent
                     'leave is without pay, treated as absent
-                    StrSql = "SELECT leaveapp.* FROM leaveapp, employees WHERE employees.employee_id = '" & tb_empid.Text & "' AND employees.id = leaveapp.employee_id AND durFrom <= '" & CurrD.ToString("yyyy-MM-dd") & "' AND durTo >= '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
-                    QryReadH()
+                    StrSql = "SELECT tbl_leaves.* FROM tbl_leaves, tbl_employee WHERE tbl_employee.emp_id = '" & tb_empid.Text & "' AND tbl_employee.id = tbl_leaves.employee_id AND durFrom <= '" & CurrD.ToString("yyyy-MM-dd") & "' AND durTo >= '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
+                    QryReadP()
                     Dim dtareader5 As MySqlDataReader = cmd.ExecuteReader
                     If dtareader5.HasRows Then
                         'merong leave

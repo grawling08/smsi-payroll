@@ -34,10 +34,13 @@
             ElseIf cb_occurence.Text = "Weekly" And date_diff = 7 Then
                 AddNewCutoff(fromDate, toDate, cb_occurence.Text)
             Else
-                MessageBox.Show("Date range must be: Monthly: 28-31, Semi-Monthly: 12-15 and Weekly: 7")
+                MessageBox.Show("Date range must be - Monthly: 28-31 days, Semi-Monthly: 12-15 days and Weekly: 7 days")
             End If
         End If
         frmMain.ReloadCutoff()
+        If Application.OpenForms().OfType(Of frm1).Any Then
+            frm1.loadCutoff()
+        End If
     End Sub
 
 End Class

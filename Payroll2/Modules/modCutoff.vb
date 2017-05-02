@@ -14,7 +14,7 @@ Module modCutoff
         StrSql = "UPDATE tbl_cutoff SET ifActive = 'Y' WHERE cutoff_range = '" & range & "'"
         QryReadP()
         cmd.ExecuteNonQuery()
-
+        current_cutoff = range
         Close_Connect()
     End Sub
 

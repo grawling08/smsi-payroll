@@ -119,7 +119,7 @@ Partial Class frmMain
         '
         Me.UploadTimsheetToolStripMenuItem.Name = "UploadTimsheetToolStripMenuItem"
         Me.UploadTimsheetToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.UploadTimsheetToolStripMenuItem.Text = "Upload Timsheet"
+        Me.UploadTimsheetToolStripMenuItem.Text = "Upload Timesheet"
         '
         'ViewRawTimesheetToolStripMenuItem
         '

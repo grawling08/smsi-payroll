@@ -121,8 +121,8 @@ Public Class frmUploadedTimesheet
             For Each row In dgv_temptimesheet.Rows
                 'save only the entries that is connected to an employee
                 If (row.Cells(2).Value.ToString IsNot "" And row.Cells(3).Value.ToString IsNot "") Then
-                    StrSql = "Select * FROM employees WHERE biometric_id = '" & row.Cells(0).Value.ToString & "'"
-                    QryReadH()
+                    StrSql = "Select * FROM tbl_employee WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "'"
+                    QryReadP()
                     Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                     If dtareader.HasRows Then
                         'check for duplicate entries
