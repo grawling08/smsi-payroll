@@ -1,10 +1,12 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports System.Security.AccessControl
 Imports Microsoft.Office.Interop
 Imports MySql.Data.MySqlClient
 
 Public Class frmSettings
     Dim dynamicControl As New ctrlServerSettings
+
     'custom vertical tabs
     Private Sub TabControl1_DrawItem(sender As System.Object, e As System.Windows.Forms.DrawItemEventArgs) Handles TabControl1.DrawItem
         Dim g As Graphics
@@ -46,6 +48,7 @@ Public Class frmSettings
         load_reftables("tax")
         load_reftables("holiday")
         load_users()
+
     End Sub
 
     Sub load_reftables(ByVal table As String)
@@ -239,11 +242,9 @@ Public Class frmSettings
             txt += line.Substring(1) & vbCr & vbLf
             line = ""
         Next
-        If File.Exists(Application.StartupPath & "\payslip.csv") Then
-            Using sw As StreamWriter = New StreamWriter(Application.StartupPath & "\payslip.csv")
-                sw.WriteLine(txt)
-            End Using
-        End If
+        Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\payslip.csv")
+            sw.WriteLine(txt)
+        End Using
         MessageBox.Show("Exported!")
     End Sub
     'export timesheet
@@ -274,11 +275,9 @@ Public Class frmSettings
             txt += line.Substring(1) & vbCr & vbLf
             line = ""
         Next
-        If File.Exists(Application.StartupPath & "\attendance.csv") Then
-            Using sw As StreamWriter = New StreamWriter(Application.StartupPath & "\attendance.csv")
-                sw.WriteLine(txt)
-            End Using
-        End If
+        Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\attendance.csv")
+            sw.WriteLine(txt)
+        End Using
         MessageBox.Show("Exported!")
     End Sub
     'export cutoff
@@ -305,11 +304,9 @@ Public Class frmSettings
             txt += line.Substring(1) & vbCr & vbLf
             line = ""
         Next
-        If File.Exists(Application.StartupPath & "\cutoff.csv") Then
-            Using sw As StreamWriter = New StreamWriter(Application.StartupPath & "\cutoff.csv")
-                sw.WriteLine(txt)
-            End Using
-        End If
+        Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\cutoff.csv")
+            sw.WriteLine(txt)
+        End Using
         MessageBox.Show("Exported!")
     End Sub
     'load users
@@ -329,6 +326,7 @@ Public Class frmSettings
             i = i + i
         Next
     End Sub
+
 #Region "sync employees, loans, overtime, leaves"
     Private Sub btn_syncemployees_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncemployees.Click
         If SyncEmployee() Then
@@ -354,7 +352,7 @@ Public Class frmSettings
         End If
     End Sub
 #End Region
-
+    'users CRUD
     Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorAddNewItem.Click
         Dim frmUser As New frmUser("add")
         frmUser.ShowDialog()

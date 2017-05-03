@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2D07506AC2A142468FC43F1D4048D3CF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2E5490076034AADE9B57B673C3DBC9E9"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -46,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_412C0213DC00EA4C60E6EE9D6AF9F875"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,13 +64,13 @@
         "Entry"
         {
         "MsmKey" = "8:_5FD6669F33D01142A6D15FDBC03775D2"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7E255AE853103489C44AA432FDBF824C"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,13 +88,13 @@
         "Entry"
         {
         "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_BC4C5CD03E913CD894D6758E36B020CF"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -100,19 +106,13 @@
         "Entry"
         {
         "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,7 +130,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F55882C6E829453A851F7B5BF304FB55"
+        "OwnerKey" = "8:_20F825492FC34B5BA83EE448860A7AED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -237,6 +237,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -663,7 +676,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Payroll"
         "ProductCode" = "8:{84026E58-B810-4F0D-BD15-7610524F11C8}"
-        "PackageCode" = "8:{99ACDB18-9791-4E5F-BC0D-FF57148E0847}"
+        "PackageCode" = "8:{997B8732-0A17-4197-A234-CE72A5F47266}"
         "UpgradeCode" = "8:{0BE6C9DC-CDEC-46A3-8D5D-3F74250DF979}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -783,7 +796,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_05838D7CCA68489586BD62A63F37AB32"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3ED3CC7AB6FE46AEA136C0B87D9ABEE1"
             {
             "Name" = "8:HIPS"
             "Arguments" = "8:"
@@ -791,13 +804,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_F55882C6E829453A851F7B5BF304FB55"
+            "Target" = "8:_20F825492FC34B5BA83EE448860A7AED"
             "Folder" = "8:_DD135EE2F1F74DB28EBCA69AE4BAD534"
             "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "Icon" = "8:"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A44D9FE73E6F4BB5A5DAEAE59B1C91BB"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8265FAAF8F50499CB083D41A99A94330"
             {
             "Name" = "8:HIPS"
             "Arguments" = "8:"
@@ -805,22 +818,8 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_F55882C6E829453A851F7B5BF304FB55"
+            "Target" = "8:_20F825492FC34B5BA83EE448860A7AED"
             "Folder" = "8:_31D405953247477BBD18F74172BF59BA"
-            "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D188B0332B4046C0B54E7C594AA2AE34"
-            {
-            "Name" = "8:HIPS"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_F55882C6E829453A851F7B5BF304FB55"
-            "Folder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "Icon" = "8:"
             "Feature" = "8:"
@@ -1224,7 +1223,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_F55882C6E829453A851F7B5BF304FB55"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_20F825492FC34B5BA83EE448860A7AED"
             {
             "SourcePath" = "8:..\\Payroll2\\obj\\x86\\Debug\\Payroll2.exe"
             "TargetName" = "8:"
