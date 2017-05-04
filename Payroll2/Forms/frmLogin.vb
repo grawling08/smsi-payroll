@@ -13,7 +13,7 @@ Public Class frmLogin
                 End If
                 frmMain.logged_user = result(2).ToString
                 frmMain.emp_id = result(1).ToString
-                frmMain.Show()
+                'frmMain.Show()
             Else
                 MessageBox.Show("You don't have the necessary credentials to access this program.")
             End If

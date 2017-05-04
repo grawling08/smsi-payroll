@@ -1,6 +1,12 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Module modSync
+
+    Function SyncTimesheet() As Boolean
+
+        Return True
+    End Function
+
     Function SyncEmployee() As Boolean
         Try
             'StrSql = "INSERT INTO hris_payroll.tbl_employee SELECT hris.employees.id, hris.employees.employee_id, hris.employees.biometric_id, hris.employees.fName, hris.employees.mi, " _

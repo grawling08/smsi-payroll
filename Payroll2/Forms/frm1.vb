@@ -45,6 +45,7 @@ Public Class frm1
         QryReadP()
         cmd.ExecuteNonQuery()
         current_company = lb_company.Text
+        frmMain.Show()
         Me.Close()
     End Sub
 

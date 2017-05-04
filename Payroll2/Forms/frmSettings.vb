@@ -253,7 +253,9 @@ Public Class frmSettings
         StrSql = "SELECT emp_bio_id, DATE_FORMAT(date,'%Y-%m-%d') as dateLog," _
                     & "DATE_FORMAT(STR_TO_DATE(time_in, '%c/%e/%Y %r'), '%H:%i:%s') as timein, " _
                     & "DATE_FORMAT(STR_TO_DATE(time_out, '%c/%e/%Y %r'), '%H:%i:%s') as timeout, " _
-                    & "totalHours, late, undertime, overtime, remarks FROM tbl_attendance"
+                    & "totalHours, late, undertime, overtime, remarks FROM tbl_attendance " _
+                    & "WHERE date BETWEEN (SELECT from_date FROM tbl_cutoff WHERE cutoff_range = '" & current_cutoff & "') AND " _
+                    & "(SELECT to_date FROM tbl_cutoff WHERE cutoff_range = '" & current_cutoff & "')"
         QryReadP()
         dt = New DataTable
         adpt.Fill(dt)

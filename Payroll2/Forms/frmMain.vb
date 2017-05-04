@@ -9,7 +9,7 @@ Public Class frmMain
     'exit the application
     Private Sub LogoutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LogoutToolStripMenuItem.Click
         Close_Connect()
-        frmLogin.Show()
+        'frmLogin.Show()
         Me.Close()
     End Sub
 
@@ -21,6 +21,9 @@ Public Class frmMain
         'load payslip for the current cutoff
         getPayslip(current_cutoff)
         lbl_currentcompany.Text = current_company.ToString
+        If app_mode = "integrate" Then
+            EmployeeToolStripMenuItem.Enabled = False
+        End If
     End Sub
     '
     Sub loadEmployee()
@@ -175,5 +178,10 @@ Public Class frmMain
     Private Sub LeaveConvertToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LeaveConvertToolStripMenuItem.Click
         Dim frmLeaveConversion As New frmLeaveConversion()
         frmLeaveConversion.ShowDialog()
+    End Sub
+
+    Private Sub ChangeCutoffCompanyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeCutoffCompanyToolStripMenuItem.Click
+        frm1.Show()
+        Me.Close()
     End Sub
 End Class

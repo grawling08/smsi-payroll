@@ -224,7 +224,7 @@ Module modConnect
             buff5 = dt.Rows(i)(5).ToString
             buff6 = dt.Rows(i)(6).ToString
             'check if timesheet is for the current company
-            StrSql = "SELECT * FROM companies WHERE code ='" & current_company & "'"
+            StrSql = "SELECT * FROM companies WHERE code ='" & current_company & "' OR name = '" & current_company & "'"
             QryReadH()
             Dim compreader As MySqlDataReader = cmd.ExecuteReader()
             If compreader.HasRows Then
