@@ -11,6 +11,7 @@ Public Class ctrlServerSettings
         Dim PayrollStrings() As String = {tb_serverPay.Text, tb_uidPay.Text, tb_pwordPay.Text, tb_dbPay.Text}
 
         SaveSystemSettings(HRStrings, PayrollStrings)
+        init_form()
         MessageBox.Show("Settings Saved!")
     End Sub
     Sub init_form()
@@ -91,6 +92,15 @@ Public Class ctrlServerSettings
     End Sub
 
     Private Sub btn_testconnect_Click(sender As System.Object, e As System.EventArgs) Handles btn_testconnect.Click
-
+        Try
+            If conn.State = ConnectionState.Open Then
+                conn.Close()
+            End If
+            conn.ConnectionString = connectstring_payroll
+            conn.Open()
+            MessageBox.Show("Connection Success!")
+        Catch ex As MySql.Data.MySqlClient.MySqlException
+            MessageBox.Show("Cannot connect to server. Contact administrator")
+        End Try
     End Sub
 End Class
