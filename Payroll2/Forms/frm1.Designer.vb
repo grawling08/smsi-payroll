@@ -113,7 +113,7 @@ Partial Class frm1
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Set Current Cutoff and Company"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()

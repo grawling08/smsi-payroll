@@ -269,12 +269,13 @@ Public Class frmEmpDetails
 
     Private Sub computeAllowance()
         'compute allowances
-        StrSql = "SELECT employees.id, employees.employee_id, CONCAT_WS(' ',fName,mi,lName), serviceallowance.amount, allowances.* FROM employees " _
-                    & "JOIN services ON employees.id = services.employee_id " _
-                    & "JOIN serviceallowance ON services.id = serviceallowance.service_id " _
-                    & "JOIN allowances ON serviceallowance.allowance_id = allowances.id " _
-                    & "WHERE employees.employee_id = '" & tb_empid.Text & "' AND services.ifcurrent = '1'"
-        QryReadH()
+        'StrSql = "SELECT employees.id, employees.employee_id, CONCAT_WS(' ',fName,mi,lName), serviceallowance.amount, allowances.* FROM employees " _
+        '            & "JOIN services ON employees.id = services.employee_id " _
+        '            & "JOIN serviceallowance ON services.id = serviceallowance.service_id " _
+        '            & "JOIN allowances ON serviceallowance.allowance_id = allowances.id " _
+        '            & "WHERE employees.employee_id = '" & tb_empid.Text & "' AND services.ifcurrent = '1'"
+        StrSql = "SELECT * FROM tbl_allowances"
+        QryReadP()
         Dim dtareader3 As MySqlDataReader = cmd.ExecuteReader
         If dtareader3.HasRows Then
             While dtareader3.Read()
@@ -285,8 +286,8 @@ Public Class frmEmpDetails
     End Sub
 
     Private Sub computeloans()
-        StrSql = "SELECT loans.* FROM loans, employees WHERE employees.id = loans.employee_id AND employees.employee_id='" & tb_empid.Text & "' AND startDate <= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND endDAte >= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "'"
-        QryReadH()
+        StrSql = "SELECT tbl_loans.* FROM tbl_loans, tbl_employee WHERE tbl_employee.id = tbl_loans.employee_id AND tbl_employee.emp_id='" & tb_empid.Text & "' AND startDate <= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND endDAte >= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "'"
+        QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         Dim loans As Double = 0
         If dtareader.HasRows Then

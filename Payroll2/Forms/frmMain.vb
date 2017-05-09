@@ -184,4 +184,9 @@ Public Class frmMain
         frm1.Show()
         Me.Close()
     End Sub
+
+    Private Sub ShiftsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ShiftsToolStripMenuItem.Click
+        Dim shifts As New frmShifts()
+        shifts.ShowDialog()
+    End Sub
 End Class

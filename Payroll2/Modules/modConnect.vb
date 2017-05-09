@@ -179,8 +179,8 @@ Module modConnect
     End Sub
 
     Sub getCompanyList()
-        StrSql = "SELECT * FROM companies"
-        QryReadH()
+        StrSql = "SELECT * FROM tbl_company"
+        QryReadP()
         dt = New DataTable
         ds = New DataSet
         adpt.Fill(dt)
@@ -201,6 +201,7 @@ Module modConnect
         dt = New DataTable
         ds = New DataSet()
         adpt.Fill(dt)
+        Close_Connect()
     End Sub
 
     'upload raw attendance sheet
@@ -224,8 +225,8 @@ Module modConnect
             buff5 = dt.Rows(i)(5).ToString
             buff6 = dt.Rows(i)(6).ToString
             'check if timesheet is for the current company
-            StrSql = "SELECT * FROM companies WHERE code ='" & current_company & "' OR name = '" & current_company & "'"
-            QryReadH()
+            StrSql = "SELECT * FROM tbl_company WHERE code ='" & current_company & "' OR name = '" & current_company & "'"
+            QryReadP()
             Dim compreader As MySqlDataReader = cmd.ExecuteReader()
             If compreader.HasRows Then
                 compreader.Read()
@@ -294,6 +295,7 @@ Module modConnect
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
         frmMain.dgv_payroll.DataSource = ds.Tables(0)
+        Close_Connect()
     End Sub
 
     Function computeSSS(ByVal basic_pay As Double) As String()

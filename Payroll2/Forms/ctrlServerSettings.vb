@@ -62,32 +62,38 @@ Public Class ctrlServerSettings
     Private Sub rb_mode_alone_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rb_mode_alone.CheckedChanged
         If rb_mode_alone.Checked Then
             disableControls()
-            StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
-            QryReadP()
-            Dim settingsreader As MySqlDataReader = cmd.ExecuteReader
-            If settingsreader.HasRows Then
-                StrSql = "UPDATE tblref_settings SET value = 'alone' WHERE setting_name = 'app_mode'"
-            Else
-                StrSql = "INSERT INTO tblref_settings VALUES('app_mode','alone')"
+            If conn.State = ConnectionState.Open Then
+                StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
+                QryReadP()
+                Dim settingsreader As MySqlDataReader = cmd.ExecuteReader
+                If settingsreader.HasRows Then
+                    StrSql = "UPDATE tblref_settings SET value = 'alone' WHERE setting_name = 'app_mode'"
+                Else
+                    StrSql = "INSERT INTO tblref_settings VALUES('app_mode','alone')"
+                End If
+                QryReadP()
+                cmd.ExecuteNonQuery()
             End If
-            QryReadP()
-            cmd.ExecuteNonQuery()
+            app_mode = "alone"
         End If
     End Sub
 
     Private Sub rb_mode_integrate_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rb_mode_integrate.CheckedChanged
         If rb_mode_integrate.Checked Then
             enableControls()
-            StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
-            QryReadP()
-            Dim settingsreader As MySqlDataReader = cmd.ExecuteReader
-            If settingsreader.HasRows Then
-                StrSql = "UPDATE tblref_settings SET value = 'integrate' WHERE setting_name = 'app_mode'"
-            Else
-                StrSql = "INSERT INTO tblref_settings VALUES('app_mode','integrate')"
+            If conn.State = ConnectionState.Open Then
+                StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
+                QryReadP()
+                Dim settingsreader As MySqlDataReader = cmd.ExecuteReader
+                If settingsreader.HasRows Then
+                    StrSql = "UPDATE tblref_settings SET value = 'integrate' WHERE setting_name = 'app_mode'"
+                Else
+                    StrSql = "INSERT INTO tblref_settings VALUES('app_mode','integrate')"
+                End If
+                QryReadP()
+                cmd.ExecuteNonQuery()
             End If
-            QryReadP()
-            cmd.ExecuteNonQuery()
+            app_mode = "integrate"
         End If
     End Sub
 
