@@ -13,14 +13,11 @@ Public Class frmUploadedTimesheet
     End Sub
 
     Private Sub btn_loadtemptimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtemptimesheet.Click
-        StrSql = "SELECT " _
-                      & "No, " _
-                      & "LogDate, " _
+        StrSql = "SELECT No, LogDate, " _
                       & "MAX(CASE Status WHEN 'C/In' THEN STR_TO_DATE(Date_Time, '%c/%e/%Y %r') END) AS Time_in, " _
                       & "MAX(CASE Status WHEN 'C/Out' THEN STR_TO_DATE(Date_Time, '%c/%e/%Y %r') END) AS Time_Out " _
                       & "FROM tbl_attendanceraw " _
-                      & "WHERE ifMapped = 0 " _
-                      & "Group by No, LogDate"
+                      & "WHERE ifMapped = 0 Group by No, LogDate"
         QryReadP()
         ds = New DataSet
         adpt.Fill(ds, "TimesheetRaw")

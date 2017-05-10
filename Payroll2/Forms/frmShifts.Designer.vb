@@ -55,6 +55,7 @@ Partial Class frmShifts
         '
         'ComboBox1
         '
+        Me.ComboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"Flexible", "Irregular", "Regular"})
         Me.ComboBox1.Location = New System.Drawing.Point(196, 12)
@@ -64,6 +65,7 @@ Partial Class frmShifts
         '
         'ComboBox2
         '
+        Me.ComboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Items.AddRange(New Object() {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})
         Me.ComboBox2.Location = New System.Drawing.Point(196, 39)
@@ -105,9 +107,14 @@ Partial Class frmShifts
         '
         'dgv_shifts
         '
+        Me.dgv_shifts.AllowUserToAddRows = False
+        Me.dgv_shifts.AllowUserToDeleteRows = False
         Me.dgv_shifts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_shifts.Location = New System.Drawing.Point(12, 147)
         Me.dgv_shifts.Name = "dgv_shifts"
+        Me.dgv_shifts.ReadOnly = True
+        Me.dgv_shifts.RowHeadersVisible = False
+        Me.dgv_shifts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_shifts.Size = New System.Drawing.Size(334, 184)
         Me.dgv_shifts.TabIndex = 9
         '
