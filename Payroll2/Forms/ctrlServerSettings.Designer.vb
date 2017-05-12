@@ -23,6 +23,7 @@ Partial Class ctrlServerSettings
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btn_testconnect = New System.Windows.Forms.Button()
         Me.tb_pwordPay = New System.Windows.Forms.TextBox()
         Me.tb_uidPay = New System.Windows.Forms.TextBox()
         Me.tb_serverPay = New System.Windows.Forms.TextBox()
@@ -45,7 +46,6 @@ Partial Class ctrlServerSettings
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.rb_mode_integrate = New System.Windows.Forms.RadioButton()
         Me.rb_mode_alone = New System.Windows.Forms.RadioButton()
-        Me.btn_testconnect = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -79,12 +79,22 @@ Partial Class ctrlServerSettings
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Server Settings"
         '
+        'btn_testconnect
+        '
+        Me.btn_testconnect.Location = New System.Drawing.Point(205, 139)
+        Me.btn_testconnect.Name = "btn_testconnect"
+        Me.btn_testconnect.Size = New System.Drawing.Size(97, 23)
+        Me.btn_testconnect.TabIndex = 19
+        Me.btn_testconnect.Text = "Test Connection"
+        Me.btn_testconnect.UseVisualStyleBackColor = True
+        '
         'tb_pwordPay
         '
         Me.tb_pwordPay.Location = New System.Drawing.Point(282, 87)
         Me.tb_pwordPay.Name = "tb_pwordPay"
         Me.tb_pwordPay.Size = New System.Drawing.Size(100, 20)
         Me.tb_pwordPay.TabIndex = 15
+        Me.tb_pwordPay.UseSystemPasswordChar = True
         '
         'tb_uidPay
         '
@@ -267,15 +277,6 @@ Partial Class ctrlServerSettings
         Me.rb_mode_alone.TabStop = True
         Me.rb_mode_alone.Text = "Stand-alone"
         Me.rb_mode_alone.UseVisualStyleBackColor = True
-        '
-        'btn_testconnect
-        '
-        Me.btn_testconnect.Location = New System.Drawing.Point(205, 139)
-        Me.btn_testconnect.Name = "btn_testconnect"
-        Me.btn_testconnect.Size = New System.Drawing.Size(97, 23)
-        Me.btn_testconnect.TabIndex = 19
-        Me.btn_testconnect.Text = "Test Connection"
-        Me.btn_testconnect.UseVisualStyleBackColor = True
         '
         'ctrlServerSettings
         '

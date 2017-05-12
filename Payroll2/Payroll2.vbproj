@@ -151,6 +151,12 @@
     <Compile Include="Forms\frmLeaveConversion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmLoans.Designer.vb">
+      <DependentUpon>frmLoans.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmLoans.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmReportGen.Designer.vb">
       <DependentUpon>frmReportGen.vb</DependentUpon>
     </Compile>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmLeaveConversion.resx">
       <DependentUpon>frmLeaveConversion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLoans.resx">
+      <DependentUpon>frmLoans.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmShifts.resx">
       <DependentUpon>frmShifts.vb</DependentUpon>

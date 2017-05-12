@@ -189,4 +189,5 @@ Public Class frmMain
         Dim shifts As New frmShifts()
         shifts.ShowDialog()
     End Sub
+
 End Class

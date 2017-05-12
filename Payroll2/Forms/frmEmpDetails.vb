@@ -336,8 +336,8 @@ Public Class frmEmpDetails
     End Sub
 
     'employee loans
-    Sub GetEmployeeLoans(ByVal EmpID As String)
-        StrSql = "SELECT loan_type AS 'Loan', lendingCompany AS 'Lending Company', amount AS 'Amount', term AS 'Term', monthlyAmortization AS 'Monthly Amortization', startDate AS 'From', endDate AS 'To', remarks AS 'Remarks' " _
+    Public Sub GetEmployeeLoans(ByVal EmpID As String)
+        StrSql = "SELECT loan_id, loan_type AS 'Loan', lendingCompany AS 'Lending Company', amount AS 'Amount', term AS 'Term', monthlyAmortization AS 'Monthly Amortization', startDate AS 'From', endDate AS 'To', remarks AS 'Remarks' " _
                     & "FROM tbl_loans WHERE employee_id = '" & EmpID & "' "
         QryReadP()
         ds = New DataSet()
@@ -348,6 +348,7 @@ Public Class frmEmpDetails
             dgv_emploans.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             i = i + i
         Next
+        dgv_emploans.Columns(0).Visible = False
         Close_Connect()
     End Sub
 
@@ -516,4 +517,14 @@ Public Class frmEmpDetails
         xlApp.Quit()
     End Sub
 
+    Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorAddNewItem.Click
+        Dim frmLoans As New frmLoans(id, "")
+        frmLoans.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
+        Dim a = dgv_emploans.CurrentRow.Cells(0).Value.ToString()
+        Dim frmLoans As New frmLoans(id, a)
+        frmLoans.ShowDialog()
+    End Sub
 End Class

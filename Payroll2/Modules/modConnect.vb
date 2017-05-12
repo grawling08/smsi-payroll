@@ -231,27 +231,32 @@ Module modConnect
             If compreader.HasRows Then
                 compreader.Read()
                 If compreader("code") = buff0 Then
-                    'check every line if it has already been added in the table
-                    StrSql = "SELECT * FROM tbl_attendanceraw WHERE " _
-                                & "Department = '" & buff0 & "' AND " _
-                                & "Name = '" & buff1 & "' AND " _
-                                & "No = '" & buff2 & "' AND " _
-                                & "Date_Time = '" & buff3 & "' AND " _
-                                & "Status = '" & buff4 & "' AND " _
-                                & "LogTime = '" & buff5 & "' AND " _
-                                & "LogDate = '" & buff6 & "' "
-                    QryReadP()
-                    Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
-                    If Not dtareader.HasRows Then
-                        StrSql = "INSERT INTO tbl_attendanceraw(Department, Name, No, Date_Time, Status, LogTime, LogDate, ifMapped) " _
-                                & "VALUES('" & buff0 & "','" & buff1 & "','" & buff2 & "','" & buff3 & "','" & buff4 & "','" & buff5 & "','" & buff6 & "',0)"
+                    'don't insert timesheet if not within the cutoff
+                    StrSql = "SELECT * FROM tbl_cutoff WHERE DATE('" & CDate(buff6) & "') BETWEEN from_date AND to_date"
+                    Dim creader As MySqlDataReader = cmd.ExecuteReader()
+                    If Not creader.HasRows Then
+                        'check every line if it has already been added in the table
+                        StrSql = "SELECT * FROM tbl_attendanceraw WHERE " _
+                                    & "Department = '" & buff0 & "' AND " _
+                                    & "Name = '" & buff1 & "' AND " _
+                                    & "No = '" & buff2 & "' AND " _
+                                    & "Date_Time = '" & buff3 & "' AND " _
+                                    & "Status = '" & buff4 & "' AND " _
+                                    & "LogTime = '" & buff5 & "' AND " _
+                                    & "LogDate = '" & buff6 & "' "
                         QryReadP()
-                        cmd.ExecuteNonQuery()
-                        numNotMatched += 1
-                    Else
-                        numMatched += 1
+                        Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
+                        If Not dtareader.HasRows Then
+                            StrSql = "INSERT INTO tbl_attendanceraw(Department, Name, No, Date_Time, Status, LogTime, LogDate, ifMapped) " _
+                                    & "VALUES('" & buff0 & "','" & buff1 & "','" & buff2 & "','" & buff3 & "','" & buff4 & "','" & buff5 & "','" & buff6 & "',0)"
+                            QryReadP()
+                            cmd.ExecuteNonQuery()
+                            numNotMatched += 1
+                        Else
+                            numMatched += 1
+                        End If
+                        counter += 1
                     End If
-                    counter += 1
                 End If
             End If
         Next

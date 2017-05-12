@@ -22,6 +22,8 @@ Partial Class frmEmpDetails
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmEmpDetails))
         Me.dgv_emploans = New System.Windows.Forms.DataGridView()
         Me.dgv_empleave = New System.Windows.Forms.DataGridView()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
@@ -116,6 +118,10 @@ Partial Class frmEmpDetails
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
+        Me.BindingNavigatorAddNewItem = New System.Windows.Forms.ToolStripButton()
+        Me.BindingNavigatorDeleteItem = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -132,6 +138,8 @@ Partial Class frmEmpDetails
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.BindingNavigator1.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -140,14 +148,13 @@ Partial Class frmEmpDetails
         Me.dgv_emploans.AllowUserToDeleteRows = False
         Me.dgv_emploans.AllowUserToResizeRows = False
         Me.dgv_emploans.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_emploans.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgv_emploans.Location = New System.Drawing.Point(3, 3)
+        Me.dgv_emploans.Location = New System.Drawing.Point(3, 31)
         Me.dgv_emploans.MultiSelect = False
         Me.dgv_emploans.Name = "dgv_emploans"
         Me.dgv_emploans.ReadOnly = True
         Me.dgv_emploans.RowHeadersVisible = False
         Me.dgv_emploans.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emploans.Size = New System.Drawing.Size(545, 450)
+        Me.dgv_emploans.Size = New System.Drawing.Size(545, 422)
         Me.dgv_emploans.TabIndex = 0
         '
         'dgv_empleave
@@ -782,6 +789,7 @@ Partial Class frmEmpDetails
         '
         'TabPage7
         '
+        Me.TabPage7.Controls.Add(Me.BindingNavigator1)
         Me.TabPage7.Controls.Add(Me.dgv_emploans)
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
@@ -1094,6 +1102,49 @@ Partial Class frmEmpDetails
         Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
         Me.dgv_shift.TabIndex = 24
         '
+        'BindingNavigator1
+        '
+        Me.BindingNavigator1.AddNewItem = Nothing
+        Me.BindingNavigator1.CountItem = Nothing
+        Me.BindingNavigator1.DeleteItem = Nothing
+        Me.BindingNavigator1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorAddNewItem, Me.ToolStripButton1, Me.BindingNavigatorDeleteItem})
+        Me.BindingNavigator1.Location = New System.Drawing.Point(3, 3)
+        Me.BindingNavigator1.MoveFirstItem = Nothing
+        Me.BindingNavigator1.MoveLastItem = Nothing
+        Me.BindingNavigator1.MoveNextItem = Nothing
+        Me.BindingNavigator1.MovePreviousItem = Nothing
+        Me.BindingNavigator1.Name = "BindingNavigator1"
+        Me.BindingNavigator1.PositionItem = Nothing
+        Me.BindingNavigator1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.BindingNavigator1.Size = New System.Drawing.Size(545, 25)
+        Me.BindingNavigator1.TabIndex = 1
+        Me.BindingNavigator1.Text = "BindingNavigator1"
+        '
+        'BindingNavigatorAddNewItem
+        '
+        Me.BindingNavigatorAddNewItem.Image = CType(resources.GetObject("BindingNavigatorAddNewItem.Image"), System.Drawing.Image)
+        Me.BindingNavigatorAddNewItem.Name = "BindingNavigatorAddNewItem"
+        Me.BindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = True
+        Me.BindingNavigatorAddNewItem.Size = New System.Drawing.Size(74, 22)
+        Me.BindingNavigatorAddNewItem.Text = "Add new"
+        '
+        'BindingNavigatorDeleteItem
+        '
+        Me.BindingNavigatorDeleteItem.Image = CType(resources.GetObject("BindingNavigatorDeleteItem.Image"), System.Drawing.Image)
+        Me.BindingNavigatorDeleteItem.Name = "BindingNavigatorDeleteItem"
+        Me.BindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = True
+        Me.BindingNavigatorDeleteItem.Size = New System.Drawing.Size(60, 22)
+        Me.BindingNavigatorDeleteItem.Text = "Delete"
+        '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(47, 22)
+        Me.ToolStripButton1.Text = "Edit"
+        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1123,12 +1174,16 @@ Partial Class frmEmpDetails
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.BindingNavigator1.ResumeLayout(False)
+        Me.BindingNavigator1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1226,4 +1281,8 @@ Partial Class frmEmpDetails
     Friend WithEvents dgv_overtime As System.Windows.Forms.DataGridView
     Friend WithEvents dgv_shift As System.Windows.Forms.DataGridView
     Friend WithEvents Label37 As System.Windows.Forms.Label
+    Friend WithEvents BindingNavigator1 As System.Windows.Forms.BindingNavigator
+    Friend WithEvents BindingNavigatorAddNewItem As System.Windows.Forms.ToolStripButton
+    Friend WithEvents BindingNavigatorDeleteItem As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
 End Class
