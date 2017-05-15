@@ -24,10 +24,10 @@ Partial Class frmShifts
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
-        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
+        Me.cb_shifttype = New System.Windows.Forms.ComboBox()
+        Me.cb_shiftday = New System.Windows.Forms.ComboBox()
+        Me.dtp_shifttimein = New System.Windows.Forms.DateTimePicker()
+        Me.dtp_shifttimeout = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.dgv_shifts = New System.Windows.Forms.DataGridView()
@@ -53,39 +53,43 @@ Partial Class frmShifts
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Day"
         '
-        'ComboBox1
+        'cb_shifttype
         '
-        Me.ComboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Flexible", "Irregular", "Regular"})
-        Me.ComboBox1.Location = New System.Drawing.Point(196, 12)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(150, 21)
-        Me.ComboBox1.TabIndex = 1
+        Me.cb_shifttype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_shifttype.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cb_shifttype.FormattingEnabled = True
+        Me.cb_shifttype.Items.AddRange(New Object() {"Flexible", "Irregular", "Regular"})
+        Me.cb_shifttype.Location = New System.Drawing.Point(196, 12)
+        Me.cb_shifttype.Name = "cb_shifttype"
+        Me.cb_shifttype.Size = New System.Drawing.Size(150, 21)
+        Me.cb_shifttype.TabIndex = 1
         '
-        'ComboBox2
+        'cb_shiftday
         '
-        Me.ComboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Items.AddRange(New Object() {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})
-        Me.ComboBox2.Location = New System.Drawing.Point(196, 39)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(150, 21)
-        Me.ComboBox2.TabIndex = 3
+        Me.cb_shiftday.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_shiftday.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cb_shiftday.FormattingEnabled = True
+        Me.cb_shiftday.Items.AddRange(New Object() {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})
+        Me.cb_shiftday.Location = New System.Drawing.Point(196, 39)
+        Me.cb_shiftday.Name = "cb_shiftday"
+        Me.cb_shiftday.Size = New System.Drawing.Size(150, 21)
+        Me.cb_shiftday.TabIndex = 3
         '
-        'DateTimePicker1
+        'dtp_shifttimein
         '
-        Me.DateTimePicker1.Location = New System.Drawing.Point(196, 66)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(150, 20)
-        Me.DateTimePicker1.TabIndex = 5
+        Me.dtp_shifttimein.Format = System.Windows.Forms.DateTimePickerFormat.Time
+        Me.dtp_shifttimein.Location = New System.Drawing.Point(196, 66)
+        Me.dtp_shifttimein.Name = "dtp_shifttimein"
+        Me.dtp_shifttimein.Size = New System.Drawing.Size(150, 20)
+        Me.dtp_shifttimein.TabIndex = 5
         '
-        'DateTimePicker2
+        'dtp_shifttimeout
         '
-        Me.DateTimePicker2.Location = New System.Drawing.Point(196, 92)
-        Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(150, 20)
-        Me.DateTimePicker2.TabIndex = 7
+        Me.dtp_shifttimeout.Format = System.Windows.Forms.DateTimePickerFormat.Time
+        Me.dtp_shifttimeout.Location = New System.Drawing.Point(196, 92)
+        Me.dtp_shifttimeout.Name = "dtp_shifttimeout"
+        Me.dtp_shifttimeout.Size = New System.Drawing.Size(150, 20)
+        Me.dtp_shifttimeout.TabIndex = 7
         '
         'Label3
         '
@@ -109,6 +113,8 @@ Partial Class frmShifts
         '
         Me.dgv_shifts.AllowUserToAddRows = False
         Me.dgv_shifts.AllowUserToDeleteRows = False
+        Me.dgv_shifts.AllowUserToResizeColumns = False
+        Me.dgv_shifts.AllowUserToResizeRows = False
         Me.dgv_shifts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_shifts.Location = New System.Drawing.Point(12, 147)
         Me.dgv_shifts.Name = "dgv_shifts"
@@ -134,10 +140,10 @@ Partial Class frmShifts
         Me.ClientSize = New System.Drawing.Size(358, 343)
         Me.Controls.Add(Me.btn_saveshift)
         Me.Controls.Add(Me.dgv_shifts)
-        Me.Controls.Add(Me.DateTimePicker2)
-        Me.Controls.Add(Me.DateTimePicker1)
-        Me.Controls.Add(Me.ComboBox2)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.dtp_shifttimeout)
+        Me.Controls.Add(Me.dtp_shifttimein)
+        Me.Controls.Add(Me.cb_shiftday)
+        Me.Controls.Add(Me.cb_shifttype)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -153,10 +159,10 @@ Partial Class frmShifts
     End Sub
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
-    Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
-    Friend WithEvents DateTimePicker1 As System.Windows.Forms.DateTimePicker
-    Friend WithEvents DateTimePicker2 As System.Windows.Forms.DateTimePicker
+    Friend WithEvents cb_shifttype As System.Windows.Forms.ComboBox
+    Friend WithEvents cb_shiftday As System.Windows.Forms.ComboBox
+    Friend WithEvents dtp_shifttimein As System.Windows.Forms.DateTimePicker
+    Friend WithEvents dtp_shifttimeout As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents dgv_shifts As System.Windows.Forms.DataGridView

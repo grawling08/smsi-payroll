@@ -37,9 +37,11 @@
                 MessageBox.Show("Date range must be - Monthly: 28-31 days, Semi-Monthly: 12-15 days and Weekly: 7 days")
             End If
         End If
-        frmMain.ReloadCutoff()
+
         If Application.OpenForms().OfType(Of frm1).Any Then
             frm1.loadCutoff()
+        ElseIf Application.OpenForms().OfType(Of frmMain).Any Then
+            frmMain.ReloadCutoff()
         End If
     End Sub
 

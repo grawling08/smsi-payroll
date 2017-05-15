@@ -20,6 +20,7 @@ Module modConnect
     Public occurence As String
     Public num_occurence, payslip_id As Integer
     Public md5Hash As MD5 = MD5.Create()
+    Public isfrmLogin_expanded As Boolean
 
     Sub SaveSystemSettings(ByVal HR_Connect() As String, ByVal Payroll_Connect() As String)
         'hr connection settings
@@ -133,6 +134,40 @@ Module modConnect
 
     End Function 'GetMd5Hash
 
+    Function Login(ByVal username As String, ByVal password As String) As Array
+        Dim login_details(2) As String
+        'login_details(0) = status
+        'login_details(1) = employee_id
+        'login_details(2) = role
+        Try
+            If username = "ads" And password = "ads" Then
+                login_details(0) = "success"
+                login_details(1) = "admin"
+                login_details(2) = "Admin"
+            Else
+                StrSql = "SELECT * FROM tbl_user WHERE username = '" & username & "' AND password = '" & GetMd5Hash(md5Hash, password) & "'"
+                QryReadP()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                If reader.HasRows Then
+                    reader.Read()
+                    login_details(0) = "success"
+                    login_details(1) = reader("employee_id").ToString()
+                    login_details(2) = reader("role").ToString()
+                Else
+                    login_details(0) = "failed"
+                    login_details(1) = ""
+                    login_details(2) = ""
+                End If
+                Close_Connect()
+            End If
+
+        Catch e As Exception
+
+        End Try
+        Return login_details
+    End Function
+
+#Region "cutoff"
     Sub GetOccurences()
         StrSql = "SELECT * FROM tblref_occurences"
         QryReadP()
@@ -178,6 +213,57 @@ Module modConnect
         Close_Connect()
     End Sub
 
+    'set to active cutoff
+    Sub SetActiveCutoff(ByVal range As String)
+        'clear
+        StrSql = "UPDATE tbl_cutoff SET ifActive = 'N' WHERE cutoff_range != '" & range & "'"
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        Close_Connect()
+
+        'set
+        StrSql = "UPDATE tbl_cutoff SET ifActive = 'Y' WHERE cutoff_range = '" & range & "'"
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        current_cutoff = range
+        Close_Connect()
+    End Sub
+
+    'add new cutoff
+    Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
+        If CheckCutoff(fromDate, toDate, occurence) = False Then
+            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,occurence_id,from_date,to_date,ifActive,ifFinished) VALUES('" & fromDate & " to " & toDate & "',(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'N', 'N')"
+            QryReadP()
+            Try
+                With cmd
+                    .Parameters.AddWithValue("@from", fromDate)
+                    .Parameters.AddWithValue("@to", toDate)
+                    .Parameters.AddWithValue("@occurence", occurence)
+                End With
+                cmd.ExecuteNonQuery()
+                MessageBox.Show("New Cutoff added!")
+            Catch e As DataException
+                MessageBox.Show(e.ToString)
+            End Try
+            Close_Connect()
+            frmAddCutoff.Close()
+        Else
+            MessageBox.Show("WARNING: DUPLICATE ENTRY FROM THE DATABASE!")
+        End If
+
+    End Sub
+
+    Function CheckCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String) As Boolean
+        StrSql = "SELECT * FROM tbl_cutoff WHERE occurence_id = (SELECT occurence_id FROM tblref_occurences WHERE name='" & occurence & "') AND from_date = '" & fromDate & "' AND to_date ='" & toDate & "'"
+        QryReadP()
+        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        If dtareader.HasRows Then
+            Return True
+        End If
+        Return False
+    End Function
+#End Region
+
     Sub getCompanyList()
         StrSql = "SELECT * FROM tbl_company"
         QryReadP()
@@ -189,9 +275,7 @@ Module modConnect
 
     Sub getEmpIDList(Optional ByVal company As String = "")
         If company = "" Then
-            StrSql = "SELECT employees.id AS ID, CONCAT_WS(' ', lName, fName, mi) AS Employee FROM employees " _
-                        '& ", services WHERE employees.ID = services.employee_id And services.ifcurrent = 1 " _
-            '& "ORDER BY ID ASC"
+            StrSql = "SELECT employees.id AS ID, CONCAT_WS(' ', lName, fName, mi) AS Employee FROM employees "
         Else
             StrSql = "SELECT employees.id AS ID, CONCAT_WS(' ', lName, fName, mi) AS Employee FROM employees, companies, services " _
                         & "WHERE employees.id = services.employee_id AND services.ifcurrent = '1' AND companies.name = '" & company & "' " _
@@ -204,6 +288,7 @@ Module modConnect
         Close_Connect()
     End Sub
 
+#Region "Payroll Process"
     'upload raw attendance sheet
     Sub SaveRawAttendance(ByVal dtable As DataTable)
         Dim dt As DataTable = dtable
@@ -381,4 +466,6 @@ Module modConnect
         Dim batch_number As String = ""
         Return batch_number
     End Function
+#End Region
+
 End Module

@@ -34,12 +34,12 @@ Public Class frmEmpDetails
             tb_position.Text = dtareader("position").ToString
             tb_monthlysalary.Text = If(String.IsNullOrEmpty(dtareader("basic_salary").ToString), 0, dtareader("basic_salary").ToString)
             tb_employmentstatus.Text = dtareader("employment_status").ToString
+            employmentStatus = dtareader("employment_status").ToString
             taxcode = If(String.IsNullOrEmpty(dtareader("tax_status").ToString), 0, dtareader("tax_status").ToString)
             tb_sssID.Text = dtareader("sss_id").ToString
             tb_hdmfID.Text = dtareader("hdmf_id").ToString
             tb_phicID.Text = dtareader("phic_id").ToString
         End If
-        employmentStatus = tb_employmentstatus.Text
         'get employee loans
         GetEmployeeLoans(id)
         'get employee leave
@@ -91,6 +91,12 @@ Public Class frmEmpDetails
         computeTotal()
 
         Label33.Text = daysPresent
+
+        If app_mode <> "alone" Then
+            tsb_loanadd.Enabled = False
+            tsb_loandelete.Enabled = False
+            tsb_loanedit.Enabled = False
+        End If
     End Sub
 
 #Region "computations"
@@ -490,39 +496,12 @@ Public Class frmEmpDetails
             e.Handled = True
         End If
     End Sub
-    'export employee timesheet
-    Private Sub btn_exportemptime_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportemptime.Click
-        'export to excel
-        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
-                        & "AND Month(date) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
-                        & "AND Year(date) = Year('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') ORDER BY date"
-        QryReadP()
-        ds = New DataSet
-        adpt.Fill(ds, "export")
-        Dim i, j As Integer
-        Dim xlApp As New Excel.Application
-        Dim xlWorkBook As Excel.Workbook
-        Dim xlWorkSheet As Excel.Worksheet
-        Dim misValue As Object = System.Reflection.Missing.Value
-        xlWorkBook = xlApp.Workbooks.Add(misValue)
-        xlWorkSheet = xlWorkBook.Sheets("sheet1")
-        For i = 0 To ds.Tables(0).Rows.Count - 1
-            For j = 0 To ds.Tables(0).Columns.Count - 1
-                xlWorkSheet.Cells(i + 1, j + 1) = _
-                ds.Tables(0).Rows(i).Item(j)
-            Next
-        Next
-        xlWorkSheet.SaveAs(Application.StartupPath & "\emp_timesheet.xlsx")
-        xlWorkBook.Close()
-        xlApp.Quit()
-    End Sub
-
-    Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorAddNewItem.Click
+    'LOANS
+    Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles tsb_loanadd.Click
         Dim frmLoans As New frmLoans(id, "")
         frmLoans.ShowDialog()
     End Sub
-
-    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
+    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles tsb_loanedit.Click
         Dim a = dgv_emploans.CurrentRow.Cells(0).Value.ToString()
         Dim frmLoans As New frmLoans(id, a)
         frmLoans.ShowDialog()
