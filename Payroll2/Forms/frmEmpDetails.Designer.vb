@@ -121,6 +121,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.btn_addtimesheet = New System.Windows.Forms.Button()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -187,6 +188,7 @@ Partial Class frmEmpDetails
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.btn_addtimesheet)
         Me.TabPage3.Controls.Add(Me.btn_loadtimesheet)
         Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth)
         Me.TabPage3.Controls.Add(Me.dgv_emptimesheet)
@@ -1134,6 +1136,15 @@ Partial Class frmEmpDetails
         Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
         Me.dgv_shift.TabIndex = 24
         '
+        'btn_addtimesheet
+        '
+        Me.btn_addtimesheet.Location = New System.Drawing.Point(290, 4)
+        Me.btn_addtimesheet.Name = "btn_addtimesheet"
+        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
+        Me.btn_addtimesheet.TabIndex = 3
+        Me.btn_addtimesheet.Text = "Add New"
+        Me.btn_addtimesheet.UseVisualStyleBackColor = True
+        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1273,4 +1284,5 @@ Partial Class frmEmpDetails
     Friend WithEvents tsb_loanadd As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_loandelete As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_loanedit As System.Windows.Forms.ToolStripButton
+    Friend WithEvents btn_addtimesheet As System.Windows.Forms.Button
 End Class

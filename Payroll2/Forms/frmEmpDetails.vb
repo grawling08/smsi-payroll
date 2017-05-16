@@ -506,4 +506,9 @@ Public Class frmEmpDetails
         Dim frmLoans As New frmLoans(id, a)
         frmLoans.ShowDialog()
     End Sub
+
+    Private Sub btn_addtimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_addtimesheet.Click
+        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text)
+        timesheet.ShowDialog()
+    End Sub
 End Class

@@ -168,7 +168,7 @@ Public Class frmUploadedTimesheet
         Dim LogDate = Me.dgv_temptimesheet.CurrentRow.Cells(1).Value.ToString
         Dim Time_in = Me.dgv_temptimesheet.CurrentRow.Cells(2).Value.ToString
         Dim Time_out = Me.dgv_temptimesheet.CurrentRow.Cells(3).Value.ToString
-        Dim frmEditTimesheet As New frmEditTimesheet(No, LogDate, Time_in, Time_out)
+        Dim frmEditTimesheet As New frmEditTimesheet("temp", No, LogDate, Time_in, Time_out)
         frmEditTimesheet.ShowDialog()
     End Sub
 End Class
