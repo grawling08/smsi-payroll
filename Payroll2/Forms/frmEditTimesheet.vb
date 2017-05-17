@@ -94,7 +94,7 @@ Public Class frmEditTimesheet
         Dim totalHours As Integer
         Dim totalLate, totalUndertime, totalOvertime As Double
         Dim latediff, undertimediff, overtimediff As Long
-        Dim remarks As String
+        Dim remarks As String = ""
         'retrieve shift details
         StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_bio_id = '" & tb_no.Text & "')"
         QryReadP()

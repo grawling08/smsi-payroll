@@ -64,3 +64,4 @@ C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debu
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmUser.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmShifts.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmLoans.resources
+C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.test.resources

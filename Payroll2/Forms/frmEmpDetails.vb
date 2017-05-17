@@ -511,4 +511,5 @@ Public Class frmEmpDetails
         Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text)
         timesheet.ShowDialog()
     End Sub
+
 End Class

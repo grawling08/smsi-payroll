@@ -28,6 +28,7 @@ Partial Class frmEmpDetails
         Me.dgv_empleave = New System.Windows.Forms.DataGridView()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.btn_addtimesheet = New System.Windows.Forms.Button()
         Me.btn_loadtimesheet = New System.Windows.Forms.Button()
         Me.dtp_timesheetmonth = New System.Windows.Forms.DateTimePicker()
         Me.dgv_emptimesheet = New System.Windows.Forms.DataGridView()
@@ -121,7 +122,6 @@ Partial Class frmEmpDetails
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
-        Me.btn_addtimesheet = New System.Windows.Forms.Button()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -200,6 +200,15 @@ Partial Class frmEmpDetails
         Me.TabPage3.Text = "Timesheet"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'btn_addtimesheet
+        '
+        Me.btn_addtimesheet.Location = New System.Drawing.Point(290, 4)
+        Me.btn_addtimesheet.Name = "btn_addtimesheet"
+        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
+        Me.btn_addtimesheet.TabIndex = 3
+        Me.btn_addtimesheet.Text = "Add New"
+        Me.btn_addtimesheet.UseVisualStyleBackColor = True
+        '
         'btn_loadtimesheet
         '
         Me.btn_loadtimesheet.Location = New System.Drawing.Point(209, 4)
@@ -265,7 +274,7 @@ Partial Class frmEmpDetails
         'Label34
         '
         Me.Label34.AutoSize = True
-        Me.Label34.Location = New System.Drawing.Point(497, 66)
+        Me.Label34.Location = New System.Drawing.Point(336, 20)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(45, 13)
         Me.Label34.TabIndex = 12
@@ -275,7 +284,7 @@ Partial Class frmEmpDetails
         'Label33
         '
         Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(497, 53)
+        Me.Label33.Location = New System.Drawing.Point(285, 20)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(45, 13)
         Me.Label33.TabIndex = 12
@@ -284,7 +293,7 @@ Partial Class frmEmpDetails
         '
         'btn_savepayslip
         '
-        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 422)
+        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 402)
         Me.btn_savepayslip.Name = "btn_savepayslip"
         Me.btn_savepayslip.Size = New System.Drawing.Size(124, 23)
         Me.btn_savepayslip.TabIndex = 13
@@ -312,7 +321,7 @@ Partial Class frmEmpDetails
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(285, 363)
+        Me.Label36.Location = New System.Drawing.Point(285, 348)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(117, 13)
         Me.Label36.TabIndex = 9
@@ -321,7 +330,7 @@ Partial Class frmEmpDetails
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(285, 337)
+        Me.Label25.Location = New System.Drawing.Point(285, 322)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(28, 13)
         Me.Label25.TabIndex = 9
@@ -330,7 +339,7 @@ Partial Class frmEmpDetails
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(285, 387)
+        Me.Label30.Location = New System.Drawing.Point(285, 379)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(74, 13)
         Me.Label30.TabIndex = 11
@@ -356,9 +365,9 @@ Partial Class frmEmpDetails
         Me.GroupBox3.Controls.Add(Me.tb_undertime)
         Me.GroupBox3.Controls.Add(Me.tb_absents)
         Me.GroupBox3.Controls.Add(Me.tb_late)
-        Me.GroupBox3.Location = New System.Drawing.Point(6, 188)
+        Me.GroupBox3.Location = New System.Drawing.Point(6, 182)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(270, 262)
+        Me.GroupBox3.Size = New System.Drawing.Size(270, 250)
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Deductions"
@@ -535,7 +544,7 @@ Partial Class frmEmpDetails
         Me.GroupBox2.Controls.Add(Me.Label19)
         Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
         Me.GroupBox2.Controls.Add(Me.tb_allowance)
-        Me.GroupBox2.Location = New System.Drawing.Point(278, 82)
+        Me.GroupBox2.Location = New System.Drawing.Point(278, 72)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(270, 246)
         Me.GroupBox2.TabIndex = 8
@@ -598,9 +607,9 @@ Partial Class frmEmpDetails
         Me.Label20.AutoSize = True
         Me.Label20.Location = New System.Drawing.Point(7, 45)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(56, 13)
+        Me.Label20.Size = New System.Drawing.Size(111, 13)
         Me.Label20.TabIndex = 2
-        Me.Label20.Text = "Incentives"
+        Me.Label20.Text = "Incentives and Others"
         '
         'Label19
         '
@@ -638,7 +647,7 @@ Partial Class frmEmpDetails
         Me.GroupBox1.Controls.Add(Me.tb_regularot)
         Me.GroupBox1.Location = New System.Drawing.Point(6, 82)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(270, 100)
+        Me.GroupBox1.Size = New System.Drawing.Size(270, 94)
         Me.GroupBox1.TabIndex = 6
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Overtime Hrs. / Day"
@@ -735,7 +744,7 @@ Partial Class frmEmpDetails
         '
         'tb_netpaywithtax
         '
-        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 360)
+        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 350)
         Me.tb_netpaywithtax.Name = "tb_netpaywithtax"
         Me.tb_netpaywithtax.ReadOnly = True
         Me.tb_netpaywithtax.Size = New System.Drawing.Size(124, 20)
@@ -744,7 +753,7 @@ Partial Class frmEmpDetails
         '
         'tb_tax
         '
-        Me.tb_tax.Location = New System.Drawing.Point(418, 334)
+        Me.tb_tax.Location = New System.Drawing.Point(418, 324)
         Me.tb_tax.Name = "tb_tax"
         Me.tb_tax.ReadOnly = True
         Me.tb_tax.Size = New System.Drawing.Size(124, 20)
@@ -753,7 +762,7 @@ Partial Class frmEmpDetails
         '
         'tb_netincome
         '
-        Me.tb_netincome.Location = New System.Drawing.Point(418, 384)
+        Me.tb_netincome.Location = New System.Drawing.Point(418, 376)
         Me.tb_netincome.Name = "tb_netincome"
         Me.tb_netincome.ReadOnly = True
         Me.tb_netincome.Size = New System.Drawing.Size(124, 20)
@@ -1135,15 +1144,6 @@ Partial Class frmEmpDetails
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
         Me.dgv_shift.TabIndex = 24
-        '
-        'btn_addtimesheet
-        '
-        Me.btn_addtimesheet.Location = New System.Drawing.Point(290, 4)
-        Me.btn_addtimesheet.Name = "btn_addtimesheet"
-        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
-        Me.btn_addtimesheet.TabIndex = 3
-        Me.btn_addtimesheet.Text = "Add New"
-        Me.btn_addtimesheet.UseVisualStyleBackColor = True
         '
         'frmEmpDetails
         '

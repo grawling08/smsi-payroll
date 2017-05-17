@@ -29,7 +29,7 @@
             'MessageBox.Show(date_diff)
             If cb_occurence.Text = "Monthly" And (date_diff >= 28 And date_diff <= 31) Then
                 AddNewCutoff(fromDate, toDate, cb_occurence.Text)
-            ElseIf cb_occurence.Text = "Semi-Monthly" And (date_diff >= 12 And date_diff <= 15) Then
+            ElseIf cb_occurence.Text = "Semi-Monthly" And (date_diff >= 12 And date_diff <= 16) Then
                 AddNewCutoff(fromDate, toDate, cb_occurence.Text)
             ElseIf cb_occurence.Text = "Weekly" And date_diff = 7 Then
                 AddNewCutoff(fromDate, toDate, cb_occurence.Text)
