@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Payroll2.DataSet1" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAIACAwAQAAJABAAAQAAQAAgCQBgQAABAAAEABBA=</HashCode>
+      <FileName>Datasets\DataSet1.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.ctrlServerSettings" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAIABAAECAIAAAEBgCAAAACBAAVIAgAAAkAAAAAAAA=</HashCode>
+      <FileName>Forms\ctrlServerSettings.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frm1" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECAAAAAAAAKAAAgCAEAAEEgBAAABAAgAAAA=</HashCode>
+      <FileName>Forms\frm1.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmAddCutoff" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAEAECBABCAIAACAAIACAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Forms\frmAddCutoff.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmEditTimesheet" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAEAkCASAACDAADAAICCBGAIAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Forms\frmEditTimesheet.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmEmpDetails" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>5iFSOCyWVCMjCQAhlCnnQJkHAHD/7eoBihKk9GBBMyQ=</HashCode>
+      <FileName>Forms\frmEmpDetails.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmLeaveConversion" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABACABAAAAEACAAAACACQAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\frmLeaveConversion.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmLoans" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAECAABBAANACQAggCAAAIQAAACAAAABAAAAA=</HashCode>
+      <FileName>Forms\frmLoans.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmLogin" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAQQAQCEAAAAAAACAAAACYAAAAgAACACBAgAAAAA=</HashCode>
+      <FileName>Forms\frmLogin.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmMain" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQZKAxACCSSIgwCBkDCAEQBSFgymIQgjQAOQACEBBHo=</HashCode>
+      <FileName>Forms\frmMain.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmReportGen" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAECQgAABAIACAAAgCAAEAQAQBAQAkAAAAAAA=</HashCode>
+      <FileName>Forms\frmReportGen.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmSettings" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBEQJgAAcSAgEQBgkBCBSAgDBEYIQHKBCgFgQgBAkQA=</HashCode>
+      <FileName>Forms\frmSettings.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmShifts" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEDAAAAAAQAKBEQACCAAAQAAAAgAAAAAAgAQ=</HashCode>
+      <FileName>Forms\frmShifts.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmUploadedTimesheet" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAABAAAACAQAAAAAACgAAACAIAAAAAAAAgAAAIAAAA=</HashCode>
+      <FileName>Forms\frmUploadedTimesheet.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmUser" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIABAgECAAQACABACAABkCQAAAQAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Forms\frmUser.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.frmAbout" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAgAAASAAAAAAAACEAABCgAAAAAAAAACACAAQAAA=</HashCode>
+      <FileName>frmAbout.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.SplashScreen1" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAgAAAABACAAAAAAAACAEAACAAAACAAAAgAAAAAAAAA=</HashCode>
+      <FileName>SplashScreen1.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.My.MyApplication" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Payroll2.My.MySettings" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAABAAIAAABAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Module Name="Payroll2.modConnect" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQABkEACJEEoQCwgkIQBAEUYIg0MEEA6AAcSABAIqBI=</HashCode>
+      <FileName>Modules\modConnect.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Payroll2.modReports" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAQAAAAAAAAAAAAAAAAAAAAAgIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\modReports.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Payroll2.modSettings" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAIAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Modules\modSettings.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Payroll2.modSync" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAAACAAYAAAABACAAAgAAAAAAAAEQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\modSync.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Payroll2.My.MySettingsProperty" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Payroll2.My.Resources.Resources" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -28,7 +28,7 @@ Public Class frmMain
     '
     Sub loadEmployee()
         'load employee list on start up
-        StrSql = "SELECT emp_id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE company = '" & current_company & "'"
+        StrSql = "SELECT emp_id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' ORDER BY Employee ASC"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Emp")
@@ -51,7 +51,8 @@ Public Class frmMain
     'open employee details
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
-        Dim frmEmpDetails As New frmEmpDetails(a)
+        Dim b = Me.dgv_emplist.CurrentRow.Cells(1).Value.ToString
+        Dim frmEmpDetails As New frmEmpDetails(a, b)
         frmEmpDetails.ShowDialog()
     End Sub
 
@@ -190,4 +191,7 @@ Public Class frmMain
         shifts.ShowDialog()
     End Sub
 
+    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
+
+    End Sub
 End Class

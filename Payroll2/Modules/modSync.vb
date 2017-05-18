@@ -36,7 +36,7 @@ Module modSync
                         & "lname = VALUES(lName), shiftgroup = VALUES(shiftgroup), " _
                         & "sss_id = VALUES(sss_id), phic_id = VALUES(phic_id), " _
                         & "hdmf_id = VALUES(hdmf_id), tin = VALUES(tin), " _
-                        & "employment_status = VALUES(employment_status),company = VALUES(company), " _
+                        & "employment_status = VALUES(employment_status), company = VALUES(company), " _
                         & "branch = VALUES(branch),position = VALUES(position), " _
                         & "tax_status = VALUES(tax_status),basic_salary = VALUES(basic_salary); " _
                         & "DROP TEMPORARY TABLE temporary_table;"

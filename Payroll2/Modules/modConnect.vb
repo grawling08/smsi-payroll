@@ -22,12 +22,7 @@ Module modConnect
     Public md5Hash As MD5 = MD5.Create()
     Public isfrmLogin_expanded As Boolean
 
-    Sub SaveSystemSettings(ByVal HR_Connect() As String, ByVal Payroll_Connect() As String)
-        'hr connection settings
-        SaveSetting("Payroll System", "Startup", "serverHR", HR_Connect(0))
-        SaveSetting("Payroll System", "Startup", "usernameHR", HR_Connect(1))
-        SaveSetting("Payroll System", "Startup", "passwordHR", HR_Connect(2))
-        SaveSetting("Payroll System", "Startup", "dbnameHR", HR_Connect(3))
+    Sub SaveSystemSettings(ByVal Payroll_Connect() As String)
         'payroll connection settings
         SaveSetting("Payroll System", "Startup", "serverPay", Payroll_Connect(0))
         SaveSetting("Payroll System", "Startup", "usernamePay", Payroll_Connect(1))
@@ -36,12 +31,12 @@ Module modConnect
     End Sub
 
     Sub GetSystemSettings()
-        'get HR connection settings
-        serverHR = GetSetting("Payroll System", "Startup", "serverHR", "")
-        userHR = GetSetting("Payroll System", "Startup", "usernameHR", "")
-        passHR = GetSetting("Payroll System", "Startup", "passwordHR", "")
-        dbnameHR = GetSetting("Payroll System", "Startup", "dbnameHR", "")
-        connectstring_hris = "server=" + serverHR + ";uid=" + userHR + ";password=" + passHR + ";database=" + dbnameHR + ";"
+        ''get HR connection settings
+        'serverHR = GetSetting("Payroll System", "Startup", "serverHR", "")
+        'userHR = GetSetting("Payroll System", "Startup", "usernameHR", "")
+        'passHR = GetSetting("Payroll System", "Startup", "passwordHR", "")
+        'dbnameHR = GetSetting("Payroll System", "Startup", "dbnameHR", "")
+        'connectstring_hris = "server=" + serverHR + ";uid=" + userHR + ";password=" + passHR + ";database=" + dbnameHR + ";"
         'get payroll connection settings
         serverPay = GetSetting("Payroll System", "Startup", "serverPay", "")
         userPay = GetSetting("Payroll System", "Startup", "usernamePay", "")
@@ -232,7 +227,7 @@ Module modConnect
     'add new cutoff
     Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
         If CheckCutoff(fromDate, toDate, occurence) = False Then
-            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,occurence_id,from_date,to_date,ifActive,ifFinished) VALUES('" & fromDate & " to " & toDate & "',(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'N', 'N')"
+            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,occurence_id,from_date,to_date,ifActive,ifFinished) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'N', 'N')"
             QryReadP()
             Try
                 With cmd
@@ -275,13 +270,12 @@ Module modConnect
 
     Sub getEmpIDList(Optional ByVal company As String = "")
         If company = "" Then
-            StrSql = "SELECT employees.id AS ID, CONCAT_WS(' ', lName, fName, mi) AS Employee FROM employees "
+            StrSql = "SELECT id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee "
         Else
-            StrSql = "SELECT employees.id AS ID, CONCAT_WS(' ', lName, fName, mi) AS Employee FROM employees, companies, services " _
-                        & "WHERE employees.id = services.employee_id AND services.ifcurrent = '1' AND companies.name = '" & company & "' " _
-                        & "ORDER BY employees.ID ASC"
+            StrSql = "SELECT tbl_employee.id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee " _
+                        & "WHERE tbl_employee.company = '" & company & "' ORDER BY tbl_employee.ID ASC"
         End If
-        QryReadH()
+        QryReadP()
         dt = New DataTable
         ds = New DataSet()
         adpt.Fill(dt)

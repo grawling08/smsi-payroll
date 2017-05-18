@@ -3,15 +3,16 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.Office.Interop
 
 Public Class frmEmpDetails
-    Private id, employee_id, employmentStatus, taxcode As String
+    Private id, emp_fullname, employee_id, employmentStatus, taxcode As String
     Private totalLate, totalUndertime, totalOvertime, totalWorkHours, totalAllowance, totalBenefits, totalLoans As Double
     Private empHourlyWage, empDailyWage As Double
     Private daysAbsent As Integer = 0
     Private daysPresent As Integer = 0
 
-    Public Sub New(ByVal emp_id As String)
+    Public Sub New(ByVal emp_id As String, ByVal emp_fullname As String)
         MyBase.New()
         employee_id = emp_id
+        Me.emp_fullname = emp_fullname
         InitializeComponent()
     End Sub
 
@@ -329,7 +330,8 @@ Public Class frmEmpDetails
 
     'load employee shift schedule
     Sub GetEmpShift(ByVal EmpID As String)
-        StrSql = "Select day as 'Day', timein as 'From', timeout as 'To' FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_id = '" & EmpID & "')"
+        Dim nameArr() As String = emp_fullname.Split(" ")
+        StrSql = "Select day as 'Day', timein as 'From', timeout as 'To' FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_id = '" & EmpID & "' OR (lName = '" & nameArr(0) & "' AND fName = '" & nameArr(1) & "' AND mName = '" & nameArr(2) & "'))"
         QryReadP()
         ds = New DataSet
         adpt.Fill(ds, "Shifts")

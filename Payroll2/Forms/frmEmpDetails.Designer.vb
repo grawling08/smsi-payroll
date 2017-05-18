@@ -293,7 +293,7 @@ Partial Class frmEmpDetails
         '
         'btn_savepayslip
         '
-        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 402)
+        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 418)
         Me.btn_savepayslip.Name = "btn_savepayslip"
         Me.btn_savepayslip.Size = New System.Drawing.Size(124, 23)
         Me.btn_savepayslip.TabIndex = 13
@@ -321,7 +321,7 @@ Partial Class frmEmpDetails
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(285, 348)
+        Me.Label36.Location = New System.Drawing.Point(285, 364)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(117, 13)
         Me.Label36.TabIndex = 9
@@ -330,7 +330,7 @@ Partial Class frmEmpDetails
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(285, 322)
+        Me.Label25.Location = New System.Drawing.Point(285, 338)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(28, 13)
         Me.Label25.TabIndex = 9
@@ -339,7 +339,7 @@ Partial Class frmEmpDetails
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(285, 379)
+        Me.Label30.Location = New System.Drawing.Point(285, 395)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(74, 13)
         Me.Label30.TabIndex = 11
@@ -544,7 +544,7 @@ Partial Class frmEmpDetails
         Me.GroupBox2.Controls.Add(Me.Label19)
         Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
         Me.GroupBox2.Controls.Add(Me.tb_allowance)
-        Me.GroupBox2.Location = New System.Drawing.Point(278, 72)
+        Me.GroupBox2.Location = New System.Drawing.Point(278, 82)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(270, 246)
         Me.GroupBox2.TabIndex = 8
@@ -744,7 +744,7 @@ Partial Class frmEmpDetails
         '
         'tb_netpaywithtax
         '
-        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 350)
+        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 366)
         Me.tb_netpaywithtax.Name = "tb_netpaywithtax"
         Me.tb_netpaywithtax.ReadOnly = True
         Me.tb_netpaywithtax.Size = New System.Drawing.Size(124, 20)
@@ -753,7 +753,7 @@ Partial Class frmEmpDetails
         '
         'tb_tax
         '
-        Me.tb_tax.Location = New System.Drawing.Point(418, 324)
+        Me.tb_tax.Location = New System.Drawing.Point(418, 340)
         Me.tb_tax.Name = "tb_tax"
         Me.tb_tax.ReadOnly = True
         Me.tb_tax.Size = New System.Drawing.Size(124, 20)
@@ -762,7 +762,7 @@ Partial Class frmEmpDetails
         '
         'tb_netincome
         '
-        Me.tb_netincome.Location = New System.Drawing.Point(418, 376)
+        Me.tb_netincome.Location = New System.Drawing.Point(418, 392)
         Me.tb_netincome.Name = "tb_netincome"
         Me.tb_netincome.ReadOnly = True
         Me.tb_netincome.Size = New System.Drawing.Size(124, 20)

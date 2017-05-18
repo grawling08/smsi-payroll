@@ -40,7 +40,7 @@ Public Class frmLogin
 
     Private Sub LinkLabel1_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles login_settings.LinkClicked
         If isfrmLogin_expanded = False Then
-            Me.Height = 460
+            Me.Height = 395
             isfrmLogin_expanded = True
         Else
             Me.Height = 220
