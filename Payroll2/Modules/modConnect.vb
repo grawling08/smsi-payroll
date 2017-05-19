@@ -22,7 +22,12 @@ Module modConnect
     Public md5Hash As MD5 = MD5.Create()
     Public isfrmLogin_expanded As Boolean
 
-    Sub SaveSystemSettings(ByVal Payroll_Connect() As String)
+    Sub SaveSystemSettings(ByVal Payroll_Connect() As String, ByVal HR_Connect() As String)
+        'hris connection setting
+        SaveSetting("Payroll System", "Startup", "serverHR", HR_Connect(0))
+        SaveSetting("Payroll System", "Startup", "usernameHR", HR_Connect(1))
+        SaveSetting("Payroll System", "Startup", "passwordHR", HR_Connect(2))
+        SaveSetting("Payroll System", "Startup", "dbnameHR", HR_Connect(3))
         'payroll connection settings
         SaveSetting("Payroll System", "Startup", "serverPay", Payroll_Connect(0))
         SaveSetting("Payroll System", "Startup", "usernamePay", Payroll_Connect(1))
@@ -31,12 +36,12 @@ Module modConnect
     End Sub
 
     Sub GetSystemSettings()
-        ''get HR connection settings
-        'serverHR = GetSetting("Payroll System", "Startup", "serverHR", "")
-        'userHR = GetSetting("Payroll System", "Startup", "usernameHR", "")
-        'passHR = GetSetting("Payroll System", "Startup", "passwordHR", "")
-        'dbnameHR = GetSetting("Payroll System", "Startup", "dbnameHR", "")
-        'connectstring_hris = "server=" + serverHR + ";uid=" + userHR + ";password=" + passHR + ";database=" + dbnameHR + ";"
+        'get HR connection settings
+        serverHR = GetSetting("Payroll System", "Startup", "serverHR", "")
+        userHR = GetSetting("Payroll System", "Startup", "usernameHR", "")
+        passHR = GetSetting("Payroll System", "Startup", "passwordHR", "")
+        dbnameHR = GetSetting("Payroll System", "Startup", "dbnameHR", "")
+        connectstring_hris = "server=" + serverHR + ";uid=" + userHR + ";password=" + passHR + ";database=" + dbnameHR + ";"
         'get payroll connection settings
         serverPay = GetSetting("Payroll System", "Startup", "serverPay", "")
         userPay = GetSetting("Payroll System", "Startup", "usernamePay", "")
@@ -326,11 +331,17 @@ Module modConnect
                         QryReadP()
                         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                         If Not dtareader.HasRows Then
-                            StrSql = "INSERT INTO tbl_attendanceraw(Department, Name, No, Date_Time, Status, LogTime, LogDate, ifMapped) " _
-                                    & "VALUES('" & buff0 & "','" & buff1 & "','" & buff2 & "','" & buff3 & "','" & buff4 & "','" & buff5 & "','" & buff6 & "',0)"
+                            'don't insert attendance where 'No.' has not match in employees
+                            StrSql = "SELECT * FROM tbl_employee WHERE emp_bio_id = '" & buff2 & "'"
                             QryReadP()
-                            cmd.ExecuteNonQuery()
-                            numNotMatched += 1
+                            Dim empbioreader As MySqlDataReader = cmd.ExecuteReader()
+                            If empbioreader.HasRows Then
+                                StrSql = "INSERT INTO tbl_attendanceraw(Department, Name, No, Date_Time, Status, LogTime, LogDate, ifMapped) " _
+                                                                    & "VALUES('" & buff0 & "','" & buff1 & "','" & buff2 & "','" & buff3 & "','" & buff4 & "','" & buff5 & "','" & buff6 & "',0)"
+                                QryReadP()
+                                cmd.ExecuteNonQuery()
+                                numNotMatched += 1
+                            End If
                         Else
                             numMatched += 1
                         End If
@@ -344,7 +355,6 @@ Module modConnect
         Else
             MessageBox.Show("Please check your timesheet file if it is for " & current_company & ".")
         End If
-
         Close_Connect()
     End Sub
 

@@ -1,27 +1,27 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class ctrlServerSettings
-    'Public ReadOnly Property tb_serverHRa As Control
-    '    Get
-    '        Return tb_serverHR
-    '    End Get
-    'End Property
+    Public ReadOnly Property tb_serverHRa As Control
+        Get
+            Return tb_serverHR
+        End Get
+    End Property
     Private Sub save_settings_Click(sender As System.Object, e As System.EventArgs) Handles save_settings.Click
-        'Dim HRStrings() As String = {tb_serverHR.Text, tb_uidHR.Text, tb_pwordHR.Text, tb_dbHR.Text}
+        Dim HRStrings() As String = {tb_serverHR.Text, tb_uidHR.Text, tb_pwordHR.Text, tb_dbHR.Text}
         Dim PayrollStrings() As String = {tb_serverPay.Text, tb_uidPay.Text, tb_pwordPay.Text, tb_dbPay.Text}
 
-        SaveSystemSettings(PayrollStrings)
+        SaveSystemSettings(PayrollStrings, HRStrings)
         init_form()
         MessageBox.Show("Settings Saved!")
     End Sub
     Sub init_form()
         GetSystemSettings()
-        'hr connections
-        'tb_serverHR.Text = serverHR
-        'tb_uidHR.Text = userHR
-        'tb_pwordHR.Text = passHR
-        'tb_dbHR.Text = dbnameHR
-        'payroll connections
+        'hr(connections)
+        tb_serverHR.Text = serverHR
+        tb_uidHR.Text = userHR
+        tb_pwordHR.Text = passHR
+        tb_dbHR.Text = dbnameHR
+        'payroll(connections)
         tb_serverPay.Text = serverPay
         tb_uidPay.Text = userPay
         tb_pwordPay.Text = passPay
@@ -46,22 +46,22 @@ Public Class ctrlServerSettings
         End If
     End Sub
 
-    'Sub disableControls()
-    '    tb_serverHR.Enabled = False
-    '    tb_uidHR.Enabled = False
-    '    tb_pwordHR.Enabled = False
-    '    tb_dbHR.Enabled = False
-    'End Sub
-    'Sub enableControls()
-    '    tb_serverHR.Enabled = True
-    '    tb_uidHR.Enabled = True
-    '    tb_pwordHR.Enabled = True
-    '    tb_dbHR.Enabled = True
-    'End Sub
+    Sub disableControls()
+        tb_serverHR.Enabled = False
+        tb_uidHR.Enabled = False
+        tb_pwordHR.Enabled = False
+        tb_dbHR.Enabled = False
+    End Sub
+    Sub enableControls()
+        tb_serverHR.Enabled = True
+        tb_uidHR.Enabled = True
+        tb_pwordHR.Enabled = True
+        tb_dbHR.Enabled = True
+    End Sub
 
     Private Sub rb_mode_alone_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rb_mode_alone.CheckedChanged
         If rb_mode_alone.Checked Then
-            'disableControls()
+            disableControls()
             If conn.State = ConnectionState.Open Then
                 StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
                 QryReadP()
@@ -80,7 +80,7 @@ Public Class ctrlServerSettings
 
     Private Sub rb_mode_integrate_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rb_mode_integrate.CheckedChanged
         If rb_mode_integrate.Checked Then
-            'enableControls()
+            enableControls()
             If conn.State = ConnectionState.Open Then
                 StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
                 QryReadP()
@@ -98,15 +98,29 @@ Public Class ctrlServerSettings
     End Sub
 
     Private Sub btn_testconnect_Click(sender As System.Object, e As System.EventArgs) Handles btn_testconnect.Click
+        'payroll test
         Try
             If conn.State = ConnectionState.Open Then
                 conn.Close()
             End If
             conn.ConnectionString = connectstring_payroll
             conn.Open()
-            MessageBox.Show("Connection Success!")
+            MessageBox.Show("Payroll Connection Success!")
         Catch ex As MySql.Data.MySqlClient.MySqlException
             MessageBox.Show("Cannot connect to server. Contact administrator")
         End Try
+        'hr test
+        If rb_mode_integrate.Checked Then
+            Try
+                If conn2.State = ConnectionState.Open Then
+                    conn2.Close()
+                End If
+                conn2.ConnectionString = connectstring_hris
+                conn2.Open()
+                MessageBox.Show("HRIS Connection Success!")
+            Catch ex As MySql.Data.MySqlClient.MySqlException
+                MessageBox.Show("Cannot connect to server. Contact administrator")
+            End Try
+        End If
     End Sub
 End Class

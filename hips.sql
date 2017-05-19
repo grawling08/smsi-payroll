@@ -12,1083 +12,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Dumping database structure for hris
-DROP DATABASE IF EXISTS `hris`;
-CREATE DATABASE IF NOT EXISTS `hris` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `hris`;
-
--- Dumping structure for table hris.allowances
-DROP TABLE IF EXISTS `allowances`;
-CREATE TABLE IF NOT EXISTS `allowances` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.allowances: 3 rows
-/*!40000 ALTER TABLE `allowances` DISABLE KEYS */;
-INSERT INTO `allowances` (`id`, `name`) VALUES
-	(1, 'Housing'),
-	(2, 'Rice'),
-	(3, 'Transportation');
-/*!40000 ALTER TABLE `allowances` ENABLE KEYS */;
-
--- Dumping structure for table hris.annualmedical
-DROP TABLE IF EXISTS `annualmedical`;
-CREATE TABLE IF NOT EXISTS `annualmedical` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) NOT NULL DEFAULT '0',
-  `dateCheckup` date DEFAULT NULL,
-  `physician` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `clinic` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.annualmedical: 0 rows
-/*!40000 ALTER TABLE `annualmedical` DISABLE KEYS */;
-/*!40000 ALTER TABLE `annualmedical` ENABLE KEYS */;
-
--- Dumping structure for table hris.attendance
-DROP TABLE IF EXISTS `attendance`;
-CREATE TABLE IF NOT EXISTS `attendance` (
-  `attendance_id` int(10) NOT NULL AUTO_INCREMENT,
-  `id` int(10) NOT NULL DEFAULT '0',
-  `emp_bio_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time_in` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time_out` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `totalHours` double(2,2) DEFAULT NULL,
-  `late` double(2,2) DEFAULT NULL,
-  `undertime` double(2,2) DEFAULT NULL,
-  `overtime` double(2,2) DEFAULT NULL,
-  `remarks` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`attendance_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- Dumping data for table hris.attendance: 0 rows
-/*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
-
--- Dumping structure for table hris.attendedtrainees
-DROP TABLE IF EXISTS `attendedtrainees`;
-CREATE TABLE IF NOT EXISTS `attendedtrainees` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) DEFAULT NULL,
-  `traindev_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.attendedtrainees: ~0 rows (approximately)
-/*!40000 ALTER TABLE `attendedtrainees` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attendedtrainees` ENABLE KEYS */;
-
--- Dumping structure for table hris.awards
-DROP TABLE IF EXISTS `awards`;
-CREATE TABLE IF NOT EXISTS `awards` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci,
-  `institution` text COLLATE utf8_unicode_ci,
-  `dateGiven` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_awards_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.awards: ~0 rows (approximately)
-/*!40000 ALTER TABLE `awards` DISABLE KEYS */;
-/*!40000 ALTER TABLE `awards` ENABLE KEYS */;
-
--- Dumping structure for table hris.bank
-DROP TABLE IF EXISTS `bank`;
-CREATE TABLE IF NOT EXISTS `bank` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bank` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `accountNo` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.bank: 0 rows
-/*!40000 ALTER TABLE `bank` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bank` ENABLE KEYS */;
-
--- Dumping structure for table hris.benefits
-DROP TABLE IF EXISTS `benefits`;
-CREATE TABLE IF NOT EXISTS `benefits` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.benefits: 4 rows
-/*!40000 ALTER TABLE `benefits` DISABLE KEYS */;
-INSERT INTO `benefits` (`id`, `name`) VALUES
-	(1, 'Bonus'),
-	(2, '13th Month Pay'),
-	(3, 'sample'),
-	(4, 'Hi');
-/*!40000 ALTER TABLE `benefits` ENABLE KEYS */;
-
--- Dumping structure for table hris.biometric
-DROP TABLE IF EXISTS `biometric`;
-CREATE TABLE IF NOT EXISTS `biometric` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) NOT NULL DEFAULT '0',
-  `branch_id` int(10) NOT NULL DEFAULT '0',
-  `biometric_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.biometric: 3 rows
-/*!40000 ALTER TABLE `biometric` DISABLE KEYS */;
-INSERT INTO `biometric` (`id`, `employee_id`, `branch_id`, `biometric_id`) VALUES
-	(1, 1, 1, '10003'),
-	(2, 226, 1, '10004'),
-	(3, 227, 1, '10005');
-/*!40000 ALTER TABLE `biometric` ENABLE KEYS */;
-
--- Dumping structure for table hris.branches
-DROP TABLE IF EXISTS `branches`;
-CREATE TABLE IF NOT EXISTS `branches` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_id` int(11) NOT NULL DEFAULT '0',
-  `name` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.branches: ~0 rows (approximately)
-/*!40000 ALTER TABLE `branches` DISABLE KEYS */;
-INSERT INTO `branches` (`id`, `company_id`, `name`) VALUES
-	(1, 62, 'as');
-/*!40000 ALTER TABLE `branches` ENABLE KEYS */;
-
--- Dumping structure for table hris.business
-DROP TABLE IF EXISTS `business`;
-CREATE TABLE IF NOT EXISTS `business` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) DEFAULT NULL,
-  `company_id` int(10) DEFAULT NULL,
-  `department_id` int(10) DEFAULT NULL,
-  `branch_id` int(10) DEFAULT NULL,
-  `destination` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `durFrom` date DEFAULT NULL,
-  `durTo` date DEFAULT NULL,
-  `purpose` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.business: 1 rows
-/*!40000 ALTER TABLE `business` DISABLE KEYS */;
-INSERT INTO `business` (`id`, `employee_id`, `company_id`, `department_id`, `branch_id`, `destination`, `durFrom`, `durTo`, `purpose`, `status`) VALUES
-	(2, NULL, 1, 2, 5, 'Manila', '0000-00-00', '0000-00-00', '', 'For Manager Approval');
-/*!40000 ALTER TABLE `business` ENABLE KEYS */;
-
--- Dumping structure for table hris.companies
-DROP TABLE IF EXISTS `companies`;
-CREATE TABLE IF NOT EXISTS `companies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8_unicode_ci,
-  `code` text COLLATE utf8_unicode_ci,
-  `contactno` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` text COLLATE utf8_unicode_ci,
-  `website` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.companies: ~3 rows (approximately)
-/*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` (`id`, `name`, `code`, `contactno`, `email`, `website`) VALUES
-	(1, 'Solutions Management Systems Inc.', 'SMSI', '0', 'smsi@gmail.com', 'www.smsi.com.ph'),
-	(3, 'Norminring Development Corporation', 'NDC', '0', '', 'www.norminring.com'),
-	(62, 'Amaara Financial Corporation', 'AFC', NULL, NULL, 'www.afc.com.ph'),
-	(63, 'Manila Teachers', 'MT', NULL, NULL, NULL);
-/*!40000 ALTER TABLE `companies` ENABLE KEYS */;
-
--- Dumping structure for table hris.department
-DROP TABLE IF EXISTS `department`;
-CREATE TABLE IF NOT EXISTS `department` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `company_id` int(10) NOT NULL DEFAULT '0',
-  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.department: 3 rows
-/*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` (`id`, `company_id`, `name`) VALUES
-	(2, 0, 'sqe'),
-	(4, 62, 'a'),
-	(5, 96, 'as');
-/*!40000 ALTER TABLE `department` ENABLE KEYS */;
-
--- Dumping structure for table hris.educations
-DROP TABLE IF EXISTS `educations`;
-CREATE TABLE IF NOT EXISTS `educations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `levelType` text COLLATE utf8_unicode_ci,
-  `course` text COLLATE utf8_unicode_ci,
-  `school` text COLLATE utf8_unicode_ci,
-  `yearGrad` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_educations_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.educations: ~0 rows (approximately)
-/*!40000 ALTER TABLE `educations` DISABLE KEYS */;
-/*!40000 ALTER TABLE `educations` ENABLE KEYS */;
-
--- Dumping structure for table hris.empchildren
-DROP TABLE IF EXISTS `empchildren`;
-CREATE TABLE IF NOT EXISTS `empchildren` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci,
-  `gender` text COLLATE utf8_unicode_ci,
-  `dateBirth` date DEFAULT NULL,
-  `civilStatus` text COLLATE utf8_unicode_ci,
-  `occupation` text COLLATE utf8_unicode_ci,
-  `company` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `index_children_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.empchildren: ~0 rows (approximately)
-/*!40000 ALTER TABLE `empchildren` DISABLE KEYS */;
-/*!40000 ALTER TABLE `empchildren` ENABLE KEYS */;
-
--- Dumping structure for table hris.employees
-DROP TABLE IF EXISTS `employees`;
-CREATE TABLE IF NOT EXISTS `employees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(13) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `biometric_id` varchar(13) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shiftgroup_id` int(11) DEFAULT NULL,
-  `image` text COLLATE utf8_unicode_ci,
-  `fName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mi` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bank` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `placeBirth` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `dateBirth` date DEFAULT NULL,
-  `civilStatus` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `taxstatus_id` int(11) DEFAULT NULL,
-  `gender` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `citizenship` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `religion` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `language` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `height` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `weight` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `bloodType` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hair` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `complexion` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `resAdd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `resTel1` int(11) DEFAULT NULL,
-  `resTel2` int(11) DEFAULT NULL,
-  `resMobile1` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `resMobile2` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `resEmail` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `perAdd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `proAdd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fatherName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `faAdd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `faOccupation` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `faCompany` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `faNo` int(11) DEFAULT NULL,
-  `motherName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `moAdd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `moOccupation` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `moCompany` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `moNo` int(11) DEFAULT NULL,
-  `spouseName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `spAdd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `spOccupation` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `spCompany` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `spNo` int(11) DEFAULT NULL,
-  `dateHired` date DEFAULT NULL,
-  `position_id` int(11) DEFAULT NULL,
-  `company_id` int(11) DEFAULT NULL,
-  `department_id` int(11) DEFAULT NULL,
-  `branch_id` int(11) DEFAULT NULL,
-  `sssNo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `phicNo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hdmfNo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `taxNo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `emp_status` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=229 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.employees: ~2 rows (approximately)
-/*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` (`id`, `employee_id`, `biometric_id`, `shiftgroup_id`, `image`, `fName`, `mi`, `lName`, `bank`, `placeBirth`, `dateBirth`, `civilStatus`, `taxstatus_id`, `gender`, `citizenship`, `religion`, `language`, `height`, `weight`, `bloodType`, `hair`, `complexion`, `resAdd`, `resTel1`, `resTel2`, `resMobile1`, `resMobile2`, `resEmail`, `perAdd`, `proAdd`, `fatherName`, `faAdd`, `faOccupation`, `faCompany`, `faNo`, `motherName`, `moAdd`, `moOccupation`, `moCompany`, `moNo`, `spouseName`, `spAdd`, `spOccupation`, `spCompany`, `spNo`, `dateHired`, `position_id`, `company_id`, `department_id`, `branch_id`, `sssNo`, `phicNo`, `hdmfNo`, `taxNo`, `emp_status`) VALUES
-	(1, 'SMSI-CGC-0001', '10003', 1, 'public\\images\\74b8db90f0059b73967ea524b916e6a0', 'Jennifer', 'Palo', 'Dantes', '5r42', 'Cagayan de Oro', '1995-01-10', 'Married', 7, 'Male', 'Filipino', 'SDA', 'Bisaya', '4\'9"', '46', 'O +', 'Brown', 'Fair', 'css', 8584352, 21, '09054050785', '0444', 'cs8@gmail.com', 'a', 'a', 'Humber Almuete', 'NHA Kauswagan', 'Seaman', 'Neogect', NULL, 'Rosario Almuete', 'NHA Kauswagan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-22', 3, 62, 4, 1, '1542012157', '151654841', '218410514', '154264845000', 'Regular'),
-	(228, 'SMSi-0001', 'undefined', 2, 'public\\images\\ac0a9700b69884c71a6d1aeb9d15edcc', 'Raul John', 'Apuli', 'Altavano', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-03-01', 0, 1, NULL, 0, NULL, NULL, NULL, NULL, 'Resigned');
-/*!40000 ALTER TABLE `employees` ENABLE KEYS */;
-
--- Dumping structure for table hris.incident
-DROP TABLE IF EXISTS `incident`;
-CREATE TABLE IF NOT EXISTS `incident` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `occurence` text COLLATE utf8_unicode_ci NOT NULL,
-  `natureOfAccident` text COLLATE utf8_unicode_ci NOT NULL,
-  `injuryType` text COLLATE utf8_unicode_ci NOT NULL,
-  `coreActivity` text COLLATE utf8_unicode_ci NOT NULL,
-  `location` text COLLATE utf8_unicode_ci NOT NULL,
-  `details` text COLLATE utf8_unicode_ci NOT NULL,
-  `dateOfOccurence` date NOT NULL,
-  `damagedProperty` text COLLATE utf8_unicode_ci NOT NULL,
-  `reference` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.incident: 1 rows
-/*!40000 ALTER TABLE `incident` DISABLE KEYS */;
-INSERT INTO `incident` (`id`, `occurence`, `natureOfAccident`, `injuryType`, `coreActivity`, `location`, `details`, `dateOfOccurence`, `damagedProperty`, `reference`) VALUES
-	(2, 'Incident', 'ads', '', '', '', '', '0000-00-00', '', NULL);
-/*!40000 ALTER TABLE `incident` ENABLE KEYS */;
-
--- Dumping structure for table hris.incidentinvolve
-DROP TABLE IF EXISTS `incidentinvolve`;
-CREATE TABLE IF NOT EXISTS `incidentinvolve` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `incident_id` int(10) DEFAULT NULL,
-  `employee_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.incidentinvolve: 0 rows
-/*!40000 ALTER TABLE `incidentinvolve` DISABLE KEYS */;
-/*!40000 ALTER TABLE `incidentinvolve` ENABLE KEYS */;
-
--- Dumping structure for table hris.jobs
-DROP TABLE IF EXISTS `jobs`;
-CREATE TABLE IF NOT EXISTS `jobs` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `position_id` int(11) NOT NULL DEFAULT '0',
-  `company_id` int(10) NOT NULL DEFAULT '0',
-  `department_id` int(10) NOT NULL DEFAULT '0',
-  `branch_id` int(10) DEFAULT '0',
-  `empStatus` text COLLATE utf8_unicode_ci,
-  `dutiesResponsibility` text COLLATE utf8_unicode_ci,
-  `qualification` text COLLATE utf8_unicode_ci,
-  `dateFiled` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.jobs: 4 rows
-/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
-INSERT INTO `jobs` (`id`, `position_id`, `company_id`, `department_id`, `branch_id`, `empStatus`, `dutiesResponsibility`, `qualification`, `dateFiled`, `status`) VALUES
-	(2, 1, 4, 0, 4, 'Full Time', 'asq', '2-year course', '2017-06-20', 'Not Available'),
-	(3, 2, 2, 0, 7, 'Full Time', 'kui', '4-year course', '2017-03-16', 'Available'),
-	(13, 1, 1, 0, 1, 'Full Time', NULL, '4-year course', '2016-02-02', 'Not Available'),
-	(17, 3, 62, 4, 1, NULL, NULL, NULL, '2017-04-18', 'Available');
-/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
-
--- Dumping structure for table hris.jobskill
-DROP TABLE IF EXISTS `jobskill`;
-CREATE TABLE IF NOT EXISTS `jobskill` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `job_id` int(10) DEFAULT NULL,
-  `positionskill_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.jobskill: 1 rows
-/*!40000 ALTER TABLE `jobskill` DISABLE KEYS */;
-INSERT INTO `jobskill` (`id`, `job_id`, `positionskill_id`) VALUES
-	(2, 2, '4');
-/*!40000 ALTER TABLE `jobskill` ENABLE KEYS */;
-
--- Dumping structure for table hris.leaveapp
-DROP TABLE IF EXISTS `leaveapp`;
-CREATE TABLE IF NOT EXISTS `leaveapp` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `durFrom` date NOT NULL,
-  `durTo` date NOT NULL,
-  `dateFiled` date NOT NULL,
-  `leave_id` int(11) NOT NULL,
-  `days_applied` double(3,1) DEFAULT NULL,
-  `mode` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reason` text COLLATE utf8_unicode_ci NOT NULL,
-  `status` text COLLATE utf8_unicode_ci NOT NULL,
-  `reasonToDissaprove` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.leaveapp: 1 rows
-/*!40000 ALTER TABLE `leaveapp` DISABLE KEYS */;
-INSERT INTO `leaveapp` (`id`, `employee_id`, `durFrom`, `durTo`, `dateFiled`, `leave_id`, `days_applied`, `mode`, `reason`, `status`, `reasonToDissaprove`) VALUES
-	(2, '228', '2017-03-22', '2017-03-24', '2017-03-28', 1, 3.0, 'with pay', 'ads', 'For Manager Approval', '');
-/*!40000 ALTER TABLE `leaveapp` ENABLE KEYS */;
-
--- Dumping structure for table hris.leaves
-DROP TABLE IF EXISTS `leaves`;
-CREATE TABLE IF NOT EXISTS `leaves` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.leaves: 6 rows
-/*!40000 ALTER TABLE `leaves` DISABLE KEYS */;
-INSERT INTO `leaves` (`id`, `name`) VALUES
-	(6, 'Parental Leave'),
-	(1, 'Emergency Leave'),
-	(4, 'Vacation Leave'),
-	(2, 'Sick Leave'),
-	(5, 'Maternity Leave'),
-	(7, 'Birthday Leave');
-/*!40000 ALTER TABLE `leaves` ENABLE KEYS */;
-
--- Dumping structure for table hris.lendingcompany
-DROP TABLE IF EXISTS `lendingcompany`;
-CREATE TABLE IF NOT EXISTS `lendingcompany` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.lendingcompany: 3 rows
-/*!40000 ALTER TABLE `lendingcompany` DISABLE KEYS */;
-INSERT INTO `lendingcompany` (`id`, `name`) VALUES
-	(1, 'SSS'),
-	(2, 'AFC'),
-	(3, 'HDMF');
-/*!40000 ALTER TABLE `lendingcompany` ENABLE KEYS */;
-
--- Dumping structure for table hris.licensures
-DROP TABLE IF EXISTS `licensures`;
-CREATE TABLE IF NOT EXISTS `licensures` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci,
-  `rating` double(3,2) DEFAULT NULL,
-  `licenseNo` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `index_licensures_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.licensures: ~0 rows (approximately)
-/*!40000 ALTER TABLE `licensures` DISABLE KEYS */;
-/*!40000 ALTER TABLE `licensures` ENABLE KEYS */;
-
--- Dumping structure for table hris.loans
-DROP TABLE IF EXISTS `loans`;
-CREATE TABLE IF NOT EXISTS `loans` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) DEFAULT NULL,
-  `loanType_id` int(10) DEFAULT NULL,
-  `lendingCompany_id` int(10) DEFAULT NULL,
-  `amount` double(10,0) DEFAULT NULL,
-  `term` text COLLATE utf8_unicode_ci,
-  `monthlyAmortization` double(10,0) DEFAULT NULL,
-  `startDate` date DEFAULT NULL,
-  `endDate` date DEFAULT NULL,
-  `loanGranted` date DEFAULT NULL,
-  `remarks` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.loans: 1 rows
-/*!40000 ALTER TABLE `loans` DISABLE KEYS */;
-INSERT INTO `loans` (`id`, `employee_id`, `loanType_id`, `lendingCompany_id`, `amount`, `term`, `monthlyAmortization`, `startDate`, `endDate`, `loanGranted`, `remarks`) VALUES
-	(1, 1, 1, 1, 1, 'f', 32, '2017-03-22', '2017-03-22', '2017-03-22', 'fd');
-/*!40000 ALTER TABLE `loans` ENABLE KEYS */;
-
--- Dumping structure for table hris.loantype
-DROP TABLE IF EXISTS `loantype`;
-CREATE TABLE IF NOT EXISTS `loantype` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `loanType` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.loantype: 2 rows
-/*!40000 ALTER TABLE `loantype` DISABLE KEYS */;
-INSERT INTO `loantype` (`id`, `loanType`) VALUES
-	(1, 'SSS Loan'),
-	(2, 'Housing Loan');
-/*!40000 ALTER TABLE `loantype` ENABLE KEYS */;
-
--- Dumping structure for table hris.medicals
-DROP TABLE IF EXISTS `medicals`;
-CREATE TABLE IF NOT EXISTS `medicals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `conditions` text COLLATE utf8_unicode_ci,
-  `started` text COLLATE utf8_unicode_ci,
-  `physician` text COLLATE utf8_unicode_ci,
-  `disability` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `index_medicals_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.medicals: ~0 rows (approximately)
-/*!40000 ALTER TABLE `medicals` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medicals` ENABLE KEYS */;
-
--- Dumping structure for table hris.organizations
-DROP TABLE IF EXISTS `organizations`;
-CREATE TABLE IF NOT EXISTS `organizations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `institution` text COLLATE utf8_unicode_ci,
-  `title` text COLLATE utf8_unicode_ci,
-  `started` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ended` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_organizations_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.organizations: ~0 rows (approximately)
-/*!40000 ALTER TABLE `organizations` DISABLE KEYS */;
-INSERT INTO `organizations` (`id`, `employee_id`, `institution`, `title`, `started`, `ended`) VALUES
-	(4, 1, NULL, NULL, '2017-05', '2017-06');
-/*!40000 ALTER TABLE `organizations` ENABLE KEYS */;
-
--- Dumping structure for table hris.overtime
-DROP TABLE IF EXISTS `overtime`;
-CREATE TABLE IF NOT EXISTS `overtime` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `dateFiled` date DEFAULT NULL,
-  `dateRequested` date DEFAULT NULL,
-  `timeStart` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timeEnd` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `totalHours` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reason` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reasonToDissaprove` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.overtime: 1 rows
-/*!40000 ALTER TABLE `overtime` DISABLE KEYS */;
-INSERT INTO `overtime` (`id`, `employee_id`, `dateFiled`, `dateRequested`, `timeStart`, `timeEnd`, `totalHours`, `reason`, `status`, `reasonToDissaprove`) VALUES
-	(1, '228', '2017-03-28', '2017-03-23', '5', '7', '02:00', 'finish work', 'Approved by HR', 'asd');
-/*!40000 ALTER TABLE `overtime` ENABLE KEYS */;
-
--- Dumping structure for table hris.payslip
-DROP TABLE IF EXISTS `payslip`;
-CREATE TABLE IF NOT EXISTS `payslip` (
-  `payslip_id` int(10) DEFAULT NULL,
-  `employee_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cutoff_id` int(11) DEFAULT NULL,
-  `totalWorkHours` double(6,2) DEFAULT NULL,
-  `income` double(6,2) DEFAULT NULL,
-  `regot_pay` double(6,2) DEFAULT NULL,
-  `holot_pay` double(6,2) DEFAULT NULL,
-  `ot_pay` double(6,2) DEFAULT NULL,
-  `allowances` double(6,2) DEFAULT NULL,
-  `incentives` double(6,2) DEFAULT NULL,
-  `lateabsent_deduct` double(6,2) DEFAULT NULL,
-  `undertime_deduct` double(6,2) DEFAULT NULL,
-  `tax` double(6,2) DEFAULT NULL,
-  `sss` double(6,2) DEFAULT NULL,
-  `phic` double(6,2) DEFAULT NULL,
-  `hdmf` double(6,2) DEFAULT NULL,
-  `gross_income` double(6,2) DEFAULT NULL,
-  `net_income` double(6,2) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.payslip: 0 rows
-/*!40000 ALTER TABLE `payslip` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payslip` ENABLE KEYS */;
-
--- Dumping structure for table hris.performance
-DROP TABLE IF EXISTS `performance`;
-CREATE TABLE IF NOT EXISTS `performance` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) NOT NULL DEFAULT '0',
-  `rating` text COLLATE utf8_unicode_ci NOT NULL,
-  `monthReview` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `remarks` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.performance: 0 rows
-/*!40000 ALTER TABLE `performance` DISABLE KEYS */;
-/*!40000 ALTER TABLE `performance` ENABLE KEYS */;
-
--- Dumping structure for table hris.positions
-DROP TABLE IF EXISTS `positions`;
-CREATE TABLE IF NOT EXISTS `positions` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `company_id` int(10) NOT NULL DEFAULT '0',
-  `rank_id` int(11) DEFAULT NULL,
-  `name` text COLLATE utf8_unicode_ci,
-  `skills` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.positions: 4 rows
-/*!40000 ALTER TABLE `positions` DISABLE KEYS */;
-INSERT INTO `positions` (`id`, `company_id`, `rank_id`, `name`, `skills`) VALUES
-	(1, 0, 6, 'Developer', 'w'),
-	(2, 0, 1, 'HR Director', 'e'),
-	(3, 62, 2, 'Manager', 'ew'),
-	(4, 0, 1, 'lkl', 'fufu');
-/*!40000 ALTER TABLE `positions` ENABLE KEYS */;
-
--- Dumping structure for table hris.positionskill
-DROP TABLE IF EXISTS `positionskill`;
-CREATE TABLE IF NOT EXISTS `positionskill` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `position_id` int(10) NOT NULL DEFAULT '0',
-  `skills` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.positionskill: 4 rows
-/*!40000 ALTER TABLE `positionskill` DISABLE KEYS */;
-INSERT INTO `positionskill` (`id`, `position_id`, `skills`) VALUES
-	(4, 1, 'PHP'),
-	(2, 1, 'Networking'),
-	(1, 2, 'Strong Communication'),
-	(5, 2, 'Interpersonal');
-/*!40000 ALTER TABLE `positionskill` ENABLE KEYS */;
-
--- Dumping structure for table hris.promotions
-DROP TABLE IF EXISTS `promotions`;
-CREATE TABLE IF NOT EXISTS `promotions` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) NOT NULL,
-  `datePromote` text COLLATE utf8_unicode_ci,
-  `position_id` text COLLATE utf8_unicode_ci NOT NULL,
-  `salary` text COLLATE utf8_unicode_ci,
-  `company_id` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.promotions: 0 rows
-/*!40000 ALTER TABLE `promotions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `promotions` ENABLE KEYS */;
-
--- Dumping structure for table hris.properties
-DROP TABLE IF EXISTS `properties`;
-CREATE TABLE IF NOT EXISTS `properties` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) NOT NULL DEFAULT '0',
-  `property` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `dateIssued` date NOT NULL,
-  `dateReturned` date NOT NULL,
-  `status` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `remarks` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.properties: 0 rows
-/*!40000 ALTER TABLE `properties` DISABLE KEYS */;
-/*!40000 ALTER TABLE `properties` ENABLE KEYS */;
-
--- Dumping structure for table hris.rank
-DROP TABLE IF EXISTS `rank`;
-CREATE TABLE IF NOT EXISTS `rank` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `rank` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.rank: 10 rows
-/*!40000 ALTER TABLE `rank` DISABLE KEYS */;
-INSERT INTO `rank` (`id`, `rank`) VALUES
-	(1, 'Level 1'),
-	(2, 'Level 2'),
-	(3, 'Level 3'),
-	(4, 'Level 4'),
-	(5, 'Level 5'),
-	(6, 'Level 6'),
-	(7, 'Level 7'),
-	(8, 'Level 8'),
-	(9, 'Level 9'),
-	(10, 'Level 10');
-/*!40000 ALTER TABLE `rank` ENABLE KEYS */;
-
--- Dumping structure for table hris.recognition
-DROP TABLE IF EXISTS `recognition`;
-CREATE TABLE IF NOT EXISTS `recognition` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `awardGiven` text COLLATE utf8_unicode_ci NOT NULL,
-  `citation` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.recognition: 0 rows
-/*!40000 ALTER TABLE `recognition` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recognition` ENABLE KEYS */;
-
--- Dumping structure for table hris.role
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `role` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.role: 6 rows
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` (`id`, `role`) VALUES
-	(1, 'Human Resource-1'),
-	(2, 'Human Resource-2'),
-	(3, 'Payroll Officer'),
-	(4, 'User'),
-	(5, 'Admin'),
-	(6, 'Manager');
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
-
--- Dumping structure for table hris.serviceallowance
-DROP TABLE IF EXISTS `serviceallowance`;
-CREATE TABLE IF NOT EXISTS `serviceallowance` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `service_id` int(10) DEFAULT NULL,
-  `employee_id` int(10) DEFAULT NULL,
-  `allowance_id` int(10) DEFAULT NULL,
-  `amount` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.serviceallowance: 1 rows
-/*!40000 ALTER TABLE `serviceallowance` DISABLE KEYS */;
-INSERT INTO `serviceallowance` (`id`, `service_id`, `employee_id`, `allowance_id`, `amount`) VALUES
-	(1, 1, 1, 1, '500');
-/*!40000 ALTER TABLE `serviceallowance` ENABLE KEYS */;
-
--- Dumping structure for table hris.serviceallowancetemp
-DROP TABLE IF EXISTS `serviceallowancetemp`;
-CREATE TABLE IF NOT EXISTS `serviceallowancetemp` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL DEFAULT '0',
-  `service_id` int(10) DEFAULT NULL,
-  `employee_id` int(10) DEFAULT NULL,
-  `allowance_id` int(10) DEFAULT NULL,
-  `amount` double(10,2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.serviceallowancetemp: 0 rows
-/*!40000 ALTER TABLE `serviceallowancetemp` DISABLE KEYS */;
-/*!40000 ALTER TABLE `serviceallowancetemp` ENABLE KEYS */;
-
--- Dumping structure for table hris.servicebenefit
-DROP TABLE IF EXISTS `servicebenefit`;
-CREATE TABLE IF NOT EXISTS `servicebenefit` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) DEFAULT NULL,
-  `benefit_id` int(10) DEFAULT NULL,
-  `amount` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.servicebenefit: 0 rows
-/*!40000 ALTER TABLE `servicebenefit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `servicebenefit` ENABLE KEYS */;
-
--- Dumping structure for table hris.serviceleave
-DROP TABLE IF EXISTS `serviceleave`;
-CREATE TABLE IF NOT EXISTS `serviceleave` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `service_id` int(10) NOT NULL DEFAULT '0',
-  `employee_id` int(10) DEFAULT NULL,
-  `leave_id` int(10) DEFAULT NULL,
-  `leavedays` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.serviceleave: 0 rows
-/*!40000 ALTER TABLE `serviceleave` DISABLE KEYS */;
-/*!40000 ALTER TABLE `serviceleave` ENABLE KEYS */;
-
--- Dumping structure for table hris.serviceleavestatus
-DROP TABLE IF EXISTS `serviceleavestatus`;
-CREATE TABLE IF NOT EXISTS `serviceleavestatus` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) DEFAULT NULL,
-  `leave_id` int(10) DEFAULT NULL,
-  `leavedays` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `useddays` varchar(4) COLLATE utf8_unicode_ci DEFAULT '0',
-  `leftdays` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `slc` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `vlt` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.serviceleavestatus: 0 rows
-/*!40000 ALTER TABLE `serviceleavestatus` DISABLE KEYS */;
-/*!40000 ALTER TABLE `serviceleavestatus` ENABLE KEYS */;
-
--- Dumping structure for table hris.serviceleavetemp
-DROP TABLE IF EXISTS `serviceleavetemp`;
-CREATE TABLE IF NOT EXISTS `serviceleavetemp` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL DEFAULT '0',
-  `service_id` int(10) DEFAULT NULL,
-  `employee_id` int(10) DEFAULT NULL,
-  `leave_id` int(10) DEFAULT NULL,
-  `leavedays` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.serviceleavetemp: 0 rows
-/*!40000 ALTER TABLE `serviceleavetemp` DISABLE KEYS */;
-/*!40000 ALTER TABLE `serviceleavetemp` ENABLE KEYS */;
-
--- Dumping structure for table hris.services
-DROP TABLE IF EXISTS `services`;
-CREATE TABLE IF NOT EXISTS `services` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL DEFAULT '0',
-  `dateAssigned` date DEFAULT NULL,
-  `datePrompt` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `position_id` int(11) DEFAULT '0',
-  `employmentStatus` text COLLATE utf8_unicode_ci,
-  `company_id` int(11) NOT NULL DEFAULT '0',
-  `department_id` int(11) NOT NULL DEFAULT '0',
-  `branch_id` int(11) NOT NULL DEFAULT '0',
-  `basicSalary` double(10,0) DEFAULT NULL,
-  `remarks` text COLLATE utf8_unicode_ci,
-  `ifcurrent` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.services: ~0 rows (approximately)
-/*!40000 ALTER TABLE `services` DISABLE KEYS */;
-INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `position_id`, `employmentStatus`, `company_id`, `department_id`, `branch_id`, `basicSalary`, `remarks`, `ifcurrent`) VALUES
-	(13, 1, '2017-03-01', '', 3, 'Regular', 62, 4, 1, 10000, 'adq', 1);
-/*!40000 ALTER TABLE `services` ENABLE KEYS */;
-
--- Dumping structure for table hris.settings
-DROP TABLE IF EXISTS `settings`;
-CREATE TABLE IF NOT EXISTS `settings` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `item` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.settings: 4 rows
-/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` (`id`, `item`, `value`) VALUES
-	(1, 'Sick Leave Conversion ', 'February'),
-	(2, 'Reset all Leaves', 'January'),
-	(3, 'Maximum SL Credit', '10'),
-	(4, 'Maximum VL Credit ', '5');
-/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
-
--- Dumping structure for table hris.shifts
-DROP TABLE IF EXISTS `shifts`;
-CREATE TABLE IF NOT EXISTS `shifts` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `day` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timein` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timeout` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shiftgroup_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.shifts: 7 rows
-/*!40000 ALTER TABLE `shifts` DISABLE KEYS */;
-INSERT INTO `shifts` (`id`, `day`, `timein`, `timeout`, `shiftgroup_id`) VALUES
-	(1, 'Wednesday', '09:00 AM', '05:00 PM', 1),
-	(12, 'Saturday', '09:00 AM', '05:00 PM', 1),
-	(7, 'Thursday', '09:00 AM', '05:00 PM', 1),
-	(9, 'Tuesday', '09:00 AM', '05:00 PM', 1),
-	(10, 'Friday', '09:00 AM', '05:00 PM', 1),
-	(11, 'Monday', '09:00 AM', '05:00 PM', 1),
-	(20, 'Monday', NULL, NULL, 5);
-/*!40000 ALTER TABLE `shifts` ENABLE KEYS */;
-
--- Dumping structure for table hris.shiftsgroup
-DROP TABLE IF EXISTS `shiftsgroup`;
-CREATE TABLE IF NOT EXISTS `shiftsgroup` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `shiftName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.shiftsgroup: 3 rows
-/*!40000 ALTER TABLE `shiftsgroup` DISABLE KEYS */;
-INSERT INTO `shiftsgroup` (`id`, `shiftName`) VALUES
-	(1, 'Regular'),
-	(2, 'Irregular'),
-	(3, 'Flexibles');
-/*!40000 ALTER TABLE `shiftsgroup` ENABLE KEYS */;
-
--- Dumping structure for table hris.skills
-DROP TABLE IF EXISTS `skills`;
-CREATE TABLE IF NOT EXISTS `skills` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `type` text COLLATE utf8_unicode_ci,
-  `name` text COLLATE utf8_unicode_ci,
-  `level` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `index_skills_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.skills: ~0 rows (approximately)
-/*!40000 ALTER TABLE `skills` DISABLE KEYS */;
-/*!40000 ALTER TABLE `skills` ENABLE KEYS */;
-
--- Dumping structure for table hris.suspension
-DROP TABLE IF EXISTS `suspension`;
-CREATE TABLE IF NOT EXISTS `suspension` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(10) DEFAULT NULL,
-  `dateSuspended` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.suspension: 0 rows
-/*!40000 ALTER TABLE `suspension` DISABLE KEYS */;
-/*!40000 ALTER TABLE `suspension` ENABLE KEYS */;
-
--- Dumping structure for table hris.taxstatus
-DROP TABLE IF EXISTS `taxstatus`;
-CREATE TABLE IF NOT EXISTS `taxstatus` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `taxstatus` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `taxcode` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.taxstatus: 10 rows
-/*!40000 ALTER TABLE `taxstatus` DISABLE KEYS */;
-INSERT INTO `taxstatus` (`id`, `taxstatus`, `taxcode`) VALUES
-	(1, 'Single', 'S'),
-	(2, 'Married', 'M'),
-	(3, 'Single w/ 1 Dependent', 'S1'),
-	(4, 'Single w/ 2 Dependent', 'S2'),
-	(5, 'Single w/ 3 Dependent', 'S3'),
-	(6, 'Single w/ 4 Dependent', 'S4'),
-	(7, 'Married w/ 1 Dependent', 'M1'),
-	(8, 'Married w/ 2 Dependent', 'M2'),
-	(9, 'Married w/ 3 Dependent', 'M3'),
-	(10, 'Married w/ 4 Dependent', 'M4');
-/*!40000 ALTER TABLE `taxstatus` ENABLE KEYS */;
-
--- Dumping structure for table hris.trainingdev
-DROP TABLE IF EXISTS `trainingdev`;
-CREATE TABLE IF NOT EXISTS `trainingdev` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `training` text COLLATE utf8_unicode_ci NOT NULL,
-  `topic` text COLLATE utf8_unicode_ci NOT NULL,
-  `duration` text COLLATE utf8_unicode_ci NOT NULL,
-  `cost` double(6,0) NOT NULL,
-  `venue` text COLLATE utf8_unicode_ci NOT NULL,
-  `speaker` text COLLATE utf8_unicode_ci NOT NULL,
-  `benefit` text COLLATE utf8_unicode_ci NOT NULL,
-  `dateConduct` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.trainingdev: ~0 rows (approximately)
-/*!40000 ALTER TABLE `trainingdev` DISABLE KEYS */;
-/*!40000 ALTER TABLE `trainingdev` ENABLE KEYS */;
-
--- Dumping structure for table hris.trainings
-DROP TABLE IF EXISTS `trainings`;
-CREATE TABLE IF NOT EXISTS `trainings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `name` text COLLATE utf8_unicode_ci,
-  `started` date DEFAULT NULL,
-  `ended` date DEFAULT NULL,
-  `institution` text COLLATE utf8_unicode_ci,
-  `venue` text COLLATE utf8_unicode_ci,
-  `speaker` text COLLATE utf8_unicode_ci,
-  `remarks` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `index_trainings_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.trainings: ~0 rows (approximately)
-/*!40000 ALTER TABLE `trainings` DISABLE KEYS */;
-/*!40000 ALTER TABLE `trainings` ENABLE KEYS */;
-
--- Dumping structure for table hris.users
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `username` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `role_id` int(10) DEFAULT NULL,
-  `userStatus` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=172 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.users: 2 rows
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `userStatus`) VALUES
-	(1, '1', 'jennifer.beltran', 'b787d22d9cb06342658bf546039117bc', 2, 'Active'),
-	(171, '228', 'raul.altavano', 'bc7a844476607e1a59d8eb1b1f311830', 5, 'Disabled');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-
--- Dumping structure for table hris.violation
-DROP TABLE IF EXISTS `violation`;
-CREATE TABLE IF NOT EXISTS `violation` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) DEFAULT NULL,
-  `memoNo` int(5) DEFAULT NULL,
-  `memo` text COLLATE utf8_unicode_ci,
-  `dateOfMemo` date DEFAULT NULL,
-  `signedBy` text COLLATE utf8_unicode_ci,
-  `noOfOffense` text COLLATE utf8_unicode_ci,
-  `categoryOfOffense` text COLLATE utf8_unicode_ci,
-  `penalties` text COLLATE utf8_unicode_ci,
-  `effectOnPenalties` text COLLATE utf8_unicode_ci,
-  `effectivePeriod` text COLLATE utf8_unicode_ci,
-  `subject` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.violation: 0 rows
-/*!40000 ALTER TABLE `violation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `violation` ENABLE KEYS */;
-
--- Dumping structure for table hris.works
-DROP TABLE IF EXISTS `works`;
-CREATE TABLE IF NOT EXISTS `works` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `position` text COLLATE utf8_unicode_ci,
-  `company` text COLLATE utf8_unicode_ci,
-  `durFrom` date DEFAULT NULL,
-  `durTo` date DEFAULT NULL,
-  `empStatus` text COLLATE utf8_unicode_ci,
-  `salary` text COLLATE utf8_unicode_ci,
-  `reason` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `index_works_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table hris.works: ~0 rows (approximately)
-/*!40000 ALTER TABLE `works` DISABLE KEYS */;
-/*!40000 ALTER TABLE `works` ENABLE KEYS */;
-
-
 -- Dumping database structure for hris_payroll
 DROP DATABASE IF EXISTS `hris_payroll`;
 CREATE DATABASE IF NOT EXISTS `hris_payroll` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `hris_payroll`;
-
--- Dumping structure for table hris_payroll.sample
-DROP TABLE IF EXISTS `sample`;
-CREATE TABLE IF NOT EXISTS `sample` (
-  `field1` varchar(20) DEFAULT NULL,
-  `field2` int(11) DEFAULT NULL,
-  `field3` date DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- Dumping data for table hris_payroll.sample: 0 rows
-/*!40000 ALTER TABLE `sample` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sample` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_holiday
 DROP TABLE IF EXISTS `tblref_holiday`;
@@ -1190,12 +117,13 @@ CREATE TABLE IF NOT EXISTS `tblref_settings` (
   `value` varchar(100) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tblref_settings: 3 rows
+-- Dumping data for table hris_payroll.tblref_settings: 4 rows
 /*!40000 ALTER TABLE `tblref_settings` DISABLE KEYS */;
 INSERT INTO `tblref_settings` (`setting_name`, `value`) VALUES
-	('current_cutoff', '2017-04-16 to 2017-04-30'),
+	('current_cutoff', '16 May 2017 to 31 May 2017'),
 	('current_company', 'Manila Teachers'),
-	('app_mode', 'integrate');
+	('app_mode', 'alone'),
+	('process', 'regular');
 /*!40000 ALTER TABLE `tblref_settings` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_sss
@@ -1409,7 +337,8 @@ INSERT INTO `tblref_tax` (`idTax`, `status`, `salary`, `percentage`, `excemption
 -- Dumping structure for table hris_payroll.tbl_allowances
 DROP TABLE IF EXISTS `tbl_allowances`;
 CREATE TABLE IF NOT EXISTS `tbl_allowances` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_allowance` int(11) DEFAULT NULL,
   `employee_id` varchar(50) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `amount` varchar(50) DEFAULT NULL,
@@ -1453,381 +382,10 @@ CREATE TABLE IF NOT EXISTS `tbl_attendanceraw` (
   `LogDate` varchar(50) DEFAULT NULL,
   `ifMapped` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`rawatt_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=371 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Dumping data for table hris_payroll.tbl_attendanceraw: 0 rows
 /*!40000 ALTER TABLE `tbl_attendanceraw` DISABLE KEYS */;
-INSERT INTO `tbl_attendanceraw` (`rawatt_id`, `Department`, `Name`, `No`, `Date_Time`, `Status`, `LogTime`, `LogDate`, `ifMapped`) VALUES
-	(1, 'MT', 'HUGUETE, LUIS B.', '10003', '10/1/2016 8:09:11 AM', 'C/In', '08:09 AM', '10/01/2016', 0),
-	(2, 'MT', 'HUGUETE, LUIS B.', '10003', '10/1/2016 4:23:33 PM', 'C/Out', '04:23 PM', '10/01/2016', 0),
-	(3, 'MT', 'HUGUETE, LUIS B.', '10003', '10/3/2016 12:22:22 PM', 'C/In', '12:22 PM', '10/03/2016', 0),
-	(4, 'MT', 'HUGUETE, LUIS B.', '10003', '10/3/2016 5:44:10 PM', 'C/Out', '05:44 PM', '10/03/2016', 0),
-	(5, 'MT', 'HUGUETE, LUIS B.', '10003', '10/4/2016 7:18:48 AM', 'C/In', '07:18 AM', '10/04/2016', 0),
-	(6, 'MT', 'HUGUETE, LUIS B.', '10003', '10/4/2016 7:35:42 PM', 'C/Out', '07:35 PM', '10/04/2016', 0),
-	(7, 'MT', 'HUGUETE, LUIS B.', '10003', '10/5/2016 6:06:29 PM', 'C/Out', '06:06 PM', '10/05/2016', 0),
-	(8, 'MT', 'HUGUETE, LUIS B.', '10003', '10/6/2016 9:02:33 AM', 'C/In', '09:02 AM', '10/06/2016', 0),
-	(9, 'MT', 'HUGUETE, LUIS B.', '10003', '10/7/2016 9:07:34 AM', 'C/In', '09:07 AM', '10/07/2016', 0),
-	(10, 'MT', 'HUGUETE, LUIS B.', '10003', '10/7/2016 6:55:48 PM', 'C/Out', '06:55 PM', '10/07/2016', 0),
-	(11, 'MT', 'HUGUETE, LUIS B.', '10003', '10/8/2016 8:07:13 AM', 'C/In', '08:07 AM', '10/08/2016', 0),
-	(12, 'MT', 'HUGUETE, LUIS B.', '10003', '10/8/2016 5:02:59 PM', 'C/Out', '05:02 PM', '10/08/2016', 0),
-	(13, 'MT', 'HUGUETE, LUIS B.', '10003', '10/10/2016 12:05:22 PM', 'C/In', '12:05 PM', '10/10/2016', 0),
-	(14, 'MT', 'HUGUETE, LUIS B.', '10003', '10/10/2016 8:54:49 PM', 'C/Out', '08:54 PM', '10/10/2016', 0),
-	(15, 'MT', 'HUGUETE, LUIS B.', '10003', '10/11/2016 9:03:43 AM', 'C/In', '09:03 AM', '10/11/2016', 0),
-	(16, 'MT', 'HUGUETE, LUIS B.', '10003', '10/12/2016 8:57:15 AM', 'C/In', '08:57 AM', '10/12/2016', 0),
-	(17, 'MT', 'HUGUETE, LUIS B.', '10003', '10/12/2016 7:18:41 PM', 'C/Out', '07:18 PM', '10/12/2016', 0),
-	(18, 'MT', 'HUGUETE, LUIS B.', '10003', '10/13/2016 9:06:06 AM', 'C/In', '09:06 AM', '10/13/2016', 0),
-	(19, 'MT', 'HUGUETE, LUIS B.', '10003', '10/13/2016 5:56:29 PM', 'C/Out', '05:56 PM', '10/13/2016', 0),
-	(20, 'MT', 'HUGUETE, LUIS B.', '10003', '10/14/2016 8:59:51 AM', 'C/In', '08:59 AM', '10/14/2016', 0),
-	(21, 'MT', 'HUGUETE, LUIS B.', '10003', '10/14/2016 5:34:22 PM', 'C/Out', '05:34 PM', '10/14/2016', 0),
-	(22, 'MT', 'HUGUETE, LUIS B.', '10003', '10/15/2016 8:13:53 AM', 'C/In', '08:13 AM', '10/15/2016', 0),
-	(23, 'MT', 'HUGUETE, LUIS B.', '10003', '10/15/2016 4:33:22 PM', 'C/Out', '04:33 PM', '10/15/2016', 0),
-	(24, 'MT', 'HUGUETE, LUIS B.', '10003', '10/20/2016 9:18:00 AM', 'C/In', '09:18 AM', '10/20/2016', 0),
-	(25, 'MT', 'HUGUETE, LUIS B.', '10003', '10/20/2016 9:07:22 PM', 'C/Out', '09:07 PM', '10/20/2016', 0),
-	(26, 'MT', 'HUGUETE, LUIS B.', '10003', '10/21/2016 9:09:58 AM', 'C/In', '09:09 AM', '10/21/2016', 0),
-	(27, 'MT', 'HUGUETE, LUIS B.', '10003', '10/21/2016 5:40:42 PM', 'C/Out', '05:40 PM', '10/21/2016', 0),
-	(28, 'MT', 'HUGUETE, LUIS B.', '10003', '10/22/2016 8:11:03 AM', 'C/In', '08:11 AM', '10/22/2016', 0),
-	(29, 'MT', 'HUGUETE, LUIS B.', '10003', '10/22/2016 5:11:22 PM', 'C/Out', '05:11 PM', '10/22/2016', 0),
-	(30, 'MT', 'HUGUETE, LUIS B.', '10003', '10/24/2016 12:01:50 PM', 'C/In', '12:01 PM', '10/24/2016', 0),
-	(31, 'MT', 'HUGUETE, LUIS B.', '10003', '10/24/2016 6:58:21 PM', 'C/Out', '06:58 PM', '10/24/2016', 0),
-	(32, 'MT', 'HUGUETE, LUIS B.', '10003', '10/25/2016 8:58:11 AM', 'C/In', '08:58 AM', '10/25/2016', 0),
-	(33, 'MT', 'HUGUETE, LUIS B.', '10003', '10/25/2016 8:56:20 PM', 'C/Out', '08:56 PM', '10/25/2016', 0),
-	(34, 'MT', 'HUGUETE, LUIS B.', '10003', '10/26/2016 7:20:27 AM', 'C/In', '07:20 AM', '10/26/2016', 0),
-	(35, 'MT', 'HUGUETE, LUIS B.', '10003', '10/26/2016 9:21:22 PM', 'C/Out', '09:21 PM', '10/26/2016', 0),
-	(36, 'MT', 'HUGUETE, LUIS B.', '10003', '10/27/2016 7:20:10 AM', 'C/In', '07:20 AM', '10/27/2016', 0),
-	(37, 'MT', 'HUGUETE, LUIS B.', '10003', '10/27/2016 8:06:13 PM', 'C/Out', '08:06 PM', '10/27/2016', 0),
-	(38, 'MT', 'CANETE, LARRY V.', '10004', '10/1/2016 7:35:44 AM', 'C/In', '07:35 AM', '10/01/2016', 0),
-	(39, 'MT', 'CANETE, LARRY V.', '10004', '10/1/2016 4:56:09 PM', 'C/Out', '04:56 PM', '10/01/2016', 0),
-	(40, 'MT', 'CANETE, LARRY V.', '10004', '10/3/2016 12:22:09 PM', 'C/In', '12:22 PM', '10/03/2016', 0),
-	(41, 'MT', 'CANETE, LARRY V.', '10004', '10/3/2016 6:30:58 PM', 'C/Out', '06:30 PM', '10/03/2016', 0),
-	(42, 'MT', 'CANETE, LARRY V.', '10004', '10/4/2016 8:37:14 AM', 'C/In', '08:37 AM', '10/04/2016', 0),
-	(43, 'MT', 'CANETE, LARRY V.', '10004', '10/4/2016 5:24:58 PM', 'C/Out', '05:24 PM', '10/04/2016', 0),
-	(44, 'MT', 'CANETE, LARRY V.', '10004', '10/5/2016 8:35:03 AM', 'C/In', '08:35 AM', '10/05/2016', 0),
-	(45, 'MT', 'CANETE, LARRY V.', '10004', '10/5/2016 6:05:43 PM', 'C/Out', '06:05 PM', '10/05/2016', 0),
-	(46, 'MT', 'CANETE, LARRY V.', '10004', '10/6/2016 8:03:47 AM', 'C/In', '08:03 AM', '10/06/2016', 0),
-	(47, 'MT', 'CANETE, LARRY V.', '10004', '10/6/2016 6:37:50 PM', 'C/Out', '06:37 PM', '10/06/2016', 0),
-	(48, 'MT', 'CANETE, LARRY V.', '10004', '10/7/2016 8:31:32 AM', 'C/In', '08:31 AM', '10/07/2016', 0),
-	(49, 'MT', 'CANETE, LARRY V.', '10004', '10/7/2016 6:42:39 PM', 'C/Out', '06:42 PM', '10/07/2016', 0),
-	(50, 'MT', 'CANETE, LARRY V.', '10004', '10/8/2016 7:20:11 AM', 'C/In', '07:20 AM', '10/08/2016', 0),
-	(51, 'MT', 'CANETE, LARRY V.', '10004', '10/8/2016 5:20:26 PM', 'C/Out', '05:20 PM', '10/08/2016', 0),
-	(52, 'MT', 'CANETE, LARRY V.', '10004', '10/10/2016 12:39:45 PM', 'C/In', '12:39 PM', '10/10/2016', 0),
-	(53, 'MT', 'CANETE, LARRY V.', '10004', '10/11/2016 8:33:47 AM', 'C/In', '08:33 AM', '10/11/2016', 0),
-	(54, 'MT', 'CANETE, LARRY V.', '10004', '10/11/2016 5:56:33 PM', 'C/Out', '05:56 PM', '10/11/2016', 0),
-	(55, 'MT', 'CANETE, LARRY V.', '10004', '10/12/2016 8:29:23 AM', 'C/In', '08:29 AM', '10/12/2016', 0),
-	(56, 'MT', 'CANETE, LARRY V.', '10004', '10/12/2016 6:05:16 PM', 'C/Out', '06:05 PM', '10/12/2016', 0),
-	(57, 'MT', 'CANETE, LARRY V.', '10004', '10/13/2016 8:35:30 AM', 'C/In', '08:35 AM', '10/13/2016', 0),
-	(58, 'MT', 'CANETE, LARRY V.', '10004', '10/13/2016 6:22:42 PM', 'C/Out', '06:22 PM', '10/13/2016', 0),
-	(59, 'MT', 'CANETE, LARRY V.', '10004', '10/14/2016 8:27:25 AM', 'C/In', '08:27 AM', '10/14/2016', 0),
-	(60, 'MT', 'CANETE, LARRY V.', '10004', '10/14/2016 6:02:14 PM', 'C/Out', '06:02 PM', '10/14/2016', 0),
-	(61, 'MT', 'CANETE, LARRY V.', '10004', '10/15/2016 7:25:50 AM', 'C/In', '07:25 AM', '10/15/2016', 0),
-	(62, 'MT', 'CANETE, LARRY V.', '10004', '10/15/2016 4:34:12 PM', 'C/Out', '04:34 PM', '10/15/2016', 0),
-	(63, 'MT', 'CANETE, LARRY V.', '10004', '10/17/2016 12:32:23 PM', 'C/In', '12:32 PM', '10/17/2016', 0),
-	(64, 'MT', 'CANETE, LARRY V.', '10004', '10/17/2016 5:34:48 PM', 'C/Out', '05:34 PM', '10/17/2016', 0),
-	(65, 'MT', 'CANETE, LARRY V.', '10004', '10/18/2016 8:33:40 AM', 'C/In', '08:33 AM', '10/18/2016', 0),
-	(66, 'MT', 'CANETE, LARRY V.', '10004', '10/18/2016 6:14:14 PM', 'C/Out', '06:14 PM', '10/18/2016', 0),
-	(67, 'MT', 'CANETE, LARRY V.', '10004', '10/19/2016 8:34:31 AM', 'C/In', '08:34 AM', '10/19/2016', 0),
-	(68, 'MT', 'CANETE, LARRY V.', '10004', '10/19/2016 5:31:34 PM', 'C/Out', '05:31 PM', '10/19/2016', 0),
-	(69, 'MT', 'CANETE, LARRY V.', '10004', '10/20/2016 8:36:02 AM', 'C/In', '08:36 AM', '10/20/2016', 0),
-	(70, 'MT', 'CANETE, LARRY V.', '10004', '10/20/2016 6:16:05 PM', 'C/Out', '06:16 PM', '10/20/2016', 0),
-	(71, 'MT', 'CANETE, LARRY V.', '10004', '10/21/2016 8:37:06 AM', 'C/In', '08:37 AM', '10/21/2016', 0),
-	(72, 'MT', 'CANETE, LARRY V.', '10004', '10/21/2016 6:34:38 PM', 'C/Out', '06:34 PM', '10/21/2016', 0),
-	(73, 'MT', 'CANETE, LARRY V.', '10004', '10/22/2016 7:33:32 AM', 'C/In', '07:33 AM', '10/22/2016', 0),
-	(74, 'MT', 'CANETE, LARRY V.', '10004', '10/22/2016 4:14:16 PM', 'C/Out', '04:14 PM', '10/22/2016', 0),
-	(75, 'MT', 'CANETE, LARRY V.', '10004', '10/24/2016 12:35:26 PM', 'C/In', '12:35 PM', '10/24/2016', 0),
-	(76, 'MT', 'CANETE, LARRY V.', '10004', '10/24/2016 5:49:40 PM', 'C/Out', '05:49 PM', '10/24/2016', 0),
-	(77, 'MT', 'CANETE, LARRY V.', '10004', '10/25/2016 8:13:51 AM', 'C/In', '08:13 AM', '10/25/2016', 0),
-	(78, 'MT', 'CANETE, LARRY V.', '10004', '10/25/2016 6:07:19 PM', 'C/Out', '06:07 PM', '10/25/2016', 0),
-	(79, 'MT', 'CANETE, LARRY V.', '10004', '10/26/2016 8:40:03 AM', 'C/In', '08:40 AM', '10/26/2016', 0),
-	(80, 'MT', 'CANETE, LARRY V.', '10004', '10/27/2016 8:23:54 AM', 'C/In', '08:23 AM', '10/27/2016', 0),
-	(81, 'MT', 'CANETE, LARRY V.', '10004', '10/27/2016 8:44:50 PM', 'C/Out', '08:44 PM', '10/27/2016', 0),
-	(82, 'MT', 'CANETE, LARRY V.', '10004', '10/28/2016 8:31:15 AM', 'C/In', '08:31 AM', '10/28/2016', 0),
-	(83, 'MT', 'CANETE, LARRY V.', '10004', '10/28/2016 6:16:19 PM', 'C/Out', '06:16 PM', '10/28/2016', 0),
-	(84, 'MT', 'CANETE, LARRY V.', '10004', '10/29/2016 7:35:27 AM', 'C/In', '07:35 AM', '10/29/2016', 0),
-	(85, 'MT', 'CANETE, LARRY V.', '10004', '10/29/2016 4:40:06 PM', 'C/Out', '04:40 PM', '10/29/2016', 0),
-	(86, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/1/2016 8:12:28 AM', 'C/In', '08:12 AM', '10/01/2016', 0),
-	(87, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/1/2016 4:54:36 PM', 'C/Out', '04:54 PM', '10/01/2016', 0),
-	(88, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/3/2016 10:16:23 AM', 'C/In', '10:16 AM', '10/03/2016', 0),
-	(89, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/4/2016 9:08:28 AM', 'C/In', '09:08 AM', '10/04/2016', 0),
-	(90, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/5/2016 9:00:01 AM', 'C/In', '09:00 AM', '10/05/2016', 0),
-	(91, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/5/2016 4:59:50 PM', 'C/Out', '04:59 PM', '10/05/2016', 0),
-	(92, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/6/2016 8:48:05 AM', 'C/In', '08:48 AM', '10/06/2016', 0),
-	(93, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/6/2016 5:02:49 PM', 'C/Out', '05:02 PM', '10/06/2016', 0),
-	(94, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/7/2016 8:52:18 AM', 'C/In', '08:52 AM', '10/07/2016', 0),
-	(95, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/7/2016 6:56:02 PM', 'C/Out', '06:56 PM', '10/07/2016', 0),
-	(96, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/8/2016 7:54:31 AM', 'C/In', '07:54 AM', '10/08/2016', 0),
-	(97, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/8/2016 4:29:47 PM', 'C/Out', '04:29 PM', '10/08/2016', 0),
-	(98, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/10/2016 10:13:48 AM', 'C/In', '10:13 AM', '10/10/2016', 0),
-	(99, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/10/2016 5:51:44 PM', 'C/Out', '05:51 PM', '10/10/2016', 0),
-	(100, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/11/2016 8:58:42 AM', 'C/In', '08:58 AM', '10/11/2016', 0),
-	(101, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/11/2016 5:15:43 PM', 'C/Out', '05:15 PM', '10/11/2016', 0),
-	(102, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/12/2016 8:50:33 AM', 'C/In', '08:50 AM', '10/12/2016', 0),
-	(103, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/12/2016 5:08:20 PM', 'C/Out', '05:08 PM', '10/12/2016', 0),
-	(104, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/13/2016 9:00:05 AM', 'C/In', '09:00 AM', '10/13/2016', 0),
-	(105, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/13/2016 5:32:52 PM', 'C/Out', '05:32 PM', '10/13/2016', 0),
-	(106, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/14/2016 8:58:24 AM', 'C/In', '08:58 AM', '10/14/2016', 0),
-	(107, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/14/2016 5:47:40 PM', 'C/Out', '05:47 PM', '10/14/2016', 0),
-	(108, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/15/2016 8:06:35 AM', 'C/In', '08:06 AM', '10/15/2016', 0),
-	(109, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/15/2016 5:01:45 PM', 'C/Out', '05:01 PM', '10/15/2016', 0),
-	(110, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/17/2016 11:03:27 AM', 'C/In', '11:03 AM', '10/17/2016', 0),
-	(111, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/17/2016 5:04:21 PM', 'C/In', '05:04 PM', '10/17/2016', 0),
-	(112, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/18/2016 9:02:08 AM', 'C/In', '09:02 AM', '10/18/2016', 0),
-	(113, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/18/2016 5:32:37 PM', 'C/Out', '05:32 PM', '10/18/2016', 0),
-	(114, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/19/2016 8:36:15 AM', 'C/In', '08:36 AM', '10/19/2016', 0),
-	(115, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/19/2016 5:10:22 PM', 'C/Out', '05:10 PM', '10/19/2016', 0),
-	(116, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/20/2016 8:50:13 AM', 'C/In', '08:50 AM', '10/20/2016', 0),
-	(117, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/20/2016 7:47:57 PM', 'C/Out', '07:47 PM', '10/20/2016', 0),
-	(118, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/21/2016 8:48:21 AM', 'C/In', '08:48 AM', '10/21/2016', 0),
-	(119, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/21/2016 6:16:18 PM', 'C/Out', '06:16 PM', '10/21/2016', 0),
-	(120, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/22/2016 8:18:09 AM', 'C/In', '08:18 AM', '10/22/2016', 0),
-	(121, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/22/2016 4:16:36 PM', 'C/Out', '04:16 PM', '10/22/2016', 0),
-	(122, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/24/2016 11:30:29 AM', 'C/In', '11:30 AM', '10/24/2016', 0),
-	(123, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/24/2016 5:04:55 PM', 'C/Out', '05:04 PM', '10/24/2016', 0),
-	(124, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/25/2016 9:11:19 AM', 'C/In', '09:11 AM', '10/25/2016', 0),
-	(125, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/25/2016 5:23:21 PM', 'C/Out', '05:23 PM', '10/25/2016', 0),
-	(126, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/26/2016 8:57:42 AM', 'C/In', '08:57 AM', '10/26/2016', 0),
-	(127, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/26/2016 5:32:43 PM', 'C/Out', '05:32 PM', '10/26/2016', 0),
-	(128, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/27/2016 9:01:45 AM', 'C/In', '09:01 AM', '10/27/2016', 0),
-	(129, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/27/2016 5:04:12 PM', 'C/Out', '05:04 PM', '10/27/2016', 0),
-	(130, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/28/2016 8:44:59 AM', 'C/In', '08:44 AM', '10/28/2016', 0),
-	(131, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/28/2016 5:39:30 PM', 'C/Out', '05:39 PM', '10/28/2016', 0),
-	(132, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/29/2016 7:46:18 AM', 'C/In', '07:46 AM', '10/29/2016', 0),
-	(133, 'MT', 'PALO, JULIUS ELMER B.', '10005', '10/29/2016 4:49:32 PM', 'C/Out', '04:49 PM', '10/29/2016', 0),
-	(134, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/1/2016 8:29:48 AM', 'C/In', '08:29 AM', '10/01/2016', 0),
-	(135, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/1/2016 3:12:39 PM', 'C/Out', '03:12 PM', '10/01/2016', 0),
-	(136, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/1/2016 3:12:52 PM', 'C/Out', '03:12 PM', '10/01/2016', 0),
-	(137, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/5/2016 8:00:09 AM', 'C/In', '08:00 AM', '10/05/2016', 0),
-	(138, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/6/2016 8:49:13 AM', 'C/In', '08:49 AM', '10/06/2016', 0),
-	(139, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/7/2016 8:23:41 AM', 'C/In', '08:23 AM', '10/07/2016', 0),
-	(140, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/8/2016 8:41:57 AM', 'C/In', '08:41 AM', '10/08/2016', 0),
-	(141, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/10/2016 8:19:51 AM', 'C/In', '08:19 AM', '10/10/2016', 0),
-	(142, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/10/2016 5:01:28 PM', 'C/Out', '05:01 PM', '10/10/2016', 0),
-	(143, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/11/2016 8:02:13 AM', 'C/In', '08:02 AM', '10/11/2016', 0),
-	(144, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/11/2016 6:21:13 PM', 'C/Out', '06:21 PM', '10/11/2016', 0),
-	(145, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/12/2016 8:12:00 AM', 'C/In', '08:12 AM', '10/12/2016', 0),
-	(146, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/17/2016 8:00:08 AM', 'C/In', '08:00 AM', '10/17/2016', 0),
-	(147, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/24/2016 8:02:09 AM', 'C/Out', '08:02 AM', '10/24/2016', 0),
-	(148, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/24/2016 8:02:27 AM', 'C/In', '08:02 AM', '10/24/2016', 0),
-	(149, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/24/2016 5:00:30 PM', 'C/Out', '05:00 PM', '10/24/2016', 0),
-	(150, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/25/2016 8:08:39 AM', 'C/In', '08:08 AM', '10/25/2016', 0),
-	(151, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/25/2016 5:00:54 PM', 'C/Out', '05:00 PM', '10/25/2016', 0),
-	(152, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/26/2016 8:13:26 AM', 'C/In', '08:13 AM', '10/26/2016', 0),
-	(153, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/27/2016 10:00:16 AM', 'C/In', '10:00 AM', '10/27/2016', 0),
-	(154, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/28/2016 8:39:55 AM', 'C/In', '08:39 AM', '10/28/2016', 0),
-	(155, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/28/2016 5:27:44 PM', 'C/Out', '05:27 PM', '10/28/2016', 0),
-	(156, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/29/2016 7:52:58 AM', 'C/In', '07:52 AM', '10/29/2016', 0),
-	(157, 'MT', 'TAGUENCA, FERDINAND M.', '10006', '10/29/2016 3:24:44 PM', 'C/Out', '03:24 PM', '10/29/2016', 0),
-	(158, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/1/2016 7:35:49 AM', 'C/In', '07:35 AM', '10/01/2016', 0),
-	(159, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/1/2016 5:04:33 PM', 'C/Out', '05:04 PM', '10/01/2016', 0),
-	(160, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/3/2016 12:32:37 PM', 'C/In', '12:32 PM', '10/03/2016', 0),
-	(161, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/3/2016 5:47:59 PM', 'C/Out', '05:47 PM', '10/03/2016', 0),
-	(162, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/4/2016 9:07:44 AM', 'C/In', '09:07 AM', '10/04/2016', 0),
-	(163, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/4/2016 6:31:07 PM', 'C/Out', '06:31 PM', '10/04/2016', 0),
-	(164, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/5/2016 8:46:43 AM', 'C/In', '08:46 AM', '10/05/2016', 0),
-	(165, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/5/2016 5:43:32 PM', 'C/Out', '05:43 PM', '10/05/2016', 0),
-	(166, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/6/2016 8:49:26 AM', 'C/In', '08:49 AM', '10/06/2016', 0),
-	(167, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/6/2016 5:18:10 PM', 'C/Out', '05:18 PM', '10/06/2016', 0),
-	(168, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/7/2016 8:58:01 AM', 'C/In', '08:58 AM', '10/07/2016', 0),
-	(169, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/7/2016 5:45:32 PM', 'C/Out', '05:45 PM', '10/07/2016', 0),
-	(170, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/8/2016 8:08:23 AM', 'C/In', '08:08 AM', '10/08/2016', 0),
-	(171, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/8/2016 5:10:26 PM', 'C/Out', '05:10 PM', '10/08/2016', 0),
-	(172, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/10/2016 12:53:23 PM', 'C/In', '12:53 PM', '10/10/2016', 0),
-	(173, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/10/2016 5:54:58 PM', 'C/Out', '05:54 PM', '10/10/2016', 0),
-	(174, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/11/2016 8:50:50 AM', 'C/In', '08:50 AM', '10/11/2016', 0),
-	(175, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/11/2016 6:15:08 PM', 'C/Out', '06:15 PM', '10/11/2016', 0),
-	(176, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/12/2016 8:55:01 AM', 'C/In', '08:55 AM', '10/12/2016', 0),
-	(177, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/12/2016 5:00:29 PM', 'C/In', '05:00 PM', '10/12/2016', 0),
-	(178, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/13/2016 8:54:02 AM', 'C/In', '08:54 AM', '10/13/2016', 0),
-	(179, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/13/2016 5:40:50 PM', 'C/Out', '05:40 PM', '10/13/2016', 0),
-	(180, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/14/2016 8:58:07 AM', 'C/In', '08:58 AM', '10/14/2016', 0),
-	(181, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/14/2016 6:02:19 PM', 'C/Out', '06:02 PM', '10/14/2016', 0),
-	(182, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/15/2016 7:48:22 AM', 'C/In', '07:48 AM', '10/15/2016', 0),
-	(183, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/15/2016 6:19:24 PM', 'C/Out', '06:19 PM', '10/15/2016', 0),
-	(184, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/17/2016 12:48:11 PM', 'C/In', '12:48 PM', '10/17/2016', 0),
-	(185, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/17/2016 6:36:54 PM', 'C/Out', '06:36 PM', '10/17/2016', 0),
-	(186, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/18/2016 8:06:48 AM', 'C/In', '08:06 AM', '10/18/2016', 0),
-	(187, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/18/2016 5:24:37 PM', 'C/Out', '05:24 PM', '10/18/2016', 0),
-	(188, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/19/2016 8:18:48 AM', 'C/In', '08:18 AM', '10/19/2016', 0),
-	(189, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/20/2016 8:54:55 AM', 'C/In', '08:54 AM', '10/20/2016', 0),
-	(190, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/20/2016 7:55:23 PM', 'C/Out', '07:55 PM', '10/20/2016', 0),
-	(191, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/21/2016 8:49:23 AM', 'C/In', '08:49 AM', '10/21/2016', 0),
-	(192, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/21/2016 5:49:08 PM', 'C/Out', '05:49 PM', '10/21/2016', 0),
-	(193, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/22/2016 8:07:06 AM', 'C/In', '08:07 AM', '10/22/2016', 0),
-	(194, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/22/2016 4:30:36 PM', 'C/Out', '04:30 PM', '10/22/2016', 0),
-	(195, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/24/2016 12:43:18 PM', 'C/In', '12:43 PM', '10/24/2016', 0),
-	(196, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/24/2016 5:39:27 PM', 'C/Out', '05:39 PM', '10/24/2016', 0),
-	(197, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/25/2016 8:50:08 AM', 'C/In', '08:50 AM', '10/25/2016', 0),
-	(198, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/25/2016 5:23:02 PM', 'C/Out', '05:23 PM', '10/25/2016', 0),
-	(199, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/26/2016 8:45:16 AM', 'C/In', '08:45 AM', '10/26/2016', 0),
-	(200, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/26/2016 5:49:14 PM', 'C/Out', '05:49 PM', '10/26/2016', 0),
-	(201, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/27/2016 8:45:07 AM', 'C/In', '08:45 AM', '10/27/2016', 0),
-	(202, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/27/2016 6:49:50 PM', 'C/Out', '06:49 PM', '10/27/2016', 0),
-	(203, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/28/2016 8:50:24 AM', 'C/In', '08:50 AM', '10/28/2016', 0),
-	(204, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/28/2016 6:21:19 PM', 'C/Out', '06:21 PM', '10/28/2016', 0),
-	(205, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/29/2016 7:53:40 AM', 'C/In', '07:53 AM', '10/29/2016', 0),
-	(206, 'MT', 'ABUELA, REGGIE MAE', '10007', '10/29/2016 4:49:28 PM', 'C/Out', '04:49 PM', '10/29/2016', 0),
-	(207, 'MT', 'KCT', '10008', '10/1/2016 7:52:48 AM', 'C/In', '07:52 AM', '10/01/2016', 0),
-	(208, 'MT', 'KCT', '10008', '10/1/2016 5:04:37 PM', 'C/Out', '05:04 PM', '10/01/2016', 0),
-	(209, 'MT', 'KCT', '10008', '10/3/2016 12:35:02 PM', 'C/In', '12:35 PM', '10/03/2016', 0),
-	(210, 'MT', 'KCT', '10008', '10/3/2016 5:48:03 PM', 'C/Out', '05:48 PM', '10/03/2016', 0),
-	(211, 'MT', 'KCT', '10008', '10/4/2016 8:47:12 AM', 'C/In', '08:47 AM', '10/04/2016', 0),
-	(212, 'MT', 'KCT', '10008', '10/4/2016 6:00:32 PM', 'C/Out', '06:00 PM', '10/04/2016', 0),
-	(213, 'MT', 'KCT', '10008', '10/5/2016 8:55:57 AM', 'C/In', '08:55 AM', '10/05/2016', 0),
-	(214, 'MT', 'KCT', '10008', '10/5/2016 5:43:36 PM', 'C/Out', '05:43 PM', '10/05/2016', 0),
-	(215, 'MT', 'KCT', '10008', '10/6/2016 8:49:05 AM', 'C/In', '08:49 AM', '10/06/2016', 0),
-	(216, 'MT', 'KCT', '10008', '10/6/2016 5:18:14 PM', 'C/Out', '05:18 PM', '10/06/2016', 0),
-	(217, 'MT', 'KCT', '10008', '10/7/2016 8:31:40 AM', 'C/In', '08:31 AM', '10/07/2016', 0),
-	(218, 'MT', 'KCT', '10008', '10/7/2016 5:24:14 PM', 'C/Out', '05:24 PM', '10/07/2016', 0),
-	(219, 'MT', 'KCT', '10008', '10/8/2016 7:41:54 AM', 'C/In', '07:41 AM', '10/08/2016', 0),
-	(220, 'MT', 'KCT', '10008', '10/8/2016 4:40:45 PM', 'C/Out', '04:40 PM', '10/08/2016', 0),
-	(221, 'MT', 'KCT', '10008', '10/10/2016 12:39:00 PM', 'C/In', '12:39 PM', '10/10/2016', 0),
-	(222, 'MT', 'KCT', '10008', '10/10/2016 5:50:19 PM', 'C/Out', '05:50 PM', '10/10/2016', 0),
-	(223, 'MT', 'KCT', '10008', '10/11/2016 8:51:17 AM', 'C/In', '08:51 AM', '10/11/2016', 0),
-	(224, 'MT', 'KCT', '10008', '10/11/2016 5:25:51 PM', 'C/Out', '05:25 PM', '10/11/2016', 0),
-	(225, 'MT', 'KCT', '10008', '10/12/2016 8:38:08 AM', 'C/In', '08:38 AM', '10/12/2016', 0),
-	(226, 'MT', 'KCT', '10008', '10/12/2016 5:27:22 PM', 'C/Out', '05:27 PM', '10/12/2016', 0),
-	(227, 'MT', 'KCT', '10008', '10/13/2016 8:48:42 AM', 'C/In', '08:48 AM', '10/13/2016', 0),
-	(228, 'MT', 'KCT', '10008', '10/13/2016 5:40:44 PM', 'C/Out', '05:40 PM', '10/13/2016', 0),
-	(229, 'MT', 'KCT', '10008', '10/14/2016 8:43:56 AM', 'C/In', '08:43 AM', '10/14/2016', 0),
-	(230, 'MT', 'KCT', '10008', '10/14/2016 5:34:08 PM', 'C/Out', '05:34 PM', '10/14/2016', 0),
-	(231, 'MT', 'KCT', '10008', '10/15/2016 7:53:00 AM', 'C/In', '07:53 AM', '10/15/2016', 0),
-	(232, 'MT', 'KCT', '10008', '10/15/2016 5:25:11 PM', 'C/Out', '05:25 PM', '10/15/2016', 0),
-	(233, 'MT', 'KCT', '10008', '10/17/2016 12:47:29 PM', 'C/In', '12:47 PM', '10/17/2016', 0),
-	(234, 'MT', 'KCT', '10008', '10/17/2016 5:19:19 PM', 'C/Out', '05:19 PM', '10/17/2016', 0),
-	(235, 'MT', 'KCT', '10008', '10/18/2016 8:43:23 AM', 'C/In', '08:43 AM', '10/18/2016', 0),
-	(236, 'MT', 'KCT', '10008', '10/19/2016 8:35:15 AM', 'C/In', '08:35 AM', '10/19/2016', 0),
-	(237, 'MT', 'KCT', '10008', '10/19/2016 5:09:30 PM', 'C/Out', '05:09 PM', '10/19/2016', 0),
-	(238, 'MT', 'KCT', '10008', '10/20/2016 8:30:48 AM', 'C/In', '08:30 AM', '10/20/2016', 0),
-	(239, 'MT', 'KCT', '10008', '10/20/2016 7:48:40 PM', 'C/Out', '07:48 PM', '10/20/2016', 0),
-	(240, 'MT', 'KCT', '10008', '10/21/2016 8:48:31 AM', 'C/In', '08:48 AM', '10/21/2016', 0),
-	(241, 'MT', 'KCT', '10008', '10/21/2016 5:49:10 PM', 'C/Out', '05:49 PM', '10/21/2016', 0),
-	(242, 'MT', 'KCT', '10008', '10/22/2016 7:36:38 AM', 'C/In', '07:36 AM', '10/22/2016', 0),
-	(243, 'MT', 'KCT', '10008', '10/22/2016 4:30:40 PM', 'C/Out', '04:30 PM', '10/22/2016', 0),
-	(244, 'MT', 'KCT', '10008', '10/24/2016 12:24:42 PM', 'C/In', '12:24 PM', '10/24/2016', 0),
-	(245, 'MT', 'KCT', '10008', '10/24/2016 5:39:23 PM', 'C/Out', '05:39 PM', '10/24/2016', 0),
-	(246, 'MT', 'KCT', '10008', '10/25/2016 8:43:29 AM', 'C/In', '08:43 AM', '10/25/2016', 0),
-	(247, 'MT', 'KCT', '10008', '10/25/2016 5:23:10 PM', 'C/Out', '05:23 PM', '10/25/2016', 0),
-	(248, 'MT', 'KCT', '10008', '10/26/2016 8:30:03 AM', 'C/In', '08:30 AM', '10/26/2016', 0),
-	(249, 'MT', 'KCT', '10008', '10/26/2016 5:16:15 PM', 'C/Out', '05:16 PM', '10/26/2016', 0),
-	(250, 'MT', 'KCT', '10008', '10/27/2016 8:39:58 AM', 'C/In', '08:39 AM', '10/27/2016', 0),
-	(251, 'MT', 'KCT', '10008', '10/27/2016 5:08:46 PM', 'C/Out', '05:08 PM', '10/27/2016', 0),
-	(252, 'MT', 'KCT', '10008', '10/28/2016 8:39:44 AM', 'C/In', '08:39 AM', '10/28/2016', 0),
-	(253, 'MT', 'KCT', '10008', '10/28/2016 5:37:42 PM', 'C/Out', '05:37 PM', '10/28/2016', 0),
-	(254, 'MT', 'KCT', '10008', '10/29/2016 7:53:18 AM', 'C/In', '07:53 AM', '10/29/2016', 0),
-	(255, 'MT', 'KCT', '10008', '10/29/2016 4:31:15 PM', 'C/Out', '04:31 PM', '10/29/2016', 0),
-	(256, 'MT', 'PALOMA, EMILY P.', '10011', '10/1/2016 8:02:49 AM', 'C/In', '08:02 AM', '10/01/2016', 0),
-	(257, 'MT', 'PALOMA, EMILY P.', '10011', '10/1/2016 4:55:50 PM', 'C/Out', '04:55 PM', '10/01/2016', 0),
-	(258, 'MT', 'PALOMA, EMILY P.', '10011', '10/3/2016 10:07:25 AM', 'C/In', '10:07 AM', '10/03/2016', 0),
-	(259, 'MT', 'PALOMA, EMILY P.', '10011', '10/3/2016 5:25:23 PM', 'C/Out', '05:25 PM', '10/03/2016', 0),
-	(260, 'MT', 'PALOMA, EMILY P.', '10011', '10/4/2016 8:47:27 AM', 'C/In', '08:47 AM', '10/04/2016', 0),
-	(261, 'MT', 'PALOMA, EMILY P.', '10011', '10/4/2016 5:30:43 PM', 'C/Out', '05:30 PM', '10/04/2016', 0),
-	(262, 'MT', 'PALOMA, EMILY P.', '10011', '10/5/2016 8:42:42 AM', 'C/In', '08:42 AM', '10/05/2016', 0),
-	(263, 'MT', 'PALOMA, EMILY P.', '10011', '10/5/2016 5:06:06 PM', 'C/Out', '05:06 PM', '10/05/2016', 0),
-	(264, 'MT', 'PALOMA, EMILY P.', '10011', '10/6/2016 8:46:29 AM', 'C/In', '08:46 AM', '10/06/2016', 0),
-	(265, 'MT', 'PALOMA, EMILY P.', '10011', '10/6/2016 5:22:01 PM', 'C/Out', '05:22 PM', '10/06/2016', 0),
-	(266, 'MT', 'PALOMA, EMILY P.', '10011', '10/7/2016 8:55:10 AM', 'C/In', '08:55 AM', '10/07/2016', 0),
-	(267, 'MT', 'PALOMA, EMILY P.', '10011', '10/7/2016 5:28:26 PM', 'C/Out', '05:28 PM', '10/07/2016', 0),
-	(268, 'MT', 'PALOMA, EMILY P.', '10011', '10/8/2016 8:18:25 AM', 'C/In', '08:18 AM', '10/08/2016', 0),
-	(269, 'MT', 'PALOMA, EMILY P.', '10011', '10/8/2016 4:40:57 PM', 'C/Out', '04:40 PM', '10/08/2016', 0),
-	(270, 'MT', 'PALOMA, EMILY P.', '10011', '10/10/2016 9:22:39 AM', 'C/In', '09:22 AM', '10/10/2016', 0),
-	(271, 'MT', 'PALOMA, EMILY P.', '10011', '10/10/2016 5:17:24 PM', 'C/Out', '05:17 PM', '10/10/2016', 0),
-	(272, 'MT', 'PALOMA, EMILY P.', '10011', '10/11/2016 8:50:29 AM', 'C/In', '08:50 AM', '10/11/2016', 0),
-	(273, 'MT', 'PALOMA, EMILY P.', '10011', '10/11/2016 5:14:13 PM', 'C/Out', '05:14 PM', '10/11/2016', 0),
-	(274, 'MT', 'PALOMA, EMILY P.', '10011', '10/12/2016 8:42:26 AM', 'C/In', '08:42 AM', '10/12/2016', 0),
-	(275, 'MT', 'PALOMA, EMILY P.', '10011', '10/12/2016 5:00:10 PM', 'C/In', '05:00 PM', '10/12/2016', 0),
-	(276, 'MT', 'PALOMA, EMILY P.', '10011', '10/13/2016 8:31:01 AM', 'C/In', '08:31 AM', '10/13/2016', 0),
-	(277, 'MT', 'PALOMA, EMILY P.', '10011', '10/13/2016 5:13:30 PM', 'C/Out', '05:13 PM', '10/13/2016', 0),
-	(278, 'MT', 'PALOMA, EMILY P.', '10011', '10/14/2016 8:40:53 AM', 'C/In', '08:40 AM', '10/14/2016', 0),
-	(279, 'MT', 'PALOMA, EMILY P.', '10011', '10/14/2016 5:11:59 PM', 'C/Out', '05:11 PM', '10/14/2016', 0),
-	(280, 'MT', 'PALOMA, EMILY P.', '10011', '10/15/2016 7:15:49 AM', 'C/In', '07:15 AM', '10/15/2016', 0),
-	(281, 'MT', 'PALOMA, EMILY P.', '10011', '10/15/2016 4:07:49 PM', 'C/Out', '04:07 PM', '10/15/2016', 0),
-	(282, 'MT', 'PALOMA, EMILY P.', '10011', '10/17/2016 11:48:44 AM', 'C/In', '11:48 AM', '10/17/2016', 0),
-	(283, 'MT', 'PALOMA, EMILY P.', '10011', '10/17/2016 5:18:58 PM', 'C/Out', '05:18 PM', '10/17/2016', 0),
-	(284, 'MT', 'PALOMA, EMILY P.', '10011', '10/18/2016 8:38:19 AM', 'C/In', '08:38 AM', '10/18/2016', 0),
-	(285, 'MT', 'PALOMA, EMILY P.', '10011', '10/18/2016 5:17:43 PM', 'C/Out', '05:17 PM', '10/18/2016', 0),
-	(286, 'MT', 'PALOMA, EMILY P.', '10011', '10/19/2016 8:37:00 AM', 'C/In', '08:37 AM', '10/19/2016', 0),
-	(287, 'MT', 'PALOMA, EMILY P.', '10011', '10/19/2016 5:14:47 PM', 'C/Out', '05:14 PM', '10/19/2016', 0),
-	(288, 'MT', 'PALOMA, EMILY P.', '10011', '10/20/2016 8:44:28 AM', 'C/In', '08:44 AM', '10/20/2016', 0),
-	(289, 'MT', 'PALOMA, EMILY P.', '10011', '10/20/2016 5:13:13 PM', 'C/Out', '05:13 PM', '10/20/2016', 0),
-	(290, 'MT', 'PALOMA, EMILY P.', '10011', '10/21/2016 8:38:59 AM', 'C/In', '08:38 AM', '10/21/2016', 0),
-	(291, 'MT', 'PALOMA, EMILY P.', '10011', '10/21/2016 5:11:56 PM', 'C/Out', '05:11 PM', '10/21/2016', 0),
-	(292, 'MT', 'PALOMA, EMILY P.', '10011', '10/22/2016 7:43:50 AM', 'C/In', '07:43 AM', '10/22/2016', 0),
-	(293, 'MT', 'PALOMA, EMILY P.', '10011', '10/22/2016 4:50:12 PM', 'C/Out', '04:50 PM', '10/22/2016', 0),
-	(294, 'MT', 'PALOMA, EMILY P.', '10011', '10/24/2016 10:12:07 AM', 'C/In', '10:12 AM', '10/24/2016', 0),
-	(295, 'MT', 'PALOMA, EMILY P.', '10011', '10/24/2016 5:36:56 PM', 'C/Out', '05:36 PM', '10/24/2016', 0),
-	(296, 'MT', 'PALOMA, EMILY P.', '10011', '10/25/2016 8:52:40 AM', 'C/In', '08:52 AM', '10/25/2016', 0),
-	(297, 'MT', 'PALOMA, EMILY P.', '10011', '10/25/2016 5:10:34 PM', 'C/Out', '05:10 PM', '10/25/2016', 0),
-	(298, 'MT', 'PALOMA, EMILY P.', '10011', '10/26/2016 8:56:32 AM', 'C/In', '08:56 AM', '10/26/2016', 0),
-	(299, 'MT', 'PALOMA, EMILY P.', '10011', '10/26/2016 5:18:42 PM', 'C/Out', '05:18 PM', '10/26/2016', 0),
-	(300, 'MT', 'PALOMA, EMILY P.', '10011', '10/27/2016 8:58:21 AM', 'C/In', '08:58 AM', '10/27/2016', 0),
-	(301, 'MT', 'PALOMA, EMILY P.', '10011', '10/27/2016 5:28:56 PM', 'C/Out', '05:28 PM', '10/27/2016', 0),
-	(302, 'MT', 'PALOMA, EMILY P.', '10011', '10/28/2016 12:35:53 PM', 'C/In', '12:35 PM', '10/28/2016', 0),
-	(303, 'MT', 'PALOMA, EMILY P.', '10011', '10/28/2016 7:07:22 PM', 'C/Out', '07:07 PM', '10/28/2016', 0),
-	(304, 'MT', 'PALOMA, EMILY P.', '10011', '10/29/2016 7:54:57 AM', 'C/In', '07:54 AM', '10/29/2016', 0),
-	(305, 'MT', 'PALOMA, EMILY P.', '10011', '10/29/2016 12:51:34 PM', 'C/Out', '12:51 PM', '10/29/2016', 0),
-	(306, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/3/2016 8:48:53 AM', 'C/In', '08:48 AM', '10/03/2016', 0),
-	(307, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/3/2016 6:11:33 PM', 'C/Out', '06:11 PM', '10/03/2016', 0),
-	(308, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/4/2016 7:53:18 AM', 'C/In', '07:53 AM', '10/04/2016', 0),
-	(309, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/4/2016 6:31:15 PM', 'C/Out', '06:31 PM', '10/04/2016', 0),
-	(310, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/5/2016 7:59:31 AM', 'C/In', '07:59 AM', '10/05/2016', 0),
-	(311, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/5/2016 6:51:55 PM', 'C/Out', '06:51 PM', '10/05/2016', 0),
-	(312, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/6/2016 7:52:19 AM', 'C/In', '07:52 AM', '10/06/2016', 0),
-	(313, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/6/2016 5:45:52 PM', 'C/Out', '05:45 PM', '10/06/2016', 0),
-	(314, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/7/2016 7:57:34 AM', 'C/Out', '07:57 AM', '10/07/2016', 0),
-	(315, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/7/2016 5:26:27 PM', 'C/Out', '05:26 PM', '10/07/2016', 0),
-	(316, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/10/2016 8:58:31 AM', 'C/In', '08:58 AM', '10/10/2016', 0),
-	(317, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/10/2016 5:18:10 PM', 'C/Out', '05:18 PM', '10/10/2016', 0),
-	(318, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/11/2016 7:58:18 AM', 'C/In', '07:58 AM', '10/11/2016', 0),
-	(319, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/11/2016 5:25:43 PM', 'C/Out', '05:25 PM', '10/11/2016', 0),
-	(320, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/12/2016 7:51:20 AM', 'C/In', '07:51 AM', '10/12/2016', 0),
-	(321, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/12/2016 5:01:59 PM', 'C/In', '05:01 PM', '10/12/2016', 0),
-	(322, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/13/2016 7:56:04 AM', 'C/In', '07:56 AM', '10/13/2016', 0),
-	(323, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/13/2016 5:33:15 PM', 'C/Out', '05:33 PM', '10/13/2016', 0),
-	(324, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/14/2016 7:57:37 AM', 'C/In', '07:57 AM', '10/14/2016', 0),
-	(325, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/14/2016 5:24:22 PM', 'C/Out', '05:24 PM', '10/14/2016', 0),
-	(326, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/20/2016 7:55:31 AM', 'C/In', '07:55 AM', '10/20/2016', 0),
-	(327, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/20/2016 5:18:42 PM', 'C/Out', '05:18 PM', '10/20/2016', 0),
-	(328, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/21/2016 7:54:29 AM', 'C/In', '07:54 AM', '10/21/2016', 0),
-	(329, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/21/2016 5:12:24 PM', 'C/Out', '05:12 PM', '10/21/2016', 0),
-	(330, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/24/2016 8:51:23 AM', 'C/In', '08:51 AM', '10/24/2016', 0),
-	(331, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/24/2016 7:58:39 PM', 'C/Out', '07:58 PM', '10/24/2016', 0),
-	(332, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/25/2016 8:00:25 AM', 'C/In', '08:00 AM', '10/25/2016', 0),
-	(333, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/25/2016 5:17:39 PM', 'C/Out', '05:17 PM', '10/25/2016', 0),
-	(334, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/26/2016 7:57:38 AM', 'C/In', '07:57 AM', '10/26/2016', 0),
-	(335, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/26/2016 5:15:06 PM', 'C/Out', '05:15 PM', '10/26/2016', 0),
-	(336, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/27/2016 7:54:30 AM', 'C/In', '07:54 AM', '10/27/2016', 0),
-	(337, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/27/2016 5:30:55 PM', 'C/Out', '05:30 PM', '10/27/2016', 0),
-	(338, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/28/2016 7:59:04 AM', 'C/In', '07:59 AM', '10/28/2016', 0),
-	(339, 'MT', 'TABAMO, LINDSEY B.', '10012', '10/28/2016 7:09:17 PM', 'C/Out', '07:09 PM', '10/28/2016', 0),
-	(340, 'MT', 'BERSANO, MELANIE M.', '10015', '10/3/2016 12:26:53 PM', 'C/In', '12:26 PM', '10/03/2016', 0),
-	(341, 'MT', 'BERSANO, MELANIE M.', '10015', '10/3/2016 5:24:33 PM', 'C/Out', '05:24 PM', '10/03/2016', 0),
-	(342, 'MT', 'BERSANO, MELANIE M.', '10015', '10/4/2016 7:12:21 AM', 'C/In', '07:12 AM', '10/04/2016', 0),
-	(343, 'MT', 'BERSANO, MELANIE M.', '10015', '10/4/2016 5:18:47 PM', 'C/Out', '05:18 PM', '10/04/2016', 0),
-	(344, 'MT', 'BERSANO, MELANIE M.', '10015', '10/5/2016 7:05:45 AM', 'C/In', '07:05 AM', '10/05/2016', 0),
-	(345, 'MT', 'BERSANO, MELANIE M.', '10015', '10/5/2016 7:59:43 PM', 'C/Out', '07:59 PM', '10/05/2016', 0),
-	(346, 'MT', 'BERSANO, MELANIE M.', '10015', '10/6/2016 7:29:21 AM', 'C/In', '07:29 AM', '10/06/2016', 0),
-	(347, 'MT', 'BERSANO, MELANIE M.', '10015', '10/6/2016 6:30:07 PM', 'C/Out', '06:30 PM', '10/06/2016', 0),
-	(348, 'MT', 'BERSANO, MELANIE M.', '10015', '10/7/2016 8:48:29 AM', 'C/In', '08:48 AM', '10/07/2016', 0),
-	(349, 'MT', 'BERSANO, MELANIE M.', '10015', '10/7/2016 5:45:14 PM', 'C/Out', '05:45 PM', '10/07/2016', 0),
-	(350, 'MT', 'BERSANO, MELANIE M.', '10015', '10/8/2016 4:50:07 PM', 'C/Out', '04:50 PM', '10/08/2016', 0),
-	(351, 'MT', 'BERSANO, MELANIE M.', '10015', '10/10/2016 12:33:30 PM', 'C/In', '12:33 PM', '10/10/2016', 0),
-	(352, 'MT', 'BERSANO, MELANIE M.', '10015', '10/10/2016 5:42:30 PM', 'C/Out', '05:42 PM', '10/10/2016', 0),
-	(353, 'MT', 'BERSANO, MELANIE M.', '10015', '10/11/2016 7:19:25 AM', 'C/In', '07:19 AM', '10/11/2016', 0),
-	(354, 'MT', 'BERSANO, MELANIE M.', '10015', '10/12/2016 7:27:34 AM', 'C/In', '07:27 AM', '10/12/2016', 0),
-	(355, 'MT', 'BERSANO, MELANIE M.', '10015', '10/12/2016 5:10:26 PM', 'C/Out', '05:10 PM', '10/12/2016', 0),
-	(356, 'MT', 'BERSANO, MELANIE M.', '10015', '10/13/2016 7:18:15 AM', 'C/In', '07:18 AM', '10/13/2016', 0),
-	(357, 'MT', 'BERSANO, MELANIE M.', '10015', '10/13/2016 5:20:37 PM', 'C/Out', '05:20 PM', '10/13/2016', 0),
-	(358, 'MT', 'BERSANO, MELANIE M.', '10015', '10/14/2016 7:23:05 AM', 'C/In', '07:23 AM', '10/14/2016', 0),
-	(359, 'MT', 'BERSANO, MELANIE M.', '10015', '10/15/2016 8:16:26 AM', 'C/In', '08:16 AM', '10/15/2016', 0),
-	(360, 'MT', 'BERSANO, MELANIE M.', '10015', '10/15/2016 4:35:14 PM', 'C/Out', '04:35 PM', '10/15/2016', 0),
-	(361, 'MT', 'BERSANO, MELANIE M.', '10015', '10/20/2016 7:27:57 AM', 'C/In', '07:27 AM', '10/20/2016', 0),
-	(362, 'MT', 'BERSANO, MELANIE M.', '10015', '10/20/2016 7:35:14 PM', 'C/Out', '07:35 PM', '10/20/2016', 0),
-	(363, 'MT', 'BERSANO, MELANIE M.', '10015', '10/22/2016 7:42:36 AM', 'C/In', '07:42 AM', '10/22/2016', 0),
-	(364, 'MT', 'BERSANO, MELANIE M.', '10015', '10/22/2016 4:00:35 PM', 'C/Out', '04:00 PM', '10/22/2016', 0),
-	(365, 'MT', 'BERSANO, MELANIE M.', '10015', '10/24/2016 12:06:29 PM', 'C/In', '12:06 PM', '10/24/2016', 0),
-	(366, 'MT', 'BERSANO, MELANIE M.', '10015', '10/24/2016 8:57:21 PM', 'C/Out', '08:57 PM', '10/24/2016', 0),
-	(367, 'MT', 'BERSANO, MELANIE M.', '10015', '10/28/2016 8:48:42 AM', 'C/In', '08:48 AM', '10/28/2016', 0),
-	(368, 'MT', 'BERSANO, MELANIE M.', '10015', '10/28/2016 5:31:46 PM', 'C/Out', '05:31 PM', '10/28/2016', 0),
-	(369, 'MT', 'BERSANO, MELANIE M.', '10015', '10/29/2016 8:14:17 AM', 'C/In', '08:14 AM', '10/29/2016', 0),
-	(370, 'MT', 'BERSANO, MELANIE M.', '10015', '10/29/2016 4:24:22 PM', 'C/Out', '04:24 PM', '10/29/2016', 0);
 /*!40000 ALTER TABLE `tbl_attendanceraw` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_company
@@ -1859,22 +417,19 @@ CREATE TABLE IF NOT EXISTS `tbl_cutoff` (
   `ifActive` enum('Y','N') NOT NULL DEFAULT 'N',
   `ifFinished` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`cutoff_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table hris_payroll.tbl_cutoff: 5 rows
+-- Dumping data for table hris_payroll.tbl_cutoff: 1 rows
 /*!40000 ALTER TABLE `tbl_cutoff` DISABLE KEYS */;
 INSERT INTO `tbl_cutoff` (`cutoff_id`, `cutoff_range`, `occurence_id`, `from_date`, `to_date`, `ifActive`, `ifFinished`) VALUES
-	(1, 'Dec 1 to Dec 15, 2016', 2, '2016-12-01', '2016-12-15', 'N', 'N'),
-	(2, '2016-12-16 to 2016-12-31', 2, '2016-12-16', '2016-12-31', 'N', 'N'),
-	(4, '2017-01-01 to 2017-01-15', 2, '2017-01-01', '2017-01-15', 'N', 'N'),
-	(5, '2016-10-01 to 2016-10-15', 2, '2016-10-01', '2016-10-15', 'N', 'N'),
-	(7, '2017-04-16 to 2017-04-30', 2, '2017-04-16', '2017-04-30', 'Y', 'N');
+	(1, '16 May 2017 to 31 May 2017', 2, '2017-05-16', '2017-05-31', 'Y', 'N');
 /*!40000 ALTER TABLE `tbl_cutoff` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_employee
 DROP TABLE IF EXISTS `tbl_employee`;
 CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_employee` varchar(50) DEFAULT NULL,
   `emp_id` varchar(50) DEFAULT NULL,
   `emp_bio_id` varchar(50) DEFAULT NULL,
   `fName` varchar(50) DEFAULT NULL,
@@ -1885,23 +440,132 @@ CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `phic_id` varchar(50) DEFAULT NULL,
   `hdmf_id` varchar(50) DEFAULT NULL,
   `tin` varchar(50) DEFAULT NULL,
-  `employment_status` varchar(50) DEFAULT NULL,
   `company` varchar(50) DEFAULT NULL,
   `branch` varchar(50) DEFAULT NULL,
   `position` varchar(50) DEFAULT NULL,
   `tax_status` varchar(50) DEFAULT NULL,
+  `employment_status` varchar(50) DEFAULT NULL,
   `basic_salary` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=229 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1253 DEFAULT CHARSET=latin1;
 
--- Dumping data for table hris_payroll.tbl_employee: 5 rows
+-- Dumping data for table hris_payroll.tbl_employee: 114 rows
 /*!40000 ALTER TABLE `tbl_employee` DISABLE KEYS */;
-INSERT INTO `tbl_employee` (`id`, `emp_id`, `emp_bio_id`, `fName`, `mName`, `lName`, `shiftgroup`, `sss_id`, `phic_id`, `hdmf_id`, `tin`, `employment_status`, `company`, `branch`, `position`, `tax_status`, `basic_salary`) VALUES
-	(1, 'SMSI-CGC-0001', '10003', 'Jennifer', 'Beltran', 'Dantes', 'Regular', '1542012157', '151654841', '218410514', '154264845000', 'Probationary', 'Manila Teachers', 'Cagayan de Oro', 'Accountant', 'M1', 13000),
-	(228, 'SMSi-0001', '10004', 'Raul John', 'Apuli', 'Altavano', 'Regular', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 10000),
-	(5, '4545r', '', 'RE', 'A', 'axd', 'Flexibles', '', '', '', '', '', '', '', '', '', 0),
-	(6, '000PLAI', '', 'marco', 'k', 'arangcop', 'Flexibles', '', '', '', '', '', '', '', '', '', 0),
-	(2, 'o3b5r', '10007', 'Charizze Mae', 'Tab', 'Lumagsao', 'Regular', '3243', '1112', '', '', 'Regular', 'Manila Teachers', 'Cagayan de Oro', 'Accountant', 'S', 11000);
+INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`, `mName`, `lName`, `shiftgroup`, `sss_id`, `phic_id`, `hdmf_id`, `tin`, `company`, `branch`, `position`, `tax_status`, `employment_status`, `basic_salary`) VALUES
+	(1, NULL, '310-98-4', '10003', 'Jennifer', 'Palo', 'Dantes', 'Permanent', '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HRD Head', 'M1', 'Regular', 10000),
+	(2, NULL, '', '', 'Charizze Mae', 'Taboada', 'Lumagsao', 'Part-Time', '8-15700359', '150501399622', '121025696574', '', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'S', 'Resigned', 0),
+	(12, NULL, '', '', 'Shiela', 'L.', 'Achas', 'Permanent', '08-2580153-6', '150504178309', '121148071155', '330785488000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'S', 'Regular', 11),
+	(22, NULL, '', '', 'Daina Jane', 'Layar', 'Lungtad', 'Part-Time', '08-2663610-8', '150253033462', '121148247833', '331694187', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Staff', 'S', 'Regular', 11),
+	(32, NULL, '', '', 'Angelito', 'Diaz', 'Delada', 'Permanent', '09-28611092', '160504045878', '121031718739', '945606122', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', 'S', 'Regular', 0),
+	(42, NULL, '', '', 'Kimberly', 'Arcena', 'Bicong', 'Permanent', '', '162506289777', '915170351768', '429744351', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', 'Regular', 0),
+	(52, NULL, '', '', 'Rachel', 'Likit', 'Brua', 'Permanent', '09-3103097-4', '170252743289', '121101750577', '445-307-079', 'Primo Partners Phils, Inc.', 'Davao', 'Admin Supervisor', 'S', 'Regular', 0),
+	(62, NULL, '', '', 'Cheryrose', 'Nepomuceno', 'Gabaton', 'Permanent', '0933035427', '160504739322', '121115018624', '444168187000', 'Primo Partners Phils, Inc.', 'Davao', 'Bookkeeper', 'S', 'Regular', 0),
+	(72, NULL, '', '', 'Nathaniel', 'Pasco', 'Dela Pena', 'Permanent', '09-08358948', '160500375997', '005064402507', '124010444', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', 'M', 'Regular', 0),
+	(82, NULL, '', '', 'Amalia', 'Demapitan', 'Frias', 'Part-Time', '09-15874295', '170502340371', '121030580785', '450957189', 'Primo Partners Phils, Inc.', 'Davao', 'Chef/Cold Section', 'S', 'Regular', 0),
+	(92, NULL, '', '', 'Leny', 'Serue', 'Lastrella', 'Permanent', '09278694176', '170501695087', '18000768907', '429743909', 'Primo Partners Phils, Inc.', 'Davao', 'Inventory Controller', 'S', 'Regular', 0),
+	(102, NULL, '', '', 'Erlyn', 'Bolante', 'Lim', 'Permanent', '09-30062419', '160503475631', '121032392549', '286335650', 'Primo Partners Phils, Inc.', 'Davao', 'Cashier', 'S', 'Regular', 0),
+	(112, NULL, '', '', 'Aldrin', 'Cotamora', 'Loma', 'Part-Time', '09-38159793', '160506389620', '121157478629', '', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', 'S', 'Resigned', 0),
+	(122, NULL, '', '', 'Lyrie Mae', 'Lustre', 'Magbutay', 'Permanent', '09-3230107-1', '121028563644', '160504463106', '460-769-947', 'Primo Partners Phils, Inc.', 'Davao', 'Cashier/Dining', 'S1', 'Regular', 0),
+	(132, NULL, '', '', 'Rodel', 'Esmedina', 'Villegas', 'Permanent', '09-3345227-5', '150504925215', '121029330515', '415-610-167', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', 'S', 'Regular', 0),
+	(142, NULL, '', '', 'Henilito', 'Gonzales', 'Polia Jr.', 'Permanent', '09-3208339-9', '160504315484', '121029358912', '400-672-745', 'Primo Partners Phils, Inc.', 'Davao', 'Bartender', 'S', 'Regular', 0),
+	(152, NULL, '', '', 'Nestor', 'Masing', 'Bantilan', 'Permanent', '09-1244652-9', '160500046756', '913169041227', '124-651-296', 'Primo Partners Phils, Inc.', 'Davao', 'Dining Supervisor', 'M', 'Regular', 0),
+	(162, NULL, '', '', 'Roberto', 'Celerio', 'Jambaro Jr.', 'Permanent', '0925830148', '160503436059', '188000743398', '308884166000', 'Primo Partners Phils, Inc.', 'Davao', 'Kitchen Supervisor', 'S1', 'Regular', 0),
+	(192, NULL, '', '', 'Junmer', 'Rebuyas', 'Talindog', 'Permanent', '09-300-44709', '160505841848', '91320145691', '', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', 'S', 'Regular', 0),
+	(202, NULL, '', '', 'Ryan', 'Dodoso', 'Florencio', 'Permanent', '09-3164239-1', '160504252636', '121086740639', '291-191-248', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', 'S', 'Regular', 0),
+	(212, NULL, '', '', 'Arnold', 'Aboyme', 'Plaza', 'Part-Time', '09-4157916-6', '162508071957', '', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', 'S', 'Probationary', 0),
+	(222, NULL, '', '', 'Jimrey', 'R.', 'Abenoja', 'Permanent', '09-3224951-5', '160506266820', '121122325178', '455239111', 'Currahee Construction Corporation', 'CDO', 'General Maintenance Service', 'S1', 'Regular', 0),
+	(232, NULL, '', '', 'Nerio', 'Gildore', 'Amper', 'Permanent', '', '190902066156', '', '922208289', 'Currahee Construction Corporation', 'CDO', 'Financial comptroller', 'S1', 'Regular', 0),
+	(262, NULL, '', '', 'James', 'C.', 'Baldosano', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'CDO', 'Field Engineer', '', 'Regular', 0),
+	(282, NULL, '', '', 'Renante', 'M.', 'Cabigas', 'Permanent', '0613995298', '152016370597', '', '', 'Currahee Construction Corporation', 'CDO', 'Liaison and Purchaser', 'M2', 'Regular', 0),
+	(292, NULL, '', '', 'Gerald', 'Detoyato', 'Caro', 'Permanent', '3430488752', '112021267328', '', '', 'Currahee Construction Corporation', 'CDO', 'Draftsman', 'M1', 'Probationary', 0),
+	(312, NULL, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Permanent', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'M', 'Regular', 32),
+	(322, NULL, '', '', 'Elgin', 'Cabunilas', 'Camilotes', 'Permanent', '09-3653870-9', '160505803776', '121098218437', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', 'S', 'Regular', 0),
+	(332, NULL, '', '', 'Aileen Joy', 'C', 'Castro', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', 'S', 'Project Based', 0),
+	(352, NULL, '', '', 'Elvira', 'Carvajal', 'Montera', 'Permanent', '09-2211068-3', '160501550245', '121042672683', '928503260', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Acctg & Audit Head', 'M3', 'Regular', 0),
+	(362, NULL, '', '', 'Kristine Joy', 'Carreon', 'Dealca', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', 'S', 'Regular', 0),
+	(372, NULL, '', '', 'Raul Adrian', 'Apuli', 'Altavano', 'Part-Time', '3464059636', '150504494774', '121144034952', '445182360', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'S', 'Probationary', 11000),
+	(382, NULL, '', '', 'May', 'Abroguena', 'Ebalang', 'Permanent', '08-1441611-0', '150251158837', '121030943288', '930-840161', 'Currahee Construction Corporation', 'CDO', 'Administrative Staff', 'S', 'Probationary', 0),
+	(392, NULL, '', '', 'Charlene', 'Jomoc', 'Almuete', 'Permanent', '0826525316', '150504277390', '', '330785931', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'S', 'Probationary', 12000),
+	(402, NULL, '', '', 'Patricio', 'R.', 'Galdo', 'Permanent', '', '', '', '', 'Manila Teachers Mutual Aid System, Inc.', 'Iligan', 'USP', 'S', 'Regular', 0),
+	(412, NULL, '', '', 'Marco', 'Costamero', 'Arangco', 'Permanent', '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'System Analyst/Developer', 'M2', 'Regular', 0),
+	(422, NULL, '', '', 'Izza Honey', 'C.', 'Manluza', 'Permanent', '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Currahee Construction Corporation', 'CDO', 'Office Engineer', 'M', 'Regular', 0),
+	(442, NULL, '', '', 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'Permanent', '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Currahee Construction Corporation', 'CDO', 'Bookkeeper', 'S', 'Regular', 0),
+	(452, NULL, '', '', 'Arnaldo', 'Arguilles', 'Mantillas', 'Permanent', '08-1075836-1', '', '310101797702', '180-027-122', 'Currahee Construction Corporation', 'CDO', 'Operations Manager', 'S1', 'Regular', 0),
+	(462, NULL, '', '', 'Brazzel Gay', 'J.', 'Cabaltera', 'Permanent', '0939595806', '010520667240', '121151311466', '472885607', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Social Media/ Sales and Marketing Staff', 'S', 'Probationary', 10),
+	(472, NULL, '', '', 'Renan', 'A.', 'Moreno', 'Permanent', '0816173053', '150502397216', '182000543107', '410675176', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Web Lead', 'M', 'Regular', 0),
+	(482, NULL, '', '', 'Rolando', 'T.', 'Mosqueda', 'Permanent', '09-2739922-1', '160505100007', '104002257284', '422-012-424', 'Currahee Construction Corporation', 'DVO', 'Utility Service Personnel', 'S', 'Project Based', 0),
+	(502, NULL, '', '', 'Jean', 'S.', 'Godornes', 'Permanent', '0816613128', '150501858430', '182000563981', '950159075', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Operations Supervisor', 'M', 'Regular', 15000),
+	(512, NULL, '', '', 'Michael', 'Dayag', 'Baculio', 'Permanent', '08-1605491-0', '010505744239', '109002186565', '256027612', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'M1', 'Regular', 0),
+	(542, NULL, '', '', 'Robert', 'Batonghinog', 'Bersano', 'Permanent', '0815082802', '020503777364', '104002242398', '937694691', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Lead', 'M1', 'Regular', 0),
+	(552, NULL, '', '', 'Pete Emmanuell', 'L.', 'Balagosa', 'Permanent', '08-1801748-9', '150503883890', '121134979348', '330784605', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'S', 'Regular', 11),
+	(562, NULL, '', '', 'Khristian Darylle Joe', 'Bona', 'Battad', 'Permanent', '3442813205', '020262108512', '121131509835', '468727860', 'Norminring Development Corporation', 'DVO', 'MRP', 'S', 'Probationary', 0),
+	(582, NULL, '', '', 'John', 'M.', 'Mingo', 'Permanent', '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Currahee Construction Corporation', 'DVO', 'Field Engineer', 'S', 'Regular', 0),
+	(592, NULL, '', '', 'Gina', 'Aboyme', 'Micoy', 'Permanent', '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Currahee Construction Corporation', 'DVO', 'Accounting Supervisor', 'M2', 'Regular', 0),
+	(602, NULL, '', '', 'Lowie', 'G.', 'Ulo', 'Permanent', '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Currahee Construction Corporation', 'DVO', 'General Maintenance Service', 'M', 'Regular', 0),
+	(612, NULL, '', '', 'Mario', 'Quiam', 'Tolosa', 'Project Based', '33-2666182-9', '082011907160', '', '', 'Currahee Construction Corporation', 'CDO', 'Foreman', 'M3', 'Project Based', 0),
+	(622, NULL, '', '', 'Julius', 'B.', 'Lascano', 'Part-Time', '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Currahee Construction Corporation', 'CDO', 'Logistic Manager', 'S', 'Probationary', 0),
+	(632, NULL, '', '', 'Romnick June', 'A.', 'Elcana', 'Part-Time', '09-2857476-0', '160502796558', '121194643961', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', 'S', 'Probationary', 10),
+	(642, NULL, '', '', 'Diane Joy', 'Yu', 'Mapano', 'Permanent', '1010277291', '140251731043', '121007858757', '452117419', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Accounting Technician', 'S', 'Regular', 12),
+	(652, NULL, '', '', 'Cresar John', 'Reyes', 'Arce', 'Permanent', '0922273135', '162003641023', '190000056276', '947987046', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'M2', 'Regular', 0),
+	(662, NULL, '', '', 'Lorman', 'S.', 'Saladaga', 'Permanent', '1009497752', '140251248725', '914301364780', '816667', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'S', 'Regular', 12),
+	(672, NULL, '', '', 'Geneth', 'L.', 'Sayson', 'Permanent', '0935125869', '160505344984', '121070911178', '429361074', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'S', 'Regular', 15),
+	(682, NULL, '', '', 'Nancy', 'Montebon', 'Wong', 'Permanent', '0919148684', '160501640325', '101000063572', '940042814', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', 'S1', 'Regular', 0),
+	(692, NULL, '', '', 'Jeffrey', 'Moneba', 'Antoque', 'Permanent', '0937380136', '160255309649', '121111591247', '409174979', 'Norminring Development Corporation', 'CDO', 'Senior Service Mechanic', 'S', 'Regular', 0),
+	(702, NULL, '', '', 'Salome', 'M.', 'Bodiongan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Inventory Controller', 'S', 'Regular', 0),
+	(712, NULL, '', '', 'Ryan Evan', 'P.', 'Almacin', 'Part-Time', '09-2732070-8', '', '', '432-197-977', 'Norminring Development Corporation', 'DVO', 'GSP', 'M', 'Probationary', 10),
+	(722, NULL, '', '', 'Raquel', 'A.', 'Baldecantos', 'Permanent', '3458063803', '140502131016', '121167253093', '', 'Norminring Development Corporation', 'DPL', 'Branch Cashier', 'S', 'Regular', 0),
+	(732, NULL, '', '', 'Gwyne', 'G.', 'Delos Reyes', 'Permanent', '0922110900', '160501436590', '121029344671', '931745676', 'Norminring Development Corporation', 'DVO', 'Bookkeeper', 'M', 'Regular', 0),
+	(742, NULL, '', '', 'Miejor', 'T.', 'Dela Cruz', 'Permanent', '', '150502394209', '', '', 'Norminring Development Corporation', 'DVO', 'Service & After Sales Manager', 'M2', 'Regular', 0),
+	(752, NULL, '', '', 'Rudini', 'G.', 'Galdo', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Branch Cashier', '', 'Probationary', 0),
+	(762, NULL, '', '', 'Allyn', 'C.', 'Angustia', 'Part-Time', '0939076231', '162509528500', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', 'S', 'Regular', 11),
+	(772, NULL, '', '', 'Reil Hazzin', 'Batilona', 'Bicoy', 'Permanent', '1011114502', '120513230309', '121142125817', '438-892-350', 'Norminring Development Corporation', 'DPL', 'MRP - Sales', 'M1', 'Regular', 0),
+	(782, NULL, '', '', 'Marlon', 'R.', 'Gal', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'General Service Maintenance', 'M', 'Regular', 11),
+	(792, NULL, '', '', 'Rudini', 'G.', 'Galdo', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Branch Cashier', 'S', '', 0),
+	(802, NULL, '', '', 'Arturo', 'G.', 'Lopez Jr.', 'Part-Time', '0929775063', '160252612308', '121180477483', '425186753', 'Norminring Development Corporation', 'DVO', 'Driver/Mechanic', 'M', 'Probationary', 10),
+	(812, NULL, '', '', 'Jose Miguel', 'P.', 'Jonelas', 'Part-Time', '0941836113', '162506888417', '917004406258', '', 'Norminring Development Corporation', 'DVO', 'Assistant Bookkeeper', 'S', 'Probationary', 10),
+	(822, NULL, '', '', 'Jessa', 'Datulayta', 'Bayking', 'Permanent', '09-35775620', '160256016613', '121177270191', '492-048-158', 'Mindanao Precast Structures Inc.', 'CDO', 'Secretary/Admin', 'S', 'Regular', 0),
+	(832, NULL, '', '', 'Ralph Nicko', 'Alcober', 'Olam', 'Permanent', '08-1977086-4', '150503440239', '916215856747', '492-049-415', 'Mindanao Precast Structures Inc.', 'CDO', 'Company Driver', 'S', 'Regular', 0),
+	(842, NULL, '', '', 'Armando', 'L.', 'Bagac', 'Permanent', '08-23845222', '150503550425', '121138563124', '492-048-869', 'Mindanao Precast Structures Inc.', 'CDO', 'General Maintenance', 'S', 'Regular', 0),
+	(852, NULL, '', '', 'Harold', 'Domo', 'Aparicio', 'Part-Time', '', '150252810651', '', '', 'Mindanao Precast Structures Inc.', 'CDO', 'Production Supervisor', 'S', 'Probationary', 0),
+	(862, NULL, '', '', 'John Gleen', 'Diaz', 'Panebio', 'Permanent', '08-1461106-7', '030501829486', '121004908041', '288-518-234', 'Mindanao Precast Structures Inc.', 'CDO', 'Production Head', 'M', 'Regular', 0),
+	(872, NULL, '', '', 'Arnulfo', 'V.', 'Layco', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'General Manager', 'S', 'Regular', 0),
+	(882, NULL, '', '', 'Stephanie', 'A.', 'Somoza', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', 'S', 'Probationary', 10),
+	(892, NULL, '', '', 'Jaymar', 'R.', 'Coresis', 'Permanent', '09-2984886-4', '060503261070', '', '', 'Norminring Development Corporation', 'DVO', 'MRP - Sales', 'S', 'Regular', 0),
+	(902, NULL, '', '', 'Mark Anthony', 'M.', 'Montera', 'Permanent', '0920192988', '162003621529', '', '924469729', 'Norminring Development Corporation', 'DVO', 'Utility/Liaison', 'S', 'Regular', 0),
+	(912, NULL, '', '', 'Rizza Mae', 'C.', 'Lapinid', 'Part-Time', '0942047011', '170253314020', '4866783', '485272573', 'Norminring Development Corporation', 'DVO', 'Sales Associate', 'S1', 'Probationary', 10),
+	(922, NULL, '', '', 'Pamela Ivy', 'A.', 'Improgo', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'CDO', 'Branch Manager', 'S1', 'Regular', 0),
+	(932, NULL, '', '', 'Jenner Nino', 'B.', 'Moneba', 'Permanent', '0924271258', '160501354306', '', '928767649', 'Norminring Development Corporation', 'DVO', 'Service and After Sales Manager', '', 'Regular', 0),
+	(942, NULL, '', '', 'Joesus', 'L.', 'Rabadan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'CDO', 'GSP', 'S1', 'Regular', 0),
+	(952, NULL, '', '', 'Michael Angelou', 'H.', 'Ponte', 'Permanent', '', '160504101026', '', '', 'Norminring Development Corporation', 'CDO', 'MRP - Sales', 'S', 'Regular', 0),
+	(962, NULL, '', '', 'Leo Alfie', 'A.', 'Quipanes', 'Permanent', '06-2515281-2', '120508612104', '913030000320', '289493450000', 'Norminring Development Corporation', 'ZBO', 'Senior Service Mechanic', 'S1', 'Regular', 0),
+	(972, NULL, '', '', 'Norben Jay', 'Leron', 'Ruiz', 'Permanent', '11-0370996-4', '160504245400', '121135281185', '297110378000', 'Norminring Development Corporation', 'DVO', 'Lead Service Mechanic', 'M3', 'Regular', 0),
+	(992, NULL, '', '', 'Danilo', 'T.', 'Palo Jr.', 'Permanent', '0923935935', '160501224674', '188000522089', '929085069', 'Norminring Development Corporation', 'KID', 'Senior Service Mechanic', '', 'Regular', 0),
+	(1002, NULL, '', '', 'Nelson', 'S.', 'Tacoloy', 'Permanent', '0927359096', '', '188001482849', '412120768', 'Norminring Development Corporation', 'DVO', 'Junior Service Mechanic', 'M1', 'Regular', 0),
+	(1012, NULL, '', '', 'Roland', 'C.', 'Sarce', 'Permanent', '0922452639', '', '', '', 'Norminring Development Corporation', 'DVO', 'Junior Service Mechanic', 'S', 'Regular', 0),
+	(1022, NULL, '', '', 'Jasper', 'B.', 'Saludes', 'Part-Time', '09-3982708-2', '', '1211-5491-23', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', 'S', 'Probationary', 10),
+	(1032, NULL, '', '', 'Ivan', 'Orbeta', 'Paredes', 'Permanent', '09-2319395-5', '160501550229', '915043561517', '922203402', 'Norminring Development Corporation', 'DPL', 'Branch Manager', 'S', 'Regular', 0),
+	(1042, NULL, '', '', 'Girlie', 'G.', 'Tolosa', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'ZBO', 'Branch Cashier', '', 'Regular', 0),
+	(1052, NULL, '', '', 'Kirbay Jay', 'A.', 'Ragol', 'Permanent', '09-4205318-6', '162010570662', '', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', 'Regular', 11),
+	(1062, NULL, '', '', 'Lovely Judy May', 'P.', 'Villar', 'Permanent', '0941445135', '160507400628', '121192880142', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', 'S', 'Regular', 11),
+	(1072, NULL, '', '', 'Anthony Greg', 'L.', 'Naduma', 'Permanent', '06-2877441-7', '180252527352', '121143095233', '460-398-585', 'Norminring Development Corporation', 'CDO', 'Sales and Marketing', 'S', 'Regular', 11),
+	(1082, NULL, '', '', 'Joer', 'S.', 'Delas Penas', 'Permanent', '', '170501971165', '', '280184534', 'Norminring Development Corporation', 'DVO', 'MRP - Sales', 'S', 'Regular', 0),
+	(1092, NULL, '', '', 'Ivy', 'R.', 'Florentino', 'Permanent', '0941791452', '162511202515', '916236620041', '', 'Bellarmine Magister Enrichment Corporation', '', 'Front Desk Officer', 'S', '', 0),
+	(1102, NULL, '', '', 'April Dan', 'S.', 'Borromeo', 'Permanent', '940335961', '162500434732', '916273954122', '', 'Bellarmine Magister Enrichment Corporation', '', 'Maintenance/Marketing Assistant', 'S', '', 0),
+	(1112, NULL, '', '', 'Junalona', 'R.', 'Basalo', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', '', 'Trainer-Full Time', 'S', '', 0),
+	(1122, NULL, '', '', 'Margilen', 'Edrozo', 'Abuhan', 'Project Based', '', '150254168765', '', '461537289', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', 0),
+	(1132, NULL, '', '', 'Alejando', 'Tilos', 'Paloma', 'Permanent', '09-2341709-7', '162005511844', '', '291789935', 'My Only Way, Inc.', '', 'Farm Caretaker', 'M1', '', 0),
+	(1142, NULL, '', '', 'Alex', 'Alejandro', 'Paloma', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', 0),
+	(1152, NULL, '', '', 'Danilo', 'Delgado', 'Vedida Jr.', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', 0),
+	(1162, NULL, '', '', 'Ronald', 'Eduave', 'Tawacal', 'Project Based', '', '230027168227', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', 0),
+	(1172, NULL, '', '', 'Anthony', 'Sanchez', 'Potot', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', 0),
+	(1182, NULL, '', '', 'Janine', 'Llanos', 'Jasmin', 'Permanent', '08-2399113-4', '150503497044', '121098502267', '440560910', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'S1', 'Regular', 0),
+	(1192, NULL, '', '', 'Christian', 'Morden', 'Rebuyas', 'Part-Time', '09-4212214-3', '162519095378', '917059132863', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'Probationary', 0),
+	(1202, NULL, '', '', 'Joseph', 'R.', 'Giron II', 'Permanent', '339-6120-303', '150502868960', '914343835204', '290055877000', 'Manila Teachers Mutual Aid System, Inc.', 'Manila', 'Technical Support Staff', 'S', 'Regular', 0),
+	(1212, NULL, '', '', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'S', 'Regular', 11),
+	(1222, NULL, '', '', 'Franco', 'P.', 'Amesola', 'Part-Time', '011101706862', '030205910474', '107012316640', '004524260', 'Norminring Development Corporation', 'CDO', 'Sales Associate/Operations', 'S', 'Probationary', 12),
+	(1232, NULL, '', '', 'Mary Grace', 'A.', 'Escalona', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Admin Head/Bookkeeper/HR Point Person', 'M2', 'Probationary', 10),
+	(1242, NULL, '', '', 'Noel', 'P.', 'Sobejana', 'Part-Time', '0813387680', '190895509276', '1900958641', '215413654', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Administrator', 'S1', 'Probationary', 15),
+	(1252, NULL, '', '', 'Kareen', 'J.', 'De Guzman', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Trainer-Part time', 'S', 'Probationary', 0);
 /*!40000 ALTER TABLE `tbl_employee` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_incentives
@@ -1932,12 +596,10 @@ CREATE TABLE IF NOT EXISTS `tbl_leaves` (
   `reason` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_leaves: 1 rows
+-- Dumping data for table hris_payroll.tbl_leaves: 0 rows
 /*!40000 ALTER TABLE `tbl_leaves` DISABLE KEYS */;
-INSERT INTO `tbl_leaves` (`id`, `employee_id`, `leave_type`, `durFrom`, `durTo`, `dateFiled`, `mode`, `days_applied`, `reason`, `status`) VALUES
-	(2, '228', 'Emergency Leave', '2017-03-22', '2017-03-24', '2017-03-28', 'with pay', '3.0', 'ads', 'Approved by HR\r');
 /*!40000 ALTER TABLE `tbl_leaves` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_loans
@@ -1954,12 +616,10 @@ CREATE TABLE IF NOT EXISTS `tbl_loans` (
   `endDate` date DEFAULT NULL,
   `remarks` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`loan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_loans: 1 rows
+-- Dumping data for table hris_payroll.tbl_loans: 0 rows
 /*!40000 ALTER TABLE `tbl_loans` DISABLE KEYS */;
-INSERT INTO `tbl_loans` (`loan_id`, `employee_id`, `loan_type`, `lendingCompany`, `amount`, `term`, `monthlyAmortization`, `startDate`, `endDate`, `remarks`) VALUES
-	(1, 1, 'SSS Loan', 'SSS', 1, 'f', 32, '2017-03-22', '2017-03-22', 'fd');
 /*!40000 ALTER TABLE `tbl_loans` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_overtime
@@ -1975,20 +635,19 @@ CREATE TABLE IF NOT EXISTS `tbl_overtime` (
   `totalHours` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_overtime: 1 rows
+-- Dumping data for table hris_payroll.tbl_overtime: 0 rows
 /*!40000 ALTER TABLE `tbl_overtime` DISABLE KEYS */;
-INSERT INTO `tbl_overtime` (`id`, `employee_id`, `reason`, `dateFiled`, `dateRequested`, `timeStart`, `timeEnd`, `totalHours`, `status`) VALUES
-	(1, 1, 'finish work', '2016-10-03', '2016-10-08', '5', '7', '02:00', 'Approved by HR');
 /*!40000 ALTER TABLE `tbl_overtime` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_payrollbatch
 DROP TABLE IF EXISTS `tbl_payrollbatch`;
 CREATE TABLE IF NOT EXISTS `tbl_payrollbatch` (
   `payrollbatch_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payslip_id` int(11) NOT NULL,
-  `remarks` text NOT NULL,
+  `cutoff_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `isFinished` text NOT NULL,
   PRIMARY KEY (`payrollbatch_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -2038,12 +697,12 @@ CREATE TABLE IF NOT EXISTS `tbl_shifts` (
 -- Dumping data for table hris_payroll.tbl_shifts: 6 rows
 /*!40000 ALTER TABLE `tbl_shifts` DISABLE KEYS */;
 INSERT INTO `tbl_shifts` (`id`, `day`, `timein`, `timeout`, `shiftgroup`) VALUES
-	(1, 'Wednesday', '09:00 AM', '05:00 PM', 'Regular'),
-	(12, 'Saturday', '09:00 AM', '03:00 PM', 'Regular'),
-	(7, 'Thursday', '09:00 AM', '05:00 PM', 'Regular'),
-	(9, 'Tuesday', '09:00 AM', '05:00 PM', 'Regular'),
-	(10, 'Friday', '09:00 AM', '05:00 PM', 'Regular'),
-	(11, 'Monday', '09:00 AM', '05:00 PM', 'Regular');
+	(1, 'Wednesday', '09:00 AM', '05:00 PM', 'Permanent'),
+	(12, 'Saturday', '09:00 AM', '03:00 PM', 'Permanent'),
+	(7, 'Thursday', '09:00 AM', '05:00 PM', 'Permanent'),
+	(9, 'Tuesday', '09:00 AM', '05:00 PM', 'Permanent'),
+	(10, 'Friday', '09:00 AM', '05:00 PM', 'Permanent'),
+	(11, 'Monday', '09:00 AM', '05:00 PM', 'Permanent');
 /*!40000 ALTER TABLE `tbl_shifts` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_user

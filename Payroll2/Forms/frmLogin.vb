@@ -31,7 +31,7 @@ Public Class frmLogin
         Dim dynamicControl As New ctrlServerSettings
         With dynamicControl
             .Name = "serverSettings"
-            .Location = New Point(0, 199)
+            .Location = New Point(0, 195)
         End With
         Me.Controls.Add(dynamicControl)
 
@@ -40,7 +40,7 @@ Public Class frmLogin
 
     Private Sub LinkLabel1_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles login_settings.LinkClicked
         If isfrmLogin_expanded = False Then
-            Me.Height = 395
+            Me.Height = 440
             isfrmLogin_expanded = True
         Else
             Me.Height = 220

@@ -28,7 +28,7 @@ Public Class frmMain
     '
     Sub loadEmployee()
         'load employee list on start up
-        StrSql = "SELECT emp_id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' ORDER BY Employee ASC"
+        StrSql = "SELECT id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') ORDER BY Employee ASC"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Emp")
@@ -40,6 +40,7 @@ Public Class frmMain
             dgv_emplist.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + i
         Next
+        dgv_emplist.Columns(0).Visible = False
     End Sub
 
     'refresh employee table
@@ -51,8 +52,7 @@ Public Class frmMain
     'open employee details
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
-        Dim b = Me.dgv_emplist.CurrentRow.Cells(1).Value.ToString
-        Dim frmEmpDetails As New frmEmpDetails(a, b)
+        Dim frmEmpDetails As New frmEmpDetails(a)
         frmEmpDetails.ShowDialog()
     End Sub
 
