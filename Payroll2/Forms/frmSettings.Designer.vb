@@ -48,6 +48,8 @@ Partial Class frmSettings
         Me.dgv_holiday = New System.Windows.Forms.DataGridView()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.group_sync = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.btn_syncleaves = New System.Windows.Forms.Button()
         Me.btn_syncovertime = New System.Windows.Forms.Button()
         Me.btn_syncemployees = New System.Windows.Forms.Button()
@@ -70,8 +72,6 @@ Partial Class frmSettings
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorDeleteItem = New System.Windows.Forms.ToolStripButton()
         Me.dgv_users = New System.Windows.Forms.DataGridView()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabControl2.SuspendLayout()
@@ -369,12 +369,30 @@ Partial Class frmSettings
         Me.group_sync.TabStop = False
         Me.group_sync.Text = "Syncronize"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(8, 141)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(61, 13)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "Allowances"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(279, 136)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(84, 23)
+        Me.Button1.TabIndex = 4
+        Me.Button1.Text = "Sync"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'btn_syncleaves
         '
         Me.btn_syncleaves.Location = New System.Drawing.Point(279, 107)
         Me.btn_syncleaves.Name = "btn_syncleaves"
         Me.btn_syncleaves.Size = New System.Drawing.Size(84, 23)
-        Me.btn_syncleaves.TabIndex = 1
+        Me.btn_syncleaves.TabIndex = 3
         Me.btn_syncleaves.Text = "Sync"
         Me.btn_syncleaves.UseVisualStyleBackColor = True
         '
@@ -383,7 +401,7 @@ Partial Class frmSettings
         Me.btn_syncovertime.Location = New System.Drawing.Point(279, 78)
         Me.btn_syncovertime.Name = "btn_syncovertime"
         Me.btn_syncovertime.Size = New System.Drawing.Size(84, 23)
-        Me.btn_syncovertime.TabIndex = 1
+        Me.btn_syncovertime.TabIndex = 2
         Me.btn_syncovertime.Text = "Sync"
         Me.btn_syncovertime.UseVisualStyleBackColor = True
         '
@@ -392,7 +410,7 @@ Partial Class frmSettings
         Me.btn_syncemployees.Location = New System.Drawing.Point(279, 19)
         Me.btn_syncemployees.Name = "btn_syncemployees"
         Me.btn_syncemployees.Size = New System.Drawing.Size(84, 23)
-        Me.btn_syncemployees.TabIndex = 1
+        Me.btn_syncemployees.TabIndex = 0
         Me.btn_syncemployees.Text = "Sync"
         Me.btn_syncemployees.UseVisualStyleBackColor = True
         '
@@ -461,7 +479,7 @@ Partial Class frmSettings
         Me.btn_exportcutoff.Location = New System.Drawing.Point(289, 75)
         Me.btn_exportcutoff.Name = "btn_exportcutoff"
         Me.btn_exportcutoff.Size = New System.Drawing.Size(75, 23)
-        Me.btn_exportcutoff.TabIndex = 1
+        Me.btn_exportcutoff.TabIndex = 2
         Me.btn_exportcutoff.Text = "Export"
         Me.btn_exportcutoff.UseVisualStyleBackColor = True
         '
@@ -506,7 +524,7 @@ Partial Class frmSettings
         Me.btn_exporttimesheet.Location = New System.Drawing.Point(289, 17)
         Me.btn_exporttimesheet.Name = "btn_exporttimesheet"
         Me.btn_exporttimesheet.Size = New System.Drawing.Size(75, 23)
-        Me.btn_exporttimesheet.TabIndex = 1
+        Me.btn_exporttimesheet.TabIndex = 0
         Me.btn_exporttimesheet.Text = "Export"
         Me.btn_exporttimesheet.UseVisualStyleBackColor = True
         '
@@ -589,24 +607,6 @@ Partial Class frmSettings
         Me.dgv_users.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_users.Size = New System.Drawing.Size(387, 261)
         Me.dgv_users.TabIndex = 0
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(279, 136)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(84, 23)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Sync"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(8, 141)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(61, 13)
-        Me.Label2.TabIndex = 3
-        Me.Label2.Text = "Allowances"
         '
         'frmSettings
         '

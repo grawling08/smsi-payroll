@@ -14,16 +14,16 @@ Module modSync
 
     Function SyncEmployee() As Boolean
         Try
-            StrSql = "INSERT INTO hris_payroll.tbl_employee SELECT hris.employees.id, hris.employees.employee_id, hris.employees.biometric_id, hris.employees.fName, hris.employees.mi, " _
-                        & "hris.employees.lName, hris.shiftsgroup.shiftName, hris.employees.sssNo, hris.employees.phicNo, hris.employees.hdmfNo, " _
-                        & "hris.employees.taxNo, hris.companies.name as company_name, hris.branches.name as branch_name, hris.positions.name as position_name, " _
-                        & "hris.taxstatus.taxcode, hris.services.employmentStatus, hris.services.basicSalary FROM hris.employees " _
-                        & "LEFT JOIN hris.services ON hris.employees.id = hris.services.employee_id " _
-                        & "LEFT JOIN hris.positions ON hris.services.position_id = hris.positions.id " _
-                        & "LEFT JOIN hris.companies ON hris.services.company_id = hris.companies.id " _
-                        & "LEFT JOIN hris.branches ON hris.services.branch_id = hris.branches.id " _
-                        & "LEFT JOIN hris.taxstatus ON hris.employees.taxstatus_id = hris.taxstatus.id " _
-                        & "LEFT JOIN hris.shiftsgroup ON hris.employees.shiftgroup_id = hris.shiftsgroup.id "
+            'StrSql = "INSERT INTO hris_payroll.tbl_employee SELECT " & dbnameHR & ".employees.id, " & dbnameHR & ".employees.employee_id, " & dbnameHR & ".employees.biometric_id, " & dbnameHR & ".employees.fName, " & dbnameHR & ".employees.mi, " _
+            '            & "" & dbnameHR & ".employees.lName, " & dbnameHR & ".shiftsgroup.shiftName, " & dbnameHR & ".employees.sssNo, " & dbnameHR & ".employees.phicNo, " & dbnameHR & ".employees.hdmfNo, " _
+            '            & "" & dbnameHR & ".employees.taxNo, " & dbnameHR & ".companies.name as company_name, " & dbnameHR & ".branches.name as branch_name, " & dbnameHR & ".positions.name as position_name, " _
+            '            & "" & dbnameHR & ".taxstatus.taxcode, " & dbnameHR & ".services.employmentStatus, " & dbnameHR & ".services.basicSalary FROM " & dbnameHR & ".employees " _
+            '            & "LEFT JOIN " & dbnameHR & ".services ON " & dbnameHR & ".employees.id = " & dbnameHR & ".services.employee_id " _
+            '            & "LEFT JOIN " & dbnameHR & ".positions ON " & dbnameHR & ".services.position_id = " & dbnameHR & ".positions.id " _
+            '            & "LEFT JOIN " & dbnameHR & ".companies ON " & dbnameHR & ".services.company_id = " & dbnameHR & ".companies.id " _
+            '            & "LEFT JOIN " & dbnameHR & ".branches ON " & dbnameHR & ".services.branch_id = " & dbnameHR & ".branches.id " _
+            '            & "LEFT JOIN " & dbnameHR & ".taxstatus ON " & dbnameHR & ".employees.taxstatus_id = " & dbnameHR & ".taxstatus.id " _
+            '            & "LEFT JOIN " & dbnameHR & ".shiftsgroup ON " & dbnameHR & ".employees.shiftgroup_id = " & dbnameHR & ".shiftsgroup.id "
             'SHGetKnownFolderPath(FolderDownloads, 0, IntPtr.Zero, sb)
             'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_employee; " _
             '            & "LOAD DATA LOCAL INFILE '" & sb.ToString.Replace("\", "\\") & "\\employee-list.csv' INTO TABLE temporary_table " _
@@ -39,8 +39,42 @@ Module modSync
             '            & "branch = VALUES(branch),position = VALUES(position), " _
             '            & "tax_status = VALUES(tax_status),basic_salary = VALUES(basic_salary); " _
             '            & "DROP TEMPORARY TABLE temporary_table;"
+            StrSql = "SELECT emp.id, emp.employee_id, emp.biometric_id, emp.fName, emp.mi, emp.lName, shift.shiftName, " _
+                        & "emp.sssNo, emp.phicNo, emp.hdmfNo, emp.taxNo, (com.name) AS company, (bra.name) AS branch, " _
+                        & "(pos.name) AS position, rank.rank, taxstat.taxcode, emp.emp_status, serv.basicSalary " _
+                        & "FROM employees emp " _
+                        & "LEFT JOIN shiftsgroup shift ON shift.id= emp.shiftgroup_id " _
+                        & "LEFT JOIN companies com ON com.id= emp.company_id " _
+                        & "LEFT JOIN branches bra ON bra.id= emp.branch_id " _
+                        & "LEFT JOIN positions pos ON pos.id= emp.position_id " _
+                        & "LEFT JOIN taxstatus taxstat ON taxstat.id= emp.taxstatus_id " _
+                        & "LEFT JOIN rank ON rank.id= pos.rank_id " _
+                        & "LEFT JOIN services serv ON serv.employee_id= emp.id AND serv.ifcurrent= '1' " _
+                        & "WHERE ifNull(emp.employee_id,'') != 'SP-Admin'"
             QryReadH()
-            cmd.ExecuteNonQuery()
+            Dim dt = New DataTable
+            adpt.Fill(dt)
+            For i = 0 To dt.Rows.Count - 1
+                'dt.Rows({row number})({field/column}).ToString
+                'dt.Rows(i)(0).ToString
+                Try
+                    StrSql = "REPLACE INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary) " _
+                                & "VALUES(" & dt.Rows(i)(0).ToString & ",'" & dt.Rows(i)(1).ToString & "'," _
+                                & "'" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "'," _
+                                & "'" & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "'," _
+                                & "'" & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "'," _
+                                & "'" & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "'," _
+                                & "'" & dt.Rows(i)(10).ToString & "','" & dt.Rows(i)(11).ToString & "'," _
+                                & "'" & dt.Rows(i)(12).ToString & "','" & dt.Rows(i)(13).ToString & "'," _
+                                & "'" & dt.Rows(i)(14).ToString & "','" & dt.Rows(i)(15).ToString & "'," _
+                                & "'" & dt.Rows(i)(16).ToString & "'," & dt.Rows(i)(17).ToString & ")"
+                    QryReadP()
+                    cmd.ExecuteNonQuery()
+                Catch e As MySqlException
+                    MessageBox.Show(e.ToString)
+                    Return False
+                End Try
+            Next
         Catch e As MySqlException
             MessageBox.Show(e.ToString)
             Return False
@@ -50,10 +84,10 @@ Module modSync
 
     Function SyncLeaves() As Boolean
         Try
-            StrSql = "INSERT INTO hris_payroll.tbl_leaves SELECT hris.leaveapp.id, hris.leaveapp.employee_id, " _
-                        & "hris.leaves.name AS 'Leave Type', hris.leaveapp.durFrom AS 'From Date', hris.leaveapp.durTo AS 'To Date', hris.leaveapp.dateFiled AS 'Date Filed', " _
-                        & "hris.leaveapp.days_applied AS 'Days Applied', hris.leaveapp.reason AS 'Reason', hris.leaveapp.status AS 'Status' FROM hris.leaveapp, hris.leaves, hris.employees " _
-                        & "WHERE hris.leaveapp.leave_id = hris.leaves.id AND hris.leaveapp.employee_id = hris.employees.id AND hris.leaveapp.status = 'Approved by HR'"
+            StrSql = "INSERT INTO hris_payroll.tbl_leaves SELECT " & dbnameHR & ".leaveapp.id, " & dbnameHR & ".leaveapp.employee_id, " _
+                        & "" & dbnameHR & ".leaves.name AS 'Leave Type', " & dbnameHR & ".leaveapp.durFrom AS 'From Date', " & dbnameHR & ".leaveapp.durTo AS 'To Date', " & dbnameHR & ".leaveapp.dateFiled AS 'Date Filed', " _
+                        & "" & dbnameHR & ".leaveapp.days_applied AS 'Days Applied', " & dbnameHR & ".leaveapp.reason AS 'Reason', " & dbnameHR & ".leaveapp.status AS 'Status' FROM " & dbnameHR & ".leaveapp, " & dbnameHR & ".leaves, " & dbnameHR & ".employees " _
+                        & "WHERE " & dbnameHR & ".leaveapp.leave_id = " & dbnameHR & ".leaves.id AND " & dbnameHR & ".leaveapp.employee_id = " & dbnameHR & ".employees.id AND " & dbnameHR & ".leaveapp.status = 'Approved by HR'"
             'SHGetKnownFolderPath(FolderDownloads, 0, IntPtr.Zero, sb)
             'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_leaves; " _
             '            & "LOAD DATA LOCAL INFILE '" & sb.ToString.Replace("\", "\\") & "\\leaves-list.csv' INTO TABLE temporary_table " _
@@ -76,12 +110,12 @@ Module modSync
     Function SyncLoans() As Boolean
         Try
             StrSql = "INSERT INTO hris_payroll.tbl_loans " _
-                        & "SELECT hris.loans.id, hris.employees.id as employee_id, hris.loantype.loantype AS 'Loan', " _
-                        & "hris.lendingcompany.name AS 'Lending Company', hris.loans.amount AS 'Amount', hris.loans.term AS 'Term', " _
-                        & "hris.loans.monthlyAmortization AS 'Monthly Amortization', hris.loans.startDate AS 'From', " _
-                        & "hris.loans.endDate AS 'To', hris.loans.remarks AS 'Remarks' " _
-                        & "FROM hris.loans, hris.loantype, hris.employees, hris.lendingcompany WHERE hris.loans.employee_id = hris.employees.id " _
-                        & "AND hris.lendingcompany.id = hris.loans.lendingCompany_id AND hris.loantype.id = hris.loans.loantype_id;"
+                        & "SELECT " & dbnameHR & ".loans.id, " & dbnameHR & ".employees.id as employee_id, " & dbnameHR & ".loantype.loantype AS 'Loan', " _
+                        & "" & dbnameHR & ".lendingcompany.name AS 'Lending Company', " & dbnameHR & ".loans.amount AS 'Amount', " & dbnameHR & ".loans.term AS 'Term', " _
+                        & "" & dbnameHR & ".loans.monthlyAmortization AS 'Monthly Amortization', " & dbnameHR & ".loans.startDate AS 'From', " _
+                        & "" & dbnameHR & ".loans.endDate AS 'To', " & dbnameHR & ".loans.remarks AS 'Remarks' " _
+                        & "FROM " & dbnameHR & ".loans, " & dbnameHR & ".loantype, " & dbnameHR & ".employees, " & dbnameHR & ".lendingcompany WHERE " & dbnameHR & ".loans.employee_id = " & dbnameHR & ".employees.id " _
+                        & "AND " & dbnameHR & ".lendingcompany.id = " & dbnameHR & ".loans.lendingCompany_id AND " & dbnameHR & ".loantype.id = " & dbnameHR & ".loans.loantype_id;"
             'SHGetKnownFolderPath(FolderDownloads, 0, IntPtr.Zero, sb)
             'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_loans; " _
             '            & "LOAD DATA LOCAL INFILE '" & sb.ToString.Replace("\", "\\") & "\\loans-list.csv' INTO TABLE temporary_table " _
@@ -104,11 +138,11 @@ Module modSync
     Function SyncOvertime() As Boolean
         Try
             StrSql = "INSERT INTO tbl_overtime " _
-                        & "SELECT hris.overtime.id, hris.overtime.employee_id, " _
-                        & "hris.overtime.reason AS 'Reason', hris.overtime.dateFiled AS 'Date Filed', " _
-                        & "hris.overtime.dateRequested AS 'Date Requested', hris.overtime.timeStart AS 'From', " _
-                        & "hris.overtime.timeEnd AS 'To', hris.overtime.status AS 'Status' " _
-                        & "FROM hris.overtime WHERE hris.overtime.status = 'Approved by HR'"
+                        & "SELECT " & dbnameHR & ".overtime.id, " & dbnameHR & ".overtime.employee_id, " _
+                        & "" & dbnameHR & ".overtime.reason AS 'Reason', " & dbnameHR & ".overtime.dateFiled AS 'Date Filed', " _
+                        & "" & dbnameHR & ".overtime.dateRequested AS 'Date Requested', " & dbnameHR & ".overtime.timeStart AS 'From', " _
+                        & "" & dbnameHR & ".overtime.timeEnd AS 'To', " & dbnameHR & ".overtime.status AS 'Status' " _
+                        & "FROM " & dbnameHR & ".overtime WHERE " & dbnameHR & ".overtime.status = 'Approved by HR'"
             'SHGetKnownFolderPath(FolderDownloads, 0, IntPtr.Zero, sb)
             'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_overtime; " _
             '            & "LOAD DATA LOCAL INFILE '" & sb.ToString.Replace("\", "\\") & "\\overtime-list.csv' INTO TABLE temporary_table " _
@@ -131,9 +165,9 @@ Module modSync
     Function SyncShifts() As Boolean
         Try
             StrSql = "INSERT INTO hris_payroll.tbl_shifts " _
-                        & "SELECT hris.shifts.id, hris.shifts.day as 'Day', hris.shifts.timein as 'From', " _
-                        & "hris.shifts.timeout as 'To', hris.shiftsgroup.shiftName as 'Shift Name' " _
-                        & "FROM hris.shifts, hris.shiftsgroup WHERE hris.shifts.shiftgroup_id = hris.shiftsgroup.id"
+                        & "SELECT " & dbnameHR & ".shifts.id, " & dbnameHR & ".shifts.day as 'Day', " & dbnameHR & ".shifts.timein as 'From', " _
+                        & "" & dbnameHR & ".shifts.timeout as 'To', " & dbnameHR & ".shiftsgroup.shiftName as 'Shift Name' " _
+                        & "FROM " & dbnameHR & ".shifts, " & dbnameHR & ".shiftsgroup WHERE " & dbnameHR & ".shifts.shiftgroup_id = " & dbnameHR & ".shiftsgroup.id"
             QryReadP()
             cmd.ExecuteNonQuery()
         Catch e As MySqlException

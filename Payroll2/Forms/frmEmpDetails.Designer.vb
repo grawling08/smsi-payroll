@@ -339,7 +339,7 @@ Partial Class frmEmpDetails
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(285, 395)
+        Me.Label30.Location = New System.Drawing.Point(285, 390)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(74, 13)
         Me.Label30.TabIndex = 11
@@ -744,7 +744,7 @@ Partial Class frmEmpDetails
         '
         'tb_netpaywithtax
         '
-        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 366)
+        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 361)
         Me.tb_netpaywithtax.Name = "tb_netpaywithtax"
         Me.tb_netpaywithtax.ReadOnly = True
         Me.tb_netpaywithtax.Size = New System.Drawing.Size(124, 20)
@@ -753,7 +753,7 @@ Partial Class frmEmpDetails
         '
         'tb_tax
         '
-        Me.tb_tax.Location = New System.Drawing.Point(418, 340)
+        Me.tb_tax.Location = New System.Drawing.Point(418, 335)
         Me.tb_tax.Name = "tb_tax"
         Me.tb_tax.ReadOnly = True
         Me.tb_tax.Size = New System.Drawing.Size(124, 20)
@@ -762,7 +762,7 @@ Partial Class frmEmpDetails
         '
         'tb_netincome
         '
-        Me.tb_netincome.Location = New System.Drawing.Point(418, 392)
+        Me.tb_netincome.Location = New System.Drawing.Point(418, 387)
         Me.tb_netincome.Name = "tb_netincome"
         Me.tb_netincome.ReadOnly = True
         Me.tb_netincome.Size = New System.Drawing.Size(124, 20)

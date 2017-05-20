@@ -49,6 +49,13 @@ Public Class frmSettings
         load_reftables("holiday")
         load_users()
 
+        If app_mode <> "integrate" Then
+            btn_syncemployees.Enabled = False
+            btn_syncleaves.Enabled = False
+            btn_syncloans.Enabled = False
+            btn_syncovertime.Enabled = False
+        End If
+
     End Sub
 
     Sub load_reftables(ByVal table As String)
