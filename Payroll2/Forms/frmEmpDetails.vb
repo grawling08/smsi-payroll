@@ -18,7 +18,7 @@ Public Class frmEmpDetails
     'load whole form
     Private Sub frmEmpDetails_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'load employee basic details
-        StrSql = "SELECT * FROM tbl_employee WHERE id = '" & id & "'"
+        StrSql = "SELECT * FROM tbl_employee WHERE id_employee = '" & id & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
         If dtareader.HasRows Then
@@ -100,7 +100,7 @@ Public Class frmEmpDetails
 
 #Region "computations"
     'compute daily and ourly wage
-    Private Sub computeWage()
+    Sub computeWage()
         'daily rate
         'Probi daily rate = basic salary / (26 * 12)
         'regular = basic salary / (30 * 12)
@@ -112,7 +112,7 @@ Public Class frmEmpDetails
         empHourlyWage = empDailyWage / 8
     End Sub
 
-    Private Sub totalOT()
+    Sub totalOT()
         Dim isRestdayOT As Boolean = False
         Dim isRegHolidayOT As Boolean = False
         Dim isSpecHolidayOT As Boolean = False
@@ -121,7 +121,7 @@ Public Class frmEmpDetails
         Dim CurrD As DateTime = frmdate_cutoff
         While (CurrD <= todate_cutoff)
             'query attendance per cutoff date
-            StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & tb_biometricid.Text & "' AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
             QryReadP()
             Dim dtareader As MySqlDataReader = cmd.ExecuteReader
             If dtareader.HasRows Then
@@ -137,7 +137,7 @@ Public Class frmEmpDetails
                 Dim otreader As MySqlDataReader = cmd.ExecuteReader
                 If otreader.HasRows Then
                     'check if rest day
-                    StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id = '" & id & "') AND day='" & CurrD.ToString("dddd") & "'"
+                    StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day='" & CurrD.ToString("dddd") & "'"
                     QryReadP()
                     Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
                     If Not shiftreader.HasRows Then
@@ -180,19 +180,19 @@ Public Class frmEmpDetails
         End While
     End Sub
 
-    Private Sub totalTimesheetDeduct()
+    Sub totalTimesheetDeduct()
         'loop cutoff range dates
         'check for absenses and leaves
         Dim countattendance = 0
         Dim CurrD As DateTime = frmdate_cutoff
         While (CurrD <= todate_cutoff)
             countattendance += 1
-            StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & tb_biometricid.Text & "' and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
             QryReadP()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then
                 'check if current day in loop is not within the shift schedule
-                StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id = '" & id & "') AND day='" & CurrD.ToString("dddd") & "'"
+                StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day='" & CurrD.ToString("dddd") & "'"
                 QryReadP()
                 Dim dtareader4 As MySqlDataReader = cmd.ExecuteReader()
                 If dtareader4.HasRows Then
@@ -201,7 +201,7 @@ Public Class frmEmpDetails
                     'query leave where leave is approved by the hr
                     'if leave is with pay -1 to absent
                     'leave is without pay, treated as absent
-                    StrSql = "SELECT tbl_leaves.* FROM tbl_leaves, tbl_employee WHERE tbl_employee.id = '" & id & "' AND tbl_employee.id = tbl_leaves.employee_id AND durFrom <= '" & CurrD.ToString("yyyy-MM-dd") & "' AND durTo >= '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
+                    StrSql = "SELECT tbl_leaves.* FROM tbl_leaves, tbl_employee WHERE tbl_employee.id_employee = '" & id & "' AND tbl_employee.id = tbl_leaves.employee_id AND durFrom <= '" & CurrD.ToString("yyyy-MM-dd") & "' AND durTo >= '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
                     QryReadP()
                     Dim dtareader5 As MySqlDataReader = cmd.ExecuteReader
                     If dtareader5.HasRows Then
@@ -219,7 +219,7 @@ Public Class frmEmpDetails
         End While
         Label34.Text = countattendance
         'get total lates
-        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & tb_biometricid.Text & "' AND date BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then
@@ -234,7 +234,7 @@ Public Class frmEmpDetails
         tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2) ' Math.Round(daysPresent * empDailyWage, 2)
     End Sub
 
-    Private Sub loadpayslip()
+    Sub loadpayslip()
         StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
@@ -249,7 +249,7 @@ Public Class frmEmpDetails
         End If
     End Sub
 
-    Private Sub computeTotal()
+    Sub computeTotal()
         tb_totaldeductions.Text = CDbl(tb_late.Text) + CDbl(tb_absents.Text) + CDbl(tb_undertime.Text) + CDbl(tb_sss.Text) + CDbl(tb_phic.Text) + CDbl(tb_hdmf.Text)
         tb_totalot.Text = CDbl(tb_regularot.Text) + CDbl(tb_holidayot.Text) 'plus holiday computation
         totalBenefits = 0
@@ -272,7 +272,7 @@ Public Class frmEmpDetails
         tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
     End Sub
 
-    Private Sub computeAllowance()
+    Sub computeAllowance()
         'compute allowances
         'StrSql = "SELECT employees.id, employees.employee_id, CONCAT_WS(' ',fName,mi,lName), serviceallowance.amount, allowances.* FROM employees " _
         '            & "JOIN services ON employees.id = services.employee_id " _
@@ -290,7 +290,7 @@ Public Class frmEmpDetails
         tb_allowance.Text = totalAllowance
     End Sub
 
-    Private Sub computeloans()
+    Sub computeloans()
         StrSql = "SELECT tbl_loans.* FROM tbl_loans, tbl_employee WHERE tbl_employee.id = tbl_loans.employee_id AND tbl_employee.id='" & id & "' AND startDate <= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND endDAte >= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
@@ -507,7 +507,7 @@ Public Class frmEmpDetails
     End Sub
 
     Private Sub btn_addtimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_addtimesheet.Click
-        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text)
+        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
         timesheet.ShowDialog()
     End Sub
 

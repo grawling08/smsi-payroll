@@ -28,7 +28,7 @@ Public Class frmMain
     '
     Sub loadEmployee()
         'load employee list on start up
-        StrSql = "SELECT id AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') ORDER BY Employee ASC"
+        StrSql = "SELECT id_employee AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') ORDER BY Employee ASC"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Emp")
@@ -125,8 +125,8 @@ Public Class frmMain
         Dim openFileDialog1 As New OpenFileDialog()
         Dim dta As New DataTable
         Dim MyConnection As New System.Data.OleDb.OleDbConnection
-        Dim DtSet As System.Data.DataSet
-        Dim MyCommand As System.Data.OleDb.OleDbDataAdapter
+        Dim DtSet As New System.Data.DataSet
+        Dim MyCommand As New System.Data.OleDb.OleDbDataAdapter
         openFileDialog1.InitialDirectory = "c:\"
         openFileDialog1.Filter = "Excel files |*.xls;*.xlsx"
         openFileDialog1.Title = "Select file for import"
@@ -145,7 +145,7 @@ Public Class frmMain
                             If MyConnection.State = ConnectionState.Open Then
                                 MyConnection.Close()
                             End If
-                            MyConnection = New System.Data.OleDb.OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;Data Source='" & FileName & "';Extended Properties=Excel 8.0;")
+                            MyConnection = New System.Data.OleDb.OleDbConnection("provider=Microsoft.ACE.OLEDB.12.0;Data Source='" & FileName & "';Extended Properties=Excel 12.0;")
                             MyCommand = New System.Data.OleDb.OleDbDataAdapter("select * from [Source$]", MyConnection)
                             MyCommand.TableMappings.Add("Table", "timesheet")
                             DtSet = New System.Data.DataSet
@@ -159,13 +159,9 @@ Public Class frmMain
                 End If
 
             Catch Exc As Exception
-                MessageBox.Show(Exc.InnerException.ToString)
-            Finally
-                ' Check this again, since we need to make sure we didn't throw an exception on open.
-                If (myStream IsNot Nothing) Then
-                    myStream.Close()
-                End If
+                Console.Write(Exc.InnerException.ToString)
             End Try
+            myStream.Close()
             SaveRawAttendance(dta)
             frmUploadedTimesheet.ShowDialog()
         End If

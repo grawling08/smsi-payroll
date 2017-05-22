@@ -317,8 +317,9 @@ Module modConnect
                 If compreader("code") = buff0 Then
                     'don't insert timesheet if not within the cutoff
                     StrSql = "SELECT * FROM tbl_cutoff WHERE DATE('" & CDate(buff6) & "') BETWEEN from_date AND to_date"
-                    Dim creader As MySqlDataReader = cmd.ExecuteReader()
-                    If Not creader.HasRows Then
+                    QryReadP()
+                    Dim ctreader As MySqlDataReader = cmd.ExecuteReader()
+                    If Not ctreader.HasRows Then
                         'check every line if it has already been added in the table
                         StrSql = "SELECT * FROM tbl_attendanceraw WHERE " _
                                     & "Department = '" & buff0 & "' AND " _
@@ -328,6 +329,8 @@ Module modConnect
                                     & "Status = '" & buff4 & "' AND " _
                                     & "LogTime = '" & buff5 & "' AND " _
                                     & "LogDate = '" & buff6 & "' "
+                        '& "LogTime = '" & CDate(buff3).ToString("t") & "' AND " _
+                        '& "LogDate = '" & CDate(buff3).ToString("d") & "' "
                         QryReadP()
                         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                         If Not dtareader.HasRows Then

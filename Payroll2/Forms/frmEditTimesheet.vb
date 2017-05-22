@@ -1,11 +1,12 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class frmEditTimesheet
-    Private mode, No, LogDate, Time_in, Time_out As String
-    Public Sub New(ByVal mode As String, Optional ByVal No As String = "", Optional ByVal LogDate As String = "", Optional ByVal Time_in As String = "", Optional ByVal Time_out As String = "")
+    Private mode, No, LogDate, Time_in, Time_out, id_employee As String
+    Public Sub New(ByVal mode As String, Optional ByVal No As String = "", Optional ByVal id_employee As String = "", Optional ByVal LogDate As String = "", Optional ByVal Time_in As String = "", Optional ByVal Time_out As String = "")
         MyBase.New()
         Me.mode = mode
         Me.No = No
+        Me.id_employee = id_employee
         Me.LogDate = LogDate
         Me.Time_in = Time_in
         Me.Time_out = Time_out
@@ -32,6 +33,7 @@ Public Class frmEditTimesheet
             savetemptime()
         ElseIf mode = "final" Then
             savefinaltime()
+
         End If
     End Sub
     Private Sub savetemptime()
@@ -96,7 +98,8 @@ Public Class frmEditTimesheet
         Dim latediff, undertimediff, overtimediff As Long
         Dim remarks As String = ""
         'retrieve shift details
-        StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_bio_id = '" & tb_no.Text & "')"
+        'StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_bio_id = '" & tb_no.Text & "' OR id_employee = '" & id_employee & "')"
+        StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE " & If(String.IsNullOrEmpty(tb_no.Text), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & tb_no.Text & "'") & ")"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
         If dtareader.HasRows Then
@@ -152,8 +155,8 @@ Public Class frmEditTimesheet
                 End If
             End While
         End If
-        StrSql = "INSERT INTO tbl_attendance(emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
-                    & "VALUES('" & No & "','" & log_date.ToString("yyyy-MM-dd") & "','" & Time_in & "','" _
+        StrSql = "INSERT INTO tbl_attendance(id_employee,emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
+                    & "VALUES('" & id_employee & "','" & No & "','" & log_date.ToString("yyyy-MM-dd") & "','" & Time_in & "','" _
                     & Time_out & "','" & totalHours & "','" & totalLate & "','" & totalUndertime & "','" & totalOvertime & "','" & remarks & "')"
         'Console.Write(StrSql)
         QryReadP()

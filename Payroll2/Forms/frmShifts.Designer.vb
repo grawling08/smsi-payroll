@@ -58,7 +58,7 @@ Partial Class frmShifts
         Me.cb_shifttype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_shifttype.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cb_shifttype.FormattingEnabled = True
-        Me.cb_shifttype.Items.AddRange(New Object() {"Flexible", "Irregular", "Regular"})
+        Me.cb_shifttype.Items.AddRange(New Object() {"Flexible", "Part-Time", "Permanent", "Project Based"})
         Me.cb_shifttype.Location = New System.Drawing.Point(196, 12)
         Me.cb_shifttype.Name = "cb_shifttype"
         Me.cb_shifttype.Size = New System.Drawing.Size(150, 21)
