@@ -10,9 +10,23 @@ Public Class ctrlServerSettings
         Dim HRStrings() As String = {tb_serverHR.Text, tb_uidHR.Text, tb_pwordHR.Text, tb_dbHR.Text}
         Dim PayrollStrings() As String = {tb_serverPay.Text, tb_uidPay.Text, tb_pwordPay.Text, tb_dbPay.Text}
 
-        SaveSystemSettings(PayrollStrings, HRStrings)
-        init_form()
-        MessageBox.Show("Settings Saved!")
+        If rb_mode_alone.Checked = True Then
+            app_mode = "alone"
+            SaveSystemSettings(PayrollStrings, HRStrings)
+            init_form()
+            MessageBox.Show("Settings Saved!")
+        ElseIf rb_mode_integrate.Checked = True Then
+            app_mode = "integrate"
+            If Not String.IsNullOrEmpty(tb_serverHR.Text) And Not String.IsNullOrEmpty(tb_uidHR.Text) And Not String.IsNullOrEmpty(tb_pwordHR.Text) And Not String.IsNullOrEmpty(tb_dbHR.Text) Then
+                SaveSystemSettings(PayrollStrings, HRStrings)
+                init_form()
+                MessageBox.Show("Settings Saved!")
+            Else
+                MessageBox.Show("Fill the necessary Fields for HRIS Connection", "Important Note", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
+        End If
+
+        
     End Sub
     Sub init_form()
         GetSystemSettings()
@@ -26,8 +40,7 @@ Public Class ctrlServerSettings
         tb_uidPay.Text = userPay
         tb_pwordPay.Text = passPay
         tb_dbPay.Text = dbnamePay
-
-        If conn.State = ConnectionState.Open Then
+        If Not String.IsNullOrEmpty(serverPay) And Not String.IsNullOrEmpty(dbnamePay) Then
             StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'app_mode'"
             QryReadP()
             Dim dtareader As MySqlDataReader = cmd.ExecuteReader
@@ -35,15 +48,15 @@ Public Class ctrlServerSettings
                 dtareader.Read()
                 app_mode = dtareader("value").ToString
             End If
-            Select Case app_mode
-                Case "alone"
-                    'disableControls()
-                    rb_mode_alone.Checked = True
-                Case "integrate"
-                    'enableControls()
-                    rb_mode_integrate.Checked = True
-            End Select
         End If
+        Select Case app_mode
+            Case "alone"
+                'disableControls()
+                rb_mode_alone.Checked = True
+            Case "integrate"
+                'enableControls()
+                rb_mode_integrate.Checked = True
+        End Select
     End Sub
 
     Sub disableControls()

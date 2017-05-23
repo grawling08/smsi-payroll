@@ -122,6 +122,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.lbl_shift = New System.Windows.Forms.Label()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -274,22 +275,20 @@ Partial Class frmEmpDetails
         'Label34
         '
         Me.Label34.AutoSize = True
-        Me.Label34.Location = New System.Drawing.Point(336, 20)
+        Me.Label34.Location = New System.Drawing.Point(499, 7)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(45, 13)
         Me.Label34.TabIndex = 12
         Me.Label34.Text = "Label33"
-        Me.Label34.Visible = False
         '
         'Label33
         '
         Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(285, 20)
+        Me.Label33.Location = New System.Drawing.Point(448, 7)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(45, 13)
         Me.Label33.TabIndex = 12
         Me.Label33.Text = "Label33"
-        Me.Label33.Visible = False
         '
         'btn_savepayslip
         '
@@ -544,9 +543,9 @@ Partial Class frmEmpDetails
         Me.GroupBox2.Controls.Add(Me.Label19)
         Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
         Me.GroupBox2.Controls.Add(Me.tb_allowance)
-        Me.GroupBox2.Location = New System.Drawing.Point(278, 82)
+        Me.GroupBox2.Location = New System.Drawing.Point(278, 86)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(270, 246)
+        Me.GroupBox2.Size = New System.Drawing.Size(270, 236)
         Me.GroupBox2.TabIndex = 8
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Additionals"
@@ -562,7 +561,7 @@ Partial Class frmEmpDetails
         Me.dgv_incentives.Name = "dgv_incentives"
         Me.dgv_incentives.RowHeadersVisible = False
         Me.dgv_incentives.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_incentives.Size = New System.Drawing.Size(257, 146)
+        Me.dgv_incentives.Size = New System.Drawing.Size(257, 136)
         Me.dgv_incentives.TabIndex = 5
         '
         'Column1
@@ -596,7 +595,7 @@ Partial Class frmEmpDetails
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(7, 223)
+        Me.Label31.Location = New System.Drawing.Point(7, 213)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(117, 13)
         Me.Label31.TabIndex = 6
@@ -622,7 +621,7 @@ Partial Class frmEmpDetails
         '
         'tb_totalbenefits
         '
-        Me.tb_totalbenefits.Location = New System.Drawing.Point(140, 220)
+        Me.tb_totalbenefits.Location = New System.Drawing.Point(140, 210)
         Me.tb_totalbenefits.Name = "tb_totalbenefits"
         Me.tb_totalbenefits.ReadOnly = True
         Me.tb_totalbenefits.Size = New System.Drawing.Size(124, 20)
@@ -979,113 +978,126 @@ Partial Class frmEmpDetails
         'Label4
         '
         Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(137, 60)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(69, 13)
+        Me.Label4.Size = New System.Drawing.Size(80, 13)
         Me.Label4.TabIndex = 8
         Me.Label4.Text = "Middle Name"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(6, 60)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(57, 13)
+        Me.Label3.Size = New System.Drawing.Size(67, 13)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "First Name"
         '
         'Label9
         '
         Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(137, 177)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(44, 13)
+        Me.Label9.Size = New System.Drawing.Size(52, 13)
         Me.Label9.TabIndex = 16
         Me.Label9.Text = "Position"
         '
         'Label8
         '
         Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(6, 177)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(41, 13)
+        Me.Label8.Size = New System.Drawing.Size(47, 13)
         Me.Label8.TabIndex = 14
         Me.Label8.Text = "Branch"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(6, 138)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(51, 13)
+        Me.Label7.Size = New System.Drawing.Size(58, 13)
         Me.Label7.TabIndex = 12
         Me.Label7.Text = "Company"
         '
         'Label35
         '
         Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label35.Location = New System.Drawing.Point(137, 99)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(103, 13)
+        Me.Label35.Size = New System.Drawing.Size(121, 13)
         Me.Label35.TabIndex = 22
         Me.Label35.Text = "Employement Status"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(137, 21)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(36, 13)
+        Me.Label6.Size = New System.Drawing.Size(42, 13)
         Me.Label6.TabIndex = 2
         Me.Label6.Text = "Bio ID"
         '
         'Label12
         '
         Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(6, 255)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(38, 13)
+        Me.Label12.Size = New System.Drawing.Size(42, 13)
         Me.Label12.TabIndex = 22
         Me.Label12.Text = "HDMF"
         '
         'Label11
         '
         Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(137, 216)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(46, 13)
+        Me.Label11.Size = New System.Drawing.Size(53, 13)
         Me.Label11.TabIndex = 20
         Me.Label11.Text = "PHIC ID"
         '
         'Label10
         '
         Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(6, 216)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(42, 13)
+        Me.Label10.Size = New System.Drawing.Size(48, 13)
         Me.Label10.TabIndex = 18
         Me.Label10.Text = "SSS ID"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(6, 21)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(67, 13)
+        Me.Label1.Size = New System.Drawing.Size(78, 13)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Employee ID"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(6, 99)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(49, 13)
+        Me.Label2.Size = New System.Drawing.Size(56, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Surname"
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.lbl_shift)
         Me.GroupBox4.Controls.Add(Me.Label37)
         Me.GroupBox4.Controls.Add(Me.dgv_shift)
         Me.GroupBox4.Controls.Add(Me.tb_employmentstatus)
@@ -1112,6 +1124,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4.Controls.Add(Me.Label4)
         Me.GroupBox4.Controls.Add(Me.tb_empid)
         Me.GroupBox4.Controls.Add(Me.tb_surname)
+        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(2, 2)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(298, 481)
@@ -1122,9 +1135,10 @@ Partial Class frmEmpDetails
         'Label37
         '
         Me.Label37.AutoSize = True
+        Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label37.Location = New System.Drawing.Point(6, 294)
         Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(76, 13)
+        Me.Label37.Size = New System.Drawing.Size(90, 13)
         Me.Label37.TabIndex = 25
         Me.Label37.Text = "Shift Schedule"
         '
@@ -1144,6 +1158,15 @@ Partial Class frmEmpDetails
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
         Me.dgv_shift.TabIndex = 24
+        '
+        'lbl_shift
+        '
+        Me.lbl_shift.AutoSize = True
+        Me.lbl_shift.Location = New System.Drawing.Point(137, 294)
+        Me.lbl_shift.Name = "lbl_shift"
+        Me.lbl_shift.Size = New System.Drawing.Size(45, 13)
+        Me.lbl_shift.TabIndex = 26
+        Me.lbl_shift.Text = "Label38"
         '
         'frmEmpDetails
         '
@@ -1285,4 +1308,5 @@ Partial Class frmEmpDetails
     Friend WithEvents tsb_loandelete As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_loanedit As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_addtimesheet As System.Windows.Forms.Button
+    Friend WithEvents lbl_shift As System.Windows.Forms.Label
 End Class

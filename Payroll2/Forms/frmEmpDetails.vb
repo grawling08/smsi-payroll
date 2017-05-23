@@ -38,6 +38,7 @@ Public Class frmEmpDetails
             tb_sssID.Text = dtareader("sss_id").ToString
             tb_hdmfID.Text = dtareader("hdmf_id").ToString
             tb_phicID.Text = dtareader("phic_id").ToString
+            lbl_shift.Text = dtareader("shiftgroup").ToString
         End If
         'get employee loans
         GetEmployeeLoans(id)
@@ -188,6 +189,7 @@ Public Class frmEmpDetails
         While (CurrD <= todate_cutoff)
             countattendance += 1
             StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            Console.Write(StrSql)
             QryReadP()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then
@@ -259,7 +261,8 @@ Public Class frmEmpDetails
             Next
         End If
         tb_totalbenefits.Text = CDbl(tb_allowance.Text) + totalBenefits
-        tb_grossincome.Text = Math.Round(CDbl(tb_totalot.Text) + CDbl(tb_income.Text) - CDbl(tb_totaldeductions.Text), 2)
+        Dim gross_income = Math.Round(CDbl(tb_totalot.Text) + CDbl(tb_income.Text) - CDbl(tb_totaldeductions.Text), 2)
+        tb_grossincome.Text = gross_income
         tb_tax.Text = Math.Round(computeTax(tb_grossincome.Text, taxcode), 2)
         Dim taxated_income = CDbl(tb_grossincome.Text) - CDbl(tb_tax.Text)
         tb_netpaywithtax.Text = taxated_income
@@ -273,12 +276,6 @@ Public Class frmEmpDetails
     End Sub
 
     Sub computeAllowance()
-        'compute allowances
-        'StrSql = "SELECT employees.id, employees.employee_id, CONCAT_WS(' ',fName,mi,lName), serviceallowance.amount, allowances.* FROM employees " _
-        '            & "JOIN services ON employees.id = services.employee_id " _
-        '            & "JOIN serviceallowance ON services.id = serviceallowance.service_id " _
-        '            & "JOIN allowances ON serviceallowance.allowance_id = allowances.id " _
-        '            & "WHERE employees.employee_id = '" & tb_empid.Text & "' AND services.ifcurrent = '1'"
         StrSql = "SELECT * FROM tbl_allowances"
         QryReadP()
         Dim dtareader3 As MySqlDataReader = cmd.ExecuteReader
@@ -291,7 +288,7 @@ Public Class frmEmpDetails
     End Sub
 
     Sub computeloans()
-        StrSql = "SELECT tbl_loans.* FROM tbl_loans, tbl_employee WHERE tbl_employee.id = tbl_loans.employee_id AND tbl_employee.id='" & id & "' AND startDate <= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND endDAte >= '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "'"
+        StrSql = "SELECT tbl_loans.* FROM tbl_loans WHERE tbl_loans.employee_id='" & id & "' AND endDate >= '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         Dim loans As Double = 0

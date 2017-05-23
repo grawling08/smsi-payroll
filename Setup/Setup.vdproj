@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_1BFA9D024B974141A6D69F19DBA2D4EE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -40,7 +34,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2E5490076034AADE9B57B673C3DBC9E9"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_412C0213DC00EA4C60E6EE9D6AF9F875"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,13 +58,13 @@
         "Entry"
         {
         "MsmKey" = "8:_5FD6669F33D01142A6D15FDBC03775D2"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7E255AE853103489C44AA432FDBF824C"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,19 +76,25 @@
         "Entry"
         {
         "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_BC4C5CD03E913CD894D6758E36B020CF"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,14 +105,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -123,14 +117,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
+        "MsmKey" = "8:_FD3BE1508D114803854C4138450357C4"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
+        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FD3BE1508D114803854C4138450357C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -166,13 +166,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
+        "OwnerKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
+        "OwnerKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -796,30 +796,30 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4FDAAC711F08444CA05294CD4F97BB1B"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_69A78904DF2B42DE83794BC94FF90768"
             {
-            "Name" = "8:Payroll"
+            "Name" = "8:HIPS"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
-            "Folder" = "8:_DD135EE2F1F74DB28EBCA69AE4BAD534"
+            "Target" = "8:_FD3BE1508D114803854C4138450357C4"
+            "Folder" = "8:_31D405953247477BBD18F74172BF59BA"
             "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "Icon" = "8:"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B7B09F47B5434E7FB40F7A27F932193E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7C7CE6E99C6046A3A62CCAAF8CD78E2B"
             {
-            "Name" = "8:Payroll"
+            "Name" = "8:HIPS"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_158A9EA73DE742B19392623FE7D7E6A0"
-            "Folder" = "8:_31D405953247477BBD18F74172BF59BA"
+            "Target" = "8:_FD3BE1508D114803854C4138450357C4"
+            "Folder" = "8:_DD135EE2F1F74DB28EBCA69AE4BAD534"
             "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "Icon" = "8:"
             "Feature" = "8:"
@@ -1223,7 +1223,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_158A9EA73DE742B19392623FE7D7E6A0"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FD3BE1508D114803854C4138450357C4"
             {
             "SourcePath" = "8:..\\Payroll2\\obj\\x86\\Debug\\Payroll2.exe"
             "TargetName" = "8:"

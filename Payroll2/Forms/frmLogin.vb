@@ -8,12 +8,14 @@ Public Class frmLogin
             'MessageBox.Show(result(2))
             If result(2).ToString = "Payroll Officer" Or result(2).ToString = "Admin" Then
                 'check for current cutoff and company from tblref_settings
+                If app_mode = "integrate" Then
+                    frmCheckAll.ShowDialog()
+                End If
                 If checkCurrents() = False Then
                     frm1.ShowDialog()
                 End If
                 frmMain.logged_user = result(2).ToString
                 frmMain.emp_id = result(1).ToString
-                'frmMain.Show()
             Else
                 MessageBox.Show("You don't have the necessary credentials to access this program.")
             End If

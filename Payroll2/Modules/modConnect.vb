@@ -189,7 +189,7 @@ Module modConnect
     'check if cutoff is 'finished'
     Function isCutoffFinished(ByVal cutoff As String) As Boolean
         Dim ifFinished As Boolean
-        StrSql = "SELECT * FROM tbl_cutoff WHERE cutoff_range = '" & cutoff & "' AND ifFinished = 'Y'"
+        StrSql = "SELECT * FROM tbl_cutoff WHERE cutoff_range = '" & cutoff & "' AND status = 'Done'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         If dtareader.HasRows Then
@@ -232,7 +232,7 @@ Module modConnect
     'add new cutoff
     Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
         If CheckCutoff(fromDate, toDate, occurence) = False Then
-            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,occurence_id,from_date,to_date,ifActive,ifFinished) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'N', 'N')"
+            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,occurence_id,from_date,to_date,status) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
             QryReadP()
             Try
                 With cmd

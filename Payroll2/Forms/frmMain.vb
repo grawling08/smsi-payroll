@@ -28,7 +28,7 @@ Public Class frmMain
     '
     Sub loadEmployee()
         'load employee list on start up
-        StrSql = "SELECT id_employee AS ID, CONCAT_WS(' ', lName, fName, mName) AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') ORDER BY Employee ASC"
+        StrSql = "SELECT id_employee AS ID, CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') AS Employee FROM tbl_employee WHERE tbl_employee.company = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') ORDER BY Employee ASC"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Emp")
@@ -59,7 +59,7 @@ Public Class frmMain
     Friend Sub ReloadCutoff()
         'get active cutoff
         GetCutoff()
-        Dim res = dt.Select("ifActive = 'Y'")
+        Dim res = dt.Select("status = 'Processing'")
         occurence = res(0).Item(8).ToString
         Select Case occurence
             Case "Monthly"
@@ -73,7 +73,7 @@ Public Class frmMain
             cb_cutoffsearch.ComboBox.DataSource = dt
             cb_cutoffsearch.ComboBox.DisplayMember = "cutoff_range"
         End If
-        res = dt.Select("ifActive = 'Y'")
+        res = dt.Select("status = 'Processing'")
         cb_cutoffsearch.SelectedIndex = cb_cutoffsearch.FindString(res(0).Item(1).ToString)
         
         'load payslip for the current cutoff

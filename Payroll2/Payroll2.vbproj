@@ -148,6 +148,12 @@
     <Compile Include="Forms\frm1.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmCheckAll.Designer.vb">
+      <DependentUpon>frmCheckAll.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmCheckAll.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmLeaveConversion.Designer.vb">
       <DependentUpon>frmLeaveConversion.vb</DependentUpon>
     </Compile>
@@ -259,6 +265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm1.resx">
       <DependentUpon>frm1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCheckAll.resx">
+      <DependentUpon>frmCheckAll.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmLeaveConversion.resx">
       <DependentUpon>frmLeaveConversion.vb</DependentUpon>

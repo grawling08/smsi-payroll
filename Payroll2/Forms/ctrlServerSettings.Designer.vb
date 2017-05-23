@@ -23,29 +23,29 @@ Partial Class ctrlServerSettings
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btn_testconnect = New System.Windows.Forms.Button()
+        Me.tb_pwordHR = New System.Windows.Forms.TextBox()
+        Me.tb_pwordPay = New System.Windows.Forms.TextBox()
+        Me.tb_uidHR = New System.Windows.Forms.TextBox()
+        Me.tb_uidPay = New System.Windows.Forms.TextBox()
+        Me.tb_serverHR = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.tb_serverPay = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.save_settings = New System.Windows.Forms.Button()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.tb_dbHR = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.tb_dbPay = New System.Windows.Forms.TextBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.rb_mode_integrate = New System.Windows.Forms.RadioButton()
         Me.rb_mode_alone = New System.Windows.Forms.RadioButton()
-        Me.btn_testconnect = New System.Windows.Forms.Button()
-        Me.tb_pwordPay = New System.Windows.Forms.TextBox()
-        Me.tb_uidPay = New System.Windows.Forms.TextBox()
-        Me.tb_serverPay = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.save_settings = New System.Windows.Forms.Button()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.tb_dbPay = New System.Windows.Forms.TextBox()
-        Me.tb_dbHR = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.tb_serverHR = New System.Windows.Forms.TextBox()
-        Me.tb_uidHR = New System.Windows.Forms.TextBox()
-        Me.tb_pwordHR = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -79,6 +79,172 @@ Partial Class ctrlServerSettings
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Server Settings"
         '
+        'btn_testconnect
+        '
+        Me.btn_testconnect.Location = New System.Drawing.Point(205, 139)
+        Me.btn_testconnect.Name = "btn_testconnect"
+        Me.btn_testconnect.Size = New System.Drawing.Size(97, 23)
+        Me.btn_testconnect.TabIndex = 8
+        Me.btn_testconnect.Text = "Test Connection"
+        Me.btn_testconnect.UseVisualStyleBackColor = True
+        '
+        'tb_pwordHR
+        '
+        Me.tb_pwordHR.Location = New System.Drawing.Point(282, 84)
+        Me.tb_pwordHR.Name = "tb_pwordHR"
+        Me.tb_pwordHR.Size = New System.Drawing.Size(100, 20)
+        Me.tb_pwordHR.TabIndex = 6
+        Me.tb_pwordHR.UseSystemPasswordChar = True
+        '
+        'tb_pwordPay
+        '
+        Me.tb_pwordPay.Location = New System.Drawing.Point(93, 84)
+        Me.tb_pwordPay.Name = "tb_pwordPay"
+        Me.tb_pwordPay.Size = New System.Drawing.Size(100, 20)
+        Me.tb_pwordPay.TabIndex = 2
+        Me.tb_pwordPay.UseSystemPasswordChar = True
+        '
+        'tb_uidHR
+        '
+        Me.tb_uidHR.Location = New System.Drawing.Point(282, 58)
+        Me.tb_uidHR.Name = "tb_uidHR"
+        Me.tb_uidHR.Size = New System.Drawing.Size(101, 20)
+        Me.tb_uidHR.TabIndex = 5
+        '
+        'tb_uidPay
+        '
+        Me.tb_uidPay.Location = New System.Drawing.Point(93, 58)
+        Me.tb_uidPay.Name = "tb_uidPay"
+        Me.tb_uidPay.Size = New System.Drawing.Size(101, 20)
+        Me.tb_uidPay.TabIndex = 1
+        '
+        'tb_serverHR
+        '
+        Me.tb_serverHR.Location = New System.Drawing.Point(282, 32)
+        Me.tb_serverHR.Name = "tb_serverHR"
+        Me.tb_serverHR.Size = New System.Drawing.Size(100, 20)
+        Me.tb_serverHR.TabIndex = 4
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(197, 113)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(53, 13)
+        Me.Label4.TabIndex = 16
+        Me.Label4.Text = "Database"
+        '
+        'tb_serverPay
+        '
+        Me.tb_serverPay.Location = New System.Drawing.Point(93, 32)
+        Me.tb_serverPay.Name = "tb_serverPay"
+        Me.tb_serverPay.Size = New System.Drawing.Size(100, 20)
+        Me.tb_serverPay.TabIndex = 0
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(197, 87)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(53, 13)
+        Me.Label3.TabIndex = 14
+        Me.Label3.Text = "Password"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(8, 113)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(53, 13)
+        Me.Label5.TabIndex = 16
+        Me.Label5.Text = "Database"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(8, 87)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(53, 13)
+        Me.Label10.TabIndex = 14
+        Me.Label10.Text = "Password"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(197, 61)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(55, 13)
+        Me.Label2.TabIndex = 12
+        Me.Label2.Text = "Username"
+        '
+        'save_settings
+        '
+        Me.save_settings.Location = New System.Drawing.Point(308, 139)
+        Me.save_settings.Name = "save_settings"
+        Me.save_settings.Size = New System.Drawing.Size(74, 23)
+        Me.save_settings.TabIndex = 9
+        Me.save_settings.Text = "Save"
+        Me.save_settings.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(8, 61)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(55, 13)
+        Me.Label9.TabIndex = 12
+        Me.Label9.Text = "Username"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(197, 35)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(79, 13)
+        Me.Label1.TabIndex = 10
+        Me.Label1.Text = "Server Address"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(197, 16)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(76, 13)
+        Me.Label6.TabIndex = 9
+        Me.Label6.Text = "HRIS Connect"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(6, 16)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(81, 13)
+        Me.Label7.TabIndex = 9
+        Me.Label7.Text = "Payroll Connect"
+        '
+        'tb_dbHR
+        '
+        Me.tb_dbHR.Location = New System.Drawing.Point(282, 110)
+        Me.tb_dbHR.Name = "tb_dbHR"
+        Me.tb_dbHR.Size = New System.Drawing.Size(100, 20)
+        Me.tb_dbHR.TabIndex = 7
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(8, 35)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(79, 13)
+        Me.Label8.TabIndex = 10
+        Me.Label8.Text = "Server Address"
+        '
+        'tb_dbPay
+        '
+        Me.tb_dbPay.Location = New System.Drawing.Point(93, 110)
+        Me.tb_dbPay.Name = "tb_dbPay"
+        Me.tb_dbPay.Size = New System.Drawing.Size(100, 20)
+        Me.tb_dbPay.TabIndex = 3
+        '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.rb_mode_integrate)
@@ -111,172 +277,6 @@ Partial Class ctrlServerSettings
         Me.rb_mode_alone.TabStop = True
         Me.rb_mode_alone.Text = "Stand-alone"
         Me.rb_mode_alone.UseVisualStyleBackColor = True
-        '
-        'btn_testconnect
-        '
-        Me.btn_testconnect.Location = New System.Drawing.Point(205, 139)
-        Me.btn_testconnect.Name = "btn_testconnect"
-        Me.btn_testconnect.Size = New System.Drawing.Size(97, 23)
-        Me.btn_testconnect.TabIndex = 5
-        Me.btn_testconnect.Text = "Test Connection"
-        Me.btn_testconnect.UseVisualStyleBackColor = True
-        '
-        'tb_pwordPay
-        '
-        Me.tb_pwordPay.Location = New System.Drawing.Point(93, 84)
-        Me.tb_pwordPay.Name = "tb_pwordPay"
-        Me.tb_pwordPay.Size = New System.Drawing.Size(100, 20)
-        Me.tb_pwordPay.TabIndex = 2
-        Me.tb_pwordPay.UseSystemPasswordChar = True
-        '
-        'tb_uidPay
-        '
-        Me.tb_uidPay.Location = New System.Drawing.Point(93, 58)
-        Me.tb_uidPay.Name = "tb_uidPay"
-        Me.tb_uidPay.Size = New System.Drawing.Size(101, 20)
-        Me.tb_uidPay.TabIndex = 1
-        '
-        'tb_serverPay
-        '
-        Me.tb_serverPay.Location = New System.Drawing.Point(93, 32)
-        Me.tb_serverPay.Name = "tb_serverPay"
-        Me.tb_serverPay.Size = New System.Drawing.Size(100, 20)
-        Me.tb_serverPay.TabIndex = 0
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(8, 113)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(62, 13)
-        Me.Label5.TabIndex = 16
-        Me.Label5.Text = "Database 2"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(8, 87)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(53, 13)
-        Me.Label10.TabIndex = 14
-        Me.Label10.Text = "Password"
-        '
-        'save_settings
-        '
-        Me.save_settings.Location = New System.Drawing.Point(308, 139)
-        Me.save_settings.Name = "save_settings"
-        Me.save_settings.Size = New System.Drawing.Size(74, 23)
-        Me.save_settings.TabIndex = 4
-        Me.save_settings.Text = "Save"
-        Me.save_settings.UseVisualStyleBackColor = True
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(8, 61)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(55, 13)
-        Me.Label9.TabIndex = 12
-        Me.Label9.Text = "Username"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 16)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(81, 13)
-        Me.Label7.TabIndex = 9
-        Me.Label7.Text = "Payroll Connect"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(8, 35)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(79, 13)
-        Me.Label8.TabIndex = 10
-        Me.Label8.Text = "Server Address"
-        '
-        'tb_dbPay
-        '
-        Me.tb_dbPay.Location = New System.Drawing.Point(93, 110)
-        Me.tb_dbPay.Name = "tb_dbPay"
-        Me.tb_dbPay.Size = New System.Drawing.Size(100, 20)
-        Me.tb_dbPay.TabIndex = 3
-        '
-        'tb_dbHR
-        '
-        Me.tb_dbHR.Location = New System.Drawing.Point(282, 110)
-        Me.tb_dbHR.Name = "tb_dbHR"
-        Me.tb_dbHR.Size = New System.Drawing.Size(100, 20)
-        Me.tb_dbHR.TabIndex = 3
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(197, 35)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(79, 13)
-        Me.Label1.TabIndex = 10
-        Me.Label1.Text = "Server Address"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(197, 61)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(55, 13)
-        Me.Label2.TabIndex = 12
-        Me.Label2.Text = "Username"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(197, 87)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(53, 13)
-        Me.Label3.TabIndex = 14
-        Me.Label3.Text = "Password"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(197, 113)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(62, 13)
-        Me.Label4.TabIndex = 16
-        Me.Label4.Text = "Database 2"
-        '
-        'tb_serverHR
-        '
-        Me.tb_serverHR.Location = New System.Drawing.Point(282, 32)
-        Me.tb_serverHR.Name = "tb_serverHR"
-        Me.tb_serverHR.Size = New System.Drawing.Size(100, 20)
-        Me.tb_serverHR.TabIndex = 0
-        '
-        'tb_uidHR
-        '
-        Me.tb_uidHR.Location = New System.Drawing.Point(282, 58)
-        Me.tb_uidHR.Name = "tb_uidHR"
-        Me.tb_uidHR.Size = New System.Drawing.Size(101, 20)
-        Me.tb_uidHR.TabIndex = 1
-        '
-        'tb_pwordHR
-        '
-        Me.tb_pwordHR.Location = New System.Drawing.Point(282, 84)
-        Me.tb_pwordHR.Name = "tb_pwordHR"
-        Me.tb_pwordHR.Size = New System.Drawing.Size(100, 20)
-        Me.tb_pwordHR.TabIndex = 2
-        Me.tb_pwordHR.UseSystemPasswordChar = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(197, 16)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(76, 13)
-        Me.Label6.TabIndex = 9
-        Me.Label6.Text = "HRIS Connect"
         '
         'ctrlServerSettings
         '

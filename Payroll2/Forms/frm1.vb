@@ -9,6 +9,9 @@ Public Class frm1
             lb_company.DisplayMember = "name"
         End If
         loadCutoff()
+        If app_mode = "alone" Then
+            lbl_newcutoff.Visible = False
+        End If
     End Sub
 
     Public Sub loadCutoff()
@@ -21,7 +24,7 @@ Public Class frm1
 
     Private Sub btn_savesettings_Click(sender As System.Object, e As System.EventArgs) Handles btn_savesettings.Click
         'save cutoff
-        SetActiveCutoff(lb_cutoff.Text)
+        'SetActiveCutoff(lb_cutoff.Text)
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
         QryReadP()
         Dim cutoffreader As MySqlDataReader = cmd.ExecuteReader

@@ -2,13 +2,60 @@
 Imports System.Runtime.InteropServices
 
 Module modSync
-    Private FolderDownloads As New Guid("374DE290-123F-4565-9164-39C4925E467B")
-    Dim sb As New System.Text.StringBuilder(128)
-    <DllImport("shell32.dll")> _
-    Private Function SHGetKnownFolderPath(<MarshalAs(UnmanagedType.LPStruct)> ByVal rfid As Guid, ByVal dwFlags As UInt32, ByVal hToken As IntPtr, <MarshalAs(UnmanagedType.LPWStr)> ByRef pszPath As System.Text.StringBuilder) As Int32
+    'Private FolderDownloads As New Guid("374DE290-123F-4565-9164-39C4925E467B")
+    'Dim sb As New System.Text.StringBuilder(128)
+    '<DllImport("shell32.dll")> _
+    'Private Function SHGetKnownFolderPath(<MarshalAs(UnmanagedType.LPStruct)> ByVal rfid As Guid, ByVal dwFlags As UInt32, ByVal hToken As IntPtr, <MarshalAs(UnmanagedType.LPWStr)> ByRef pszPath As System.Text.StringBuilder) As Int32
+    'End Function
+    Function SyncCompany() As Boolean
+        StrSql = "SELECT name, code FROM companies"
+        QryReadH()
+        Dim dt = New DataTable
+        adpt.Fill(dt)
+        StrSql = "TRUNCATE tbl_company"
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        For i = 0 To dt.Rows.Count - 1
+            'dt.Rows({row number})({field/column}).ToString
+            'dt.Rows(i)(0).ToString
+            Try
+                StrSql = "INSERT INTO tbl_company(name,code) " _
+                            & "VALUES('" & dt.Rows(i)(0).ToString & "','" & dt.Rows(i)(1).ToString & "')"
+                'Console.Write(StrSql)
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Catch e As MySqlException
+                MessageBox.Show(e.ToString)
+                Return False
+            End Try
+        Next
+        Return True
     End Function
 
-    Function SyncTimesheet() As Boolean
+
+    Function SyncCutoff() As Boolean
+        StrSql = "SELECT companies.name, cutoff.from_date, cutoff.to_date, occurence, status FROM cutoff, companies WHERE companies.id = cutoff.company_id"
+        QryReadH()
+        Dim dt = New DataTable
+        adpt.Fill(dt)
+        StrSql = "TRUNCATE tbl_cutoff"
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        For i = 0 To dt.Rows.Count - 1
+            'dt.Rows({row number})({field/column}).ToString
+            'dt.Rows(i)(0).ToString
+            Try
+                StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) " _
+                            & "VALUES('" & CDate(dt.Rows(i)(1).ToString).ToString("d MMM yyyy") & " to " & CDate(dt.Rows(i)(2).ToString).ToString("d MMM yyyy") & "', " _
+                            & "'" & dt.Rows(i)(0).ToString & "',(SELECT occurence_id FROM tblref_occurences WHERE name='" & occurence & "'),'" & CDate(dt.Rows(i)(1).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(3).ToString & "')"
+                'Console.Write(StrSql)
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Catch e As MySqlException
+                MessageBox.Show(e.ToString)
+                Return False
+            End Try
+        Next
         Return True
     End Function
 
@@ -124,7 +171,7 @@ Module modSync
                         & "loans.monthlyAmortization AS 'Monthly Amortization', loans.startDate AS 'From', " _
                         & "loans.endDate AS 'To', loans.remarks AS 'Remarks' " _
                         & "FROM loans, loantype, employees, lendingcompany WHERE loans.employee_id = employees.id " _
-                        & "AND lendingcompany.id = loans.lendingCompany_id AND loantype.id = loans.loantype_id;"
+                        & "AND lendingcompany.id = loans.lendingCompany_id AND loantype.id = loans.loantype_id"
             'SHGetKnownFolderPath(FolderDownloads, 0, IntPtr.Zero, sb)
             'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_loans; " _
             '            & "LOAD DATA LOCAL INFILE '" & sb.ToString.Replace("\", "\\") & "\\loans-list.csv' INTO TABLE temporary_table " _
@@ -142,12 +189,12 @@ Module modSync
                 'dt.Rows({row number})({field/column}).ToString
                 'dt.Rows(i)(0).ToString
                 Try
-                    StrSql = "REPLACE INTO tbl_loans" _
-                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & "," _
-                                & dt.Rows(i)(2).ToString & "," & dt.Rows(i)(3).ToString & "," _
-                                & dt.Rows(i)(4).ToString & "," & dt.Rows(i)(5).ToString & "," _
-                                & dt.Rows(i)(6).ToString & "," & dt.Rows(i)(7).ToString & "," _
-                                & dt.Rows(i)(8).ToString & "," & dt.Rows(i)(9).ToString & ")"
+                    StrSql = "REPLACE INTO tbl_loans(loan_id,employee_id,loan_type,lendingCompany,amount,term,monthlyAmortization,startDate,endDate,remarks)" _
+                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" & dt.Rows(i)(2).ToString & "','" _
+                                & dt.Rows(i)(3).ToString & "'," & dt.Rows(i)(4).ToString & ",'" _
+                                & dt.Rows(i)(5).ToString & "'," & dt.Rows(i)(6).ToString & ",'" _
+                                & CDate(dt.Rows(i)(7).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(8).ToString).ToString("yyyy-MM-dd") & "','" _
+                                & dt.Rows(i)(9).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
                     cmd.ExecuteNonQuery()
@@ -213,8 +260,23 @@ Module modSync
             StrSql = "SELECT shifts.id, shifts.day as 'Day', shifts.timein as 'From', " _
                         & "shifts.timeout as 'To', shiftsgroup.shiftName as 'Shift Name' " _
                         & "FROM shifts, shiftsgroup WHERE shifts.shiftgroup_id = shiftsgroup.id"
-            QryReadP()
-            cmd.ExecuteNonQuery()
+            QryReadH()
+            Dim dt = New DataTable
+            adpt.Fill(dt)
+            For i = 0 To dt.Rows.Count - 1
+                'dt.Rows({row number})({field/column}).ToString
+                'dt.Rows(i)(0).ToString
+                Try
+                    StrSql = "REPLACE INTO tbl_shifts(id,day,timein,timeout,shiftgroup)" _
+                                & "VALUES('" & dt.Rows(i)(0).ToString & "','" & dt.Rows(i)(1).ToString & "','" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "'.,'" & dt.Rows(i)(4).ToString & "')"
+                    'Console.Write(StrSql)
+                    QryReadP()
+                    cmd.ExecuteNonQuery()
+                Catch e As MySqlException
+                    MessageBox.Show(e.ToString)
+                    Return False
+                End Try
+            Next
         Catch e As MySqlException
             MessageBox.Show(e.ToString)
             Return False
@@ -223,8 +285,8 @@ Module modSync
     End Function
 
     Function SyncAllowances() As Boolean
-        'SELECT serviceallowance.id, employee_id, allowances.name, amount FROM allowances, serviceallowance
-        'WHERE serviceallowance.allowance_id = allowances.id;
+        StrSql = "SELECT serviceallowance.id, employee_id, allowances.name, amount FROM allowances, serviceallowance " _
+                    & "WHERE serviceallowance.allowance_id = allowances.id"
         Return True
     End Function
 

@@ -9,7 +9,7 @@
 
     Private Sub btn_saveshift_Click(sender As System.Object, e As System.EventArgs) Handles btn_saveshift.Click
         StrSql = "INSERT INTO tbl_shifts(day,timein,timeout,shiftgroup) " _
-                    & "VALUES('" & cb_shiftday.Text & "','" & dtp_shifttimein.Text & "','" & dtp_shifttimeout.Text & "','" & cb_shifttype.Text & "')"
+                    & "VALUES('" & cb_shiftday.Text & "','" & dtp_shifttimein.Value.ToString("t") & "','" & dtp_shifttimeout.Value.ToString("t") & "','" & cb_shifttype.Text & "')"
         QryReadP()
         cmd.ExecuteNonQuery()
         loadshifts()
