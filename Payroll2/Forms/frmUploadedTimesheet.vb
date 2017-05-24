@@ -53,7 +53,7 @@ Public Class frmUploadedTimesheet
                                 '1. compute total hours
                                 '2. employee's time in exceeds the shift time in, compute for late
                                 '2.1 determine if half day time in
-                                Console.Write(log_date & " " & dtareader("timein").ToString & "\n " & log_date & " " & time_in.ToString("h:mm:ss tt"))
+                                'Console.Write(log_date & " " & dtareader("timein").ToString & "\n " & log_date & " " & time_in.ToString("h:mm:ss tt"))
                                 Dim halfdayam As Date = log_date & " " & #12:00:00 PM#
                                 If CDate(log_date & " " & time_in.ToString("h:mm:ss tt")) < halfdayam Then
                                     If CDate(log_date & " " & time_in.ToString("h:mm:ss tt")) > CDate(log_date & " " & dtareader("timein").ToString) Then
@@ -117,31 +117,33 @@ Public Class frmUploadedTimesheet
             Dim row As New DataGridViewRow
             For Each row In dgv_temptimesheet.Rows
                 'save only the entries that is connected to an employee
-                If (row.Cells(2).Value.ToString IsNot "" And row.Cells(3).Value.ToString IsNot "") Then
+                If Not String.IsNullOrEmpty(row.Cells(2).Value.ToString) And Not String.IsNullOrEmpty(row.Cells(3).Value.ToString) And row.Cells(4).Value <> Nothing Then
                     StrSql = "Select * FROM tbl_employee WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "'"
                     QryReadP()
                     Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                     If dtareader.HasRows Then
                         'check for duplicate entries
-                        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "' AND date = '" & row.Cells(1).Value.ToString & "'"
-                        QryReadP()
-                        Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader()
+                        StrSql2 = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "' AND date = '" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'"
+                        Connect_Sub("payroll")
+                        cmd2 = New MySqlCommand(StrSql2, conn2)
+                        Dim dtareader2 As MySqlDataReader = cmd2.ExecuteReader()
                         If Not dtareader2.HasRows Then
                             'if no duplicate entries
                             'save to db
-                            Try
-                                StrSql = "INSERT INTO tbl_attendance(emp_bio_id, date, time_in, time_out, totalHours, late, undertime, overtime, remarks) " _
-                                        & "VALUES('" & row.Cells(0).Value.ToString & "'," _
-                                        & "'" & CDate(row.Cells(0).Value.ToString).ToString("yyyy-MM-dd") & "'," _
-                                        & "'" & row.Cells(2).Value.ToString & "','" & row.Cells(3).Value.ToString & "'," _
-                                        & "'" & row.Cells(4).Value.ToString & "','" & row.Cells(5).Value.ToString & "'," _
-                                        & "'" & row.Cells(6).Value.ToString & "','" & row.Cells(7).Value.ToString & "'," _
-                                        & "'" & row.Cells(8).Value.ToString & "')"
-                                QryReadP()
-                                cmd.ExecuteNonQuery()
-                            Catch ex As Exception
-                                MessageBox.Show(ex.Message.ToString)
-                            End Try
+                            'Try
+                            StrSql = "INSERT INTO tbl_attendance(emp_bio_id, date, time_in, time_out, totalHours, late, undertime, overtime, remarks) " _
+                                    & "VALUES('" & row.Cells(0).Value.ToString & "'," _
+                                    & "'" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'," _
+                                    & "'" & row.Cells(2).Value.ToString & "','" & row.Cells(3).Value.ToString & "'," _
+                                    & "'" & row.Cells(4).Value.ToString & "','" & row.Cells(5).Value.ToString & "'," _
+                                    & "'" & row.Cells(6).Value.ToString & "','" & row.Cells(7).Value.ToString & "'," _
+                                    & "'" & row.Cells(8).Value.ToString & "')"
+                            'QryReadP()
+                            'cmd.ExecuteNonQuery()
+                            'Catch ex As Exception
+                            'MessageBox.Show(ex.InnerException.ToString)
+                            'Console.Write(ex.InnerException.ToString)
+                            'End Try
                             'update saved data from tbl_attendanceraw as 'mapped'
                             StrSql = "UPDATE tbl_attendanceraw SET ifMapped='1' WHERE LogDate = '" & row.Cells(1).Value.ToString & "' AND No = '" & row.Cells(0).Value.ToString & "'"
                             QryReadP()

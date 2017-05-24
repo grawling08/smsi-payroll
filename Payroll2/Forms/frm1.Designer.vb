@@ -52,7 +52,7 @@ Partial Class frm1
         Me.btn_savesettings.Name = "btn_savesettings"
         Me.btn_savesettings.Size = New System.Drawing.Size(75, 23)
         Me.btn_savesettings.TabIndex = 5
-        Me.btn_savesettings.Text = "Save"
+        Me.btn_savesettings.Text = "Open"
         Me.btn_savesettings.UseVisualStyleBackColor = True
         '
         'lbl_newcutoff

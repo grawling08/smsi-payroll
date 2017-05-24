@@ -148,7 +148,6 @@ Public Class frmMain
                             MyConnection = New System.Data.OleDb.OleDbConnection("provider=Microsoft.ACE.OLEDB.12.0;Data Source='" & FileName & "';Extended Properties=Excel 12.0;")
                             MyCommand = New System.Data.OleDb.OleDbDataAdapter("select * from [Source$]", MyConnection)
                             MyCommand.TableMappings.Add("Table", "timesheet")
-                            DtSet = New System.Data.DataSet
                             MyCommand.Fill(DtSet)
                             dta = DtSet.Tables(0)
                         Catch ex As Exception
