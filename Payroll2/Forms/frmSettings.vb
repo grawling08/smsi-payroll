@@ -360,6 +360,11 @@ Public Class frmSettings
             MessageBox.Show("Synced Leaves")
         End If
     End Sub
+    Private Sub Button1_Click_1(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+        If SyncAllowances() Then
+            MessageBox.Show("Synced Allowances")
+        End If
+    End Sub
 #End Region
     'users CRUD
     Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorAddNewItem.Click
@@ -380,4 +385,5 @@ Public Class frmSettings
         dgv_users.Rows.Remove(dgv_users.SelectedRows(0))
         MessageBox.Show("Deleted!")
     End Sub
+
 End Class

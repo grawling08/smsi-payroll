@@ -120,9 +120,9 @@ Partial Class frmEmpDetails
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
-        Me.lbl_shift = New System.Windows.Forms.Label()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -280,6 +280,7 @@ Partial Class frmEmpDetails
         Me.Label34.Size = New System.Drawing.Size(45, 13)
         Me.Label34.TabIndex = 12
         Me.Label34.Text = "Label33"
+        Me.Label34.Visible = False
         '
         'Label33
         '
@@ -289,6 +290,7 @@ Partial Class frmEmpDetails
         Me.Label33.Size = New System.Drawing.Size(45, 13)
         Me.Label33.TabIndex = 12
         Me.Label33.Text = "Label33"
+        Me.Label33.Visible = False
         '
         'btn_savepayslip
         '
@@ -1132,6 +1134,15 @@ Partial Class frmEmpDetails
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Employee Details"
         '
+        'lbl_shift
+        '
+        Me.lbl_shift.AutoSize = True
+        Me.lbl_shift.Location = New System.Drawing.Point(137, 294)
+        Me.lbl_shift.Name = "lbl_shift"
+        Me.lbl_shift.Size = New System.Drawing.Size(45, 13)
+        Me.lbl_shift.TabIndex = 26
+        Me.lbl_shift.Text = "Label38"
+        '
         'Label37
         '
         Me.Label37.AutoSize = True
@@ -1158,15 +1169,6 @@ Partial Class frmEmpDetails
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
         Me.dgv_shift.TabIndex = 24
-        '
-        'lbl_shift
-        '
-        Me.lbl_shift.AutoSize = True
-        Me.lbl_shift.Location = New System.Drawing.Point(137, 294)
-        Me.lbl_shift.Name = "lbl_shift"
-        Me.lbl_shift.Size = New System.Drawing.Size(45, 13)
-        Me.lbl_shift.TabIndex = 26
-        Me.lbl_shift.Text = "Label38"
         '
         'frmEmpDetails
         '

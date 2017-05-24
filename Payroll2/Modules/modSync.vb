@@ -47,7 +47,7 @@ Module modSync
             Try
                 StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) " _
                             & "VALUES('" & CDate(dt.Rows(i)(1).ToString).ToString("d MMM yyyy") & " to " & CDate(dt.Rows(i)(2).ToString).ToString("d MMM yyyy") & "', " _
-                            & "'" & dt.Rows(i)(0).ToString & "',(SELECT occurence_id FROM tblref_occurences WHERE name='" & occurence & "'),'" & CDate(dt.Rows(i)(1).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(3).ToString & "')"
+                            & "'" & dt.Rows(i)(0).ToString & "',(SELECT occurence_id FROM tblref_occurences WHERE name='" & dt.Rows(i)(3).ToString & "'),'" & CDate(dt.Rows(i)(1).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(4).ToString & "')"
                 'Console.Write(StrSql)
                 QryReadP()
                 cmd.ExecuteNonQuery()
@@ -144,11 +144,11 @@ Module modSync
                 'dt.Rows(i)(0).ToString
                 Try
                     StrSql = "REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,mode,days_applied,reason,status) " _
-                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & "," _
-                                & dt.Rows(i)(2).ToString & "," & dt.Rows(i)(3).ToString & "," _
-                                & dt.Rows(i)(4).ToString & "," & dt.Rows(i)(5).ToString & "," _
-                                & dt.Rows(i)(6).ToString & "," & dt.Rows(i)(7).ToString & "," _
-                                & dt.Rows(i)(8).ToString & "," & dt.Rows(i)(9).ToString & ")"
+                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
+                                & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
+                                & CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd") & "','" _
+                                & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
+                                & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
                     cmd.ExecuteNonQuery()
@@ -234,12 +234,12 @@ Module modSync
                 'dt.Rows({row number})({field/column}).ToString
                 'dt.Rows(i)(0).ToString
                 Try
-                    StrSql = "REPLACE INTO tbl_overtime" _
-                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & "," _
-                                & dt.Rows(i)(2).ToString & "," & dt.Rows(i)(3).ToString & "," _
-                                & dt.Rows(i)(4).ToString & "," & dt.Rows(i)(5).ToString & "," _
-                                & dt.Rows(i)(6).ToString & "," & dt.Rows(i)(7).ToString & "," _
-                                & dt.Rows(i)(8).ToString & ")"
+                    StrSql = "REPLACE INTO tbl_overtime(id,employee_id,reason,dateFiled,dateRequested,timeStart,timeEnd,totalHours,status)" _
+                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
+                                & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
+                                & CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(5).ToString & "','" _
+                                & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
+                                & dt.Rows(i)(8).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
                     cmd.ExecuteNonQuery()
@@ -268,7 +268,7 @@ Module modSync
                 'dt.Rows(i)(0).ToString
                 Try
                     StrSql = "REPLACE INTO tbl_shifts(id,day,timein,timeout,shiftgroup)" _
-                                & "VALUES('" & dt.Rows(i)(0).ToString & "','" & dt.Rows(i)(1).ToString & "','" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "'.,'" & dt.Rows(i)(4).ToString & "')"
+                                & "VALUES('" & dt.Rows(i)(0).ToString & "','" & dt.Rows(i)(1).ToString & "','" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "','" & dt.Rows(i)(4).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
                     cmd.ExecuteNonQuery()
@@ -285,8 +285,34 @@ Module modSync
     End Function
 
     Function SyncAllowances() As Boolean
-        StrSql = "SELECT serviceallowance.id, employee_id, allowances.name, amount FROM allowances, serviceallowance " _
-                    & "WHERE serviceallowance.allowance_id = allowances.id"
+        Try
+            StrSql = "SELECT sa.id, sa.employee_id, (al.name) AS allowance, sa.amount FROM serviceallowance sa " _
+                        & "JOIN allowances al ON al.id= sa.allowance_id LEFT JOIN services svs ON svs.id = sa.service_id " _
+                        & "WHERE svs.ifcurrent = '1'"
+            QryReadH()
+            Dim dt = New DataTable
+            adpt.Fill(dt)
+            StrSql = "TRUNCATE tbl_allowances"
+            QryReadP()
+            cmd.ExecuteNonQuery()
+            For i = 0 To dt.Rows.Count - 1
+                'dt.Rows({row number})({field/column}).ToString
+                'dt.Rows(i)(0).ToString
+                Try
+                    StrSql = "INSERT INTO tbl_allowances(employee_id,name,amount)" _
+                                & "VALUES('" & dt.Rows(i)(1).ToString & "','" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "')"
+                    'Console.Write(StrSql)
+                    QryReadP()
+                    cmd.ExecuteNonQuery()
+                Catch e As MySqlException
+                    MessageBox.Show(e.ToString)
+                    Return False
+                End Try
+            Next
+        Catch e As MySqlException
+            MessageBox.Show(e.ToString)
+            Return False
+        End Try
         Return True
     End Function
 

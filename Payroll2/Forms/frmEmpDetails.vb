@@ -276,7 +276,7 @@ Public Class frmEmpDetails
     End Sub
 
     Sub computeAllowance()
-        StrSql = "SELECT * FROM tbl_allowances"
+        StrSql = "SELECT * FROM tbl_allowances WHERE employee_id = " & id
         QryReadP()
         Dim dtareader3 As MySqlDataReader = cmd.ExecuteReader
         If dtareader3.HasRows Then

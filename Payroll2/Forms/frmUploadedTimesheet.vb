@@ -129,23 +129,16 @@ Public Class frmUploadedTimesheet
                         If Not dtareader2.HasRows Then
                             'if no duplicate entries
                             'save to db
-                            Dim strarr() As String = row.Cells(1).Value.ToString.Split("/")
-                            Dim logdate As Date = strarr(2) & "-" & strarr(0) & "-" & strarr(1)
                             Try
                                 StrSql = "INSERT INTO tbl_attendance(emp_bio_id, date, time_in, time_out, totalHours, late, undertime, overtime, remarks) " _
-                                        & "VALUES(@empbioid,@date,@timein,@timeout,@totalHours,@late,@undertime,@overtime,@remarks)"
+                                        & "VALUES('" & row.Cells(0).Value.ToString & "'," _
+                                        & "'" & CDate(row.Cells(0).Value.ToString).ToString("yyyy-MM-dd") & "'," _
+                                        & "'" & row.Cells(2).Value.ToString & "','" & row.Cells(3).Value.ToString & "'," _
+                                        & "'" & row.Cells(4).Value.ToString & "','" & row.Cells(5).Value.ToString & "'," _
+                                        & "'" & row.Cells(6).Value.ToString & "','" & row.Cells(7).Value.ToString & "'," _
+                                        & "'" & row.Cells(8).Value.ToString & "')"
                                 QryReadP()
-                                cmd.Parameters.Add("empbioid", MySqlDbType.String).Value = row.Cells(0).Value.ToString
-                                cmd.Parameters.Add("date", MySqlDbType.Date).Value = logdate
-                                cmd.Parameters.Add("timein", MySqlDbType.String).Value = row.Cells(2).Value.ToString
-                                cmd.Parameters.Add("timeout", MySqlDbType.String).Value = row.Cells(3).Value.ToString
-                                cmd.Parameters.Add("totalHours", MySqlDbType.String).Value = row.Cells(4).Value.ToString
-                                cmd.Parameters.Add("late", MySqlDbType.String).Value = row.Cells(5).Value.ToString
-                                cmd.Parameters.Add("undertime", MySqlDbType.String).Value = row.Cells(6).Value.ToString
-                                cmd.Parameters.Add("overtime", MySqlDbType.String).Value = row.Cells(7).Value.ToString
-                                cmd.Parameters.Add("remarks", MySqlDbType.String).Value = row.Cells(8).Value.ToString
                                 cmd.ExecuteNonQuery()
-                                cmd.Dispose()
                             Catch ex As Exception
                                 MessageBox.Show(ex.Message.ToString)
                             End Try
