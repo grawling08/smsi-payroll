@@ -47,7 +47,7 @@ Public Class frmEmpDetails
         'get employee overtime
         GetEmployeeOvertime(id)
         'get employee shifts
-        GetEmpShift(employee_id)
+        GetEmpShift(id)
 
         'reset dgv_emptimesheet & other dgv's
         dgv_emptimesheet.Refresh()
@@ -325,7 +325,7 @@ Public Class frmEmpDetails
 
     'load employee shift schedule
     Sub GetEmpShift(ByVal EmpID As String)
-            StrSql = "Select day as 'Day', timein as 'From', timeout as 'To' FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id = '" & id & "')"
+        StrSql = "Select day as 'Day', timein as 'From', timeout as 'To' FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "')"
         QryReadP()
             ds = New DataSet
             adpt.Fill(ds, "Shifts")

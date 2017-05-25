@@ -78,7 +78,7 @@ Module modSync
             '            & "DROP TEMPORARY TABLE temporary_table;"
             StrSql = "SELECT emp.id, emp.employee_id, emp.biometric_id, emp.fName, emp.mi, emp.lName, shift.shiftName, " _
                         & "emp.sssNo, emp.phicNo, emp.hdmfNo, emp.taxNo, (com.name) AS company, (bra.name) AS branch, " _
-                        & "(pos.name) AS position, rank.rank, taxstat.taxcode, emp.emp_status, serv.basicSalary " _
+                        & "(pos.name) AS position, rank.rank, taxstat.taxcode, emp.emp_status, serv.basicSalary, emp.lastUpdated " _
                         & "FROM employees emp " _
                         & "LEFT JOIN shiftsgroup shift ON shift.id= emp.shiftgroup_id " _
                         & "LEFT JOIN companies com ON com.id= emp.company_id " _
@@ -89,30 +89,61 @@ Module modSync
                         & "LEFT JOIN services serv ON serv.employee_id= emp.id AND serv.ifcurrent= '1' " _
                         & "WHERE ifNull(emp.employee_id,'') != 'SP-Admin'"
             QryReadH()
-            Dim dt = New DataTable
-            adpt.Fill(dt)
-            For i = 0 To dt.Rows.Count - 1
-                'dt.Rows({row number})({field/column}).ToString
-                'dt.Rows(i)(0).ToString
-                Try
-                    StrSql = "REPLACE INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary) " _
-                                & "VALUES(" & dt.Rows(i)(0).ToString & ",'" & dt.Rows(i)(1).ToString & "'," _
-                                & "'" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "'," _
-                                & "'" & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "'," _
-                                & "'" & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "'," _
-                                & "'" & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "'," _
-                                & "'" & dt.Rows(i)(10).ToString & "','" & dt.Rows(i)(11).ToString & "'," _
-                                & "'" & dt.Rows(i)(12).ToString & "','" & dt.Rows(i)(13).ToString & "'," _
-                                & "'" & dt.Rows(i)(14).ToString & "','" & dt.Rows(i)(15).ToString & "'," _
-                                & "'" & dt.Rows(i)(16).ToString & "'," & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & ")"
-                    'Console.Write(StrSql)
+            'Dim dt = New DataTable
+            'adpt.Fill(dt)
+            Dim syncempreader As MySqlDataReader = cmd.ExecuteReader
+            If syncempreader.HasRows Then
+                While syncempreader.Read()
+                    StrSql = "SELECT * FROM tbl_employee WHERE id_employee = " & syncempreader(0).ToString
                     QryReadP()
-                    cmd.ExecuteNonQuery()
-                Catch e As MySqlException
-                    MessageBox.Show(e.ToString)
-                    Return False
-                End Try
-            Next
+                    Dim reader1 As MySqlDataReader = cmd.ExecuteReader
+                    If reader1.HasRows Then
+                        'read, compare lastupdated and update or not
+                        reader1.Read()
+                        If syncempreader(18) > reader1(19) Then
+                            'update
+                            Try
+                                StrSql = "UPDATE tbl_employee SET emp_id = '" & syncempreader(1).ToString & "'," _
+                                            & "emp_bio_id = '" & syncempreader(2).ToString & "', fName = '" & syncempreader(3).ToString & "'," _
+                                            & "mName = '" & syncempreader(4).ToString & "', lName = '" & syncempreader(5).ToString & "'," _
+                                            & "shiftgroup = '" & syncempreader(6).ToString & "', sss_id = '" & syncempreader(7).ToString & "'," _
+                                            & "phic_id = '" & syncempreader(8).ToString & "', hdmf_id = '" & syncempreader(9).ToString & "'," _
+                                            & "tin = '" & syncempreader(10).ToString & "', company = '" & syncempreader(11).ToString & "'," _
+                                            & "branch = '" & syncempreader(12).ToString & "', position = '" & syncempreader(13).ToString & "'," _
+                                            & "rank = '" & syncempreader(14).ToString & "', tax_status = '" & syncempreader(15).ToString & "'," _
+                                            & "employment_status = '" & syncempreader(16).ToString & "', basic_salary = " & If(String.IsNullOrEmpty(syncempreader(17).ToString), 0, syncempreader(17).ToString) & "," _
+                                            & "lastUpdated = '" & syncempreader(18).ToString & "' WHERE id_employee =" & syncempreader(0).ToString
+                                'Console.Write(StrSql)
+                                QryReadP()
+                                cmd.ExecuteNonQuery()
+                            Catch e As MySqlException
+                                MessageBox.Show(e.ToString)
+                                Return False
+                            End Try
+                        End If
+                    Else
+                        'insert
+                        Try
+                            StrSql = "INSERT INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary,lastUpdated) " _
+                                        & "VALUES(" & syncempreader(0).ToString & ",'" & syncempreader(1).ToString & "'," _
+                                        & "'" & syncempreader(2).ToString & "','" & syncempreader(3).ToString & "'," _
+                                        & "'" & syncempreader(4).ToString & "','" & syncempreader(5).ToString & "'," _
+                                        & "'" & syncempreader(6).ToString & "','" & syncempreader(7).ToString & "'," _
+                                        & "'" & syncempreader(8).ToString & "','" & syncempreader(9).ToString & "'," _
+                                        & "'" & syncempreader(10).ToString & "','" & syncempreader(11).ToString & "'," _
+                                        & "'" & syncempreader(12).ToString & "','" & syncempreader(13).ToString & "'," _
+                                        & "'" & syncempreader(14).ToString & "','" & syncempreader(15).ToString & "'," _
+                                        & "'" & syncempreader(16).ToString & "'," & If(String.IsNullOrEmpty(syncempreader(17).ToString), 0, syncempreader(17).ToString) & ",'" & syncempreader(18).ToString & "')"
+                            'Console.Write(StrSql)
+                            QryReadP()
+                            cmd.ExecuteNonQuery()
+                        Catch e As MySqlException
+                            MessageBox.Show(e.ToString)
+                            Return False
+                        End Try
+                    End If
+                End While
+            End If
         Catch e As MySqlException
             MessageBox.Show(e.ToString)
             Return False

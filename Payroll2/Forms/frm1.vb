@@ -9,7 +9,7 @@ Public Class frm1
             lb_company.DisplayMember = "name"
         End If
         loadCutoff()
-        If app_mode = "alone" Then
+        If app_mode = "integrate" Then
             lbl_newcutoff.Visible = False
         End If
     End Sub
@@ -56,4 +56,8 @@ Public Class frm1
         frmAddCutoff.ShowDialog()
     End Sub
 
+    Private Sub lb_cutoff_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles lb_cutoff.SelectedValueChanged
+        'MessageBox.Show(lb_cutoff.Text.ToString)
+
+    End Sub
 End Class

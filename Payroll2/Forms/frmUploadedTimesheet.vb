@@ -138,8 +138,8 @@ Public Class frmUploadedTimesheet
                                     & "'" & row.Cells(4).Value.ToString & "','" & row.Cells(5).Value.ToString & "'," _
                                     & "'" & row.Cells(6).Value.ToString & "','" & row.Cells(7).Value.ToString & "'," _
                                     & "'" & row.Cells(8).Value.ToString & "')"
-                            'QryReadP()
-                            'cmd.ExecuteNonQuery()
+                            QryReadP()
+                            cmd.ExecuteNonQuery()
                             'Catch ex As Exception
                             'MessageBox.Show(ex.InnerException.ToString)
                             'Console.Write(ex.InnerException.ToString)
@@ -158,7 +158,7 @@ Public Class frmUploadedTimesheet
         End If
     End Sub
 
-    Private Sub dgv_temptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_temptimesheet.CellDoubleClick
+    Private Sub dgv_temptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_temptimesheet.CellDoubleClick, dgv_maptimesheet.CellDoubleClick
         Dim No = Me.dgv_temptimesheet.CurrentRow.Cells(0).Value.ToString
         Dim LogDate = Me.dgv_temptimesheet.CurrentRow.Cells(1).Value.ToString
         Dim Time_in = Me.dgv_temptimesheet.CurrentRow.Cells(2).Value.ToString

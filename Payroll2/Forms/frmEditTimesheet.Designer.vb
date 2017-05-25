@@ -88,6 +88,7 @@ Partial Class frmEditTimesheet
         '
         'btn_cancel
         '
+        Me.btn_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btn_cancel.Location = New System.Drawing.Point(140, 118)
         Me.btn_cancel.Name = "btn_cancel"
         Me.btn_cancel.Size = New System.Drawing.Size(75, 23)
@@ -121,8 +122,10 @@ Partial Class frmEditTimesheet
         '
         'frmEditTimesheet
         '
+        Me.AcceptButton = Me.btn_save
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.btn_cancel
         Me.ClientSize = New System.Drawing.Size(228, 154)
         Me.Controls.Add(Me.dtp_logdate)
         Me.Controls.Add(Me.dtp_timeout)
