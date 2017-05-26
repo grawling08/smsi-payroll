@@ -97,7 +97,7 @@ Module modSync
                     StrSql = "SELECT * FROM tbl_employee WHERE id_employee = " & syncempreader(0).ToString
                     QryReadP()
                     Dim reader1 As MySqlDataReader = cmd.ExecuteReader
-                    If reader1.HasRows Then
+                    If Not reader1.HasRows Then
                         'read, compare lastupdated and update or not
                         reader1.Read()
                         If syncempreader(18) > reader1(19) Then
