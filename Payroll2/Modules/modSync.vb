@@ -89,30 +89,32 @@ Module modSync
                         & "LEFT JOIN services serv ON serv.employee_id= emp.id AND serv.ifcurrent= '1' " _
                         & "WHERE ifNull(emp.employee_id,'') != 'SP-Admin'"
             QryReadH()
-            'Dim dt = New DataTable
-            'adpt.Fill(dt)
-            Dim syncempreader As MySqlDataReader = cmd.ExecuteReader
-            If syncempreader.HasRows Then
-                While syncempreader.Read()
-                    StrSql = "SELECT * FROM tbl_employee WHERE id_employee = " & syncempreader(0).ToString
-                    QryReadP()
-                    Dim reader1 As MySqlDataReader = cmd.ExecuteReader
-                    If Not reader1.HasRows Then
-                        'read, compare lastupdated and update or not
-                        reader1.Read()
-                        If syncempreader(18) > reader1(19) Then
+            Dim dt = New DataTable
+            adpt.Fill(dt)
+            'Dim syncempreader As MySqlDataReader = cmd.ExecuteReader
+            'If syncempreader.HasRows Then
+            'While syncempreader.Read()
+            For i = 0 To dt.Rows.Count - 1
+                StrSql2 = "SELECT * FROM tbl_employee WHERE id_employee = '" & dt.Rows(i)(0).ToString & "'"
+                Connect_Sub("payroll")
+                cmd2 = New MySqlCommand(StrSql2, conn2)
+                Dim reader1 As MySqlDataReader = cmd2.ExecuteReader
+                If reader1.HasRows Then
+                    'read, compare lastupdated and update or not
+                    While reader1.Read()
+                        If CDate(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") > CDate(reader1(19).ToString).ToString("yyyy-MM-dd HH:mm:ss") Then
                             'update
                             Try
-                                StrSql = "UPDATE tbl_employee SET emp_id = '" & syncempreader(1).ToString & "'," _
-                                            & "emp_bio_id = '" & syncempreader(2).ToString & "', fName = '" & syncempreader(3).ToString & "'," _
-                                            & "mName = '" & syncempreader(4).ToString & "', lName = '" & syncempreader(5).ToString & "'," _
-                                            & "shiftgroup = '" & syncempreader(6).ToString & "', sss_id = '" & syncempreader(7).ToString & "'," _
-                                            & "phic_id = '" & syncempreader(8).ToString & "', hdmf_id = '" & syncempreader(9).ToString & "'," _
-                                            & "tin = '" & syncempreader(10).ToString & "', company = '" & syncempreader(11).ToString & "'," _
-                                            & "branch = '" & syncempreader(12).ToString & "', position = '" & syncempreader(13).ToString & "'," _
-                                            & "rank = '" & syncempreader(14).ToString & "', tax_status = '" & syncempreader(15).ToString & "'," _
-                                            & "employment_status = '" & syncempreader(16).ToString & "', basic_salary = " & If(String.IsNullOrEmpty(syncempreader(17).ToString), 0, syncempreader(17).ToString) & "," _
-                                            & "lastUpdated = '" & syncempreader(18).ToString & "' WHERE id_employee =" & syncempreader(0).ToString
+                                StrSql = "UPDATE tbl_employee SET emp_id = '" & dt.Rows(i)(1).ToString & "'," _
+                                            & "emp_bio_id = '" & dt.Rows(i)(2).ToString & "', fName = '" & dt.Rows(i)(3).ToString & "'," _
+                                            & "mName = '" & dt.Rows(i)(4).ToString & "', lName = '" & dt.Rows(i)(5).ToString & "'," _
+                                            & "shiftgroup = '" & dt.Rows(i)(6).ToString & "', sss_id = '" & dt.Rows(i)(7).ToString & "'," _
+                                            & "phic_id = '" & dt.Rows(i)(8).ToString & "', hdmf_id = '" & dt.Rows(i)(9).ToString & "'," _
+                                            & "tin = '" & dt.Rows(i)(10).ToString & "', company = '" & dt.Rows(i)(11).ToString & "'," _
+                                            & "branch = '" & dt.Rows(i)(12).ToString & "', position = '" & dt.Rows(i)(13).ToString & "'," _
+                                            & "rank = '" & dt.Rows(i)(14).ToString & "', tax_status = '" & dt.Rows(i)(15).ToString & "'," _
+                                            & "employment_status = '" & dt.Rows(i)(16).ToString & "', basic_salary = " & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & "," _
+                                            & "lastUpdated = '" & dt.Rows(i)(18).ToString & "' WHERE id_employee =" & dt.Rows(i)(0).ToString
                                 'Console.Write(StrSql)
                                 QryReadP()
                                 cmd.ExecuteNonQuery()
@@ -121,29 +123,32 @@ Module modSync
                                 Return False
                             End Try
                         End If
-                    Else
-                        'insert
-                        Try
-                            StrSql = "INSERT INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary,lastUpdated) " _
-                                        & "VALUES(" & syncempreader(0).ToString & ",'" & syncempreader(1).ToString & "'," _
-                                        & "'" & syncempreader(2).ToString & "','" & syncempreader(3).ToString & "'," _
-                                        & "'" & syncempreader(4).ToString & "','" & syncempreader(5).ToString & "'," _
-                                        & "'" & syncempreader(6).ToString & "','" & syncempreader(7).ToString & "'," _
-                                        & "'" & syncempreader(8).ToString & "','" & syncempreader(9).ToString & "'," _
-                                        & "'" & syncempreader(10).ToString & "','" & syncempreader(11).ToString & "'," _
-                                        & "'" & syncempreader(12).ToString & "','" & syncempreader(13).ToString & "'," _
-                                        & "'" & syncempreader(14).ToString & "','" & syncempreader(15).ToString & "'," _
-                                        & "'" & syncempreader(16).ToString & "'," & If(String.IsNullOrEmpty(syncempreader(17).ToString), 0, syncempreader(17).ToString) & ",'" & syncempreader(18).ToString & "')"
-                            'Console.Write(StrSql)
-                            QryReadP()
-                            cmd.ExecuteNonQuery()
-                        Catch e As MySqlException
-                            MessageBox.Show(e.ToString)
-                            Return False
-                        End Try
-                    End If
-                End While
-            End If
+                    End While
+                Else
+                    'insert
+                    Try
+                        StrSql = "INSERT INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary,lastUpdated) " _
+                                    & "VALUES(" & dt.Rows(i)(0).ToString & ",'" & dt.Rows(i)(1).ToString & "'," _
+                                    & "'" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "'," _
+                                    & "'" & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "'," _
+                                    & "'" & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "'," _
+                                    & "'" & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "'," _
+                                    & "'" & dt.Rows(i)(10).ToString & "','" & dt.Rows(i)(11).ToString & "'," _
+                                    & "'" & dt.Rows(i)(12).ToString & "','" & dt.Rows(i)(13).ToString & "'," _
+                                    & "'" & dt.Rows(i)(14).ToString & "','" & dt.Rows(i)(15).ToString & "'," _
+                                    & "'" & dt.Rows(i)(16).ToString & "'," & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & ",'" & CDate(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "')"
+                        'Console.Write(StrSql)
+                        QryReadP()
+                        cmd.ExecuteNonQuery()
+                    Catch e As MySqlException
+                        MessageBox.Show(e.ToString)
+                        Return False
+                    End Try
+                End If
+                reader1.Dispose()
+            Next
+            'End While
+            'End If
         Catch e As MySqlException
             MessageBox.Show(e.ToString)
             Return False
