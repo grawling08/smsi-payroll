@@ -102,8 +102,9 @@ Partial Class frm1
         'frm1
         '
         Me.AcceptButton = Me.btn_savesettings
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
+        Me.AutoSize = True
         Me.ClientSize = New System.Drawing.Size(412, 210)
         Me.ControlBox = False
         Me.Controls.Add(Me.Panel1)

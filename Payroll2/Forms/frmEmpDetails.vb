@@ -189,7 +189,7 @@ Public Class frmEmpDetails
         While (CurrD <= todate_cutoff)
             countattendance += 1
             StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
-            Console.Write(StrSql)
+            'Console.Write(StrSql)
             QryReadP()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then

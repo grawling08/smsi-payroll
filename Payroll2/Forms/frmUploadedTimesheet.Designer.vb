@@ -26,10 +26,8 @@ Partial Class frmUploadedTimesheet
         Me.btn_savetimesheet = New System.Windows.Forms.Button()
         Me.btn_canceltimesheet = New System.Windows.Forms.Button()
         Me.btn_loadtemptimesheet = New System.Windows.Forms.Button()
-        Me.dgv_maptimesheet = New System.Windows.Forms.DataGridView()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         CType(Me.dgv_temptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgv_maptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -45,7 +43,7 @@ Partial Class frmUploadedTimesheet
         Me.dgv_temptimesheet.RowHeadersVisible = False
         Me.dgv_temptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.dgv_temptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_temptimesheet.Size = New System.Drawing.Size(496, 528)
+        Me.dgv_temptimesheet.Size = New System.Drawing.Size(785, 528)
         Me.dgv_temptimesheet.TabIndex = 0
         '
         'btn_savetimesheet
@@ -76,33 +74,16 @@ Partial Class frmUploadedTimesheet
         Me.btn_loadtemptimesheet.Text = "LOAD"
         Me.btn_loadtemptimesheet.UseVisualStyleBackColor = True
         '
-        'dgv_maptimesheet
-        '
-        Me.dgv_maptimesheet.AllowUserToAddRows = False
-        Me.dgv_maptimesheet.AllowUserToDeleteRows = False
-        Me.dgv_maptimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.dgv_maptimesheet.Location = New System.Drawing.Point(505, 3)
-        Me.dgv_maptimesheet.MultiSelect = False
-        Me.dgv_maptimesheet.Name = "dgv_maptimesheet"
-        Me.dgv_maptimesheet.ReadOnly = True
-        Me.dgv_maptimesheet.RowHeadersVisible = False
-        Me.dgv_maptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        Me.dgv_maptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_maptimesheet.Size = New System.Drawing.Size(497, 528)
-        Me.dgv_maptimesheet.TabIndex = 0
-        '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.dgv_temptimesheet, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.dgv_maptimesheet, 1, 0)
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(1, 2)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1005, 534)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(791, 534)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'frmUploadedTimesheet
@@ -110,7 +91,7 @@ Partial Class frmUploadedTimesheet
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btn_canceltimesheet
-        Me.ClientSize = New System.Drawing.Size(1009, 571)
+        Me.ClientSize = New System.Drawing.Size(794, 571)
         Me.ControlBox = False
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.btn_canceltimesheet)
@@ -122,7 +103,6 @@ Partial Class frmUploadedTimesheet
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Timesheet"
         CType(Me.dgv_temptimesheet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgv_maptimesheet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -131,6 +111,5 @@ Partial Class frmUploadedTimesheet
     Friend WithEvents btn_savetimesheet As System.Windows.Forms.Button
     Friend WithEvents btn_canceltimesheet As System.Windows.Forms.Button
     Friend WithEvents btn_loadtemptimesheet As System.Windows.Forms.Button
-    Friend WithEvents dgv_maptimesheet As System.Windows.Forms.DataGridView
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
 End Class

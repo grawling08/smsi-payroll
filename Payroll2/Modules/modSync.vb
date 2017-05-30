@@ -114,7 +114,7 @@ Module modSync
                                             & "branch = '" & dt.Rows(i)(12).ToString & "', position = '" & dt.Rows(i)(13).ToString & "'," _
                                             & "rank = '" & dt.Rows(i)(14).ToString & "', tax_status = '" & dt.Rows(i)(15).ToString & "'," _
                                             & "employment_status = '" & dt.Rows(i)(16).ToString & "', basic_salary = " & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & "," _
-                                            & "lastUpdated = '" & dt.Rows(i)(18).ToString & "' WHERE id_employee =" & dt.Rows(i)(0).ToString
+                                            & "lastUpdated = '" & CDate(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "' WHERE id_employee =" & dt.Rows(i)(0).ToString
                                 'Console.Write(StrSql)
                                 QryReadP()
                                 cmd.ExecuteNonQuery()

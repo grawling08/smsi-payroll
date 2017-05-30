@@ -14,10 +14,10 @@ Public Class frmUploadedTimesheet
 
     Private Sub btn_loadtemptimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtemptimesheet.Click
         StrSql = "SELECT No, LogDate, " _
-                      & "MAX(CASE Status WHEN 'C/In' THEN STR_TO_DATE(Date_Time, '%c/%e/%Y %r') END) AS Time_in, " _
-                      & "MAX(CASE Status WHEN 'C/Out' THEN STR_TO_DATE(Date_Time, '%c/%e/%Y %r') END) AS Time_Out " _
+                      & "MIN(CASE Status WHEN 'C/In' THEN STR_TO_DATE(Date_Time, '%c/%e/%Y %r') END) AS Time_in, " _
+                      & "MIN(CASE Status WHEN 'C/Out' THEN STR_TO_DATE(Date_Time, '%c/%e/%Y %r') END) AS Time_Out " _
                       & "FROM tbl_attendanceraw " _
-                      & "WHERE ifMapped = 0 Group by No, LogDate"
+                      & "WHERE ifMapped = 0 Group by tbl_attendanceraw.`No`, LogDate"
         QryReadP()
         ds = New DataSet
         adpt.Fill(ds, "TimesheetRaw")
@@ -158,7 +158,7 @@ Public Class frmUploadedTimesheet
         End If
     End Sub
 
-    Private Sub dgv_temptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_temptimesheet.CellDoubleClick, dgv_maptimesheet.CellDoubleClick
+    Private Sub dgv_temptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_temptimesheet.CellDoubleClick
         Dim No = Me.dgv_temptimesheet.CurrentRow.Cells(0).Value.ToString
         Dim LogDate = Me.dgv_temptimesheet.CurrentRow.Cells(1).Value.ToString
         Dim Time_in = Me.dgv_temptimesheet.CurrentRow.Cells(2).Value.ToString

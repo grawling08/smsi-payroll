@@ -338,32 +338,52 @@ Public Class frmSettings
 
 #Region "sync employees, loans, overtime, leaves"
     Private Sub btn_syncemployees_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncemployees.Click
-        If SyncEmployee() Then
-            MessageBox.Show("Synced Employees")
-        End If
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncEmployee)
+        thread.Start()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        MessageBox.Show("Synced Employees")
     End Sub
 
     Private Sub btn_syncloans_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncloans.Click
-        If SyncLoans() Then
-            MessageBox.Show("Synced Loans")
-        End If
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncLoans)
+        thread.Start()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        MessageBox.Show("Synced Loans")
     End Sub
 
     Private Sub btn_syncovertime_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncovertime.Click
-        If SyncOvertime() Then
-            MessageBox.Show("Synced Overtime")
-        End If
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncOvertime)
+        thread.Start()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        MessageBox.Show("Synced Overtime")
     End Sub
 
     Private Sub btn_syncleaves_Click(sender As System.Object, e As System.EventArgs) Handles btn_syncleaves.Click
-        If SyncLeaves() Then
-            MessageBox.Show("Synced Leaves")
-        End If
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncLeaves)
+        thread.Start()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        MessageBox.Show("Synced Leaves")
     End Sub
     Private Sub Button1_Click_1(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        If SyncAllowances() Then
-            MessageBox.Show("Synced Allowances")
-        End If
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncAllowances)
+        thread.Start()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        MessageBox.Show("Synced Allowances")
     End Sub
 #End Region
     'users CRUD

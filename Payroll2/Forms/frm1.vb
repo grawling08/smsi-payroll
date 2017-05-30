@@ -35,6 +35,7 @@ Public Class frm1
         End If
         QryReadP()
         cmd.ExecuteNonQuery()
+        current_cutoff = lb_cutoff.Text
         'save company
         'StrSql = "SELECT * FROM companies WHERE name = '" & lb_company.Text & "'"
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_company'"
