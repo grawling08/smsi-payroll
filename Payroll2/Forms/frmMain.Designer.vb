@@ -342,9 +342,6 @@ Partial Class frmMain
         Me.dgv_payroll.AllowUserToAddRows = False
         Me.dgv_payroll.AllowUserToDeleteRows = False
         Me.dgv_payroll.AllowUserToResizeRows = False
-        Me.dgv_payroll.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -376,7 +373,7 @@ Partial Class frmMain
         Me.dgv_payroll.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_payroll.RowHeadersVisible = False
         Me.dgv_payroll.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_payroll.Size = New System.Drawing.Size(970, 590)
+        Me.dgv_payroll.Size = New System.Drawing.Size(967, 590)
         Me.dgv_payroll.TabIndex = 8
         '
         'TabControl1

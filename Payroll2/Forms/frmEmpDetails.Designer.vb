@@ -123,6 +123,12 @@ Partial Class frmEmpDetails
         Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.dgv_otherdeduct = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btn_deldeduct = New System.Windows.Forms.Button()
+        Me.btn_adddeduct = New System.Windows.Forms.Button()
+        Me.Label38 = New System.Windows.Forms.Label()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -141,6 +147,7 @@ Partial Class frmEmpDetails
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -155,7 +162,7 @@ Partial Class frmEmpDetails
         Me.dgv_emploans.ReadOnly = True
         Me.dgv_emploans.RowHeadersVisible = False
         Me.dgv_emploans.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emploans.Size = New System.Drawing.Size(545, 422)
+        Me.dgv_emploans.Size = New System.Drawing.Size(545, 438)
         Me.dgv_emploans.TabIndex = 0
         '
         'dgv_empleave
@@ -171,7 +178,7 @@ Partial Class frmEmpDetails
         Me.dgv_empleave.ReadOnly = True
         Me.dgv_empleave.RowHeadersVisible = False
         Me.dgv_empleave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_empleave.Size = New System.Drawing.Size(545, 450)
+        Me.dgv_empleave.Size = New System.Drawing.Size(545, 467)
         Me.dgv_empleave.TabIndex = 0
         '
         'TabControl2
@@ -184,7 +191,7 @@ Partial Class frmEmpDetails
         Me.TabControl2.Location = New System.Drawing.Point(302, 1)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(559, 482)
+        Me.TabControl2.Size = New System.Drawing.Size(559, 523)
         Me.TabControl2.TabIndex = 0
         '
         'TabPage3
@@ -196,7 +203,7 @@ Partial Class frmEmpDetails
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(551, 456)
+        Me.TabPage3.Size = New System.Drawing.Size(551, 473)
         Me.TabPage3.TabIndex = 1
         Me.TabPage3.Text = "Timesheet"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -239,7 +246,7 @@ Partial Class frmEmpDetails
         Me.dgv_emptimesheet.RowHeadersVisible = False
         Me.dgv_emptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.dgv_emptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 420)
+        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 436)
         Me.dgv_emptimesheet.TabIndex = 2
         '
         'TabPage1
@@ -251,9 +258,11 @@ Partial Class frmEmpDetails
         Me.TabPage1.Controls.Add(Me.lbl_cutoff)
         Me.TabPage1.Controls.Add(Me.Label36)
         Me.TabPage1.Controls.Add(Me.Label25)
+        Me.TabPage1.Controls.Add(Me.Label22)
         Me.TabPage1.Controls.Add(Me.Label30)
         Me.TabPage1.Controls.Add(Me.GroupBox3)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
+        Me.TabPage1.Controls.Add(Me.tb_grossincome)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.tb_income)
         Me.TabPage1.Controls.Add(Me.Label15)
@@ -267,7 +276,7 @@ Partial Class frmEmpDetails
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(551, 456)
+        Me.TabPage1.Size = New System.Drawing.Size(551, 497)
         Me.TabPage1.TabIndex = 3
         Me.TabPage1.Text = "Payroll Details"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -294,7 +303,7 @@ Partial Class frmEmpDetails
         '
         'btn_savepayslip
         '
-        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 418)
+        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 466)
         Me.btn_savepayslip.Name = "btn_savepayslip"
         Me.btn_savepayslip.Size = New System.Drawing.Size(124, 23)
         Me.btn_savepayslip.TabIndex = 13
@@ -322,7 +331,7 @@ Partial Class frmEmpDetails
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(285, 364)
+        Me.Label36.Location = New System.Drawing.Point(285, 417)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(117, 13)
         Me.Label36.TabIndex = 9
@@ -331,7 +340,7 @@ Partial Class frmEmpDetails
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(285, 338)
+        Me.Label25.Location = New System.Drawing.Point(285, 391)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(28, 13)
         Me.Label25.TabIndex = 9
@@ -340,7 +349,7 @@ Partial Class frmEmpDetails
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(285, 390)
+        Me.Label30.Location = New System.Drawing.Point(285, 443)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(74, 13)
         Me.Label30.TabIndex = 11
@@ -348,13 +357,15 @@ Partial Class frmEmpDetails
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.btn_deldeduct)
+        Me.GroupBox3.Controls.Add(Me.btn_adddeduct)
+        Me.GroupBox3.Controls.Add(Me.Label38)
+        Me.GroupBox3.Controls.Add(Me.dgv_otherdeduct)
         Me.GroupBox3.Controls.Add(Me.Label29)
         Me.GroupBox3.Controls.Add(Me.Label21)
         Me.GroupBox3.Controls.Add(Me.Label28)
-        Me.GroupBox3.Controls.Add(Me.Label22)
         Me.GroupBox3.Controls.Add(Me.Label27)
         Me.GroupBox3.Controls.Add(Me.Label26)
-        Me.GroupBox3.Controls.Add(Me.tb_grossincome)
         Me.GroupBox3.Controls.Add(Me.Label24)
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Label23)
@@ -366,9 +377,9 @@ Partial Class frmEmpDetails
         Me.GroupBox3.Controls.Add(Me.tb_undertime)
         Me.GroupBox3.Controls.Add(Me.tb_absents)
         Me.GroupBox3.Controls.Add(Me.tb_late)
-        Me.GroupBox3.Location = New System.Drawing.Point(6, 182)
+        Me.GroupBox3.Location = New System.Drawing.Point(3, 82)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(270, 250)
+        Me.GroupBox3.Size = New System.Drawing.Size(270, 409)
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Deductions"
@@ -376,7 +387,7 @@ Partial Class frmEmpDetails
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(7, 201)
+        Me.Label29.Location = New System.Drawing.Point(7, 386)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(116, 13)
         Me.Label29.TabIndex = 12
@@ -403,7 +414,7 @@ Partial Class frmEmpDetails
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(7, 225)
+        Me.Label22.Location = New System.Drawing.Point(284, 365)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(100, 13)
         Me.Label22.TabIndex = 8
@@ -429,7 +440,7 @@ Partial Class frmEmpDetails
         '
         'tb_grossincome
         '
-        Me.tb_grossincome.Location = New System.Drawing.Point(140, 222)
+        Me.tb_grossincome.Location = New System.Drawing.Point(418, 362)
         Me.tb_grossincome.Name = "tb_grossincome"
         Me.tb_grossincome.ReadOnly = True
         Me.tb_grossincome.Size = New System.Drawing.Size(124, 20)
@@ -465,7 +476,7 @@ Partial Class frmEmpDetails
         '
         'tb_totaldeductions
         '
-        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 198)
+        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 383)
         Me.tb_totaldeductions.Name = "tb_totaldeductions"
         Me.tb_totaldeductions.ReadOnly = True
         Me.tb_totaldeductions.Size = New System.Drawing.Size(124, 20)
@@ -545,7 +556,7 @@ Partial Class frmEmpDetails
         Me.GroupBox2.Controls.Add(Me.Label19)
         Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
         Me.GroupBox2.Controls.Add(Me.tb_allowance)
-        Me.GroupBox2.Location = New System.Drawing.Point(278, 86)
+        Me.GroupBox2.Location = New System.Drawing.Point(278, 120)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(270, 236)
         Me.GroupBox2.TabIndex = 8
@@ -646,7 +657,7 @@ Partial Class frmEmpDetails
         Me.GroupBox1.Controls.Add(Me.Label16)
         Me.GroupBox1.Controls.Add(Me.tb_totalot)
         Me.GroupBox1.Controls.Add(Me.tb_regularot)
-        Me.GroupBox1.Location = New System.Drawing.Point(6, 82)
+        Me.GroupBox1.Location = New System.Drawing.Point(278, 23)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(270, 94)
         Me.GroupBox1.TabIndex = 6
@@ -745,7 +756,7 @@ Partial Class frmEmpDetails
         '
         'tb_netpaywithtax
         '
-        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 361)
+        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 414)
         Me.tb_netpaywithtax.Name = "tb_netpaywithtax"
         Me.tb_netpaywithtax.ReadOnly = True
         Me.tb_netpaywithtax.Size = New System.Drawing.Size(124, 20)
@@ -754,7 +765,7 @@ Partial Class frmEmpDetails
         '
         'tb_tax
         '
-        Me.tb_tax.Location = New System.Drawing.Point(418, 335)
+        Me.tb_tax.Location = New System.Drawing.Point(418, 388)
         Me.tb_tax.Name = "tb_tax"
         Me.tb_tax.ReadOnly = True
         Me.tb_tax.Size = New System.Drawing.Size(124, 20)
@@ -763,7 +774,7 @@ Partial Class frmEmpDetails
         '
         'tb_netincome
         '
-        Me.tb_netincome.Location = New System.Drawing.Point(418, 387)
+        Me.tb_netincome.Location = New System.Drawing.Point(418, 440)
         Me.tb_netincome.Name = "tb_netincome"
         Me.tb_netincome.ReadOnly = True
         Me.tb_netincome.Size = New System.Drawing.Size(124, 20)
@@ -795,7 +806,7 @@ Partial Class frmEmpDetails
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(551, 456)
+        Me.TabPage7.Size = New System.Drawing.Size(551, 473)
         Me.TabPage7.TabIndex = 4
         Me.TabPage7.Text = "Loans"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -849,7 +860,7 @@ Partial Class frmEmpDetails
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(551, 456)
+        Me.TabPage8.Size = New System.Drawing.Size(551, 473)
         Me.TabPage8.TabIndex = 5
         Me.TabPage8.Text = "Leave"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -860,7 +871,7 @@ Partial Class frmEmpDetails
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(551, 456)
+        Me.TabPage2.Size = New System.Drawing.Size(551, 473)
         Me.TabPage2.TabIndex = 6
         Me.TabPage2.Text = "Overtime"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -878,7 +889,7 @@ Partial Class frmEmpDetails
         Me.dgv_overtime.ReadOnly = True
         Me.dgv_overtime.RowHeadersVisible = False
         Me.dgv_overtime.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_overtime.Size = New System.Drawing.Size(545, 450)
+        Me.dgv_overtime.Size = New System.Drawing.Size(545, 467)
         Me.dgv_overtime.TabIndex = 0
         '
         'tb_middlename
@@ -1129,7 +1140,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(2, 2)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(298, 481)
+        Me.GroupBox4.Size = New System.Drawing.Size(298, 522)
         Me.GroupBox4.TabIndex = 3
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Employee Details"
@@ -1137,7 +1148,7 @@ Partial Class frmEmpDetails
         'lbl_shift
         '
         Me.lbl_shift.AutoSize = True
-        Me.lbl_shift.Location = New System.Drawing.Point(137, 294)
+        Me.lbl_shift.Location = New System.Drawing.Point(102, 301)
         Me.lbl_shift.Name = "lbl_shift"
         Me.lbl_shift.Size = New System.Drawing.Size(45, 13)
         Me.lbl_shift.TabIndex = 26
@@ -1147,7 +1158,7 @@ Partial Class frmEmpDetails
         '
         Me.Label37.AutoSize = True
         Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label37.Location = New System.Drawing.Point(6, 294)
+        Me.Label37.Location = New System.Drawing.Point(6, 301)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(90, 13)
         Me.Label37.TabIndex = 25
@@ -1161,20 +1172,71 @@ Partial Class frmEmpDetails
         Me.dgv_shift.AllowUserToResizeRows = False
         Me.dgv_shift.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgv_shift.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_shift.Location = New System.Drawing.Point(9, 310)
+        Me.dgv_shift.Location = New System.Drawing.Point(9, 317)
         Me.dgv_shift.MultiSelect = False
         Me.dgv_shift.Name = "dgv_shift"
         Me.dgv_shift.RowHeadersVisible = False
         Me.dgv_shift.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_shift.Size = New System.Drawing.Size(283, 164)
+        Me.dgv_shift.Size = New System.Drawing.Size(283, 195)
         Me.dgv_shift.TabIndex = 24
+        '
+        'dgv_otherdeduct
+        '
+        Me.dgv_otherdeduct.AllowUserToAddRows = False
+        Me.dgv_otherdeduct.AllowUserToDeleteRows = False
+        Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
+        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 227)
+        Me.dgv_otherdeduct.MultiSelect = False
+        Me.dgv_otherdeduct.Name = "dgv_otherdeduct"
+        Me.dgv_otherdeduct.RowHeadersVisible = False
+        Me.dgv_otherdeduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_otherdeduct.Size = New System.Drawing.Size(257, 147)
+        Me.dgv_otherdeduct.TabIndex = 14
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Name"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Amount"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        '
+        'btn_deldeduct
+        '
+        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 198)
+        Me.btn_deldeduct.Name = "btn_deldeduct"
+        Me.btn_deldeduct.Size = New System.Drawing.Size(35, 23)
+        Me.btn_deldeduct.TabIndex = 17
+        Me.btn_deldeduct.Text = "Del"
+        Me.btn_deldeduct.UseVisualStyleBackColor = True
+        '
+        'btn_adddeduct
+        '
+        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 198)
+        Me.btn_adddeduct.Name = "btn_adddeduct"
+        Me.btn_adddeduct.Size = New System.Drawing.Size(35, 23)
+        Me.btn_adddeduct.TabIndex = 16
+        Me.btn_adddeduct.Text = "Add"
+        Me.btn_adddeduct.UseVisualStyleBackColor = True
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Location = New System.Drawing.Point(7, 203)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(90, 13)
+        Me.Label38.TabIndex = 15
+        Me.Label38.Text = "Other Deductions"
         '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(864, 486)
+        Me.ClientSize = New System.Drawing.Size(864, 526)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.TabControl2)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
@@ -1209,6 +1271,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1311,4 +1374,10 @@ Partial Class frmEmpDetails
     Friend WithEvents tsb_loanedit As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_addtimesheet As System.Windows.Forms.Button
     Friend WithEvents lbl_shift As System.Windows.Forms.Label
+    Friend WithEvents btn_deldeduct As System.Windows.Forms.Button
+    Friend WithEvents btn_adddeduct As System.Windows.Forms.Button
+    Friend WithEvents Label38 As System.Windows.Forms.Label
+    Friend WithEvents dgv_otherdeduct As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

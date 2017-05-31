@@ -266,27 +266,38 @@ Public Class frmSettings
         QryReadP()
         dt = New DataTable
         adpt.Fill(dt)
-        Dim txt As String = String.Empty
-        Dim line As String = ""
-        For Each column As DataColumn In dt.Columns
-            'Add the Header row for Text file.
-            line += "," & column.ColumnName
+        For i = 0 To dt.Rows.Count - 1
+            StrSql = "INSERT INTO timesheet(emp_bio_id,dateLog,timein,timeout,totalHours,late,undertime,overtime,remarks) " _
+                        & "VALUES(" & dt.Rows(i)(0).ToString & ",'" & dt.Rows(i)(1).ToString & "','" _
+                        & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "','" _
+                        & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
+                        & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
+                        & dt.Rows(i)(8).ToString & "')"
+            QryReadH()
+            cmd.ExecuteNonQuery()
         Next
-        'Add new line.
-        txt += line.Substring(1) & vbCr & vbLf
-        line = ""
-        For Each row As DataRow In dt.Rows
-            For Each column As DataColumn In dt.Columns
-                'Add the Data rows.
-                line += "," & row(column.ColumnName).ToString()
-            Next
-            'Add new line.
-            txt += line.Substring(1) & vbCr & vbLf
-            line = ""
-        Next
-        Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\attendance.csv")
-            sw.WriteLine(txt)
-        End Using
+
+        'Dim txt As String = String.Empty
+        'Dim line As String = ""
+        'For Each column As DataColumn In dt.Columns
+        '    'Add the Header row for Text file.
+        '    line += "," & column.ColumnName
+        'Next
+        ''Add new line.
+        'txt += line.Substring(1) & vbCr & vbLf
+        'line = ""
+        'For Each row As DataRow In dt.Rows
+        '    For Each column As DataColumn In dt.Columns
+        '        'Add the Data rows.
+        '        line += "," & row(column.ColumnName).ToString()
+        '    Next
+        '    'Add new line.
+        '    txt += line.Substring(1) & vbCr & vbLf
+        '    line = ""
+        'Next
+        'Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\attendance.csv")
+        '    sw.WriteLine(txt)
+        'End Using
         MessageBox.Show("Exported!")
     End Sub
     'export cutoff

@@ -43,12 +43,12 @@ Partial Class frm1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(412, 210)
+        Me.Panel1.Size = New System.Drawing.Size(459, 234)
         Me.Panel1.TabIndex = 0
         '
         'btn_savesettings
         '
-        Me.btn_savesettings.Location = New System.Drawing.Point(334, 183)
+        Me.btn_savesettings.Location = New System.Drawing.Point(381, 208)
         Me.btn_savesettings.Name = "btn_savesettings"
         Me.btn_savesettings.Size = New System.Drawing.Size(75, 23)
         Me.btn_savesettings.TabIndex = 5
@@ -58,7 +58,7 @@ Partial Class frm1
         'lbl_newcutoff
         '
         Me.lbl_newcutoff.AutoSize = True
-        Me.lbl_newcutoff.Location = New System.Drawing.Point(3, 183)
+        Me.lbl_newcutoff.Location = New System.Drawing.Point(3, 213)
         Me.lbl_newcutoff.Name = "lbl_newcutoff"
         Me.lbl_newcutoff.Size = New System.Drawing.Size(82, 13)
         Me.lbl_newcutoff.TabIndex = 4
@@ -68,23 +68,23 @@ Partial Class frm1
         'lb_company
         '
         Me.lb_company.FormattingEnabled = True
-        Me.lb_company.Location = New System.Drawing.Point(209, 20)
+        Me.lb_company.Location = New System.Drawing.Point(231, 20)
         Me.lb_company.Name = "lb_company"
-        Me.lb_company.Size = New System.Drawing.Size(200, 160)
+        Me.lb_company.Size = New System.Drawing.Size(225, 186)
         Me.lb_company.TabIndex = 3
         '
         'lb_cutoff
         '
         Me.lb_cutoff.FormattingEnabled = True
-        Me.lb_cutoff.Location = New System.Drawing.Point(6, 20)
+        Me.lb_cutoff.Location = New System.Drawing.Point(3, 20)
         Me.lb_cutoff.Name = "lb_cutoff"
-        Me.lb_cutoff.Size = New System.Drawing.Size(200, 160)
+        Me.lb_cutoff.Size = New System.Drawing.Size(225, 186)
         Me.lb_cutoff.TabIndex = 2
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(206, 4)
+        Me.Label2.Location = New System.Drawing.Point(228, 4)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(51, 13)
         Me.Label2.TabIndex = 1
@@ -105,7 +105,7 @@ Partial Class frm1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(412, 210)
+        Me.ClientSize = New System.Drawing.Size(459, 234)
         Me.ControlBox = False
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow

@@ -252,7 +252,6 @@ Public Class frmEmpDetails
     End Sub
 
     Sub computeTotal()
-        tb_totaldeductions.Text = CDbl(tb_late.Text) + CDbl(tb_absents.Text) + CDbl(tb_undertime.Text) + CDbl(tb_sss.Text) + CDbl(tb_phic.Text) + CDbl(tb_hdmf.Text)
         tb_totalot.Text = CDbl(tb_regularot.Text) + CDbl(tb_holidayot.Text) 'plus holiday computation
         totalBenefits = 0
         If dgv_incentives.Rows.Count > 0 Then
@@ -260,6 +259,13 @@ Public Class frmEmpDetails
                 totalBenefits += CDbl(row.Cells(1).Value.ToString())
             Next
         End If
+        Dim otherdeduct = 0
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            For Each row In dgv_otherdeduct.Rows
+                otherdeduct += CDbl(row.Cells(1).Value.ToString())
+            Next
+        End If
+        tb_totaldeductions.Text = CDbl(tb_late.Text) + CDbl(tb_absents.Text) + CDbl(tb_undertime.Text) + CDbl(tb_sss.Text) + CDbl(tb_phic.Text) + CDbl(tb_hdmf.Text) + CDbl(otherdeduct)
         tb_totalbenefits.Text = CDbl(tb_allowance.Text) + totalBenefits
         Dim gross_income = Math.Round(CDbl(tb_totalot.Text) + CDbl(tb_income.Text) - CDbl(tb_totaldeductions.Text), 2)
         tb_grossincome.Text = gross_income
@@ -507,5 +513,25 @@ Public Class frmEmpDetails
         Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
         timesheet.ShowDialog()
     End Sub
-
+    'other deductions
+    Private Sub btn_adddeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_adddeduct.Click
+        Dim row As String() = New String() {"Edit", "0"}
+        dgv_otherdeduct.Rows.Add(row)
+    End Sub
+    'other deductions
+    Private Sub btn_deldeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_deldeduct.Click
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            'StrSql = "DELETE FROM tbl_incentives WHERE payslip_id = " & payslip_id
+            'QryReadP()
+            'cmd.ExecuteNonQuery()
+            dgv_otherdeduct.Rows.Remove(dgv_otherdeduct.SelectedRows(0))
+            computeTotal()
+        Else
+            MessageBox.Show("No data to delete.")
+        End If
+    End Sub
+    'autocompute after cell edit
+    Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
+        computeTotal()
+    End Sub
 End Class
