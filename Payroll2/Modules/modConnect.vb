@@ -433,9 +433,9 @@ Module modConnect
     Function computeHDMF(ByVal basic_pay As Double) As Double
         Dim hdmfContrib As Double
         If (basic_pay / num_occurence) > 1500 Then
-            hdmfContrib = (basic_pay / num_occurence) * 0.01
+            hdmfContrib = 5000 * 0.01
         Else
-            hdmfContrib = (basic_pay / num_occurence) * 0.02
+            hdmfContrib = 5000 * 0.02
         End If
         Return hdmfContrib
     End Function

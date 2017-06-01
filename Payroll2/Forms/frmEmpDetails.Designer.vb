@@ -40,15 +40,20 @@ Partial Class frmEmpDetails
         Me.lbl_cutoff = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.btn_deldeduct = New System.Windows.Forms.Button()
+        Me.btn_adddeduct = New System.Windows.Forms.Button()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.dgv_otherdeduct = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
-        Me.tb_grossincome = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
@@ -71,6 +76,7 @@ Partial Class frmEmpDetails
         Me.Label19 = New System.Windows.Forms.Label()
         Me.tb_totalbenefits = New System.Windows.Forms.TextBox()
         Me.tb_allowance = New System.Windows.Forms.TextBox()
+        Me.tb_grossincome = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -123,12 +129,6 @@ Partial Class frmEmpDetails
         Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
-        Me.dgv_otherdeduct = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btn_deldeduct = New System.Windows.Forms.Button()
-        Me.btn_adddeduct = New System.Windows.Forms.Button()
-        Me.Label38 = New System.Windows.Forms.Label()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -136,6 +136,7 @@ Partial Class frmEmpDetails
         CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
+        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         CType(Me.dgv_incentives, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -147,7 +148,6 @@ Partial Class frmEmpDetails
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -178,7 +178,7 @@ Partial Class frmEmpDetails
         Me.dgv_empleave.ReadOnly = True
         Me.dgv_empleave.RowHeadersVisible = False
         Me.dgv_empleave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_empleave.Size = New System.Drawing.Size(545, 467)
+        Me.dgv_empleave.Size = New System.Drawing.Size(545, 491)
         Me.dgv_empleave.TabIndex = 0
         '
         'TabControl2
@@ -203,7 +203,7 @@ Partial Class frmEmpDetails
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(551, 473)
+        Me.TabPage3.Size = New System.Drawing.Size(551, 497)
         Me.TabPage3.TabIndex = 1
         Me.TabPage3.Text = "Timesheet"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -246,7 +246,7 @@ Partial Class frmEmpDetails
         Me.dgv_emptimesheet.RowHeadersVisible = False
         Me.dgv_emptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.dgv_emptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 436)
+        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 461)
         Me.dgv_emptimesheet.TabIndex = 2
         '
         'TabPage1
@@ -346,6 +346,15 @@ Partial Class frmEmpDetails
         Me.Label25.TabIndex = 9
         Me.Label25.Text = "TAX"
         '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(284, 365)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(100, 13)
+        Me.Label22.TabIndex = 8
+        Me.Label22.Text = "TAXABLE INCOME"
+        '
         'Label30
         '
         Me.Label30.AutoSize = True
@@ -384,10 +393,61 @@ Partial Class frmEmpDetails
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Deductions"
         '
+        'btn_deldeduct
+        '
+        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 198)
+        Me.btn_deldeduct.Name = "btn_deldeduct"
+        Me.btn_deldeduct.Size = New System.Drawing.Size(35, 23)
+        Me.btn_deldeduct.TabIndex = 17
+        Me.btn_deldeduct.Text = "Del"
+        Me.btn_deldeduct.UseVisualStyleBackColor = True
+        '
+        'btn_adddeduct
+        '
+        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 198)
+        Me.btn_adddeduct.Name = "btn_adddeduct"
+        Me.btn_adddeduct.Size = New System.Drawing.Size(35, 23)
+        Me.btn_adddeduct.TabIndex = 16
+        Me.btn_adddeduct.Text = "Add"
+        Me.btn_adddeduct.UseVisualStyleBackColor = True
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Location = New System.Drawing.Point(7, 203)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(90, 13)
+        Me.Label38.TabIndex = 15
+        Me.Label38.Text = "Other Deductions"
+        '
+        'dgv_otherdeduct
+        '
+        Me.dgv_otherdeduct.AllowUserToAddRows = False
+        Me.dgv_otherdeduct.AllowUserToDeleteRows = False
+        Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
+        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 227)
+        Me.dgv_otherdeduct.MultiSelect = False
+        Me.dgv_otherdeduct.Name = "dgv_otherdeduct"
+        Me.dgv_otherdeduct.RowHeadersVisible = False
+        Me.dgv_otherdeduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_otherdeduct.Size = New System.Drawing.Size(257, 147)
+        Me.dgv_otherdeduct.TabIndex = 14
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Name"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Amount"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        '
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(7, 386)
+        Me.Label29.Location = New System.Drawing.Point(7, 383)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(116, 13)
         Me.Label29.TabIndex = 12
@@ -411,15 +471,6 @@ Partial Class frmEmpDetails
         Me.Label28.TabIndex = 8
         Me.Label28.Text = "HDMF"
         '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(284, 365)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(100, 13)
-        Me.Label22.TabIndex = 8
-        Me.Label22.Text = "TAXABLE INCOME"
-        '
         'Label27
         '
         Me.Label27.AutoSize = True
@@ -437,15 +488,6 @@ Partial Class frmEmpDetails
         Me.Label26.Size = New System.Drawing.Size(28, 13)
         Me.Label26.TabIndex = 4
         Me.Label26.Text = "SSS"
-        '
-        'tb_grossincome
-        '
-        Me.tb_grossincome.Location = New System.Drawing.Point(418, 362)
-        Me.tb_grossincome.Name = "tb_grossincome"
-        Me.tb_grossincome.ReadOnly = True
-        Me.tb_grossincome.Size = New System.Drawing.Size(124, 20)
-        Me.tb_grossincome.TabIndex = 9
-        Me.tb_grossincome.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label24
         '
@@ -476,7 +518,7 @@ Partial Class frmEmpDetails
         '
         'tb_totaldeductions
         '
-        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 383)
+        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 380)
         Me.tb_totaldeductions.Name = "tb_totaldeductions"
         Me.tb_totaldeductions.ReadOnly = True
         Me.tb_totaldeductions.Size = New System.Drawing.Size(124, 20)
@@ -649,6 +691,15 @@ Partial Class frmEmpDetails
         Me.tb_allowance.TabIndex = 1
         Me.tb_allowance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
+        'tb_grossincome
+        '
+        Me.tb_grossincome.Location = New System.Drawing.Point(418, 362)
+        Me.tb_grossincome.Name = "tb_grossincome"
+        Me.tb_grossincome.ReadOnly = True
+        Me.tb_grossincome.Size = New System.Drawing.Size(124, 20)
+        Me.tb_grossincome.TabIndex = 9
+        Me.tb_grossincome.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.Label18)
@@ -806,7 +857,7 @@ Partial Class frmEmpDetails
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(551, 473)
+        Me.TabPage7.Size = New System.Drawing.Size(551, 497)
         Me.TabPage7.TabIndex = 4
         Me.TabPage7.Text = "Loans"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -860,7 +911,7 @@ Partial Class frmEmpDetails
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(551, 473)
+        Me.TabPage8.Size = New System.Drawing.Size(551, 497)
         Me.TabPage8.TabIndex = 5
         Me.TabPage8.Text = "Leave"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -871,7 +922,7 @@ Partial Class frmEmpDetails
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(551, 473)
+        Me.TabPage2.Size = New System.Drawing.Size(551, 497)
         Me.TabPage2.TabIndex = 6
         Me.TabPage2.Text = "Overtime"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -889,7 +940,7 @@ Partial Class frmEmpDetails
         Me.dgv_overtime.ReadOnly = True
         Me.dgv_overtime.RowHeadersVisible = False
         Me.dgv_overtime.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_overtime.Size = New System.Drawing.Size(545, 467)
+        Me.dgv_overtime.Size = New System.Drawing.Size(545, 491)
         Me.dgv_overtime.TabIndex = 0
         '
         'tb_middlename
@@ -1181,57 +1232,6 @@ Partial Class frmEmpDetails
         Me.dgv_shift.Size = New System.Drawing.Size(283, 195)
         Me.dgv_shift.TabIndex = 24
         '
-        'dgv_otherdeduct
-        '
-        Me.dgv_otherdeduct.AllowUserToAddRows = False
-        Me.dgv_otherdeduct.AllowUserToDeleteRows = False
-        Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
-        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 227)
-        Me.dgv_otherdeduct.MultiSelect = False
-        Me.dgv_otherdeduct.Name = "dgv_otherdeduct"
-        Me.dgv_otherdeduct.RowHeadersVisible = False
-        Me.dgv_otherdeduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_otherdeduct.Size = New System.Drawing.Size(257, 147)
-        Me.dgv_otherdeduct.TabIndex = 14
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Name"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Amount"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        '
-        'btn_deldeduct
-        '
-        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 198)
-        Me.btn_deldeduct.Name = "btn_deldeduct"
-        Me.btn_deldeduct.Size = New System.Drawing.Size(35, 23)
-        Me.btn_deldeduct.TabIndex = 17
-        Me.btn_deldeduct.Text = "Del"
-        Me.btn_deldeduct.UseVisualStyleBackColor = True
-        '
-        'btn_adddeduct
-        '
-        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 198)
-        Me.btn_adddeduct.Name = "btn_adddeduct"
-        Me.btn_adddeduct.Size = New System.Drawing.Size(35, 23)
-        Me.btn_adddeduct.TabIndex = 16
-        Me.btn_adddeduct.Text = "Add"
-        Me.btn_adddeduct.UseVisualStyleBackColor = True
-        '
-        'Label38
-        '
-        Me.Label38.AutoSize = True
-        Me.Label38.Location = New System.Drawing.Point(7, 203)
-        Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(90, 13)
-        Me.Label38.TabIndex = 15
-        Me.Label38.Text = "Other Deductions"
-        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1255,6 +1255,7 @@ Partial Class frmEmpDetails
         Me.TabPage1.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
+        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.dgv_incentives, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1271,7 +1272,6 @@ Partial Class frmEmpDetails
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

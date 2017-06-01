@@ -267,7 +267,7 @@ Public Class frmSettings
         dt = New DataTable
         adpt.Fill(dt)
         For i = 0 To dt.Rows.Count - 1
-            StrSql = "INSERT INTO timesheet(emp_bio_id,dateLog,timein,timeout,totalHours,late,undertime,overtime,remarks) " _
+            StrSql = "INSERT INTO timesheettemp(emp_bio_id,dateLog,timein,timeout,totalHours,late,undertime,overtime,remarks) " _
                         & "VALUES(" & dt.Rows(i)(0).ToString & ",'" & dt.Rows(i)(1).ToString & "','" _
                         & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "','" _
                         & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _

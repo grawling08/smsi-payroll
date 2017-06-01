@@ -9,7 +9,7 @@ Public Class frmEmpDetails
     Private daysAbsent As Integer = 0
     Private daysPresent As Integer = 0
 
-    Public Sub New(ByVal emp_id As String)
+    Sub New(ByVal emp_id As String)
         MyBase.New()
         id = emp_id
         InitializeComponent()

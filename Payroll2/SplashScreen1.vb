@@ -32,4 +32,7 @@
         Copyright.Text = My.Application.Info.Copyright
     End Sub
 
+    Private Sub NotifyIcon1_MouseDoubleClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+
+    End Sub
 End Class

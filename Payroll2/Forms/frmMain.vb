@@ -25,6 +25,7 @@ Public Class frmMain
         If app_mode = "integrate" Then
             EmployeeToolStripMenuItem.Enabled = False
         End If
+        'frmTray.Show()
     End Sub
     '
     Sub loadEmployee()
@@ -221,7 +222,4 @@ Public Class frmMain
         shifts.ShowDialog()
     End Sub
 
-    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
-
-    End Sub
 End Class
