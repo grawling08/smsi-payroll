@@ -267,8 +267,7 @@ Public Class frmEmpDetails
         End If
         tb_totaldeductions.Text = CDbl(tb_late.Text) + CDbl(tb_absents.Text) + CDbl(tb_undertime.Text) + CDbl(tb_sss.Text) + CDbl(tb_phic.Text) + CDbl(tb_hdmf.Text) + CDbl(otherdeduct)
         tb_totalbenefits.Text = CDbl(tb_allowance.Text) + totalBenefits
-        Dim gross_income = Math.Round(CDbl(tb_totalot.Text) + CDbl(tb_income.Text) - CDbl(tb_totaldeductions.Text), 2)
-        tb_grossincome.Text = gross_income
+        tb_grossincome.Text = Math.Round(CDbl(tb_totalot.Text) + CDbl(tb_income.Text) - CDbl(tb_totaldeductions.Text), 2)
         tb_tax.Text = Math.Round(computeTax(tb_grossincome.Text, taxcode), 2)
         Dim taxated_income = CDbl(tb_grossincome.Text) - CDbl(tb_tax.Text)
         tb_netpaywithtax.Text = taxated_income

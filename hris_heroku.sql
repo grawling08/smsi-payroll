@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- Host:                         us-cdbr-iron-east-03.cleardb.net
--- Server version:               5.5.45-log - MySQL Community Server (GPL)
--- Server OS:                    Linux
+-- Host:                         127.0.0.1
+-- Server version:               5.7.17-log - MySQL Community Server (GPL)
+-- Server OS:                    Win32
 -- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
 
@@ -12,20 +12,18 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Dumping database structure for heroku_760d4109a89e3f8
-DROP DATABASE IF EXISTS `heroku_760d4109a89e3f8`;
-CREATE DATABASE IF NOT EXISTS `heroku_760d4109a89e3f8` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `heroku_760d4109a89e3f8`;
+-- Dumping database structure for hris
+CREATE DATABASE IF NOT EXISTS `hris` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `hris`;
 
--- Dumping structure for table heroku_760d4109a89e3f8.allowances
-DROP TABLE IF EXISTS `allowances`;
+-- Dumping structure for table hris.allowances
 CREATE TABLE IF NOT EXISTS `allowances` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.allowances: 8 rows
+-- Dumping data for table hris.allowances: 3 rows
 /*!40000 ALTER TABLE `allowances` DISABLE KEYS */;
 INSERT INTO `allowances` (`id`, `name`) VALUES
 	(1, 'Housing'),
@@ -38,45 +36,25 @@ INSERT INTO `allowances` (`id`, `name`) VALUES
 	(12, 'Representation');
 /*!40000 ALTER TABLE `allowances` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.annualmedical
-DROP TABLE IF EXISTS `annualmedical`;
+-- Dumping structure for table hris.annualmedical
 CREATE TABLE IF NOT EXISTS `annualmedical` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) NOT NULL DEFAULT '0',
   `dateCheckup` date DEFAULT NULL,
+  `conditionCheckup` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `typeCheckup` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `physician` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `clinic` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `condition` text COLLATE utf8_unicode_ci,
   `image` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.annualmedical: 0 rows
+-- Dumping data for table hris.annualmedical: 0 rows
 /*!40000 ALTER TABLE `annualmedical` DISABLE KEYS */;
 /*!40000 ALTER TABLE `annualmedical` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.attendance
-DROP TABLE IF EXISTS `attendance`;
-CREATE TABLE IF NOT EXISTS `attendance` (
-  `attendance_id` int(10) NOT NULL AUTO_INCREMENT,
-  `id` int(10) NOT NULL DEFAULT '0',
-  `emp_bio_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time_in` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time_out` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `totalHours` double(2,2) DEFAULT NULL,
-  `late` double(2,2) DEFAULT NULL,
-  `undertime` double(2,2) DEFAULT NULL,
-  `overtime` double(2,2) DEFAULT NULL,
-  `remarks` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`attendance_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- Dumping data for table heroku_760d4109a89e3f8.attendance: 0 rows
-/*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
-
--- Dumping structure for table heroku_760d4109a89e3f8.attendedtrainees
-DROP TABLE IF EXISTS `attendedtrainees`;
+-- Dumping structure for table hris.attendedtrainees
 CREATE TABLE IF NOT EXISTS `attendedtrainees` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) DEFAULT NULL,
@@ -84,14 +62,11 @@ CREATE TABLE IF NOT EXISTS `attendedtrainees` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.attendedtrainees: ~1 rows (approximately)
+-- Dumping data for table hris.attendedtrainees: ~2 rows (approximately)
 /*!40000 ALTER TABLE `attendedtrainees` DISABLE KEYS */;
-INSERT INTO `attendedtrainees` (`id`, `employee_id`, `traindev_id`) VALUES
-	(2, 12, 2);
 /*!40000 ALTER TABLE `attendedtrainees` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.awards
-DROP TABLE IF EXISTS `awards`;
+-- Dumping structure for table hris.awards
 CREATE TABLE IF NOT EXISTS `awards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -102,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `awards` (
   KEY `index_awards_on_employee_id` (`employee_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.awards: ~10 rows (approximately)
+-- Dumping data for table hris.awards: ~2 rows (approximately)
 /*!40000 ALTER TABLE `awards` DISABLE KEYS */;
 INSERT INTO `awards` (`id`, `employee_id`, `name`, `institution`, `dateGiven`) VALUES
 	(1, 1, '5yrs in Service', 'MTMAS', NULL),
@@ -117,8 +92,7 @@ INSERT INTO `awards` (`id`, `employee_id`, `name`, `institution`, `dateGiven`) V
 	(102, 1242, 'Best Paper Award', 'Singapore', '2014-08-20');
 /*!40000 ALTER TABLE `awards` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.bank
-DROP TABLE IF EXISTS `bank`;
+-- Dumping structure for table hris.bank
 CREATE TABLE IF NOT EXISTS `bank` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -127,19 +101,18 @@ CREATE TABLE IF NOT EXISTS `bank` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.bank: 0 rows
+-- Dumping data for table hris.bank: 0 rows
 /*!40000 ALTER TABLE `bank` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bank` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.benefits
-DROP TABLE IF EXISTS `benefits`;
+-- Dumping structure for table hris.benefits
 CREATE TABLE IF NOT EXISTS `benefits` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.benefits: 4 rows
+-- Dumping data for table hris.benefits: 4 rows
 /*!40000 ALTER TABLE `benefits` DISABLE KEYS */;
 INSERT INTO `benefits` (`id`, `name`) VALUES
 	(1, 'Bonus'),
@@ -148,32 +121,31 @@ INSERT INTO `benefits` (`id`, `name`) VALUES
 	(4, 'Hi');
 /*!40000 ALTER TABLE `benefits` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.biometric
-DROP TABLE IF EXISTS `biometric`;
+-- Dumping structure for table hris.biometric
 CREATE TABLE IF NOT EXISTS `biometric` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) NOT NULL DEFAULT '0',
   `branch_id` int(10) NOT NULL DEFAULT '0',
   `biometric_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.biometric: 9 rows
+-- Dumping data for table hris.biometric: 2 rows
 /*!40000 ALTER TABLE `biometric` DISABLE KEYS */;
 INSERT INTO `biometric` (`id`, `employee_id`, `branch_id`, `biometric_id`) VALUES
 	(1, 1, 1, '10003'),
-	(12, 12, 32, '1004'),
+	(12, 12, 32, NULL),
 	(22, 392, 32, '10002'),
 	(32, 372, 32, '10021'),
 	(42, 412, 32, '1003'),
-	(52, 652, 32, '10014'),
+	(52, 652, 32, NULL),
 	(62, 512, 32, '116'),
 	(72, 652, 1, ''),
-	(82, 402, 11, '');
+	(82, 402, 11, ''),
+	(92, 1262, 122, '');
 /*!40000 ALTER TABLE `biometric` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.branches
-DROP TABLE IF EXISTS `branches`;
+-- Dumping structure for table hris.branches
 CREATE TABLE IF NOT EXISTS `branches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL DEFAULT '0',
@@ -181,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `branches` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.branches: ~24 rows (approximately)
+-- Dumping data for table hris.branches: ~3 rows (approximately)
 /*!40000 ALTER TABLE `branches` DISABLE KEYS */;
 INSERT INTO `branches` (`id`, `company_id`, `name`) VALUES
 	(1, 7, 'Cagayan de Oro'),
@@ -210,8 +182,7 @@ INSERT INTO `branches` (`id`, `company_id`, `name`) VALUES
 	(142, 4, 'GEN. SAN.');
 /*!40000 ALTER TABLE `branches` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.business
-DROP TABLE IF EXISTS `business`;
+-- Dumping structure for table hris.business
 CREATE TABLE IF NOT EXISTS `business` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) DEFAULT NULL,
@@ -226,12 +197,11 @@ CREATE TABLE IF NOT EXISTS `business` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.business: 0 rows
+-- Dumping data for table hris.business: 1 rows
 /*!40000 ALTER TABLE `business` DISABLE KEYS */;
 /*!40000 ALTER TABLE `business` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.companies
-DROP TABLE IF EXISTS `companies`;
+-- Dumping structure for table hris.companies
 CREATE TABLE IF NOT EXISTS `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci,
@@ -242,10 +212,10 @@ CREATE TABLE IF NOT EXISTS `companies` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.companies: ~12 rows (approximately)
+-- Dumping data for table hris.companies: ~4 rows (approximately)
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
 INSERT INTO `companies` (`id`, `name`, `code`, `contactno`, `email`, `website`) VALUES
-	(1, 'Solutions Management Systems Inc.', 'SMSi', '88', 'smsi@gmail.com', 'www.smsi.com.ph'),
+	(1, 'Solutions Management Systems Inc.', 'SMSI', '88', 'smsi@gmail.com', 'www.smsi.com.ph'),
 	(2, 'Amaara Financial Corporation', 'AFC', '0', '', 'www.afc.com.ph'),
 	(3, 'Norminring Development Corporation', 'NDC', '0', '', 'www.norminring.com'),
 	(4, 'Mindanao Educators Mutual Benefit Association , Inc.', 'MEMBAI', '0', '', 'www.memba.com.ph'),
@@ -259,25 +229,25 @@ INSERT INTO `companies` (`id`, `name`, `code`, `contactno`, `email`, `website`) 
 	(22, 'Currahee Group of Companies', 'CGC', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.cutoff
-DROP TABLE IF EXISTS `cutoff`;
+-- Dumping structure for table hris.cutoff
 CREATE TABLE IF NOT EXISTS `cutoff` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `company_id` int(10) DEFAULT NULL,
   `from_date` date DEFAULT NULL,
   `to_date` date DEFAULT NULL,
+  `occurence` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.cutoff: ~1 rows (approximately)
+-- Dumping data for table hris.cutoff: 5 rows
 /*!40000 ALTER TABLE `cutoff` DISABLE KEYS */;
-INSERT INTO `cutoff` (`id`, `company_id`, `from_date`, `to_date`, `status`) VALUES
-	(2, 1, '2017-05-15', '2017-05-30', 'Processing');
+INSERT INTO `cutoff` (`id`, `company_id`, `from_date`, `to_date`, `occurence`, `status`) VALUES
+	(2, 1, '2017-05-15', '2017-05-30', 'Semi-Monthly', 'Done'),
+	(12, 1, '2017-05-01', '2017-05-15', 'Semi-Monthly', 'Processing');
 /*!40000 ALTER TABLE `cutoff` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.department
-DROP TABLE IF EXISTS `department`;
+-- Dumping structure for table hris.department
 CREATE TABLE IF NOT EXISTS `department` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `company_id` int(10) NOT NULL DEFAULT '0',
@@ -285,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `department` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=263 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.department: 36 rows
+-- Dumping data for table hris.department: 4 rows
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
 INSERT INTO `department` (`id`, `company_id`, `name`) VALUES
 	(1, 1, 'IT'),
@@ -326,8 +296,7 @@ INSERT INTO `department` (`id`, `company_id`, `name`) VALUES
 	(262, 4, 'Operations');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.educations
-DROP TABLE IF EXISTS `educations`;
+-- Dumping structure for table hris.educations
 CREATE TABLE IF NOT EXISTS `educations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -337,9 +306,9 @@ CREATE TABLE IF NOT EXISTS `educations` (
   `yearGrad` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_educations_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1302 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1482 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.educations: ~123 rows (approximately)
+-- Dumping data for table hris.educations: ~0 rows (approximately)
 /*!40000 ALTER TABLE `educations` DISABLE KEYS */;
 INSERT INTO `educations` (`id`, `employee_id`, `levelType`, `course`, `school`, `yearGrad`) VALUES
 	(1, 1, 'College', 'BS-Accountancy', 'NDKC', 1992),
@@ -368,14 +337,13 @@ INSERT INTO `educations` (`id`, `employee_id`, `levelType`, `course`, `school`, 
 	(212, 202, 'High School', '', 'Digos National High School', 2005),
 	(222, 212, 'High School', NULL, 'Sta Ana National High School', 2013),
 	(232, 232, 'College', 'Bachelor of Science in Accountancy', 'Holy Cross of Davao College', 2000),
-	(242, 282, NULL, 'Bachelor of Science in Civil Engineering', 'University of Cebu', NULL),
+	(242, 282, 'Undergraduate', 'Bachelor of Science in Civil Engineering', 'University of Cebu', NULL),
 	(252, 292, 'College', 'Bachelor of Science in Industrial Technology Major in Architectural Drafting', 'Western Visayas College of Science and Technology', 2005),
 	(262, 312, 'College', 'Bachelor of Arts Major in Philosophy', 'Xavier University - Ateneo de Cagayan', 2005),
 	(272, 312, 'Post Graduate', 'Professional Education', 'Xavier University - Ateneo de Cagayan', 2007),
 	(282, 312, 'Post Graduate', 'Diploma of Special Education Teaching Program', 'Xavier University - Ateneo de Cagayan', 2008),
 	(292, 322, 'College', 'Bachelor of Science in Architecture', 'University of Mindanao', 2014),
 	(302, 332, 'College', 'Bachelor of Science in Accountancy', 'Holy Cross of Davao College', 2006),
-	(312, 332, NULL, NULL, NULL, NULL),
 	(322, 362, 'College', 'Bachelor of Science in Business Administration', 'Holy Cross of Davao College, Inc.', 2104),
 	(332, 372, 'College', 'Bachelor of science in Information Technology', 'Bicol University', 2015),
 	(342, 382, 'College', 'Bachelor of Science in Business Administration Major in Management', 'Pilgrim Christian College', 2002),
@@ -430,7 +398,6 @@ INSERT INTO `educations` (`id`, `employee_id`, `levelType`, `course`, `school`, 
 	(912, 922, 'College', 'Bachelor of Science in Commerce major in Management Accounting', 'Liceo de Cagayan University', 2000),
 	(922, 932, 'Undergraduate', 'Bachelor of Science in Computer Science', 'CorJesu College of Digos', NULL),
 	(932, 942, 'Vocational', NULL, 'TESDA, West City Central', 2002),
-	(942, 952, 'College', 'Bachelors of Science in Business Administration Major in Marketing Management', 'Holy Cross of Davao College Inc.', 2014),
 	(952, 952, 'Vocational', 'Refrigeration and Air-conditioning Technology (R.A.C)', 'Mindanao Masters Technical Training Center Inc.', 2009),
 	(962, 962, 'College', 'Bachelor of Science in Industrial Technology Major in Automotive Technology', 'Bohol Island State University (BISU)', 2007),
 	(972, 972, 'Undergraduate', '', 'Cor Jesu College of Digos City', NULL),
@@ -464,11 +431,28 @@ INSERT INTO `educations` (`id`, `employee_id`, `levelType`, `course`, `school`, 
 	(1262, 1242, 'Post Graduate', 'Masters in Information Technology', 'University of Immaculate Conception', 2009),
 	(1272, 1242, 'College', 'Bachelor of Science in Computer Engineering', 'University of Immaculate Conception', 2001),
 	(1282, 1252, 'College', 'Bachelor of Science in accounting Technology', 'UM Digos College', 2017),
-	(1292, 1262, 'College', 'Associate in Computer Secretarial', 'Zamboanga A.E. Colleges', 1999);
+	(1292, 1262, 'College', 'Associate in Computer Secretarial', 'Zamboanga A.E. Colleges', 1999),
+	(1302, 752, 'College', 'Bachelor of Science in Commerce major in management', 'University of Immaculate Conception', 2006),
+	(1312, 952, 'College', 'Bachelor of Science in Business Administration', 'Holy Cross of Davao College Inc.', 2014),
+	(1322, 352, 'College', 'BS Accountancy', 'Holy Cross of Davao Colleges', 2000),
+	(1332, 12, 'High School', NULL, 'SHTMS', NULL),
+	(1342, 372, 'High School', 'High School', 'St. raphael Academy,legaspi City Albay', 2009),
+	(1352, 652, 'High School', 'High School', 'San Isidro National High School', 1996),
+	(1362, 412, 'High School', 'High school', 'Sta. Maria National High School', 1998),
+	(1372, 512, 'High School', 'High School', 'Liceo de Cagayan University', 2005),
+	(1382, 552, 'High School', 'High School', 'Liceo de Cagayan university', 2005),
+	(1392, 1182, 'High School', 'High School', 'Lugait National High School', 2009),
+	(1402, 642, 'High School', 'High School', 'Tabak National High school', 2009),
+	(1412, 662, 'High School', 'High School', 'Lourdes academy', NULL),
+	(1422, 1212, 'High School', 'High School', 'Kapatagan National High School', 2011),
+	(1432, 382, 'High School', NULL, 'Pilgrim Christian College', 1997),
+	(1442, 322, 'High School', NULL, 'Max Mirafuentes Academy', 2007),
+	(1452, 222, 'High School', NULL, 'Maa National High School', 2005),
+	(1462, 1272, 'College', 'Associate in Computer Secretarial', 'Zamboanga A.E. Colleges', 1999),
+	(1472, 1272, 'High School', 'High School', 'Isidro Miranda (LAIH-BATU) National High School', 1995);
 /*!40000 ALTER TABLE `educations` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.empchildren
-DROP TABLE IF EXISTS `empchildren`;
+-- Dumping structure for table hris.empchildren
 CREATE TABLE IF NOT EXISTS `empchildren` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -480,9 +464,9 @@ CREATE TABLE IF NOT EXISTS `empchildren` (
   `company` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_children_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=362 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=532 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.empchildren: ~37 rows (approximately)
+-- Dumping data for table hris.empchildren: ~2 rows (approximately)
 /*!40000 ALTER TABLE `empchildren` DISABLE KEYS */;
 INSERT INTO `empchildren` (`id`, `employee_id`, `name`, `gender`, `dateBirth`, `civilStatus`, `occupation`, `company`) VALUES
 	(1, 1, 'Jhelou Miguela Raye P. Dantes', 'Female', NULL, 'Single', 'student', 'na'),
@@ -495,11 +479,11 @@ INSERT INTO `empchildren` (`id`, `employee_id`, `name`, `gender`, `dateBirth`, `
 	(62, 292, 'Vinz Daniel V. Caro', 'Male', '2013-04-21', 'Single', NULL, NULL),
 	(72, 352, 'Travis Matteo C. Montera', 'Male', '2010-08-17', NULL, NULL, NULL),
 	(82, 352, 'Colin Gabriel C. Montera', 'Male', '2010-08-17', NULL, NULL, NULL),
-	(92, 352, 'Audrey Annika C. Montera', 'Male', '2012-03-01', NULL, NULL, NULL),
+	(92, 352, 'Audrey Annika C. Montera', 'Female', '2012-03-01', NULL, NULL, NULL),
 	(102, 452, 'Francis Miguel G. Mantillas', 'Male', '2007-08-28', NULL, NULL, NULL),
 	(112, 512, 'Myeisha Myles E. Baculio', 'Female', '2010-05-04', NULL, NULL, NULL),
 	(122, 542, 'Rob James M. Bersano', 'Male', '2010-11-14', NULL, NULL, NULL),
-	(132, 602, 'Princess Clowie L. Ulo', 'Female', NULL, NULL, NULL, NULL),
+	(132, 602, 'Princess Clowie L. Ulo', 'Female', '2014-04-15', NULL, NULL, NULL),
 	(142, 712, 'Reynalyn Almacin', 'Female', '2014-03-27', NULL, NULL, NULL),
 	(152, 742, 'Khloe Miezy L. Dela Cruz', 'Female', '2012-12-04', NULL, NULL, NULL),
 	(162, 742, 'Khlea Miezy L. Dela Cruz', 'Female', '2015-01-12', NULL, NULL, NULL),
@@ -516,16 +500,27 @@ INSERT INTO `empchildren` (`id`, `employee_id`, `name`, `gender`, `dateBirth`, `
 	(272, 1232, 'Sean Voltaire A. Escalona', 'Male', NULL, NULL, NULL, NULL),
 	(282, 1232, 'Stephen Vladimir A. Escalona', 'Female', NULL, NULL, NULL, NULL),
 	(292, 1242, 'Nicollas Andraei Sobejana', 'Male', '2010-01-17', NULL, NULL, NULL),
-	(302, 1262, 'Annie France B. Amesola', 'Female', '2006-12-12', 'Single', NULL, NULL),
-	(312, 1262, 'Franzyn Anne B. Amesola', 'Female', '2009-09-03', NULL, NULL, NULL),
-	(322, 1262, 'James Franco B.Amesola', 'Male', '2012-11-28', NULL, NULL, NULL),
-	(332, 1262, 'Rhenz Ethan B. Amesola', 'Male', '2015-06-19', NULL, NULL, NULL),
 	(342, 652, 'LJ B. Arce', 'Male', '2007-01-03', NULL, NULL, NULL),
-	(352, 652, 'VJ Mari B. Arce', 'Female', '2009-08-22', NULL, NULL, NULL);
+	(352, 652, 'VJ Mari B. Arce', 'Female', '2009-08-22', NULL, NULL, NULL),
+	(362, 752, 'Olivia Brienne S. Galdo', 'Female', '2015-06-21', NULL, NULL, NULL),
+	(372, 972, 'Axzel Jay U. Ruiz', 'Male', '2005-03-24', NULL, NULL, NULL),
+	(382, 972, 'Jhustine Jay U. Ruiz', 'Male', '2009-11-06', NULL, NULL, NULL),
+	(392, 972, 'Ynnah Maxine U. Ruiz', 'Female', '2012-07-01', NULL, NULL, NULL),
+	(412, 322, 'Leanne Kendra O. Camilotes', 'Female', NULL, NULL, NULL, NULL),
+	(422, 322, 'Lyannah Kate O. Camilotes', 'Female', NULL, NULL, NULL, NULL),
+	(432, 232, 'Nathan Lance H. amper', 'Male', NULL, NULL, NULL, NULL),
+	(442, 592, 'Mary Angeline A. Micoy', 'Female', NULL, NULL, NULL, NULL),
+	(452, 592, 'Marc Angelo A. Micoy', 'Male', NULL, NULL, NULL, NULL),
+	(462, 482, 'King Sedric Mosqueda', 'Male', NULL, NULL, NULL, NULL),
+	(472, 262, 'Paul Willem T. Baldosano', NULL, NULL, NULL, NULL, NULL),
+	(482, 292, 'Lara Ysabelle B. Caro', 'Female', NULL, NULL, NULL, NULL),
+	(492, 1272, 'Annie France B. Amesola', 'Female', '2006-12-11', NULL, NULL, NULL),
+	(502, 1272, 'Franzyn Anne B. Amesola', 'Female', '2009-09-03', NULL, NULL, NULL),
+	(512, 1272, 'James Franco B. Amesola', 'Male', '2012-11-28', NULL, NULL, NULL),
+	(522, 1272, 'Rhenz Ethan B. Amesola', 'Male', '2015-06-19', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `empchildren` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.employees
-DROP TABLE IF EXISTS `employees`;
+-- Dumping structure for table hris.employees
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(13) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -557,6 +552,8 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `resMobile2` varchar(11) COLLATE utf8_unicode_ci DEFAULT NULL,
   `resEmail` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contactperson` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `emergencyno` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `emergencyaddress` text COLLATE utf8_unicode_ci,
   `perAdd` text COLLATE utf8_unicode_ci,
   `proAdd` text COLLATE utf8_unicode_ci,
   `fatherName` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -584,277 +581,133 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `hdmfNo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `taxNo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `emp_status` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1253 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1282 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.employees: ~122 rows (approximately)
+-- Dumping data for table hris.employees: ~8 rows (approximately)
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` (`id`, `employee_id`, `biometric_id`, `shiftgroup_id`, `image`, `fName`, `mi`, `lName`, `acronym`, `bank`, `placeBirth`, `dateBirth`, `civilStatus`, `taxstatus_id`, `gender`, `citizenship`, `religion`, `language`, `height`, `weight`, `bloodType`, `hair`, `complexion`, `resAdd`, `resTel1`, `resTel2`, `resMobile1`, `resMobile2`, `resEmail`, `contactperson`, `perAdd`, `proAdd`, `fatherName`, `faAdd`, `faOccupation`, `faCompany`, `faNo`, `motherName`, `moAdd`, `moOccupation`, `moCompany`, `moNo`, `spouseName`, `spAdd`, `spOccupation`, `spCompany`, `spNo`, `dateHired`, `position_id`, `company_id`, `department_id`, `branch_id`, `sssNo`, `phicNo`, `hdmfNo`, `taxNo`, `emp_status`) VALUES
-	(1, '310-98-4', '10003', 1, '', 'Jennifer', 'Palo', 'Dantes', NULL, NULL, 'Bislig, Surigao Del Sur', '1975-08-04', 'Married', 7, 'Female', 'Filipino', 'Catholic', 'Bisaya', '5\'', '51', 'O +', 'Brown', 'Fair', '17E Southview Homes Subd.,Macasandig, Cagayan De O', 88, 88, '09173049861', '09989590804', 'jen.dantes@smsi.com.ph', NULL, 'same', 'same', 'Jose M. Palo', 'Kidapawan, Cotabato', 'Gov\'t Employee', 'Makilala City Mayor Office', '0', 'Socorro R. Beltran', 'Malita, Davao Del Sur', 'none', 'none', '0', 'Reynaldo I. Dantes Jr', '17E Southview Homes Subd., Cagayan de Oro City', 'Project Manager', 'MTMAS', '0', '1997-04-01', 92, 1, 2, 32, '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Regular'),
-	(2, NULL, NULL, 4, NULL, 'Charizze Mae', 'Taboada', 'Lumagsao', NULL, NULL, 'San Juan Metro Manila', '1985-01-03', 'Married', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan, Singlish', '4\'11inches', '51kgs', 'B +', NULL, 'Fair', '#3A Yellow Street Palm Ridge Maandig Buena Oro, Up', NULL, NULL, '09771046500', NULL, 'dotmrsl@gmail.com', NULL, 'B29-L3 Bronze St. Johndorf Subd. Barra,Opol Mis Or', 'B29-L3 Bronze St. Johndorf Subd. Barra,Opol Mis Or', 'Eliseo M. Taboada', '', '', NULL, NULL, 'Frances Merlie B. Taboada', '', NULL, NULL, NULL, 'Ranji Yehudi G. Lumagsao', '#3A Yellow St. Palm Ridge Maandig Village Upper Ma', 'Social Aide', 'City Social Welfare Cagayan de Oro', '0', '2017-04-01', 102, 1, 2, 32, '8-15700359', '150501399622', '121025696574', NULL, 'Resigned'),
-	(3, 'SP-Admin', NULL, NULL, NULL, 'SUPER ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(12, NULL, NULL, 1, NULL, 'Shiela', 'L.', 'Achas', NULL, NULL, 'Cagayan de Oro', '1994-11-09', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'1inches', '65Kg', NULL, NULL, NULL, 'Gusa. Cagayan de Oro City', NULL, NULL, '09267459394', NULL, 'libresshiela@gmail.com', NULL, 'Gusa. Cagayan de Oro City', 'Gusa. Cagayan de Oro City', 'Samuel B. Achas', 'Lagobglong, Misamis Oriental', NULL, NULL, NULL, 'Celia T. Libres', '#127 Purok-3A, Gusa Cagayan de Oro City', 'Business Woman', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-03-01', 112, 1, 22, 32, '08-2580153-6', '150504178309', '121148071155', '330785488000', 'Regular'),
-	(22, NULL, NULL, 4, NULL, 'Daina Jane', 'Layar', 'Lungtad', NULL, NULL, 'Palao, Iligan City', '1990-12-30', 'Single', 1, 'Female', 'Filipino', 'Seventh Day Adventist', 'English, Tagalog, Visayan', '5\'1 inches', '51Kg', 'A +', 'Brown', '', 'Lao-Lao Lugait Misamis Oriental', NULL, NULL, '09267876016', NULL, 'dainajanelungtad@gmail.com', NULL, 'Lao-Lao Lugait Misamis Oriental', 'Lao-Lao Lugait Misamis Oriental', 'Cornelio A. Lungtad', 'Salvacion Bayugan City', 'Foreman', NULL, NULL, 'Rosalinda L. Lungtad', 'Salvacion Bayugan City', 'Housekeeper', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-11-21', 122, 1, 32, 32, '08-2663610-8', '150253033462', '121148247833', '331694187', 'Regular'),
-	(32, NULL, NULL, 1, NULL, 'Angelito', 'Diaz', 'Delada', NULL, NULL, 'Davao City', '1986-12-30', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'5 inches', '51kgs', NULL, NULL, NULL, '268-Purok 14 Bushoa Phase 1 Bucana, Davao City', NULL, NULL, '09165376514', NULL, NULL, NULL, '268-Purok 14 Bushoa Phase 1 Bucana, Davao', '268-Purok 14 Bushoa Phase 1 Bucana, Davao', 'Rogelio Delada', 'Davao City', NULL, NULL, NULL, 'Aurora Diaz', 'Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 84, 9, 14, 42, '09-28611092', '160504045878', '121031718739', '945606122', 'Regular'),
-	(42, NULL, NULL, 1, NULL, 'Kimberly', 'Arcena', 'Bicong', NULL, NULL, 'Davao City, Davao del Sur', '1995-07-20', 'Single', NULL, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Km8, Tigatto Buhangin Dsrct. Davao City', NULL, NULL, '09333191043', NULL, NULL, NULL, 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Oscar G. Bicong', 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Laborer', NULL, NULL, 'Teresita C. Bicong', 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-09-26', 86, 9, 14, 42, NULL, '162506289777', '915170351768', '429744351', 'Regular'),
-	(52, NULL, NULL, 1, NULL, 'Rachel', 'Likit', 'Brua', NULL, NULL, 'Brgy. Saguing, Makilala, Cotabato', '1988-01-01', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'', NULL, NULL, NULL, NULL, 'Saguing, Makilala, North Cotabato', NULL, NULL, '09093671550', NULL, 'bruarachel@gmail.com', NULL, 'Villa Fontana Dormitory for Girls, Bolton St., Dav', 'Saguing, Makilala, North Cotabato', 'Telesforo T. Brua', 'Saguing, Makilala, North Cotabato', NULL, NULL, NULL, 'Emeteria L. Brua', 'Saguing, Makilala, North Cotabato', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-01-01', 81, 9, 42, 42, '09-3103097-4', '170252743289', '121101750577', '445-307-079', 'Regular'),
-	(62, NULL, NULL, 1, NULL, 'Cheryrose', 'Nepomuceno', 'Gabaton', NULL, NULL, 'Davao City, Davao Del Sur', '1989-10-22', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'2"', '47Kgs', NULL, NULL, NULL, 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada', NULL, NULL, '09105861353', NULL, NULL, NULL, 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', 'Andres B. Gabaton', 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', NULL, NULL, NULL, 'Fidencia N. Gabaton', 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-06-01', 132, 9, 52, 42, '0933035427', '160504739322', '121115018624', '444168187000', 'Regular'),
-	(72, NULL, NULL, 1, NULL, 'Nathaniel', 'Pasco', 'Dela Pena', NULL, NULL, 'Zamboanga City', '1962-01-25', 'Married', 2, 'Male', 'Filipino', 'Jehovah\'s Witness', NULL, '5\'5"', '68kl.', NULL, NULL, NULL, '129-3 Quezon Blvd., Davao City', NULL, NULL, '09394168476', '09394606417', NULL, NULL, '129-3 Quezon Blvd., Davao City', '129-3 Quezon Blvd., Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 83, 9, 15, 42, '09-08358948', '160500375997', '005064402507', '124010444', 'Regular'),
-	(82, NULL, NULL, 4, NULL, 'Amalia', 'Demapitan', 'Frias', NULL, NULL, 'Poblacion, Lebak Cotabato', '1967-12-01', 'Single', 1, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Caindoc Residence Drive #2 Teacher\'s Village Matin', NULL, NULL, '09362841391', NULL, 'fnasamz@yahoo.com', NULL, 'Caindoc Residence Drive #2 Teacher\'s Village Matina Aplaya Davao City', 'Lebak, Sultan Kudarat', 'Felipe F. Frias', 'Lebak, Sultan Kudarat', NULL, NULL, NULL, 'Angeles D. Frias', 'Lebak, Sultan Kudarat', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-02-01', 142, 9, 15, 42, '09-15874295', '170502340371', '121030580785', '450957189', 'Regular'),
-	(92, NULL, NULL, 1, NULL, 'Leny', 'Serue', 'Lastrella', NULL, NULL, 'T\'boli, South Cotabato', '1987-06-01', 'Single', 1, 'Female', 'Filipino', NULL, 'Filipino, Englis, Illonggo', '5\'0"', '46kgs', NULL, NULL, NULL, 'Brgy. Veterans, Surulla, South Cotabato', NULL, NULL, '09082705445', NULL, 'lastrellaleny@gmail.com', NULL, 'Brgy. Veterans, Surulla, South Cotabato', 'Brgy. Tabudtod, T\'boli South Cotabato', 'Eugene B. Lastrella', 'T\'boli South Cotabato', NULL, NULL, NULL, 'Raquel S. Lastrella', 'T\'boli South Cotabato', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01', 152, 9, 62, 42, '09278694176', '170501695087', '18000768907', '429743909', 'Regular'),
-	(102, NULL, NULL, 1, NULL, 'Erlyn', 'Bolante', 'Lim', NULL, NULL, 'Davao City', '1987-12-17', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'Filipino, English, Visaya', '5\'3"', NULL, NULL, NULL, NULL, 'Phase 3 Blk 6 L19 NHA Bangkal Davao City', NULL, NULL, '09074375342', NULL, 'erlynlim17@ymail.com', NULL, 'Phase 3 Blk 6 L19 NHA Bangkal Davao City', 'Phase 3 Blk 6 L19 NHA Bangkal Davao City', 'Ernesto R. Lim', 'Davao City, Davao Del Sur', NULL, NULL, NULL, 'Arlyn B. Lim', 'Davao City, Davao Del Sur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 162, 9, 42, 42, '09-30062419', '160503475631', '121032392549', '286335650', 'Regular'),
-	(112, NULL, NULL, 4, NULL, 'Aldrin', 'Cotamora', 'Loma', NULL, NULL, 'Davao City', '1986-04-19', 'Single', 1, 'Male', 'Filipino', 'Jehova\'s Witness', 'English, Filipino, Bisaya', '5\'7"', '110lbs', NULL, NULL, NULL, 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok Distr', NULL, NULL, '09309846935', NULL, 'aldrincotamora86@gmail.com', NULL, 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', 'Edgar S. Loma', 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', NULL, NULL, NULL, 'Alma C. Loma', 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-11-02', 86, 9, 14, 42, '09-38159793', '160506389620', '121157478629', NULL, 'Resigned'),
-	(122, NULL, NULL, 1, NULL, 'Lyrie Mae', 'Lustre', 'Magbutay', NULL, NULL, 'Batangueno Village, Matina, Davao City', '1985-10-06', 'Married', 3, 'Female', 'Filipino', 'Roman Catholic', 'English, Filipino, Visayan', '5\'4"', '55kgs', NULL, NULL, NULL, 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', NULL, NULL, '09072281906', NULL, NULL, NULL, 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', 'Frederico L. Lustre Jr.', 'Matina Davao City', NULL, NULL, NULL, 'Leny P. Lustre', 'Matina Davao City', NULL, NULL, NULL, 'Conrasito A. Magbutay Jr.', 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', NULL, NULL, NULL, '2012-12-01', 582, 9, 14, 42, '09-3230107-1', '121028563644', '160504463106', '460-769-947', 'Regular'),
-	(132, NULL, NULL, 1, NULL, 'Rodel', 'Esmedina', 'Villegas', NULL, NULL, 'Poblacion, Carmen Cotabato', '1992-03-03', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Bisaya', '5\'8', '64Kgs', NULL, NULL, NULL, 'Garcia Heights Bajada, Davao City', NULL, NULL, '09482716805', NULL, NULL, NULL, 'Garcia Heights Bajada, Davao City', 'Carmen Cotabato', 'Bonifacio Villegas', 'Kibudtungan Carmen Cotabato', 'Driver', NULL, NULL, 'Genara Villegas', 'Kibudtungan Carmen Cotabato', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 83, 9, 15, 42, '09-3345227-5', '150504925215', '121029330515', '415-610-167', 'Regular'),
-	(142, NULL, NULL, 1, NULL, 'Henilito', 'Gonzales', 'Polia Jr.', NULL, NULL, 'Purok 2, San Juan Maco, Compostela Valley', '1990-09-29', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog, English,', '5\'9"', '58kgs', NULL, NULL, NULL, 'Purok 2, San Juan Maco, Compostela Valley Province', NULL, NULL, '09302974747', NULL, NULL, NULL, 'Purok 2, San Juan Maco, Compostela Valley Province', 'Purok 2, San Juan Maco, Compostela Valley Province', 'Senilito Polia', 'Purok 2, San Juan Maco, Compostela Valley Province', NULL, NULL, NULL, 'Jemecita G. Polia', 'Purok 2, San Juan Maco, Compostela Valley Province', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 85, 9, 14, 42, '09-3208339-9', '160504315484', '121029358912', '400-672-745', 'Regular'),
-	(152, NULL, NULL, 1, NULL, 'Nestor', 'Masing', 'Bantilan', NULL, NULL, 'Kapatagan, Asuncion Tagum City', '1967-10-08', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog,', '5\'5"', '120lbs', NULL, NULL, NULL, 'Shanghai Village Matina Aplaya, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, 'Shanghai Village Matina Aplaya, Davao City', 'Shanghai Village Matina Aplaya, Davao City', 'Benito Tanduyan Bantilan', 'Kapatagan Asuncion, Tagum City', NULL, NULL, NULL, 'Amparo B. Bantilan', 'Kapatagan Asuncion, Tagum City', NULL, NULL, NULL, 'Erlyn Labis', 'Poblacion Kabacan Cotabato', NULL, NULL, NULL, '2015-12-01', 80, 9, 14, 42, '09-1244652-9', '160500046756', '913169041227', '124-651-296', 'Regular'),
-	(162, NULL, NULL, 1, NULL, 'Roberto', 'Celerio', 'Jambaro Jr.', NULL, NULL, 'Davao Medical Center', '1986-03-30', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Samantha Homes Bago Gallera, Davao City', NULL, NULL, '09485336616', NULL, NULL, NULL, 'Samantha Homes Bago Gallera, Davao City', 'Samantha Homes Bago Gallera, Davao City', 'Roberto Jambaro Sr.', 'Davao City', NULL, NULL, NULL, 'Cremery Celerio', 'Davao City', NULL, NULL, NULL, 'Karen Jambaro', 'Samantha Homes Bago Gallera, Davao City', NULL, '', '2147483647', '2012-12-01', 82, 9, 15, 42, '0925830148', '160503436059', '188000743398', '308884166000', 'Regular'),
-	(192, NULL, NULL, 1, NULL, 'Junmer', 'Rebuyas', 'Talindog', NULL, NULL, 'Poblacion, Marasugan Combal Province', '1988-08-03', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'Bisaya, Tagalog & English', '5\'7"', '65Kgs', NULL, NULL, NULL, 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', NULL, NULL, NULL, NULL, NULL, NULL, 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', 'Aquilino C. Talindog', 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', NULL, NULL, NULL, 'Mercedes R. Talindog', 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-11-01', 86, 9, 14, 42, '09-300-44709', '160505841848', '91320145691', NULL, 'Regular'),
-	(202, NULL, NULL, 1, NULL, 'Ryan', 'Dodoso', 'Florencio', NULL, NULL, 'Davao City', '1986-06-05', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, & Visayan', '5\'5"', '61Kgs', NULL, NULL, NULL, 'Bo. Obrero Burgos St. Davao City', NULL, NULL, '09304965392', NULL, NULL, NULL, 'Bo. Obrero Burgos St. Davao City', 'Bo. Obrero Burgos St. Davao City', 'Rostico B. Florencio', 'Sinayawan Hagonoy Davao Del Sur', NULL, NULL, NULL, 'Semma D. Florencio', 'Sinayawan Hagonoy Davao Del Sur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01', 83, 9, 15, 42, '09-3164239-1', '160504252636', '121086740639', '291-191-248', 'Regular'),
-	(212, NULL, NULL, 4, NULL, 'Arnold', 'Aboyme', 'Plaza', NULL, NULL, 'Davao City', NULL, 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog,English,Bisaya', '5\'7"', NULL, NULL, NULL, NULL, 'Blk.91 Piapi Blvd. Brgy.21-C Davao City', NULL, NULL, '09052684019', NULL, 'arnoldplaza@yahoo.com', NULL, 'Blk.91 Piapi Blvd. Brgy.21-C Davao City', 'Blk.91 Piapi Blvd. Brgy.21-C Davao City', 'Rolando A. Plaza', 'Davao City', 'deceased', NULL, NULL, 'Celia A. Plaza', 'Davao City', 'Housekeeper', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-08-04', 84, 9, 14, 42, '09-4157916-6', '162508071957', NULL, NULL, 'Probationary'),
-	(222, NULL, NULL, 1, NULL, 'Jimrey', 'R.', 'Abenoja', 'JRA', NULL, NULL, '1986-05-20', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. 25 Maa Peoples Village Davao City', NULL, NULL, '09082418357', NULL, NULL, NULL, 'Prk. 25 Maa Peoples Village Davao City', 'Maa Davao City', NULL, NULL, NULL, NULL, NULL, 'Riza R. Abenoja', 'Prk. 25 Maa Peoples Village Davao City', NULL, NULL, '', 'Christin Mayn J. Suson', 'Prk. 25 Maa Peoples Village Davao City', NULL, NULL, '', '2013-09-09', 322, 8, 112, 52, '09-3224951-5', '160506266820', '121122325178', '455239111', 'Regular'),
-	(232, NULL, NULL, 1, NULL, 'Nerio', 'Gildore', 'Amper', 'NGA', NULL, 'Davao City', '1976-11-09', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Dacudao Village, Prk. 23, Panacan Davao City', NULL, NULL, NULL, NULL, NULL, NULL, 'Dacudao Village, Prk. 23, Panacan Davao City', 'Dacudao Village, Prk. 23, Panacan Davao City', NULL, NULL, NULL, NULL, NULL, 'Victoria G. Amper', 'Dacudao Village, Prk. 23, Panacan Davao City', 'Self-Employed', NULL, '', NULL, NULL, NULL, NULL, NULL, '2003-12-11', 212, 8, 102, 62, NULL, '190902066156', NULL, '922208289', 'Regular'),
-	(262, NULL, NULL, 1, NULL, 'James', 'C.', 'Baldosano', 'JCB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-11-02', 182, 8, 112, 52, NULL, NULL, NULL, NULL, 'Regular'),
-	(282, NULL, NULL, 1, NULL, 'Renante', 'M.', 'Cabigas', 'RMC', NULL, 'Davao City', '1969-05-07', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Taguanao, Indahag Cagayan de Oro City', NULL, NULL, '09499335271', NULL, NULL, NULL, 'Taguanao, Indahag Cagayan de Oro City', 'Taguanao, Indahag Cagayan de Oro City', 'Hilarion Cabigas', 'Camp 2 Tabunok, Talisayan Cebu City', 'Automotive Mechanic', NULL, NULL, 'Catalina M. Cabigas', 'Camp 2 Tabunok, Talisayan Cebu City', 'Housewife', NULL, '', 'Rosalina Timbal', 'Taguanao, Indahag Cagayan de Oro City', 'Housewife', NULL, NULL, '2011-11-01', 222, 8, 82, 52, '0613995298', '152016370597', NULL, NULL, 'Regular'),
-	(292, NULL, NULL, 1, NULL, 'Gerald', 'Detoyato', 'Caro', 'GDC', NULL, 'Guimaras, Iloilo', '1985-01-16', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'Ilonggo, Cebuano, Tagalog, English', '170cm', '60kgs', NULL, NULL, NULL, 'PN Roa Subd. Brgy. Canitoan Calaanan CDOC.', NULL, NULL, '09263679009', NULL, 'gerald_caro@yahoo.com', NULL, 'PN Roa Subd. Brgy. Canitoan Calaanan CDOC.', 'PN Roa Subd. Brgy. Canitoan Calaanan CDOC.', 'Efren A. Caro Sr.', 'Pob. Jordan Guimaras, Iloilo', 'Ricemill Operator', NULL, NULL, 'Judy D. Caro', 'Pob. Jordan Guimaras, Iloilo', NULL, NULL, NULL, 'Lanibeth', 'PN Roa Subd. Brgy. Canitoan Calaanan CDOC.', 'Logistics Officer', 'HFHP CDO', '2147483647', '2016-09-17', 192, 8, 112, 52, '3430488752', '112021267328', NULL, NULL, 'Regular'),
-	(312, NULL, NULL, 1, NULL, 'Ramon Alejandro', 'Magtajas', 'Valleser', NULL, NULL, 'Cagayan de Oro', '1982-11-04', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'St. Ignatius St., Melecia Homes, Upper Macasandig,', NULL, NULL, '09989640456', NULL, 'RAMONVALLESER1114@YAHOO.COM', NULL, 'St. Ignatius St., Melecia Homes, Upper Macasandig, Cagayan de Oro City', 'St. Ignatius St., Melecia Homes, Upper Macasandig, Cagayan de Oro City', 'Jesus Valleser', 'Melecia Homes, Upper MAcasandig, Cagayan de Oro', NULL, NULL, NULL, 'Alma Magtajas', 'Melecia Homes, Upper MAcasandig, Cagayan de Oro', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-17', 232, 1, 22, 32, '08-1543251-7', '150251923010', '121048504092', '942957588', 'Regular'),
-	(322, NULL, NULL, 1, NULL, 'Elgin', 'Cabunilas', 'Camilotes', 'ECC', NULL, 'Mati, Davao Oriental', NULL, 'Single', 1, 'Male', 'Filipino', 'Seventh Day Adventist', 'English, Filipino', '5\'7"', '60Kgs', NULL, NULL, NULL, 'Camus Street, Illustre Davao City', NULL, NULL, '09123463489', NULL, 'camiloteselgin@ymail.com', NULL, 'Camus Street, Illustre Davao City', 'Camus Street, Illustre Davao City', 'Zacarias S. Camilotes', 'Camus Street, Illustre Davao City', 'Land Brooker', NULL, NULL, 'Rochann C. Camilotes', 'Camus Street, Illustre Davao City', 'Teacher', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-08-01', 192, 8, 112, 62, '09-3653870-9', '160505803776', '121098218437', NULL, 'Regular'),
-	(332, NULL, NULL, 1, NULL, 'Aileen Joy', 'C', 'Castro', 'ACC', NULL, 'Mati City', '1985-07-03', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Filipino', '5\'0\'', NULL, NULL, NULL, NULL, 'Lopo-Diaz St. Obrero, Davao City', NULL, NULL, '09462412819', NULL, 'castroaileenjoy@yahoo.com', NULL, 'Lopo-Diaz St. Obrero, Davao City', 'Lopo-Diaz St. Obrero, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-11-16', 202, 8, 102, 62, NULL, NULL, NULL, NULL, 'Regular'),
-	(352, NULL, NULL, 1, NULL, 'Elvira', 'Carvajal', 'Montera', NULL, NULL, 'Digos Davao del Sur', '1979-04-16', 'Married', 9, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4', '65 kls.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2008-01-09', 23, 1, 7, 32, '09-2211068-3', '160501550245', '121042672683', '928503260', 'Regular'),
-	(362, NULL, NULL, 1, NULL, 'Kristine Joy', 'Carreon', 'Dealca', 'KCD', NULL, 'Davao Cityu', '1994-09-27', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English,Filipino, Cebuano', '5\'0"', '46Kgs', NULL, NULL, NULL, 'San Agustine, Ulas Davao City', NULL, NULL, '09421433737', NULL, 'jhoii_dealca@yahoo.com', NULL, 'San Agustine, Ulas Davao City', 'San Agustine, Ulas Davao City', 'Gilbert S. Dealca Jr.', 'San Agustine, Ulas Davao City', NULL, NULL, NULL, 'Reynilda C. Dealca', 'San Agustine, Ulas Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-05-04', 202, 8, 102, 62, NULL, NULL, NULL, NULL, 'Regular'),
-	(372, NULL, NULL, 4, NULL, 'Raul Adrian', 'Apuli', 'Altavano', NULL, NULL, 'Legazpi City, albay', '1993-05-08', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan d', NULL, NULL, '09056935376', NULL, 'grawling08@gmail.com', NULL, 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan de Oro City', 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan de Oro City', 'Raul L. Altavano', '#904 Our Lady\'s Village, Bitano, Legazpi City', NULL, NULL, NULL, 'Hipolita A. Altavano', '#904 Our Lady\'s Village, Bitano, Legazpi City', 'Budget Officer', 'Dep\'t. of Agrarian Reform Regn\'l. Office 5', '', NULL, NULL, NULL, NULL, NULL, '2016-11-21', 72, 1, 1, 32, NULL, '150504494774', '121144034952', '445182360', 'Regular'),
-	(382, NULL, NULL, 1, NULL, 'May', 'Abroguena', 'Ebalang', 'MAE', NULL, 'Cagayan de Oro City', '1980-05-14', 'Single', 1, 'Female', 'Filipino', 'Protestant', 'English,Filipino, Visayan', '5\'3"', NULL, NULL, NULL, NULL, 'Zone 7 N11 Adelfa St. Carmen Ilaya, CDOC', NULL, NULL, '09277000684', NULL, 'uzziah_bhlue@yahoo.com', NULL, 'Block 19 L3 Oro Habitat Calaanan, Canitoan CDOC', 'Block 19 L3 Oro Habitat Calaanan, Canitoan', 'Ceasar B. Ebalang', 'Zone 7 N11 Adelfa St. Carmen Ilaya, CDOC', 'deceased', NULL, NULL, 'Estella S. Abroguena', 'Zone 7 N11 Adelfa St. Carmen Ilaya, CDOC', 'housewife', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-05-04', 252, 8, 92, 52, '08-1441611-0', '150251158837', '121030943288', '930-840161', 'Regular'),
-	(392, NULL, NULL, 1, NULL, 'Charlene', 'Jomoc', 'Almuete', NULL, NULL, 'Cagayan de Oro City', '1995-12-04', 'Single', 1, 'Female', 'Filipino', 'Seventh Day Adventist', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de O', NULL, NULL, '09054050785', NULL, 'cs8almuetecharlene@gmail.com', NULL, 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Humber V. almuete', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Mechanical Engineer', NULL, '735526', 'Rosario J. Almuete', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Civil Engineer', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-04-05', 72, 1, 1, 32, '0826525316', '150504277390', NULL, '330785931', 'Regular'),
-	(402, NULL, NULL, 1, NULL, 'Patricio', 'R.', 'Galdo', 'PRG', NULL, 'Lagonglong', NULL, 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog, Visayan', NULL, '50kgs', NULL, NULL, NULL, 'Balulang, Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, 'Lagonglong Misamis Oriental', 'Lagonglong Misamis Oriental', 'Isabelo V. Gardo', 'Lagonglong Misamis Oriental', 'deceased', NULL, NULL, 'Corazon R. Galdo', 'Lagonglong Misamis Oriental', 'housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2007-11-01', 282, 8, 82, 52, NULL, NULL, NULL, NULL, 'Regular'),
-	(412, NULL, NULL, 1, NULL, 'Marco', 'Costamero', 'Arangco', NULL, NULL, 'Trento, Agusan del Sur', '1981-09-12', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Phase 2, Marianville Subd., Landless, Tipanoy, Ili', NULL, NULL, '09471936635', NULL, 'marcoarangco@gmail.com', NULL, 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Marino D. Arangco', 'Sta. Maria, Trento, Agusan del Sur', 'Senior Police Officer- Retired', 'PNP', NULL, 'Marites C. Arangco', 'Sta. Maria, Trento, Agusan del Sur', 'Housewife', NULL, NULL, 'Juvelyn N. Arangco', 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Bookkeeper', 'MAnila Teachers\'', '2147483647', '2015-05-04', 72, 1, 1, 32, '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Regular'),
-	(422, NULL, NULL, 1, NULL, 'Izza Honey', 'C.', 'Manluza', 'ICM', NULL, 'Bayabason, Maramag Bukidnon', '1986-11-22', 'Married', 2, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog,', '5\'2"', '55Kgs', NULL, 'Black', NULL, 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, NULL, NULL, NULL, 'Bayabason, Maramag Bukidnon', 'Bayabason, Maramag Bukidnon', 'Leonardo Canoneo', 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, 'Beatres B. Canoneo', 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, 'Mark Fel C. Manluza', 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, '2015-03-16', 272, 8, 112, 52, '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Regular'),
-	(442, NULL, NULL, 1, NULL, 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'CDM', NULL, 'Ozamis City', '1980-10-08', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Filipino, Visayan', '5\'2"', NULL, NULL, NULL, NULL, 'Purok 1 Manaka, Ozamis City', NULL, NULL, '09285314905', '09263425404', 'cheriemae.maghanoy@yahoo.com', NULL, 'Purok 1 Manaka, Ozamis City', 'Purok 1 Manaka, Ozamis City', 'Alberto O. Maghanoy', 'Purok 1 Manaka, Ozamis City', NULL, NULL, NULL, 'Corazon dela Torre Maghanoy', 'Purok 1 Manaka, Ozamis City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-16', 202, 8, 102, 52, '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Regular'),
-	(452, NULL, NULL, 1, NULL, 'Arnaldo', 'Arguilles', 'Mantillas', NULL, NULL, 'Butuan City', '1971-12-04', 'Married', 3, 'Female', 'Filipino', NULL, 'English, Tagalog, Visayan', '1.67meters', '95Kgs', 'A +', NULL, NULL, 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan C', NULL, NULL, '09471214313', NULL, 'arms120471@hotmail.com', NULL, 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', 'Hilario C. Mantillas', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', NULL, NULL, NULL, 'Jovita T. Arguilles', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', NULL, NULL, NULL, 'Cherrymel Mantillas', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', 'Regional Manager', 'Manila Teacher\'s', '3419767', '2016-05-01', 292, 8, 112, 52, '08-1075836-1', NULL, '310101797702', '180-027-122', 'Regular'),
-	(462, NULL, NULL, 1, NULL, 'Brazzel Gay', 'J.', 'Cabaltera', NULL, NULL, 'San Jose, Aurora, Zamboanga del Sur', '1995-08-25', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, 'Zone 1, Igpit, opol, Misamis Oriental', NULL, NULL, '09264542455', NULL, 'brazzelgay@gmail.com', 'Jennifer J. Cabaltera', 'Navalan, Tukan, Zamboanga del sur', 'Navalan, Tukan, Zamboanga del sur', NULL, NULL, NULL, NULL, NULL, 'Jennifer J. Cabaltera', 'Navalan, Tukan, Zamboanga del sur', NULL, NULL, '‎09072038080', NULL, NULL, NULL, NULL, NULL, '2016-05-23', 74, 1, 1, 32, '0939595806', '010520667240', '121151311466', '472885607', 'Regular'),
-	(472, NULL, NULL, 1, NULL, 'Renan', 'A.', 'Moreno', NULL, NULL, 'Cagayan de Oro City', '1985-09-06', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'8', '165 lb', NULL, NULL, NULL, 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayan', NULL, NULL, '09189042101', NULL, 'ramoreno@smsi.com.ph', NULL, 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', 'Renato Moreno', 'B-9 L-9 Emily Homes Subd., Macahan Carmen, Cagayan de Oro City', NULL, NULL, NULL, 'Aida A. Moreno', 'B-9 L-9 Emily Homes Subd., Macahan Carmen, Cagayan de Oro City', NULL, NULL, NULL, 'Lovelie Flor Q. Moreno', 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', NULL, NULL, NULL, '2011-05-16', 73, 1, 1, 32, '0816173053', '150502397216', '182000543107', '410675176', 'Regular'),
-	(482, NULL, NULL, 1, NULL, 'Rolando', 'T.', 'Mosqueda', NULL, NULL, 'Tagum Kapalong', '1982-11-26', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Visaya, Tagalog', '5\'6"', '60Kgs', NULL, NULL, NULL, 'D.D.F Village Mandug Davao City', NULL, NULL, '09108399148', NULL, NULL, NULL, 'D.D.F Village Mandug Davao City', 'D.D.F Village Mandug Davao City', 'Gardencio Mosquedo', 'D.D.F Village Mandug Davao City', NULL, NULL, NULL, 'Rebecca Mosquedo', 'D.D.F Village Mandug Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-09-02', 322, 8, 82, 62, '09-2739922-1', '160505100007', '104002257284', '422-012-424', 'Regular'),
-	(502, NULL, NULL, 1, NULL, 'Jean', 'S.', 'Godornes', NULL, NULL, 'Iponan, Cagayan de Oro City', '1986-11-25', 'Married', 2, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro C', NULL, NULL, NULL, NULL, NULL, 'Randy Edward G. Godornes', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', 'Baudelio B. Salvan', NULL, NULL, NULL, NULL, 'Mamelita A. Salvan', 'Blk. 3 Lot 5 Villa Candida Bulua, Cagayan de Oro City', 'Housewife', NULL, NULL, 'Randy Edward G. Godornes', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', NULL, NULL, '‎09263480340', '2007-11-12', 18, 1, 22, 32, '0816613128', '150501858430', '182000563981', '950159075', 'Regular'),
-	(512, NULL, '116', 1, NULL, 'Michael', 'Dayag', 'Baculio', NULL, NULL, 'Cagayan de Oro City', '1987-12-04', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'8\'\'', '68 kgs.', NULL, NULL, NULL, 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', NULL, NULL, '09268775535', NULL, 'mikebaculio@gmail.com', NULL, 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-06-01', 302, 1, 1, 32, '08-1605491-0', '010505744239', '109002186565', '256027612', 'Regular'),
-	(542, NULL, NULL, 1, NULL, 'Robert', 'Batonghinog', 'Bersano', NULL, NULL, 'Camp Phillips, Manolo Fortich, Bukidnon', '1980-12-04', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. O', NULL, NULL, NULL, NULL, 'nicejames09@yahoo.com', 'Melanie M. Bersano', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Eleuterio Bersano', '373 M - St. Camp Philips, Bukidnon', 'Land Prep. Operator', 'DMPI', NULL, 'Terencia Bersano', '373 M - St. Camp Philips, Bukidnon', 'Housewife', NULL, NULL, 'Melanie M. Bersano', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Branch Manager', 'Manila Teachers\'', NULL, '2005-01-03', 20, 1, 1, 32, '0815082802', '020503777364', '104002242398', '937694691', 'Regular'),
-	(552, NULL, NULL, 1, NULL, 'Pete Emmanuell', 'L.', 'Balagosa', NULL, NULL, 'Cagayan de Oro City', '1988-02-05', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, 'F. Dabatian St., Carmen, Cagayan de Oro City', NULL, NULL, '09068591013', NULL, 'petebals5@gmail.com', NULL, 'F. Dabatian St., Carmen, Cagayan de Oro City', 'F. Dabatian St., Carmen, Cagayan de Oro City', 'Pepe Balagosa', 'Lila, Lomanoy Bohol', NULL, NULL, NULL, 'Dativa L. Balagosa', 'F. Dabatian St., Carmen, CDO', NULL, NULL, '09258195875', NULL, NULL, NULL, NULL, NULL, '2016-03-16', 302, 1, 1, 32, '08-1801748-9', '150503883890', '121134979348', '330784605', 'Regular'),
-	(562, NULL, NULL, 1, NULL, 'Khristian Darylle Joe', 'Bona', 'Battad', NULL, NULL, 'Quezon City', '1990-12-09', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '112 Old Samson Rd., Apolonio Samson, Quezon City', NULL, NULL, '09164641392', NULL, 'darylle.battad@gmail.com', 'Danillo Battad', '112 Old Samson Rd., Apolonio Samson, Quezon City', '112 Old Samson Rd., Apolonio Samson, Quezon City', 'Danillo Battad', '112 Old Samson Rd., Apolonio Samson, Quezon City', NULL, NULL, '3622074', 'Josie B. Battad', '112 Old Samson Rd., Apolonio Samson, Quezon City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-08-10', 76, 1, 1, 32, '3442813205', '020262108512', '121131509835', '468727860', 'Regular'),
-	(582, NULL, NULL, 1, NULL, 'John', 'M.', 'Mingo', NULL, NULL, 'Lumbia, Cagayan de Oro', '1989-06-06', 'Single', 1, 'Male', 'Filipino', 'Born Again Christian', 'English, Filipino', NULL, NULL, NULL, NULL, NULL, 'Lumbia,  Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, 'Lumbia,  Cagayan de Oro City', 'Lumbia,  Cagayan de Oro City', 'Bebito A. Mingo', 'Lumbia,  Cagayan de Oro City', NULL, NULL, NULL, 'Teresa M. Mingo', 'Lumbia,  Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-03-01', 182, 8, 112, 62, '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Regular'),
-	(592, NULL, NULL, 1, NULL, 'Gina', 'Aboyme', 'Micoy', NULL, NULL, 'Davao City', '1979-06-13', 'Married', 8, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Prk 23-A Brgy 76-A Bucana Ecoland Times Beach, Mat', NULL, NULL, '09258242635', NULL, NULL, NULL, 'Prk 23-A Brgy 76-A Bucana Ecoland Times Beach, Matina Davao City', 'Prk 23-A Brgy 76-A Bucana Ecoland Times Beach, Matina Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-09-01', 312, 8, 102, 62, '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Regular'),
-	(602, NULL, NULL, 1, NULL, 'Lowie', 'G.', 'Ulo', NULL, NULL, NULL, '1981-01-21', 'Married', 2, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Catalunan Grande Davao City', NULL, NULL, '09305193188', NULL, NULL, NULL, 'Catalunan Grande Davao City', 'Catalunan Grande Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Angelie L. Ulo', 'Catalunan Grande Davao City', NULL, NULL, '', '2014-04-17', 322, 8, 82, 62, '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Regular'),
-	(612, NULL, NULL, 5, NULL, 'Mario', 'Quiam', 'Tolosa', NULL, NULL, 'San Narciso Quezon', '1977-10-26', 'Married', 9, 'Male', 'Filipino', 'Christian', NULL, '5\'6"', '48Kg', NULL, NULL, NULL, '#49 Brgy. Maravilla Magdalena, Laguna', NULL, NULL, '09478166305', NULL, NULL, NULL, '#49 Brgy. Maravilla Magdalena, Laguna', '#49 Brgy. Maravilla Magdalena, Laguna', 'Jose Tolosa', '#49 Brgy. Maravilla Magdalena, Laguna', 'Farmer', NULL, NULL, 'Flora Q. Tolosa', '#49 Brgy. Maravilla Magdalena, Laguna', NULL, NULL, NULL, 'Jilanie R. Tolosa', '#49 Brgy. Maravilla Magdalena, Laguna', 'Housewife', NULL, '2147483647', '2016-03-01', 332, 8, 112, 52, '33-2666182-9', '082011907160', NULL, NULL, 'Regular'),
-	(622, NULL, NULL, 4, NULL, 'Julius', 'B.', 'Lascano', 'JBL', NULL, 'Manila', '1972-07-14', 'Separated', 1, 'Male', 'Filipino', 'Roman Catholic', 'Filipino, English', '5\'5"', '160lbs', NULL, NULL, NULL, '93 L.Lupa St. Maypajo Caloocan City', NULL, NULL, '09166823210', NULL, 'julius.lascano714@gmail.com', NULL, '93 L.Lupa St. Maypajo Caloocan City', '93 L.Lupa St. Maypajo Caloocan City', 'Cesar L. Lascano', '93 L.Lupa St. Maypajo Caloocan City', 'Deceased', NULL, NULL, 'Ofelia B. Bismonte', '93 L.Lupa St. Maypajo Caloocan City', 'Businesswoman', NULL, '', NULL, NULL, NULL, NULL, NULL, '2017-03-01', 342, 8, 112, 52, '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Probationary'),
-	(632, NULL, NULL, 4, NULL, 'Romnick June', 'A.', 'Elcana', 'RAE', NULL, 'Mati City', '1989-06-15', 'Single', 1, 'Male', 'Filipino', 'Seventh Day Adventist', NULL, '5\'5"', '73Kgs', NULL, NULL, NULL, 'San Ignacio, Manay Davao City', NULL, NULL, '09487553880', NULL, 'rjelcana@gmail.com', NULL, 'San Ignacio, Manay Davao City', 'San Ignacio, Manay Davao City', 'Anselmo L. Elcana', 'San Ignacio, Manay Davao City', NULL, NULL, '2147483647', 'Jocelyn Elcana', 'San Ignacio, Manay Davao City', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '2017-01-16', 192, 8, 112, 62, '09-2857476-0', '160502796558', '121194643961', NULL, 'Probationary'),
-	(642, NULL, NULL, 1, NULL, 'Diane Joy', 'Yu', 'Mapano', NULL, NULL, 'Upper Pulacan, Labangan, Zamboanga del Sur', '1991-11-11', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'3', '68 kl.', NULL, NULL, NULL, '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboa', NULL, NULL, '09076367117', NULL, 'diane_111109@yahoo.com', NULL, '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-07-18', 352, 1, 7, 32, '1010277291', '140251731043', '121007858757', '452117419', 'Regular'),
-	(652, NULL, NULL, 1, NULL, 'Cresar John', 'Reyes', 'Arce', NULL, NULL, 'San Isidro, Davao Oriental', '1978-10-23', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4', '60 kg', NULL, NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', NULL, NULL, '09464154507', NULL, 'cjarce_power@yahoo.com', NULL, 'Poblacion, San Isidro, Davao Oriental', 'Poblacion, San Isidro, Davao Oriental', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-02-01', 112, 1, 7, 32, '0922273135', '162003641023', '190000056276', '947987046', 'Regular'),
-	(662, NULL, NULL, 1, NULL, 'Lorman', 'S.', 'Saladaga', NULL, NULL, 'Tapian, San Miguel, Zamboanga del Sur', '1989-10-17', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'6', '74kls.', NULL, NULL, NULL, 'Bulawan San Miguel, Zamboanga del Sur', NULL, NULL, '09107465042', NULL, 'lorm89@gmail.com', NULL, 'Bulawan San Miguel, Zamboanga del Sur', 'Bulawan San Miguel, Zamboanga del Sur', 'Tomasito Saladaga', 'Bulawan San Miguel, Zamboanga del Sur', 'Farmer', NULL, NULL, 'Lestina Saladaga', 'Bulawan San Miguel, Zamboanga del Sur', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-06-01', 24, 1, 7, 32, '1009497752', '140251248725', '914301364780', '816667', 'Regular'),
-	(672, NULL, NULL, 1, NULL, 'Geneth', 'L.', 'Sayson', NULL, NULL, 'Davao', '1991-03-11', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, '039 Gentiles Subd., Brgy. New Visayas, Panabo City', NULL, NULL, '09101662549', NULL, 'genethsayson@gmail.com', NULL, '039 Gentiles Subd., Brgy. New Visayas, Panabo City', '039 Gentiles Subd., Brgy. New Visayas, Panabo City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-07-20', 24, 1, 7, 32, '0935125869', '160505344984', '121070911178', '429361074', 'Regular'),
-	(682, NULL, NULL, 1, NULL, 'Nancy', 'Montebon', 'Wong', NULL, NULL, 'Davao City', '1980-08-07', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd', NULL, NULL, '09177739208', NULL, 'nmw0807@gmail.com', NULL, 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd., Matina Crossing, Davao City', 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd., Matina Crossing, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kadil Sinolinding Jr.', 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd., Matina Crossing, Davao City', 'Doctor', NULL, '2147483647', '2016-07-05', 362, 9, 42, 42, '0919148684', '160501640325', '101000063572', '940042814', 'Regular'),
-	(692, NULL, NULL, 1, NULL, 'Jeffrey', 'Moneba', 'Antoque', NULL, NULL, 'Digos City', NULL, 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'8"', '76Kgs', NULL, NULL, NULL, 'Estrada 2nd, Digos City', NULL, NULL, '09308334162', NULL, 'jessa.antoque@yahoo.com', NULL, 'Estrada 2nd, Digos City', 'Estrada 2nd, Digos City', 'Danillo Antoque', 'Estrada 2nd, Digos City', 'Honda Authorize Mechanic', NULL, NULL, 'Maria Theressa M. Antoque', 'Estrada 2nd, Digos City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-12-02', 68, 3, 172, 72, '0937380136', '160255309649', '121111591247', '409174979', 'Regular'),
-	(702, NULL, NULL, 1, NULL, 'Salome', 'M.', 'Bodiongan', NULL, NULL, 'Davao City', '1989-01-10', 'Single', 1, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sto. Nino Porras St. Davao City', NULL, NULL, '09195186051', NULL, 'sambodiongan@yahoo.com', NULL, 'Sto. Nino Porras St. Davao City', 'Sto. Nino Porras St. Davao City', 'Silverio E. Bodiongan', 'Sto. Nino Porras St. Davao City', 'deceased', NULL, NULL, 'Evangeline M. Bodiongan', 'Sto. Nino Porras St. Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-04-22', 33, 3, 172, 82, NULL, NULL, NULL, NULL, 'Regular'),
-	(712, NULL, NULL, 4, NULL, 'Ryan Evan', 'P.', 'Almacin', NULL, NULL, 'Davao City', '1982-03-14', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, NULL, '09474814964', NULL, NULL, NULL, 'ARC Bartoline Compound, Bago Aplaya, Davao City', 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, '', NULL, NULL, NULL, 'Dalinda P. Almacin', 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, NULL, NULL, 'Charito D. Almacin', 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, NULL, NULL, '2017-01-16', 39, 3, 172, 82, '09-2732070-8', NULL, NULL, '432-197-977', 'Probationary'),
-	(722, NULL, NULL, 1, NULL, 'Raquel', 'A.', 'Baldecantos', NULL, NULL, 'Lantian Labangan, Zamboanga del Sur', '1993-02-02', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Broca St. San Jose District, Pagadian City', NULL, NULL, '09076708600', NULL, 'baldecantosraquel1993@gmail.com', NULL, 'Broca St. San Jose District, Pagadian City', 'Broca St. San Jose District, Pagadian City', NULL, NULL, NULL, NULL, NULL, 'Zenaida A. Baldecantos', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-07-15', 402, 3, 162, 102, '3458063803', '140502131016', '121167253093', NULL, 'Regular'),
-	(732, NULL, NULL, 1, NULL, 'Gwyne', 'G.', 'Delos Reyes', NULL, NULL, 'Davao City', '1979-10-08', 'Married', 2, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'2', '50kg.', NULL, NULL, NULL, 'Blk. 2 Lot 16 silver St. Mineral Village, Bajada, ', NULL, NULL, '09999915949', NULL, 'gwyndelos@gmail.com', NULL, 'Blk. 2 Lot 16 silver St. Mineral Village, Bajada, Davao City', 'Blk. 2 Lot 16 silver St. Mineral Village, Bajada, Davao City', NULL, NULL, NULL, NULL, NULL, 'Fidencia N. Gabaton', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-04-30', 372, 3, 162, 82, '0922110900', '160501436590', '121029344671', '931745676', 'Regular'),
-	(742, NULL, NULL, 1, NULL, 'Miejor', 'T.', 'Dela Cruz', NULL, NULL, 'Zamboanga City', '1983-09-24', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'7', '75kg.', NULL, NULL, NULL, 'Balulang, Cagayan de Oro City', NULL, NULL, '09427085206', NULL, 'miejor.delacruz@yahoo.com', NULL, 'Balulang, Cagayan de Oro City', 'Balulang, Cagayan de Oro City', 'Charlie M. Dela Cruz', NULL, NULL, NULL, NULL, 'Susan T. Bontia', 'Balulang, Cagayan de Oro City', 'Housewife', NULL, NULL, 'Jezyl L. Dela Cruz', 'Balulang, Cagayan de Oro City', NULL, NULL, NULL, '2016-06-20', 63, 3, 3, 82, NULL, '150502394209', NULL, NULL, 'Regular'),
-	(752, NULL, NULL, 4, NULL, 'Rudini', 'G.', 'Galdo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-03', 402, 3, 3, 82, NULL, NULL, NULL, NULL, 'Probationary'),
-	(762, NULL, NULL, 4, NULL, 'Allyn', 'C.', 'Angustia', NULL, NULL, 'Davao City', '1994-11-27', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'5"', '50kls.', NULL, NULL, NULL, '172 Gumamela St., Kasilak Bucana, Davao City', NULL, NULL, '09300670456', NULL, NULL, NULL, '172 Gumamela St., Kasilak Bucana, Davao City', '172 Gumamela St., Kasilak Bucana, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-17', 65, 3, 3, 82, '0939076231', '162509528500', NULL, NULL, 'Regular'),
-	(772, NULL, NULL, 1, NULL, 'Reil Hazzin', 'Batilona', 'Bicoy', NULL, NULL, NULL, '1992-11-11', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'5"', '50kg.', NULL, NULL, NULL, 'Lower Dicayas, Dipolog City', NULL, NULL, '09468516163', NULL, 'bicoyreilhazzin@gmail.com', NULL, 'Lower Dicayas, Dipolog City', 'Lower Dicayas, Dipolog City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-05-14', 412, 3, 3, 102, '1011114502', '120513230309', '121142125817', NULL, 'Regular'),
-	(782, NULL, NULL, 1, NULL, 'Marlon', 'R.', 'Gal', NULL, NULL, 'Makilala, Cotabato', '1985-03-29', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Makilala, North Cotabato', NULL, NULL, '09468912462', NULL, NULL, NULL, 'Makilala, North Cotabato', 'Makilala, North Cotabato', 'Marciano Gal', 'Poblacion, Makilala, Cotabato', 'Tailor', NULL, NULL, 'Leonida Gal', 'Poblacion, Makilala, Cotabato', 'Dress Maker', NULL, NULL, 'Mary Agnes Gallano', 'Makilala, North Cotabato', 'Housewife', NULL, NULL, '2016-09-15', 48, 3, 212, 82, NULL, NULL, NULL, NULL, 'Regular'),
-	(792, NULL, NULL, 4, NULL, 'Rudini', 'G.', 'Galdo', NULL, NULL, NULL, '1981-08-22', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '194 Paseo del Carmen St., Monte Maria Village, Cat', NULL, NULL, '09323007363', NULL, 'galdo.rudini@yahoo.com', NULL, '194 Paseo del Carmen St., Monte Maria Village, Cataluna Grande, Davao City', '194 Paseo del Carmen St., Monte Maria Village, Cataluna Grande, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-03', 402, 3, 3, 82, NULL, NULL, NULL, NULL, NULL),
-	(802, NULL, NULL, 4, NULL, 'Arturo', 'G.', 'Lopez Jr.', NULL, NULL, 'Digos City', '1984-06-26', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Christian Village, Digos City', NULL, NULL, '09481371494', NULL, 'kristine_del@yahoo.com', NULL, 'Christian Village, Digos City', 'Christian Village, Digos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kristine Ann D. Lopez', 'Christian Village, Digos City', 'Teacher', NULL, NULL, '2017-02-21', 422, 3, 172, 82, '0929775063', '160252612308', '121180477483', '425186753', 'Probationary'),
-	(812, NULL, NULL, 4, NULL, 'Jose Miguel', 'P.', 'Jonelas', NULL, NULL, NULL, '1994-04-09', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '321 Molave St., DDF Village Mndug, Davao City', NULL, NULL, '09124813756', NULL, 'mjonelas@gmail.com', NULL, '321 Molave St., DDF Village Mndug, Davao City', '321 Molave St., DDF Village Mndug, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-01-05', 382, 3, 162, 82, '0941836113', '162506888417', '917004406258', NULL, 'Probationary'),
-	(822, NULL, NULL, 1, NULL, 'Jessa', 'Datulayta', 'Bayking', NULL, NULL, NULL, '1993-12-07', 'Single', 1, 'Female', 'Filipino', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-01-04', 59, 11, 182, 122, '09-35775620', '160256016613', '121177270191', '492-048-158', 'Regular'),
-	(832, NULL, NULL, 1, NULL, 'Ralph Nicko', 'Alcober', 'Olam', NULL, NULL, 'Zamboamga , Sibugay', '1991-02-24', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'5"', '59Kgs', NULL, NULL, NULL, 'Taguanao, Indahag CDOC', NULL, NULL, '09161641159', NULL, NULL, NULL, 'Taguanao, Indahag CDOC', 'Taguanao, Indahag CDOC', 'Robinson Olam Sr.', 'Nazareth Kabaslan Zamboanga Sibugay', NULL, NULL, NULL, 'Bernadeta Olam', 'Nazareth Kabaslan Zamboanga Sibugay', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-09-11', 432, 11, 182, 122, '08-1977086-4', '150503440239', '916215856747', '492-049-415', 'Regular'),
-	(842, NULL, NULL, 1, NULL, 'Armando', 'L.', 'Bagac', NULL, NULL, NULL, '1993-01-14', 'Single', 1, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-10-01', 562, 11, 202, 122, '08-23845222', '150503550425', '121138563124', '492-048-869', 'Regular'),
-	(852, NULL, NULL, 4, NULL, 'Harold', 'Domo', 'Aparicio', NULL, NULL, 'Manolo Fortich, Bukidnon', '1989-03-21', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', NULL, NULL, '09177096134', NULL, 'aparicio.haroldd@gmail.com', NULL, 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', 'Engr. Norberto L. Aparicio', 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', '', NULL, NULL, 'Engr, Milagros S. Domo', 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-12-04', 58, 11, 4, 122, NULL, '150252810651', NULL, NULL, 'Probationary'),
-	(862, NULL, NULL, 1, NULL, 'John Gleen', 'Diaz', 'Panebio', NULL, NULL, 'Pagadian City', '1987-02-25', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Dist. 01, Canitoan CDOC', NULL, NULL, '09258116774', NULL, NULL, NULL, 'Dist. 01, Canitoan CDOC', 'Dist. 01, Canitoan CDOC', 'Mario D. Panebio', 'Dist. 01, Canitoan CDOC', NULL, NULL, NULL, 'Edna D. Panebio', 'Dist. 01, Canitoan CDOC', NULL, NULL, NULL, 'Zeta Ranile Panebio', 'Dist. 01, Canitoan CDOC', NULL, NULL, NULL, '2014-03-10', 57, 11, 4, 122, '08-1461106-7', '030501829486', '121004908041', '288-518-234', 'Regular'),
-	(872, NULL, NULL, 1, NULL, 'Arnulfo', 'V.', 'Layco', NULL, NULL, 'Manila', NULL, 'Single', 1, 'Male', 'Filipino', 'Christian Catholic', 'English, Filipino', '5\'5"', '120lbs', NULL, NULL, NULL, 'Blk 8 L8 New Washington  Village Maa, Davao City', NULL, NULL, '09177220531', '09988660531', 'arnie.layco@norminring.com', NULL, 'Blk 8 L8 New Washington  Village Maa, Davao City', 'Blk 8 L8 New Washington  Village Maa, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2007-03-01', 452, 3, 162, 82, NULL, NULL, NULL, NULL, 'Regular'),
-	(882, NULL, NULL, 4, NULL, 'Stephanie', 'A.', 'Somoza', NULL, NULL, 'Davao City', NULL, 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Visayan, Tagalog', NULL, NULL, NULL, NULL, NULL, 'Sales St. Magsaysay Avenue, Davao City', NULL, NULL, '09496971557', '09335626715', 'enahpetsmae12@gmail.com', NULL, 'Sales St. Magsaysay Avenue, Davao City', 'Sales St. Magsaysay Avenue, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-20', 65, 3, 3, 82, NULL, NULL, NULL, NULL, 'Probationary'),
-	(892, NULL, NULL, 1, NULL, 'Jaymar', 'R.', 'Coresis', NULL, NULL, NULL, NULL, 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'4"', NULL, NULL, NULL, NULL, '76-A Purok 5 Bucana Trading, Q. Boulevard, Davao C', NULL, NULL, '09225360187', NULL, 'jaymarcoresis@gmail.com', NULL, '76-A Purok 5 Bucana Trading, Q. Boulevard, Davao City', '76-A Purok 5 Bucana Trading, Q. Boulevard, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-01', 412, 3, 3, 82, '09-2984886-4', '060503261070', NULL, NULL, 'Regular'),
-	(902, NULL, NULL, 1, NULL, 'Mark Anthony', 'M.', 'Montera', NULL, NULL, 'Davao Oriental', '1981-03-13', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', NULL, NULL, '09422674185', NULL, NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', 'Poblacion, San Isidro, Davao Oriental', 'Moises O. Montera', NULL, NULL, NULL, NULL, 'Roberta M. Montera', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-07-12', 462, 3, 212, 82, '0920192988', '162003621529', NULL, '924469729', 'Regular'),
-	(912, NULL, NULL, 4, NULL, 'Rizza Mae', 'C.', 'Lapinid', NULL, NULL, 'Kidapawan', '1991-09-13', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-20', 65, 3, 3, 82, '0942047011', '170253314020', '4866783', '485272573', 'Probationary'),
-	(922, NULL, NULL, 1, NULL, 'Pamela Ivy', 'A.', 'Improgo', NULL, NULL, 'Manolo Fortich', '1979-02-20', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Magallones Compound, Manolo Fortich, Bukidnon', NULL, NULL, '09173176151', NULL, 'pam.improgo@ktmdavao.com', NULL, 'Magallones Compound, Manolo Fortich, Bukidnon', 'Magallones Compound, Manolo Fortich, Bukidnon', NULL, NULL, NULL, NULL, NULL, 'Lourdes A. Improgo', 'Magallones Compound, Manolo Fortich, Bukidnon', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2005-02-01', 472, 3, 162, 72, NULL, NULL, NULL, NULL, 'Regular'),
-	(932, NULL, NULL, 1, NULL, 'Jenner Nino', 'B.', 'Moneba', NULL, NULL, 'Davao City', '1983-01-15', 'Married', NULL, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao', NULL, NULL, '09773452163', NULL, 'jennermonebaducaiktm@gmail.com', NULL, 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao City', 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Mericrist C. Moneba', 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao City', NULL, NULL, '2147483647', '2013-09-22', 482, 3, 5, 82, '0924271258', '160501354306', NULL, '928767649', 'Regular'),
-	(942, NULL, NULL, 1, NULL, 'Joesus', 'L.', 'Rabadan', NULL, NULL, 'Zone 3 Kauswagan, Cdo', NULL, 'Single', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Taguanao, Indahag, CDO', NULL, NULL, '09358993420', NULL, NULL, NULL, 'Taguanao, Indahag, CDO', 'Taguanao, Indahag, CDO', 'Ismael W. Rabadan', NULL, NULL, NULL, NULL, 'Evelyn L. Rabadan', NULL, NULL, NULL, NULL, 'Alfie M. Antillas', NULL, NULL, NULL, NULL, '2015-06-01', 39, 3, 212, 72, NULL, NULL, NULL, NULL, 'Regular'),
-	(952, NULL, NULL, 1, NULL, 'Michael Angelou', 'H.', 'Ponte', NULL, NULL, 'San Isidro, Davao Oriental', '1990-04-06', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'65"', '63lbs', NULL, NULL, NULL, 'Blk 5 Lot 3 Cory Village, Dacudao Ave. Davao City', NULL, NULL, '09484374461', NULL, 'michaelangelouponte@yahoo.com', NULL, 'Blk 5 Lot 3 Cory Village, Dacudao Ave. Davao City', 'Blk 5 Lot 3 Cory Village, Dacudao Ave. Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-01-01', 412, 3, 3, 72, NULL, '160504101026', NULL, NULL, 'Regular'),
-	(962, NULL, NULL, 1, NULL, 'Leo Alfie', 'A.', 'Quipanes', NULL, NULL, 'Tagbilaran City', '1985-04-21', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', 'English, Visayan', '5\'5"', '64Kgs', NULL, NULL, NULL, 'Santol St. Manggahan Toril Davao City', NULL, NULL, '09466432634', NULL, 'gleoalfie@yahoo.com', NULL, 'Santol St. Manggahan Toril Davao City', 'Santol St. Manggahan Toril Davao City', 'Leonardo Quipanes', 'Santol St. Manggahan Toril Davao City', NULL, NULL, NULL, 'Maria Salome A. Quipanes', 'Santol St. Manggahan Toril Davao City', NULL, NULL, NULL, 'Emily R. Quipanes', 'Santol St. Manggahan Toril Davao City', NULL, NULL, NULL, '2015-05-11', 68, 3, 172, 92, '06-2515281-2', '120508612104', '913030000320', '289493450000', 'Regular'),
-	(972, NULL, NULL, 1, NULL, 'Norben Jay', 'Leron', 'Ruiz', NULL, NULL, 'Digos City', '1983-03-02', 'Married', 9, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'0"', '50Kgs', NULL, NULL, NULL, '1944 Purok Talisay Roxas Ext. Digos City', NULL, NULL, '09302220566', NULL, 'norbenjayrui78@gmail.com', NULL, '1944 Purok Talisay Roxas Ext. Digos City', '1944 Purok Talisay Roxas Ext. Digos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-07-01', 492, 3, 172, 82, '11-0370996-4', '160504245400', '121135281185', '297110378000', 'Regular'),
-	(992, NULL, NULL, 1, NULL, 'Danilo', 'T.', 'Palo Jr.', NULL, NULL, 'Kidapawan City', '1981-11-11', 'Married', NULL, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Lopez St., Kidapawan City', NULL, NULL, '09998501799', NULL, NULL, NULL, 'Lopez St., Kidapawan City', 'Lopez St., Kidapawan City', 'Danilo Palo Sr.', 'Kidapawan City', 'Carpenter', NULL, NULL, 'Helen T. Palo', 'Kidapawan City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-02-01', 68, 3, 212, 112, '0923935935', '160501224674', '188000522089', '929085069', 'Regular'),
-	(1002, NULL, NULL, 1, NULL, 'Nelson', 'S.', 'Tacoloy', NULL, NULL, 'San Jose Surigao del Sure', '1982-05-01', 'Married', 7, 'Male', 'Filipino', 'Alliance', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-10-26', 502, 3, 212, 82, '0927359096', NULL, '188001482849', '412120768', 'Regular'),
-	(1012, NULL, NULL, 1, NULL, 'Roland', 'C.', 'Sarce', NULL, NULL, 'Laak, ComVal Province', '1982-04-22', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. 6A, Bago Gallera, Talomo District, Davao City', NULL, NULL, '09212094647', NULL, NULL, NULL, 'Prk. 6A, Bago Gallera, Talomo District, Davao City', 'Prk. 6A, Bago Gallera, Talomo District, Davao City', 'Romy Sarce', NULL, NULL, NULL, NULL, 'Trinidad Salem', 'Posalina III, Dumoy Toril, Davao City', 'Business Woman', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-10-26', 502, 3, 172, 82, '0922452639', NULL, NULL, NULL, 'Regular'),
-	(1022, NULL, NULL, 4, NULL, 'Jasper', 'B.', 'Saludes', NULL, NULL, 'Davao City', '1996-01-21', 'Single', 1, 'Male', 'Filipino', 'Iglesia Ni Cristo', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. 8 Upper Catitipan Buhangin, Davao City', NULL, NULL, '09103841058', NULL, 'jaspersaludes@gmail.com', NULL, 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Lordioso Saludes', 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Electronic Technician', NULL, NULL, 'Gina Saludes', 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-11-02', 67, 3, 172, 82, '09-3982708-2', NULL, '1211-5491-23', NULL, 'Probationary'),
-	(1032, NULL, NULL, 1, NULL, 'Ivan', 'Orbeta', 'Paredes', NULL, NULL, 'Davao City', '1978-09-14', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'7"', NULL, NULL, NULL, NULL, '#27 San Roque St., Toril, Davao City', NULL, NULL, '09088678993', NULL, 'ivan.paredes@norminring.com', NULL, '#27 San Roque St., Toril, Davao City', '#27 San Roque St., Toril, Davao City', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2006-05-02', 472, 3, 162, 102, '09-2319395-5', '160501550229', '915043561517', '922203402', 'Regular'),
-	(1042, NULL, NULL, 1, NULL, 'Girlie', 'G.', 'Tolosa', NULL, NULL, NULL, '1983-04-02', 'Single', NULL, 'Female', 'Filipino', 'Protestant', 'English,Tagalog, Chavacano', NULL, NULL, NULL, NULL, NULL, 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', NULL, NULL, '09177038681', NULL, 'tolosagirlie02@gmail.com', NULL, 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Ramon Tolosa', 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Company Driver', NULL, NULL, 'Melodina Tolosa', 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-12-07', 402, 3, 162, 92, NULL, NULL, NULL, NULL, 'Regular'),
-	(1052, NULL, NULL, 1, NULL, 'Kirbay Jay', 'A.', 'Ragol', NULL, NULL, 'Davao City', '1989-06-06', 'Married', NULL, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Abella Subd., Digos City', NULL, NULL, '09268389931', NULL, 'Kirbyjayragol@yahoo.com', NULL, 'Abella Subd., Digos City', 'Abella Subd., Digos City', 'Ortodome M. Ragol', 'Abella Subd., Digos City', 'Driver', NULL, NULL, 'Josephine A. Ragol', 'Abella Subd., Digos City', 'Housweife', NULL, NULL, 'Sissy R. Ragol', 'Abella Subd., Digos City', 'Teacher', NULL, NULL, '2016-10-13', 67, 3, 172, 82, '09-4205318-6', '162010570662', NULL, NULL, 'Regular'),
-	(1062, NULL, NULL, 1, NULL, 'Lovely Judy May', 'P.', 'Villar', NULL, NULL, 'Davao City', '1996-05-31', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'4"', '48Kgs', NULL, NULL, NULL, 'Arroyo Comp. Crossing, Davao City', NULL, NULL, '09179333291', NULL, NULL, NULL, 'Arroyo Comp. Crossing, Davao City', 'Arroyo Comp. Crossing, Davao City', 'Carlos P. Villar', 'Arroyo Comp. Crossing, Davao City', NULL, NULL, NULL, 'Anatalia P. Villar', 'Arroyo Comp. Crossing, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-17', 65, 3, 3, 82, '0941445135', '160507400628', '121192880142', NULL, 'Regular'),
-	(1072, NULL, NULL, 1, NULL, 'Anthony Greg', 'L.', 'Naduma', NULL, NULL, NULL, '1985-11-04', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '426 Arjuville Subd., Libertad, Butuan City', NULL, NULL, '09179842214', NULL, 'anthonygregnaduma0411@gmail.com', NULL, '426 Arjuville Subd., Libertad, Butuan City', '426 Arjuville Subd., Libertad, Butuan City', NULL, NULL, NULL, NULL, NULL, 'Nancy L. Naduma', '426 Arjuville Subd., Libertad, Butuan City', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-06-16', 522, 3, 3, 72, '06-2877441-7', '180252527352', '121143095233', '460-398-585', 'Regular'),
-	(1082, NULL, NULL, 1, NULL, 'Joer', 'S.', 'Delas Penas', NULL, NULL, 'Tagum City', NULL, 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. Bulaklak II Lafortuna Magugpo North Tagum Cit', NULL, NULL, '09353302690', NULL, 'delaspenas_joer@yahoo.com', NULL, 'Prk. Bulaklak II Lafortuna Magugpo North Tagum City', 'Prk. Bulaklak II Lafortuna Magugpo North Tagum City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-03-01', 412, 3, 3, 82, NULL, '170501971165', NULL, '280184534', 'Regular'),
-	(1092, NULL, NULL, 1, NULL, 'Ivy', 'R.', 'Florentino', NULL, NULL, NULL, '1994-01-27', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. Sambag, Lower Kiagot, Digos City', NULL, NULL, '09952284322', NULL, 'ivyflorentino27@gmail.com', NULL, 'Prk. Sambag, Lower Kiagot, Digos City', 'Prk. Sambag, Lower Kiagot, Digos City', 'Ike B. Florentino', 'Prk. Sambag, Lower Kiagot, Digos City', NULL, NULL, NULL, 'Ma. Dulsora R. Florentino', 'Prk. Sambag, Lower Kiagot, Digos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-07-21', 41, 6, 222, NULL, '0941791452', '162511202515', '916236620041', NULL, NULL),
-	(1102, NULL, NULL, 1, NULL, 'April Dan', 'S.', 'Borromeo', NULL, NULL, 'Kapalong', '1995-04-09', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Luna Kapalong, Davao del Norte', NULL, NULL, '09486794342', NULL, 'april09dan@gmail.com', NULL, 'Luna Kapalong, Davao del Norte', 'Luna Kapalong, Davao del Norte', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-08-27', 542, 6, 222, NULL, '940335961', '162500434732', '916273954122', NULL, NULL),
-	(1112, NULL, NULL, 4, NULL, 'Junalona', 'R.', 'Basalo', NULL, NULL, 'Malalag, Davao del Sur', '1993-06-21', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Padre Gomez, Bonifacio St. Davao City', NULL, NULL, '09109128219', NULL, NULL, NULL, 'Prk. 2, IBO, Malalag, Davao del Sur', 'Prk. 2, IBO, Malalag, Davao del Sur', 'Leonardo L. Basalo Sr.', 'Prk. 2, IBO, Malalag, Davao del Sur', 'Farmer', NULL, NULL, 'Evelyn R. Basalo', 'Prk. 2, IBO, Malalag, Davao del Sur', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-03-01', 43, 6, 232, NULL, NULL, NULL, NULL, NULL, NULL),
-	(1122, NULL, NULL, 5, NULL, 'Margilen', 'Edrozo', 'Abuhan', 'MEA', NULL, 'Opol Misamis Oriental', '1980-12-28', 'Widow', NULL, 'Female', 'Filipino', 'Born Again Christian', NULL, '5\'2"', '54Kgs', NULL, 'Black', NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, '09265287804', NULL, NULL, NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Diomedes Edoso', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Farmer', NULL, NULL, 'Jeanitha Edroso', 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-03-01', 56, 10, NULL, NULL, NULL, '150254168765', NULL, '461537289', NULL),
-	(1132, NULL, NULL, 1, NULL, 'Alejando', 'Tilos', 'Paloma', 'ATP', NULL, 'Badas Mati City, Davao Oriental', '1971-10-05', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'7"', '150lbs', NULL, NULL, NULL, 'Princeton St. Cambridge Subd. Iponan Cagayan de Or', NULL, NULL, '09366279530', NULL, 'ali.paloma@gmail.com', NULL, 'Princeton St. Cambridge Subd. Iponan Cagayan de Oro City', 'Misamis Oreintal', 'Alfredo D. Paloma', 'Purok #2 Maitum Tubaon Tarrangona Davao Oriental', 'deceased', NULL, NULL, 'Lilia T. Paloma', 'Purok #2 Maitum Tubaon Tarrangona Davao Oriental', NULL, NULL, NULL, 'Emelie P. Paloma', 'Princeton St. Cambridge Subd. Iponan Cagayan de Oro City', NULL, NULL, '2147483647', '2017-04-10', 56, 10, NULL, NULL, '09-2341709-7', '162005511844', NULL, '291789935', NULL),
-	(1142, NULL, NULL, 5, NULL, 'Alex', 'Alejandro', 'Paloma', 'AAP', NULL, 'Tokwal Sarangani Province', '1976-07-26', 'Single', NULL, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Purok 2 Brgy. Tinagakan General Santos City', NULL, NULL, '09752343045', NULL, NULL, NULL, 'Purok 2 Brgy. Tinagakan General Santos City', 'Purok 2 Brgy. Tinagakan General Santos City', 'Anisito Paloma', 'Purok 2 Brgy. Tinagakan General Santos City', NULL, NULL, NULL, 'Julia Paloma', 'Purok 2 Brgy. Tinagakan General Santos City', 'Housewife', NULL, NULL, 'Cristy Paloma', 'Purok 2 Brgy. Tinagakan General Santos City', NULL, NULL, NULL, '2017-04-01', 56, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(1152, NULL, NULL, 5, NULL, 'Danilo', 'Delgado', 'Vedida Jr.', NULL, NULL, 'Sarangani Provinve', NULL, 'Single', NULL, 'Male', 'Filipino', NULL, NULL, '5\'4"', '52Kgs', NULL, NULL, NULL, 'Brgy, Tinagacan General Santos City', NULL, NULL, '09261565861', NULL, NULL, NULL, 'Brgy, Tinagacan General Santos City', 'Brgy, Tinagacan General Santos City', 'Danilo Verdida Sr.', 'Yanzon Village, Lagao General Santos City', 'Taxi Driver', NULL, '2147483647', 'Merlinda Verdida', 'Yanzon Village, Lagao General Santos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-03-27', 56, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(1162, NULL, NULL, 5, NULL, 'Ronald', 'Eduave', 'Tawacal', NULL, NULL, 'Taglimao, Cdoc', '1982-01-26', 'Married', NULL, 'Male', 'Filipino', 'Born Again Christian', NULL, '5\'4"', '72Kgs', NULL, 'Black', NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, '09756516313', NULL, NULL, NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Felizardo Tawacal', 'Barra, Opol Misamis Oriental', 'Farmer', NULL, NULL, 'Elviera Tawacal', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Housewife', NULL, NULL, 'Lonie E. Tawacal', 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, '0', '2017-04-02', 56, 10, NULL, NULL, NULL, '230027168227', NULL, NULL, NULL),
-	(1172, NULL, NULL, 5, NULL, 'Anthony', 'Sanchez', 'Potot', NULL, NULL, 'Tubod Lanao del Norte', '1991-09-12', 'Single', NULL, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'7"', '90lbs', NULL, NULL, NULL, 'Zone 7 Patag, Opol Misamis Oriental', NULL, NULL, '09351307015', NULL, NULL, NULL, 'Zone 7 Patag, Opol Misamis Oriental', 'Zone 7 Patag, Opol Misamis Oriental', NULL, 'Purok 2 San Jose Libona', 'deceased', NULL, NULL, 'Nora Sanchez Potot', 'Purok 2 San Jose Libona', NULL, NULL, NULL, 'Receil Fernandez', 'Zone 7 Patag, Opol Misamis Oriental', 'Housewife', NULL, '2147483647', '2017-04-09', 56, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(1182, NULL, NULL, 1, NULL, 'Janine', 'Llanos', 'Jasmin', NULL, NULL, 'Iligan City, Lanao del Norte', '1993-01-14', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'11"', '47Kgs', NULL, NULL, NULL, 'Purok Masilakon 1, Lugait Misamis Oriental', NULL, NULL, '09207522982', NULL, 'nicegal17@gmail.com', NULL, 'Purok Masilakon 1, Lugait Misamis Oriental', 'Purok Masilakon 1, Lugait Misamis Oriental', 'Eleuterio Jasmin', 'Purok Masilakon 1, Lugait Misamis Oriental', 'deceased', NULL, NULL, 'Rosanna Llanos Jasmin', 'Purok Masilakon 1, Lugait Misamis Oriental', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-05-20', 71, 1, 1, 32, '08-2399113-4', '150503497044', '121098502267', '440560910', 'Regular'),
-	(1192, NULL, NULL, 4, NULL, 'Christian', 'Morden', 'Rebuyas', NULL, NULL, 'Bislig, Surigao del Sur', NULL, 'Single', NULL, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'B19 Garcia Heights, Bacaca Road Davao City', NULL, NULL, '09078977962', NULL, 'christian984@yahoo.com', NULL, 'B19 Garcia Heights, Bacaca Road Davao City', 'B19 Garcia Heights, Bacaca Road Davao City', NULL, NULL, NULL, NULL, NULL, 'Cristina M. Rebuyas', 'B19 Garcia Heights, Bacaca Road Davao City', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-10-24', 84, 9, 14, 42, '09-4212214-3', '162519095378', '917059132863', NULL, 'Probationary'),
-	(1202, NULL, NULL, 1, NULL, 'Joseph', 'R.', 'Giron II', NULL, NULL, 'Benguet, Baguio City', '1984-03-02', 'Single', 1, 'Male', 'Filipino', '', 'English, Filipino', '', NULL, NULL, NULL, NULL, 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon C', NULL, NULL, '0917344855', '09228382307', 'bluepeach7@yahoo.com', NULL, 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', 'Joseph Fernandez Giron Sr.', 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', 'deceased', NULL, NULL, 'Teresita Rosales Giron', 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-01', 76, 1, 1, 32, '339-6120-303', '150502868960', '914343835204', '290055877000', 'Regular'),
-	(1212, NULL, NULL, 1, NULL, 'Chad Louei', 'C.', 'Sullaga', NULL, NULL, 'Kapatagan, Digos, Davao del Sur', '1994-11-23', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4', '43 kg.', NULL, NULL, NULL, 'Kapatagan, Digos, Davao del Sur', NULL, NULL, '09124544095', NULL, 'chadsullaga1123@gmail.com', NULL, 'Kapatagan, Digos, Davao del Sur', 'Kapatagan, Digos, Davao del Sur', 'Raul R. Sullaga', 'Kapatagan, Digos, Davao del Sur', 'Farmer', NULL, '2147483647', 'Cecilia C. Sullaga', 'Kapatagan, Digos, Davao del Sur', 'Brgy. Health Worker', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-11-21', 73, 1, 1, 32, '0941828228', '162013068828', '121189041310', '335284227', 'Regular'),
-	(1222, NULL, NULL, 4, NULL, 'Franco', 'P.', 'Amesola', NULL, NULL, 'Iligan City', '1980-01-01', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'7\'\'', '63kg', NULL, NULL, NULL, 'Siay Batu , Zamboanga Sibugay', NULL, NULL, '09278434744', NULL, NULL, NULL, 'Siay Batu, Zamboanga Sibugay', 'Siay Batu , Zamboanga Sibugay', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arlyn C. Benito', 'Siay Batu , Zamboanga Sibugay', NULL, NULL, '09366704289', '2017-04-24', 572, 3, 172, 72, '011101706862', '030205910474', '107012316640', '004524260', 'Probationary'),
-	(1232, NULL, NULL, 4, NULL, 'Mary Grace', 'A.', 'Escalona', NULL, NULL, 'Luz Village, Mlang, North Cotabato', '1974-05-03', 'Married', 8, 'Female', 'Filipino', 'Roman Catholic', 'English, Visayan, Tagalof', '5\'2"', '47', NULL, NULL, NULL, 'Prk. 6B Lanao, Kidapawan City', NULL, NULL, '09194880606', NULL, 'mgeaescalona@yahoo.com', NULL, 'Prk. 6B Lanao, Kidapawan City', 'Prk. 6B Lanao, Kidapawan City', NULL, NULL, NULL, NULL, NULL, 'Clarita E. Albutra', 'Prk. 6B Lanao, Kidapawan City', 'Housewife', NULL, '09302395832', NULL, NULL, NULL, NULL, NULL, '2017-04-06', 592, 6, 222, 132, NULL, NULL, NULL, NULL, 'Probationary'),
-	(1242, NULL, NULL, 4, NULL, 'Noel', 'P.', 'Sobejana', NULL, NULL, 'Davao', '1979-08-09', 'Single', 3, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'7 1/2"', '68', 'O +', 'black', NULL, 'Prk. Tamsi, Sitio Upper Quinokol, Brgy. Inawayan, ', NULL, NULL, '09484539197', NULL, 'noelpsobejana@gmail.com', NULL, 'Prk. Tamsi, Sitio Upper Quinokol, Brgy. Inawayan, Municipality of Sta. Cruz, Davao del Sur', 'Prk. Tamsi, Sitio Upper Quinokol, Brgy. Inawayan, Municipality of Sta. Cruz, Davao del Sur', 'Narciso Sobejana Sr.', 'F. Lopez St. Kidapawan City', 'Government employee', NULL, '09198882577', 'Agnes Sobejana', 'F. Lopez St. Kidapawan City', 'Housewife', NULL, '09287846797', NULL, NULL, NULL, NULL, NULL, '2016-07-04', 602, 6, 222, 132, '0813387680', '190895509276', '1900958641', '215413654', 'Probationary'),
-	(1252, NULL, NULL, 4, NULL, 'Kareen', 'J.', 'De Guzman', NULL, NULL, 'Digos City', '1997-05-03', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Cebuano', '5\'1"', '55', NULL, NULL, NULL, 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', NULL, NULL, '09462442253', NULL, 'kareen.deguzman0503@gmail.com', NULL, 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Virgilio H. de Guzman Jr.', 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Stock Custodian', NULL, NULL, 'Sonia J. de Guzman', 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Liaison Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-04-06', 44, 6, 232, 132, NULL, NULL, NULL, NULL, 'Probationary');
+INSERT INTO `employees` (`id`, `employee_id`, `biometric_id`, `shiftgroup_id`, `image`, `fName`, `mi`, `lName`, `acronym`, `bank`, `placeBirth`, `dateBirth`, `civilStatus`, `taxstatus_id`, `gender`, `citizenship`, `religion`, `language`, `height`, `weight`, `bloodType`, `hair`, `complexion`, `resAdd`, `resTel1`, `resTel2`, `resMobile1`, `resMobile2`, `resEmail`, `contactperson`, `emergencyno`, `emergencyaddress`, `perAdd`, `proAdd`, `fatherName`, `faAdd`, `faOccupation`, `faCompany`, `faNo`, `motherName`, `moAdd`, `moOccupation`, `moCompany`, `moNo`, `spouseName`, `spAdd`, `spOccupation`, `spCompany`, `spNo`, `dateHired`, `position_id`, `company_id`, `department_id`, `branch_id`, `sssNo`, `phicNo`, `hdmfNo`, `taxNo`, `emp_status`, `lastUpdated`) VALUES
+	(1, '310-98-4', '1005', 1, '', 'Jennifer', 'Palo', 'Dantes', 'JPD', NULL, 'Bislig, Surigao Del Sur', '1975-08-04', 'Married', 7, 'Female', 'Filipino', 'Catholic', 'Bisaya', '5\'', '51', 'O +', 'Brown', 'Fair', '17E Southview Homes Subd.,Macasandig, Cagayan De O', 88, 88, '09173049861', '09989590804', 'jen.dantes@smsi.com.ph', NULL, NULL, NULL, 'same', 'same', 'Jose M. Palo', 'Kidapawan, Cotabato', 'Gov\'t Employee', 'Makilala City Mayor Office', '0', 'Socorro R. Beltran', 'Malita, Davao Del Sur', 'none', 'none', '0', 'Reynaldo I. Dantes Jr', '17E Southview Homes Subd., Cagayan de Oro City', 'Project Manager', 'MTMAS', '0', '1997-04-01', 92, 1, 2, 32, '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Regular', '2017-05-25 13:31:17'),
+	(2, NULL, '10025', 4, NULL, 'Charizze Mae', 'Taboada', 'Lumagsao', 'CTL', NULL, 'San Juan Metro Manila', '1985-01-03', 'Married', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan, Singlish', '4\'11inches', '51kgs', 'B +', NULL, 'Fair', '#3A Yellow Street Palm Ridge Maandig Buena Oro, Up', NULL, NULL, '09771046500', NULL, 'dotmrsl@gmail.com', NULL, NULL, NULL, 'B29-L3 Bronze St. Johndorf Subd. Barra,Opol Mis Or', 'B29-L3 Bronze St. Johndorf Subd. Barra,Opol Mis Or', 'Eliseo M. Taboada', '', '', NULL, NULL, 'Frances Merlie B. Taboada', '', NULL, NULL, NULL, 'Ranji Yehudi G. Lumagsao', '#3A Yellow St. Palm Ridge Maandig Village Upper Ma', 'Social Aide', 'City Social Welfare Cagayan de Oro', '0', '2017-04-01', 102, 1, 2, 32, '8-15700359', '150501399622', '121025696574', NULL, 'Resigned', '2017-05-25 13:31:17'),
+	(3, 'SP-Admin', NULL, NULL, NULL, 'SUPER ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(12, NULL, '1004', 1, NULL, 'Shiela', 'L.', 'Achas', 'SLA', NULL, 'Cagayan de Oro', '1994-11-09', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'1inches', '65Kg', NULL, NULL, NULL, 'Gusa. Cagayan de Oro City', NULL, NULL, '09267459394', NULL, 'libresshiela@gmail.com', 'Celia T. Libres', '09054294206', '#127 Purok 3A Gusa Cagayan de oro City', 'Gusa. Cagayan de Oro City', 'Gusa. Cagayan de Oro City', 'Samuel B. Achas', 'Lagobglong, Misamis Oriental', NULL, NULL, NULL, 'Celia T. Libres', '#127 Purok-3A, Gusa Cagayan de Oro City', 'Business Woman', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-03-01', 112, 1, 22, 32, '08-2580153-6', '150504178309', '121148071155', '330785488000', 'Regular', '2017-05-25 13:31:17'),
+	(22, NULL, '10023', 4, NULL, 'Daina Jane', 'Layar', 'Lungtad', 'DLL', NULL, 'Palao, Iligan City', '1990-12-30', 'Single', 1, 'Female', 'Filipino', 'Seventh Day Adventist', 'English, Tagalog, Visayan', '5\'1 inches', '51Kg', 'A +', 'Brown', '', 'Lao-Lao Lugait Misamis Oriental', NULL, NULL, '09267876016', NULL, 'dainajanelungtad@gmail.com', 'Rosalinda L. Lungtad', NULL, NULL, 'Lao-Lao Lugait Misamis Oriental', 'Lao-Lao Lugait Misamis Oriental', 'Cornelio A. Lungtad', 'Salvacion Bayugan City', 'Foreman', 'Agusan Vertical Horizon', NULL, 'Rosalinda L. Lungtad', 'Salvacion Bayugan City', 'Housekeeper', NULL, '09077939755', NULL, NULL, NULL, NULL, NULL, '2016-11-21', 122, 1, 32, 32, '08-2663610-8', '150253033462', '121148247833', '331694187', 'Regular', '2017-05-25 13:31:17'),
+	(32, NULL, NULL, 1, NULL, 'Angelito', 'Diaz', 'Delada', 'ADD', NULL, 'Davao City', '1986-12-30', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'5 inches', '51kgs', NULL, NULL, NULL, '268-Purok 14 Bushoa Phase 1 Bucana, Davao City', NULL, NULL, '09165376514', NULL, NULL, NULL, NULL, NULL, '268-Purok 14 Bushoa Phase 1 Bucana, Davao', '268-Purok 14 Bushoa Phase 1 Bucana, Davao', 'Rogelio Delada', 'Davao City', NULL, NULL, NULL, 'Aurora Diaz', 'Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 84, 9, 14, 42, '09-28611092', '160504045878', '121031718739', '945606122', 'Regular', '2017-05-25 13:31:17'),
+	(42, NULL, NULL, 1, NULL, 'Kimberly', 'Arcena', 'Bicong', 'KAB', NULL, 'Davao City, Davao del Sur', '1995-07-20', 'Single', NULL, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Km8, Tigatto Buhangin Dsrct. Davao City', NULL, NULL, '09333191043', NULL, NULL, NULL, NULL, NULL, 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Oscar G. Bicong', 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Laborer', NULL, NULL, 'Teresita C. Bicong', 'Km8, Tigatto Buhangin Dsrct. Davao City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-09-26', 86, 9, 14, 42, NULL, '162506289777', '915170351768', '429744351', 'Regular', '2017-05-25 13:31:17'),
+	(52, NULL, NULL, 1, NULL, 'Rachel', 'Likit', 'Brua', 'RLL', NULL, 'Brgy. Saguing, Makilala, Cotabato', '1988-01-01', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'', NULL, NULL, NULL, NULL, 'Saguing, Makilala, North Cotabato', NULL, NULL, '09093671550', NULL, 'bruarachel@gmail.com', NULL, NULL, NULL, 'Villa Fontana Dormitory for Girls, Bolton St., Dav', 'Saguing, Makilala, North Cotabato', 'Telesforo T. Brua', 'Saguing, Makilala, North Cotabato', NULL, NULL, NULL, 'Emeteria L. Brua', 'Saguing, Makilala, North Cotabato', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-01-01', 81, 9, 42, 42, '09-3103097-4', '170252743289', '121101750577', '445-307-079', 'Regular', '2017-05-25 13:31:17'),
+	(62, NULL, NULL, 1, NULL, 'Cheryrose', 'Nepomuceno', 'Gabaton', 'CNG', NULL, 'Davao City, Davao Del Sur', '1989-10-22', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'2"', '47Kgs', NULL, NULL, NULL, 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada', NULL, NULL, '09105861353', NULL, NULL, NULL, NULL, NULL, 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', 'Andres B. Gabaton', 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', NULL, NULL, NULL, 'Fidencia N. Gabaton', 'Blk.2 Lot 16 Silver Street Mineral Village, Bajada Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-06-01', 132, 9, 52, 42, '0933035427', '160504739322', '121115018624', '444168187000', 'Regular', '2017-05-25 13:31:17'),
+	(72, NULL, NULL, 1, NULL, 'Nathaniel', 'Pasco', 'Dela Pena', 'NPD', NULL, 'Zamboanga City', '1962-01-25', 'Married', 2, 'Male', 'Filipino', 'Jehovah\'s Witness', NULL, '5\'5"', '68kl.', NULL, NULL, NULL, '129-3 Quezon Blvd., Davao City', NULL, NULL, '09394168476', '09394606417', NULL, NULL, NULL, NULL, '129-3 Quezon Blvd., Davao City', '129-3 Quezon Blvd., Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 83, 9, 15, 42, '09-08358948', '160500375997', '005064402507', '124010444', 'Regular', '2017-05-25 13:31:17'),
+	(82, NULL, NULL, 4, NULL, 'Amalia', 'Demapitan', 'Frias', 'ADF', NULL, 'Poblacion, Lebak Cotabato', '1967-12-01', 'Single', 1, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Caindoc Residence Drive #2 Teacher\'s Village Matin', NULL, NULL, '09362841391', NULL, 'fnasamz@yahoo.com', NULL, NULL, NULL, 'Caindoc Residence Drive #2 Teacher\'s Village Matina Aplaya Davao City', 'Lebak, Sultan Kudarat', 'Felipe F. Frias', 'Lebak, Sultan Kudarat', NULL, NULL, NULL, 'Angeles D. Frias', 'Lebak, Sultan Kudarat', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-02-01', 142, 9, 15, 42, '09-15874295', '170502340371', '121030580785', '450957189', 'Regular', '2017-05-25 13:31:17'),
+	(92, NULL, NULL, 1, NULL, 'Leny', 'Serue', 'Lastrella', 'LSL', NULL, 'T\'boli, South Cotabato', '1987-06-01', 'Single', 1, 'Female', 'Filipino', NULL, 'Filipino, Englis, Illonggo', '5\'0"', '46kgs', NULL, NULL, NULL, 'Brgy. Veterans, Surulla, South Cotabato', NULL, NULL, '09082705445', NULL, 'lastrellaleny@gmail.com', NULL, NULL, NULL, 'Brgy. Veterans, Surulla, South Cotabato', 'Brgy. Tabudtod, T\'boli South Cotabato', 'Eugene B. Lastrella', 'T\'boli South Cotabato', NULL, NULL, NULL, 'Raquel S. Lastrella', 'T\'boli South Cotabato', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01', 152, 9, 62, 42, '09278694176', '170501695087', '18000768907', '429743909', 'Regular', '2017-05-25 13:31:17'),
+	(102, NULL, NULL, 1, NULL, 'Erlyn', 'Bolante', 'Lim', 'EBL', NULL, 'Davao City', '1987-12-17', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'Filipino, English, Visaya', '5\'3"', NULL, NULL, NULL, NULL, 'Phase 3 Blk 6 L19 NHA Bangkal Davao City', NULL, NULL, '09074375342', NULL, 'erlynlim17@ymail.com', NULL, NULL, NULL, 'Phase 3 Blk 6 L19 NHA Bangkal Davao City', 'Phase 3 Blk 6 L19 NHA Bangkal Davao City', 'Ernesto R. Lim', 'Davao City, Davao Del Sur', NULL, NULL, NULL, 'Arlyn B. Lim', 'Davao City, Davao Del Sur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 162, 9, 42, 42, '09-30062419', '160503475631', '121032392549', '286335650', 'Regular', '2017-05-25 13:31:17'),
+	(112, NULL, NULL, 4, NULL, 'Aldrin', 'Cotamora', 'Loma', 'ACL', NULL, 'Davao City', '1986-04-19', 'Single', 1, 'Male', 'Filipino', 'Jehova\'s Witness', 'English, Filipino, Bisaya', '5\'7"', '110lbs', NULL, NULL, NULL, 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok Distr', NULL, NULL, '09309846935', NULL, 'aldrincotamora86@gmail.com', NULL, NULL, NULL, 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', 'Edgar S. Loma', 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', NULL, NULL, NULL, 'Alma C. Loma', 'Purok 4 Sampaguita St. Brgy. Sto Nino Tugbok District Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-11-02', 86, 9, 14, 42, '09-38159793', '160506389620', '121157478629', NULL, 'Resigned', '2017-05-25 13:31:17'),
+	(122, NULL, NULL, 1, NULL, 'Lyrie Mae', 'Lustre', 'Magbutay', 'LLM', NULL, 'Batangueno Village, Matina, Davao City', '1985-10-06', 'Married', 3, 'Female', 'Filipino', 'Roman Catholic', 'English, Filipino, Visayan', '5\'4"', '55kgs', NULL, NULL, NULL, 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', NULL, NULL, '09072281906', NULL, NULL, NULL, NULL, NULL, 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', 'Frederico L. Lustre Jr.', 'Matina Davao City', NULL, NULL, NULL, 'Leny P. Lustre', 'Matina Davao City', NULL, NULL, NULL, 'Conrasito A. Magbutay Jr.', 'Blk6 L45 Sunrise Village Brgy. Matina Davao City', NULL, NULL, NULL, '2012-12-01', 582, 9, 14, 42, '09-3230107-1', '121028563644', '160504463106', '460-769-947', 'Regular', '2017-05-25 13:31:17'),
+	(132, NULL, NULL, 1, NULL, 'Rodel', 'Esmedina', 'Villegas', 'REV', NULL, 'Poblacion, Carmen Cotabato', '1992-03-03', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Bisaya', '5\'8', '64Kgs', NULL, NULL, NULL, 'Garcia Heights Bajada, Davao City', NULL, NULL, '09482716805', NULL, NULL, NULL, NULL, NULL, 'Garcia Heights Bajada, Davao City', 'Carmen Cotabato', 'Bonifacio Villegas', 'Kibudtungan Carmen Cotabato', 'Driver', NULL, NULL, 'Genara Villegas', 'Kibudtungan Carmen Cotabato', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 83, 9, 15, 42, '09-3345227-5', '150504925215', '121029330515', '415-610-167', 'Regular', '2017-05-25 13:31:17'),
+	(142, NULL, NULL, 1, NULL, 'Henilito', 'Gonzales', 'Polia Jr.', 'HPG', NULL, 'Purok 2, San Juan Maco, Compostela Valley', '1990-09-29', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog, English,', '5\'9"', '58kgs', NULL, NULL, NULL, 'Purok 2, San Juan Maco, Compostela Valley Province', NULL, NULL, '09302974747', NULL, NULL, NULL, NULL, NULL, 'Purok 2, San Juan Maco, Compostela Valley Province', 'Purok 2, San Juan Maco, Compostela Valley Province', 'Senilito Polia', 'Purok 2, San Juan Maco, Compostela Valley Province', NULL, NULL, NULL, 'Jemecita G. Polia', 'Purok 2, San Juan Maco, Compostela Valley Province', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-12-01', 85, 9, 14, 42, '09-3208339-9', '160504315484', '121029358912', '400-672-745', 'Regular', '2017-05-25 13:31:17'),
+	(152, NULL, NULL, 1, NULL, 'Nestor', 'Masing', 'Bantilan', 'NMB', NULL, 'Kapatagan, Asuncion Tagum City', '1967-10-08', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog,', '5\'5"', '120lbs', NULL, NULL, NULL, 'Shanghai Village Matina Aplaya, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Shanghai Village Matina Aplaya, Davao City', 'Shanghai Village Matina Aplaya, Davao City', 'Benito Tanduyan Bantilan', 'Kapatagan Asuncion, Tagum City', NULL, NULL, NULL, 'Amparo B. Bantilan', 'Kapatagan Asuncion, Tagum City', NULL, NULL, NULL, 'Erlyn Labis', 'Poblacion Kabacan Cotabato', NULL, NULL, NULL, '2015-12-01', 80, 9, 14, 42, '09-1244652-9', '160500046756', '913169041227', '124-651-296', 'Regular', '2017-05-25 13:31:17'),
+	(162, NULL, NULL, 1, NULL, 'Roberto', 'Celerio', 'Jambaro Jr.', 'RCJ', NULL, 'Davao Medical Center', '1986-03-30', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Samantha Homes Bago Gallera, Davao City', NULL, NULL, '09485336616', NULL, NULL, NULL, NULL, NULL, 'Samantha Homes Bago Gallera, Davao City', 'Samantha Homes Bago Gallera, Davao City', 'Roberto Jambaro Sr.', 'Davao City', NULL, NULL, NULL, 'Cremery Celerio', 'Davao City', NULL, NULL, NULL, 'Karen Jambaro', 'Samantha Homes Bago Gallera, Davao City', NULL, '', '2147483647', '2012-12-01', 82, 9, 15, 42, '0925830148', '160503436059', '188000743398', '308884166000', 'Regular', '2017-05-25 13:31:17'),
+	(192, NULL, NULL, 1, NULL, 'Junmer', 'Rebuyas', 'Talidong', 'JRT', NULL, 'Poblacion, Marasugan Combal Province', '1988-08-03', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'Bisaya, Tagalog & English', '5\'7"', '65Kgs', NULL, NULL, NULL, 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', 'Aquilino C. Talindog', 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', NULL, NULL, NULL, 'Mercedes R. Talindog', 'Apo St. Rolling Hills Subd. Bacaca Road Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-11-01', 86, 9, 14, 42, '09-300-44709', '160505841848', '91320145691', NULL, 'Regular', '2017-05-25 13:31:17'),
+	(202, NULL, NULL, 1, NULL, 'Ryan', 'Dodoso', 'Florencio', 'RDF', NULL, 'Davao City', '1986-06-05', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, & Visayan', '5\'5"', '61Kgs', NULL, NULL, NULL, 'Bo. Obrero Burgos St. Davao City', NULL, NULL, '09304965392', NULL, NULL, NULL, NULL, NULL, 'Bo. Obrero Burgos St. Davao City', 'Bo. Obrero Burgos St. Davao City', 'Rostico B. Florencio', 'Sinayawan Hagonoy Davao Del Sur', NULL, NULL, NULL, 'Semma D. Florencio', 'Sinayawan Hagonoy Davao Del Sur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01', 83, 9, 15, 42, '09-3164239-1', '160504252636', '121086740639', '291-191-248', 'Regular', '2017-05-25 13:31:17'),
+	(212, NULL, NULL, 4, NULL, 'Arnold', 'Aboyme', 'Plaza', 'AAP', NULL, 'Davao City', '1995-11-07', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog,English,Bisaya', '5\'7"', NULL, NULL, NULL, NULL, 'Blk.91 Piapi Blvd. Brgy.21-C Davao City', NULL, NULL, '09052684019', NULL, 'arnoldplaza@yahoo.com', NULL, NULL, NULL, 'Blk.91 Piapi Blvd. Brgy.21-C Davao City', 'Blk.91 Piapi Blvd. Brgy.21-C Davao City', 'Rolando A. Plaza', 'Davao City', 'deceased', NULL, NULL, 'Celia A. Plaza', 'Davao City', 'Housekeeper', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-08-04', 84, 9, 14, 42, '09-4157916-6', '162508071957', NULL, NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(222, NULL, NULL, 1, NULL, 'Jimrey', 'R.', 'Abenoja', 'JRA', NULL, NULL, '1986-05-20', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'4"', '57', NULL, NULL, NULL, 'Prk. 25 Maa Peoples Village Davao City', NULL, NULL, '09082418357', NULL, NULL, NULL, NULL, NULL, 'Prk. 25 Maa Peoples Village Davao City', 'Maa Davao City', 'Jaime Abenoja', 'Prk. 25 Maa Peoples Village Davao City', 'Farmer', NULL, NULL, 'Riza R. Abenoja', 'Prk. 25 Maa Peoples Village Davao City', 'Hair Cutting & Manicure', NULL, '', 'Christin Mayn J. Suson', 'Prk. 25 Maa Peoples Village Davao City', NULL, NULL, '', '2013-09-09', 322, 8, 112, 52, '09-3224951-5', '160506266820', '121122325178', '455239111', 'Regular', '2017-05-29 02:07:23'),
+	(232, NULL, NULL, 1, NULL, 'Nerio', 'Gildore', 'Amper', 'NGA', NULL, 'Davao City', '1976-11-09', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Molave homes, Indahag, Davao City', NULL, NULL, '09258235436', NULL, 'nga.amper@gmail.com', 'Loulibeth H. Amper', '09257993866', 'Molave homes, Indahag, Davao City', 'Molave homes, Indahag, Davao City', 'Molave homes, Indahag, Davao City', NULL, NULL, NULL, NULL, NULL, 'Victoria G. Amper', 'Dacudao Village, Prk. 23, Panacan Davao City', 'Self-Employed', NULL, '', 'Loulibeth H. Amper', 'Molave homes, Indahag, Davao City', '09257993866', NULL, NULL, '2003-12-11', 212, 8, 102, 62, '0916548070', '190902066156', '388004036012', '922208289', 'Regular', '2017-05-29 01:58:25'),
+	(262, NULL, NULL, 1, NULL, 'James', 'C.', 'Baldosano', 'JCB', NULL, NULL, NULL, 'Married', 7, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Lot 26 Block 27 Vista Grande Subd., Brgy. Lumbia, ', NULL, NULL, '09177193256', NULL, 'james.baldosano@cthree.com.ph', 'Henry Baldosano', '09282248519', 'Lot 26 Block 27 Vista Grande Subd., Brgy. Lumbia, Cagayan de Oro City', 'Lot 26 Block 27 Vista Grande Subd., Brgy. Lumbia, Cagayan de Oro City', 'Lot 26 Block 27 Vista Grande Subd., Brgy. Lumbia, Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-11-02', 182, 8, 112, 52, '08-1841488-8', '150502798830', '121028250041', '405322115', 'Regular', '2017-05-30 01:17:23'),
+	(282, NULL, NULL, 1, NULL, 'Renante', 'M.', 'Cabigas', 'RMC', NULL, 'Davao City', '1969-05-07', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog, Visayan', '5\'5"', '68', NULL, NULL, NULL, 'Taguanao, Indahag Cagayan de Oro City', NULL, NULL, '09263048709', NULL, NULL, 'Rosalina T. Cabigas', '09062023529', 'Taguanao, Indahag, Cagayan de Oro', 'Taguanao, Indahag Cagayan de Oro City', 'Taguanao, Indahag Cagayan de Oro City', 'Hilarion Cabigas', 'Camp 2 Tabunok, Talisayan Cebu City', 'Automotive Mechanic', NULL, NULL, 'Catalina M. Cabigas', 'Camp 2 Tabunok, Talisayan Cebu City', 'Housewife', NULL, '', 'Rosalina Timbal', 'Taguanao, Indahag Cagayan de Oro City', 'Housewife', NULL, '09062023529', '2011-11-01', 222, 8, 82, 52, '0613995298', '152016370597', '111129529206', '422012853', 'Regular', '2017-05-30 01:19:47'),
+	(292, NULL, NULL, 1, NULL, 'Gerald', 'Detoyato', 'Caro', 'GDC', NULL, 'Guimaras, Iloilo', '1985-01-16', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'Ilonggo, Cebuano, Tagalog, English', '170cm', '60kgs', NULL, NULL, NULL, 'Ferrer Compound, PN Roa Subd. Brgy. Canitoan, Cala', NULL, NULL, '09263679009', NULL, 'gerald_caro@yahoo.com', 'Lanibeth S. Bahian', '09168332337', 'Ferrer Compound, PN Roa Subd., Canitoan, Calaanan, Cagayan de Oro', 'Ferrer Compound, PN Roa Subd. Brgy. Canitoan, Calaanan CDOC.', 'Ferrer Compound, PN Roa Subd. Brgy. Canitoan, Calaanan CDOC.', 'Efren A. Caro Sr.', 'Pob. Jordan Guimaras, Iloilo', 'Ricemill Operator', NULL, NULL, 'Judy D. Caro', 'Pob. Jordan Guimaras, Iloilo', NULL, NULL, NULL, 'Lanibeth', 'PN Roa Subd. Brgy. Canitoan Calaanan CDOC.', 'Logistics Officer', 'HFHP CDO', '09168332337', '2016-09-17', 192, 8, 112, 52, '3430488752', '112021267328', '121166288885', NULL, 'Regular', '2017-05-30 01:25:07'),
+	(312, NULL, NULL, 1, NULL, 'Ramon Alejandro', 'Magtajas', 'Valleser', 'RMV', NULL, 'Cagayan de Oro', '1982-11-04', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'St. Ignatius St., Melecia Homes, Upper Macasandig,', NULL, NULL, '09989640456', NULL, 'RAMONVALLESER1114@YAHOO.COM', NULL, NULL, NULL, 'St. Ignatius St., Melecia Homes, Upper Macasandig, Cagayan de Oro City', 'St. Ignatius St., Melecia Homes, Upper Macasandig, Cagayan de Oro City', 'Jesus Valleser', 'Melecia Homes, Upper MAcasandig, Cagayan de Oro', NULL, NULL, NULL, 'Alma Magtajas', 'Melecia Homes, Upper MAcasandig, Cagayan de Oro', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-17', 232, 1, 22, 32, '08-1543251-7', '150251923010', '121048504092', '942957588', 'Regular', '2017-05-25 13:31:17'),
+	(322, NULL, NULL, 1, NULL, 'Elgin', 'Cabunilas', 'Camilotes', 'ECC', NULL, 'Mati, Davao Oriental', '1990-07-06', 'Married', 8, 'Male', 'Filipino', 'Seventh Day Adventist', 'English, Filipino', '5\'7"', '60Kgs', NULL, NULL, NULL, 'Prk. Pine Tree, Magugpo North, Tagum City', NULL, NULL, '09100038896', NULL, 'camiloteselgin@gmail.com', 'Leah Mae O. Camilotes', '09090734029', 'Prk. Pine Tree, Magugpo North, Tagum City', 'Prk. Pine Tree, Magugpo North, Tagum City', 'Prk. Pine Tree, Magugpo North, Tagum City', 'Zacarias S. Camilotes', 'Camus Street, Illustre Davao City', 'Land Brooker', NULL, NULL, 'Rochann C. Camilotes', 'Camus Street, Illustre Davao City', 'Teacher', NULL, NULL, 'Leah Mae O. Camilotes', 'Prk. Pine Tree, Magugpo North, Tagum City', NULL, NULL, '09090734029', '2013-08-01', 192, 8, 112, 62, '09-3653870-9', '160505803776', '121098218437', '440119377', 'Regular', '2017-05-29 01:43:57'),
+	(332, NULL, NULL, 1, NULL, 'Aileen Joy', 'C', 'Castro', 'ACC', NULL, 'Mati City', '1985-07-03', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Filipino', '5\'0\'', NULL, NULL, NULL, NULL, 'Lopo-Diaz St. Obrero, Davao City', NULL, NULL, '09462412819', NULL, 'castroaileenjoy@yahoo.com', NULL, NULL, NULL, 'Lopo-Diaz St. Obrero, Davao City', 'Lopo-Diaz St. Obrero, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-11-16', 202, 8, 102, 62, '0928422634', '160502867331', '188000966823', '945454280', 'Regular', '2017-05-29 01:56:18'),
+	(352, NULL, NULL, 1, NULL, 'Elvira', 'Carvajal', 'Montera', 'ECM', NULL, 'Digos Davao del Sur', '1979-04-16', 'Married', 9, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4', '65 kls.', NULL, NULL, NULL, 'Blk. 13 Lot 1&2 Melecia Homes, Macasandig, CDOC', NULL, NULL, '09985378277', NULL, NULL, 'Marlon H. Montera', '09177079266', 'Blk. 13 Lot 1&2 Melecia Homes, Macasandig, CDOC', 'Blk. 13 Lot 1&2 Melecia Homes, Macasandig, CDOC', 'Blk. 13 Lot 1&2 Melecia Homes, Macasandig, CDOC', 'Oscar T. Carvajal', NULL, NULL, NULL, NULL, 'Ma. Rosario Origenes', NULL, NULL, NULL, NULL, 'Marlon H. Montera', 'Blk. 13 Lot 1&2 Melecia Homes, Macasandig, CDOC', 'Chief Financial Officer', 'CGC', '09177079266', '2008-01-09', 23, 1, 7, 32, '09-2211068-3', '160501550245', '121042672683', '928503260', 'Regular', '2017-05-25 05:52:49'),
+	(362, NULL, NULL, 1, NULL, 'Kristine Joy', 'Carreon', 'Dealca', 'KCD', NULL, 'Davao Cityu', '1994-09-27', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English,Filipino, Cebuano', '5\'0"', '46Kgs', NULL, NULL, NULL, 'San Agustine, Ulas Davao City', NULL, NULL, '09421433737', NULL, 'jhoii_dealca@yahoo.com', NULL, NULL, NULL, 'San Agustine, Ulas Davao City', 'San Agustine, Ulas Davao City', 'Gilbert S. Dealca Jr.', 'San Agustine, Ulas Davao City', NULL, NULL, NULL, 'Reynilda C. Dealca', 'San Agustine, Ulas Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-05-04', 202, 8, 102, 62, NULL, NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(372, NULL, '10021', 1, NULL, 'Raul Adrian', 'Apuli', 'Altavano', 'RAA', NULL, 'Legazpi City, albay', '1993-05-06', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English,Tagalog,Bikolano', '5\'7"', '57', NULL, NULL, NULL, 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan d', NULL, NULL, '09056935376', NULL, 'grawling08@gmail.com', 'Mylene Plasquita', '09228135953', 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan de Oro City', 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan de Oro City', 'Blk. 15 Lot 1 silvercreak Subd., Carmen, Cagayan de Oro City', 'Raul L. Altavano', '#904 Our Lady\'s Village, Bitano, Legazpi City', NULL, NULL, NULL, 'Hipolita A. Altavano', '#904 Our Lady\'s Village, Bitano, Legazpi City', 'Budget Officer', 'Dep\'t. of Agrarian Reform Regn\'l. Office 5', '', NULL, NULL, NULL, NULL, NULL, '2016-11-21', 72, 1, 1, 32, '34-6405963-6', '150504494774', '121144034952', '445182360', 'Regular', '2017-05-25 13:31:17'),
+	(382, NULL, NULL, 1, NULL, 'May', 'Abroguena', 'Ebalang', 'MAE', NULL, 'Cagayan de Oro City', '1980-05-14', 'Single', 1, 'Female', 'Filipino', 'Protestant', 'English,Filipino, Visayan', '5\'3"', NULL, NULL, NULL, NULL, 'Zone 7 N11 Adelfa St. Carmen Ilaya, CDOC', NULL, NULL, '09277000684', NULL, 'uzziah_bhlue@yahoo.com', NULL, NULL, NULL, 'Block 19 L3 Oro Habitat Calaanan, Canitoan CDOC', 'Block 19 L3 Oro Habitat Calaanan, Canitoan', 'Ceasar B. Ebalang', 'Zone 7 N11 Adelfa St. Carmen Ilaya, CDOC', 'deceased', NULL, NULL, 'Estella S. Abroguena', 'Zone 7 N11 Adelfa St. Carmen Ilaya, CDOC', 'housewife', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-05-04', 252, 8, 92, 52, '08-1441611-0', '150251158837', '121030943288', '930-840161', 'Probationary', '2017-05-25 05:44:42'),
+	(392, NULL, '10002', 1, NULL, 'Charlene', 'Jomoc', 'Almuete', 'CJA', NULL, 'Cagayan de Oro City', '1995-12-03', 'Single', 1, 'Female', 'Filipino', 'Seventh Day Adventist', 'English Tagalog,Visayan', '4\'9"', '45', NULL, NULL, NULL, 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de O', NULL, NULL, '09054050785', NULL, 'cs8almuetecharlene@gmail.com', 'Rosario Almuete', '735526', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Humber V. almuete', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Mechanical Engineer', NULL, '735526', 'Rosario J. Almuete', 'Blk. 37 Lot 14 NHA Phase 2 Kauswagan, Cagayan de Oro City', 'Civil Engineer', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-04-05', 72, 1, 1, 32, '0826525316', '150504277390', NULL, '330785931', 'Regular', '2017-05-25 13:31:17'),
+	(402, NULL, NULL, 1, NULL, 'Patricio', 'R.', 'Galdo', 'PRG', NULL, 'Lagonglong', NULL, 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'Tagalog, Visayan', NULL, '50kgs', NULL, NULL, NULL, 'Balulang, Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Lagonglong Misamis Oriental', 'Lagonglong Misamis Oriental', 'Isabelo V. Gardo', 'Lagonglong Misamis Oriental', 'deceased', NULL, NULL, 'Corazon R. Galdo', 'Lagonglong Misamis Oriental', 'housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2007-11-01', 282, 8, 82, 52, '08-1623217-2', '020506435049', '104002270786', '272572003', 'Regular', '2017-05-25 13:31:17'),
+	(412, NULL, '1003', 1, NULL, 'Marco', 'Costamero', 'Arangco', 'MCA', NULL, 'Trento, Agusan del Sur', '1981-09-11', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'8"', '92', NULL, NULL, NULL, 'Phase 2, Marianville Subd., Landless, Tipanoy, Ili', NULL, NULL, '09471936635', NULL, 'marcoarangco@gmail.com', 'Juvelyn N. Arangco', '2147483647', 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Marino D. Arangco', 'Sta. Maria, Trento, Agusan del Sur', 'Senior Police Officer- Retired', 'PNP', NULL, 'Marites C. Arangco', 'Sta. Maria, Trento, Agusan del Sur', 'Housewife', NULL, NULL, 'Juvelyn N. Arangco', 'Phase 2, Marianville Subd., Landless, Tipanoy, Iligan City', 'Bookkeeper', 'MAnila Teachers\'', '2147483647', '2015-05-04', 72, 1, 1, 32, '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Regular', '2017-05-25 13:31:17'),
+	(422, NULL, NULL, 1, NULL, 'Izza Honey', 'C.', 'Manluza', 'ICM', NULL, 'Bayabason, Maramag Bukidnon', '1986-11-22', 'Married', 2, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog,', '5\'2"', '55Kgs', NULL, 'Black', NULL, 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Bayabason, Maramag Bukidnon', 'Bayabason, Maramag Bukidnon', 'Leonardo Canoneo', 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, 'Beatres B. Canoneo', 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, 'Mark Fel C. Manluza', 'Bayabason, Maramag Bukidnon', NULL, NULL, NULL, '2015-03-16', 272, 8, 112, 52, '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Regular', '2017-05-25 13:31:17'),
+	(442, NULL, NULL, 1, NULL, 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'CDM', NULL, 'Ozamis City', '1980-10-08', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Filipino, Visayan', '5\'2"', NULL, NULL, NULL, NULL, 'Purok 1 Manaka, Ozamis City', NULL, NULL, '09285314905', '09263425404', 'cheriemae.maghanoy@yahoo.com', NULL, NULL, NULL, 'Purok 1 Manaka, Ozamis City', 'Purok 1 Manaka, Ozamis City', 'Alberto O. Maghanoy', 'Purok 1 Manaka, Ozamis City', NULL, NULL, NULL, 'Corazon dela Torre Maghanoy', 'Purok 1 Manaka, Ozamis City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-03-16', 202, 8, 102, 52, '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Regular', '2017-05-25 13:31:17'),
+	(452, NULL, NULL, 1, NULL, 'Arnaldo', 'Arguilles', 'Mantillas', 'AAM', NULL, 'Butuan City', '1971-12-03', 'Married', 7, 'Male', 'Filipino', NULL, 'English, Tagalog, Visayan', '1.67meters', '95Kgs', 'A +', NULL, NULL, 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan C', NULL, NULL, '09471214313', NULL, 'arms120471@hotmail.com', NULL, NULL, NULL, 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', 'Hilario C. Mantillas', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', NULL, NULL, NULL, 'Jovita T. Arguilles', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', NULL, NULL, NULL, 'Cherrymel Mantillas', 'Blk 10 L4 Happy Homes Subd. Brgy. Ambago, Butuan City', 'Regional Manager', 'Manila Teacher\'s', '3419767', '2016-05-01', 292, 8, 112, 52, '08-1075836-1', '180514581443', '310101797702', '180-027-122', 'Regular', '2017-05-25 13:31:17'),
+	(462, NULL, '10017', 1, NULL, 'Brazzel Gay', 'J.', 'Cabaltera', 'BJC', NULL, 'San Jose, Aurora, Zamboanga del Sur', '1995-08-24', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4"', '65', NULL, NULL, NULL, 'Zone 1, Igpit, opol, Misamis Oriental', NULL, NULL, '09264542455', NULL, 'brazzelgay@gmail.com', 'John Nangkil', '09171716866', 'Zone 1 Igpit,Opol Misamis Oriental', 'Navalan, Tukan, Zamboanga del sur', 'Navalan, Tukan, Zamboanga del sur', 'Jacinto Z. Cabaltera', 'Navalan, Tukan, Zamboanga del sur', 'Farmer', NULL, NULL, 'Jennifer J. Cabaltera', 'Navalan, Tukan, Zamboanga del sur', 'Housewife', NULL, '‎09072038080', NULL, NULL, NULL, NULL, NULL, '2016-05-23', 74, 1, 1, 32, '0939595806', '010520667240', '121151311466', '472885607', 'Regular', '2017-05-25 13:31:17'),
+	(472, NULL, '110', 1, NULL, 'Renan', 'A.', 'Moreno', 'RAM', NULL, 'Cagayan de Oro City', '1985-09-06', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'8', '165 lb', NULL, NULL, NULL, 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayan', NULL, NULL, '09189042101', NULL, 'ramoreno@smsi.com.ph', 'Lovelie Flor Q. Moreno', '‎09505917343', 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', 'Renato Moreno', 'B-9 L-9 Emily Homes Subd., Macahan Carmen, Cagayan de Oro City', NULL, NULL, NULL, 'Aida A. Moreno', 'B-9 L-9 Emily Homes Subd., Macahan Carmen, Cagayan de Oro City', NULL, NULL, NULL, 'Lovelie Flor Q. Moreno', 'B17 L b Yale St., Cambridge Subd., Iponan, Cagayann de Oro City', NULL, NULL, '‎09505917343', '2011-05-16', 21, 1, 1, 32, '0816173053', '150502397216', '182000543107', '410675176', 'Regular', '2017-05-25 06:20:18'),
+	(482, NULL, NULL, 1, NULL, 'Rolando', 'T.', 'Mosqueda', 'RTM', NULL, 'Tagum Kapalong', '1982-11-26', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'Visaya, Tagalog', '5\'6"', '60Kgs', NULL, NULL, NULL, 'D.D.F Village Mandug Davao City', NULL, NULL, '09068875250', NULL, NULL, 'Mary Joy B. Benitez', '09758805685', 'Mandug, Davao City', 'D.D.F Village Mandug Davao City', 'D.D.F Village Mandug Davao City', 'Gardencio Mosquedo', 'D.D.F Village Mandug Davao City', NULL, NULL, NULL, 'Rebecca Mosquedo', 'D.D.F Village Mandug Davao City', NULL, NULL, NULL, 'Mary Joy Benitez', 'Mandug, Davao City', NULL, NULL, '09758805685', '2011-09-02', 282, 8, 112, 62, '09-2739922-1', '160505100007', '104002257284', '422-012-424', 'Project Based', '2017-05-30 01:07:46'),
+	(502, NULL, '111', 1, NULL, 'Jean', 'S.', 'Godornes', 'JSG', NULL, 'Iponan, Cagayan de Oro City', '1986-11-25', 'Married', 2, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro C', NULL, NULL, NULL, NULL, NULL, 'Randy Edward G. Godornes', '‎09263480340', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', 'Baudelio B. Salvan', NULL, NULL, NULL, NULL, 'Mamelita A. Salvan', 'Blk. 3 Lot 5 Villa Candida Bulua, Cagayan de Oro City', 'Housewife', NULL, NULL, 'Randy Edward G. Godornes', 'San Nicolas St. Zone 2 Kauswagan, Cagayan de Oro City', NULL, NULL, '‎09263480340', '2007-11-12', 18, 1, 22, 32, '0816613128', '150501858430', '182000563981', '950159075', 'Regular', '2017-05-25 07:56:03'),
+	(512, NULL, '116', 1, NULL, 'Michael', 'Dayag', 'Baculio', 'MDB', NULL, 'Cagayan de Oro City', '1987-12-04', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'8\'\'', '68 kgs.', NULL, NULL, NULL, 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', NULL, NULL, '09268775535', NULL, 'mikebaculio@gmail.com', 'Manilyn Jenn Baculio', NULL, 'Blck 29,lot 24 Phase 2B Calaanan Canitoan', 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', 'Obdulio Baculio', 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', NULL, NULL, NULL, 'Reynilda Baculio', 'Villarin St. Zone 8, Carmen, Cagayan de Oro City', NULL, NULL, NULL, 'Manilyn Jenn E. Baculio', 'Blck 29,lot 24 Phase 2B Calaanan Canitoan', NULL, NULL, NULL, '2015-06-01', 302, 1, 1, 32, '08-1605491-0', '010505744239', '109002186565', '256027612', 'Regular', '2017-05-25 13:31:17'),
+	(542, NULL, '104', 1, NULL, 'Robert', 'Batonghinog', 'Bersano', 'RBB', NULL, 'Camp Phillips, Manolo Fortich, Bukidnon', '1980-12-04', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', NULL, NULL, NULL, NULL, NULL, 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. O', NULL, NULL, NULL, NULL, 'nicejames09@yahoo.com', 'Melanie M. Bersano', '09173265511', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Eleuterio Bersano', '373 M - St. Camp Philips, Bukidnon', 'Land Prep. Operator', 'DMPI', NULL, 'Terencia Bersano', '373 M - St. Camp Philips, Bukidnon', 'Housewife', NULL, NULL, 'Melanie M. Bersano', 'Blk.1 Lot 17 Green Meadows Subd., Barra Opol Mi. Or.', 'Branch Manager', 'Manila Teachers\'', NULL, '2005-01-03', 20, 1, 1, 32, '0815082802', '020503777364', '104002242398', '937694691', 'Regular', '2017-05-25 13:31:17'),
+	(552, NULL, '1006', 1, NULL, 'Pete Emmanuell', 'L.', 'Balagosa', 'PLB', NULL, 'Cagayan de Oro City', '1988-02-04', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'6"', '82', NULL, NULL, NULL, 'F. Dabatian St., Carmen, Cagayan de Oro City', NULL, NULL, '09068591013', NULL, 'petebals5@gmail.com', 'Dativa L. Balagosa', '09068591013', 'F. Dabatian St., Carmen, CDO', 'F. Dabatian St., Carmen, Cagayan de Oro City', 'F. Dabatian St., Carmen, Cagayan de Oro City', 'Pepe Balagosa', 'Lila, Lomanoy Bohol', NULL, NULL, NULL, 'Dativa L. Balagosa', 'F. Dabatian St., Carmen, CDO', NULL, NULL, '09258195875', NULL, NULL, NULL, NULL, NULL, '2016-03-16', 302, 1, 1, 32, '08-1801748-9', '150503883890', '121134979348', '330784605', 'Regular', '2017-05-25 13:31:17'),
+	(562, NULL, '117', 1, NULL, 'Khristian Darylle Joe', 'Bona', 'Battad', 'DBB', NULL, 'Quezon City', '1990-12-09', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '112 Old Samson Rd., Apolonio Samson, Quezon City', NULL, NULL, '09164641392', NULL, 'darylle.battad@gmail.com', 'Danillo Battad', '3622074', '112 Old Samson Rd., Apolonio Samson, Quezon City', '112 Old Samson Rd., Apolonio Samson, Quezon City', '112 Old Samson Rd., Apolonio Samson, Quezon City', 'Danillo Battad', '112 Old Samson Rd., Apolonio Samson, Quezon City', NULL, NULL, '3622074', 'Josie B. Battad', '112 Old Samson Rd., Apolonio Samson, Quezon City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-08-10', 76, 1, 1, 32, '3442813205', '020262108512', '121131509835', '468727860', 'Regular', '2017-05-25 13:31:17'),
+	(582, NULL, NULL, 1, NULL, 'John', 'M.', 'Mingo', NULL, NULL, 'Lumbia, Cagayan de Oro', '1989-06-06', 'Single', 1, 'Male', 'Filipino', 'Born Again Christian', 'English, Filipino', NULL, NULL, NULL, NULL, NULL, 'Z-3, Lower Palalan,Lumbia,  Cagayan de Oro City', NULL, NULL, '09258235437', NULL, 'c3.jhonmingo@gmail.com', 'Bebito A. Mingo', '09056955606', 'Z-3, Lower Palalan,Lumbia,  Cagayan de Oro City', 'Z-3, Lower Palalan,Lumbia,  Cagayan de Oro City', 'Z-3, Lower Palalan,Lumbia,  Cagayan de Oro City', 'Bebito A. Mingo', 'Lumbia,  Cagayan de Oro City', NULL, NULL, NULL, 'Teresa M. Mingo', 'Lumbia,  Cagayan de Oro City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-03-01', 182, 8, 112, 62, '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Regular', '2017-05-29 02:26:11'),
+	(592, NULL, NULL, 1, NULL, 'Gina', 'Aboyme', 'Micoy', 'GAM', NULL, 'Davao City', '1979-06-13', 'Married', 8, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Brgy. 76-A Bucana, matina, Davao City', NULL, NULL, '09258242635', NULL, 'gina.micoy@cthree.com.ph', 'Arman T. Micoy', '09993824018', 'Brgy. 76-A Bucana, matina, Davao City', 'Brgy. 76-A Bucana, matina, Davao City', 'Brgy. 76-A Bucana, matina, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arman T. Micoy', 'Brgy. 76-A Bucana, matina, Davao City', NULL, NULL, '09993824018', '2015-09-01', 312, 8, 102, 62, '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Regular', '2017-05-29 02:23:27'),
+	(602, NULL, NULL, 1, NULL, 'Lowie', 'G.', 'Ulo', NULL, NULL, NULL, '1981-01-21', 'Married', 2, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Catalunan Grande Davao City', NULL, NULL, '09305193188', NULL, NULL, NULL, NULL, NULL, 'Catalunan Grande Davao City', 'Catalunan Grande Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Angelie L. Ulo', 'Catalunan Grande Davao City', NULL, NULL, '09461927890', '2014-04-17', 322, 8, 112, 62, '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Regular', '2017-05-30 01:14:08'),
+	(612, NULL, NULL, 5, NULL, 'Mario', 'Quiam', 'Tolosa', 'MQT', NULL, 'San Narciso Quezon', '1977-10-26', 'Married', 9, 'Male', 'Filipino', 'Christian', NULL, '5\'6"', '48Kg', NULL, NULL, NULL, '#49 Brgy. Maravilla Magdalena, Laguna', NULL, NULL, '09478166305', NULL, NULL, 'Jelanie R. Tolosa', '09362132905', '#49 Brgy. Maravilla Magdalena, Laguna', '#49 Brgy. Maravilla Magdalena, Laguna', '#49 Brgy. Maravilla Magdalena, Laguna', 'Jose Tolosa', '#49 Brgy. Maravilla Magdalena, Laguna', 'Farmer', NULL, NULL, 'Flora Q. Tolosa', '#49 Brgy. Maravilla Magdalena, Laguna', NULL, NULL, NULL, 'Jelanie R. Tolosa', '#49 Brgy. Maravilla Magdalena, Laguna', 'Housewife', NULL, '09362132905', '2016-03-01', 332, 8, 112, 52, '33-2666182-9', '082011907160', NULL, NULL, 'Regular', '2017-05-27 06:39:05'),
+	(622, NULL, NULL, 4, NULL, 'Julius', 'B.', 'Lascano', 'JBL', NULL, 'Manila', '1972-07-14', 'Separated', 1, 'Male', 'Filipino', 'Roman Catholic', 'Filipino, English', '5\'5"', '160lbs', NULL, NULL, NULL, '93 L.Lupa St. Maypajo Caloocan City', NULL, NULL, '09166823210', NULL, 'julius.lascano714@gmail.com', NULL, NULL, NULL, '93 L.Lupa St. Maypajo Caloocan City', '93 L.Lupa St. Maypajo Caloocan City', 'Cesar L. Lascano', '93 L.Lupa St. Maypajo Caloocan City', 'Deceased', NULL, NULL, 'Ofelia B. Bismonte', '93 L.Lupa St. Maypajo Caloocan City', 'Businesswoman', NULL, '', NULL, NULL, NULL, NULL, NULL, '2017-03-01', 342, 8, 112, 52, '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Probationary', '2017-05-25 13:31:17'),
+	(632, NULL, NULL, 4, NULL, 'Romnick June', 'A.', 'Elcana', 'RAE', NULL, 'Mati City', '1989-06-15', 'Single', 1, 'Male', 'Filipino', 'Seventh Day Adventist', NULL, '5\'5"', '73Kgs', NULL, NULL, NULL, 'San Ignacio, Manay Davao City', NULL, NULL, '09487553880', NULL, 'rjelcana@gmail.com', 'Anselmo Elcana', '09056500379', 'San Ignacio, Manay Davao City', 'San Ignacio, Manay Davao City', 'San Ignacio, Manay Davao City', 'Anselmo L. Elcana', 'San Ignacio, Manay Davao City', NULL, NULL, '09056500379', 'Jocelyn Elcana', 'San Ignacio, Manay Davao City', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '2017-01-16', 192, 8, 112, 62, '09-2857476-0', '160502796558', '121194643961', NULL, 'Probationary', '2017-05-29 02:18:06'),
+	(642, NULL, '10019', 1, NULL, 'Diane Joy', 'Yu', 'Mapano', 'DYM', NULL, 'Upper Pulacan, Labangan, Zamboanga del Sur', '1991-11-11', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'3', '68 kl.', NULL, NULL, NULL, '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboa', NULL, NULL, '09076367117', NULL, 'diane_111109@yahoo.com', 'Jocelyn Y. Mapanao', NULL, '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', 'Mario R. Mapanao', '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', NULL, NULL, NULL, 'Jocelyn Y. Mapanao', '408 Prk. Hillside, Upper Pulacan, Labangan, Zamboanga del Sur', NULL, NULL, '‎09214188155', NULL, NULL, NULL, NULL, NULL, '2013-07-18', 352, 1, 7, 32, '1010277291', '140251731043', '121007858757', '452117419', 'Regular', '2017-05-25 05:38:02'),
+	(652, NULL, '10014', 1, NULL, 'Cresar John', 'Reyes', 'Arce', 'CRA', NULL, 'San Isidro, Davao Oriental', '1978-10-23', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4', '60 kg', NULL, NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', NULL, NULL, '09464154507', NULL, 'cjarce_power@yahoo.com', 'Arsenia Arce', NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', 'Poblacion, San Isidro, Davao Oriental', NULL, NULL, NULL, NULL, NULL, 'Arsenia Arce', 'Batobato,San Isidro Davao Oriental', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-02-01', 112, 1, 7, 32, '0922273135', '162003641023', '190000056276', '947987046', 'Regular', '2017-05-25 13:31:17'),
+	(662, NULL, '10013', 1, NULL, 'Lorman', 'S.', 'Saladaga', 'LSS', NULL, 'Tapian, San Miguel, Zamboanga del Sur', '1989-10-17', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'6', '74kls.', NULL, NULL, NULL, 'Bulawan San Miguel, Zamboanga del Sur', NULL, NULL, '09107465042', NULL, 'lorm89@gmail.com', 'Lestina Saladaga', '‎09207193544', 'Bulawan San Miguel, Zamboanga del Sur', 'Bulawan San Miguel, Zamboanga del Sur', 'Bulawan San Miguel, Zamboanga del Sur', 'Tomasito Saladaga', 'Bulawan San Miguel, Zamboanga del Sur', 'Farmer', NULL, NULL, 'Lestina Saladaga', 'Bulawan San Miguel, Zamboanga del Sur', 'Housewife', NULL, '‎09207193544', NULL, NULL, NULL, NULL, NULL, '2013-06-01', 24, 1, 7, 32, '1009497752', '140251248725', '914301364780', '816667', 'Regular', '2017-05-25 06:54:45'),
+	(672, NULL, NULL, 1, NULL, 'Geneth', 'S.', 'Jadulan', 'GSJ', NULL, 'Davao', '1991-03-11', 'Married', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'2"', '65', 'O +', NULL, NULL, '039 Gentiles Subd., Brgy. New Visayas, Panabo City', NULL, NULL, '09101662549', NULL, 'genethsayson@gmail.com', 'Louie A. Jadulan', NULL, NULL, '039 Gentiles Subd., Brgy. New Visayas, Panabo City', '039 Gentiles Subd., Brgy. New Visayas, Panabo City', 'Genaro B. Sayson', '039 Gentiles Subd., Brgy. New Visayas, Panabo City', NULL, NULL, '09072094276', NULL, NULL, NULL, NULL, NULL, 'Louie A. Jadulan', 'Jose Rizal St. Prk. 5 Pob. Tulunan, North Cotabato', NULL, NULL, NULL, '2015-07-20', 24, 1, 7, 32, '0935125869', '160505344984', '121070911178', '429361074', 'Regular', '2017-05-25 13:31:17'),
+	(682, NULL, NULL, 1, NULL, 'Nancy', 'Montebon', 'Wong', 'NMW', NULL, 'Davao City', '1980-08-07', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd', NULL, NULL, '09177739208', NULL, 'nmw0807@gmail.com', NULL, NULL, NULL, 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd., Matina Crossing, Davao City', 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd., Matina Crossing, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kadil Sinolinding Jr.', 'Blk. 1 Lot 35 & 36 Santan St., Villa Josefina Subd., Matina Crossing, Davao City', 'Doctor', NULL, '2147483647', '2016-07-05', 362, 9, 42, 42, '0919148684', '160501640325', '101000063572', '940042814', 'Regular', '2017-05-25 13:31:17'),
+	(692, NULL, NULL, 1, NULL, 'Jeffrey', 'Moneba', 'Antoque', 'JMA', NULL, 'Digos City', '1987-04-24', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'8"', '76Kgs', NULL, NULL, NULL, 'Estrada 2nd, Digos City', NULL, NULL, '09308334162', NULL, 'jessa.antoque@yahoo.com', NULL, NULL, NULL, 'Estrada 2nd, Digos City', 'Estrada 2nd, Digos City', 'Danillo Antoque', 'Estrada 2nd, Digos City', 'Honda Authorize Mechanic', NULL, NULL, 'Maria Theressa M. Antoque', 'Estrada 2nd, Digos City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-12-02', 68, 3, 172, 72, '0937380136', '160255309649', '121111591247', '409174979', 'Regular', '2017-05-25 13:31:17'),
+	(702, NULL, NULL, 1, NULL, 'Salome', 'M.', 'Bodiongan', 'SMB', NULL, 'Davao City', '1989-01-10', 'Single', 1, 'Female', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sto. Nino Porras St. Davao City', NULL, NULL, '09195186051', NULL, 'sambodiongan@yahoo.com', NULL, NULL, NULL, 'Sto. Nino Porras St. Davao City', 'Sto. Nino Porras St. Davao City', 'Silverio E. Bodiongan', 'Sto. Nino Porras St. Davao City', 'deceased', NULL, NULL, 'Evangeline M. Bodiongan', 'Sto. Nino Porras St. Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-04-22', 33, 3, 172, 82, NULL, NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(712, NULL, NULL, 4, NULL, 'Ryan Evan', 'P.', 'Almacin', 'RPA', NULL, 'Davao City', '1982-03-14', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, NULL, '09474814964', NULL, NULL, NULL, NULL, NULL, 'ARC Bartoline Compound, Bago Aplaya, Davao City', 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, '', NULL, NULL, NULL, 'Dalinda P. Almacin', 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, NULL, NULL, 'Charito D. Almacin', 'ARC Bartoline Compound, Bago Aplaya, Davao City', NULL, NULL, NULL, '2017-01-16', 39, 3, 172, 82, '09-2732070-8', NULL, NULL, '432-197-977', 'Probationary', '2017-05-25 13:31:17'),
+	(722, NULL, NULL, 1, NULL, 'Raquel', 'A.', 'Baldecantos', 'RAB', NULL, 'Lantian Labangan, Zamboanga del Sur', '1993-02-02', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Broca St. San Jose District, Pagadian City', NULL, NULL, '09076708600', NULL, 'baldecantosraquel1993@gmail.com', NULL, NULL, NULL, 'Broca St. San Jose District, Pagadian City', 'Broca St. San Jose District, Pagadian City', NULL, NULL, NULL, NULL, NULL, 'Zenaida A. Baldecantos', 'Broca St. San Jose District, Pagadian City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-07-15', 402, 3, 162, 102, '3458063803', '140502131016', '121167253093', NULL, 'Regular', '2017-05-25 13:31:17'),
+	(732, NULL, NULL, 1, NULL, 'Gwyne', 'G.', 'Delos Reyes', 'GDG', NULL, 'Davao City', '1979-10-08', 'Married', 2, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'2', '50kg.', NULL, NULL, NULL, 'Blk. 2 Lot 16 silver St. Mineral Village, Bajada, ', NULL, NULL, '09999915949', NULL, 'gwyndelos@gmail.com', 'Fidencia Gabaton', NULL, NULL, 'Blk. 2 Lot 16 silver St. Mineral Village, Bajada, Davao City', 'Blk. 2 Lot 16 silver St. Mineral Village, Bajada, Davao City', NULL, NULL, NULL, NULL, NULL, 'Fidencia N. Gabaton', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-04-30', 372, 3, 162, 82, '0922110900', '160501436590', '121029344671', '931745676', 'Regular', '2017-05-25 13:31:17'),
+	(742, NULL, NULL, 1, NULL, 'Miejor', 'T.', 'Dela Cruz', 'MTD', NULL, 'Zamboanga City', '1983-09-24', 'Married', 8, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'7', '75kg.', NULL, NULL, NULL, 'Balulang, Cagayan de Oro City', NULL, NULL, '09427085206', NULL, 'miejor.delacruz@yahoo.com', NULL, NULL, NULL, 'Balulang, Cagayan de Oro City', 'Balulang, Cagayan de Oro City', 'Charlie M. Dela Cruz', NULL, NULL, NULL, NULL, 'Susan T. Bontia', 'Balulang, Cagayan de Oro City', 'Housewife', NULL, NULL, 'Jezyl L. Dela Cruz', 'Balulang, Cagayan de Oro City', NULL, NULL, NULL, '2016-06-20', 63, 3, 3, 82, NULL, '150502394209', NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(752, NULL, NULL, 4, NULL, 'Rudini', 'G.', 'Galdo', 'RGG', NULL, 'Bajada Davao City', '1981-08-22', 'Single', 1, 'Male', 'Filipino', 'Roman catholic', NULL, '5\'11"', NULL, NULL, NULL, NULL, '194 Paseo del Carmen St.Monte Maria  Village,Catal', NULL, NULL, '09323007363', NULL, NULL, NULL, NULL, NULL, '194 Paseo del Carmen St.Monte Maria  Village,Catalunan Grande,Davao City', '194 Paseo del Carmen St.Monte Maria  Village,Catalunan Grande,Davao City', 'Rodulfo Galdo', 'No.25 Reldo Village Puan Davao City', NULL, NULL, NULL, 'Susana Galdo', 'No.25 Reldo Village Puan Davao City', NULL, NULL, NULL, 'Katherine Anne Carmella S. Galdo', '194 Paseo del Carmen St.Monte Maria  Village,Catalunan Grande,Davao City', NULL, NULL, NULL, '2017-02-03', 402, 3, 3, 82, NULL, NULL, NULL, NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(762, NULL, NULL, 4, NULL, 'Allyn', 'C.', 'Angustia', 'ACA', NULL, 'Davao City', '1994-11-27', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'5"', '50kls.', NULL, NULL, NULL, '172 Gumamela St., Kasilak Bucana, Davao City', NULL, NULL, '09300670456', NULL, NULL, NULL, NULL, NULL, '172 Gumamela St., Kasilak Bucana, Davao City', '172 Gumamela St., Kasilak Bucana, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-17', 65, 3, 3, 82, '0939076231', '162509528500', NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(772, NULL, NULL, 1, NULL, 'Reil Hazzin', 'Batilona', 'Bicoy', 'RBB', NULL, NULL, '1992-11-11', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'5"', '50kg.', NULL, NULL, NULL, 'Lower Dicayas, Dipolog City', NULL, NULL, '09468516163', NULL, 'bicoyreilhazzin@gmail.com', NULL, NULL, NULL, 'Lower Dicayas, Dipolog City', 'Lower Dicayas, Dipolog City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-05-14', 412, 3, 3, 102, '1011114502', '120513230309', '121142125817', NULL, 'Regular', '2017-05-25 13:31:17'),
+	(782, NULL, NULL, 1, NULL, 'Marlon', 'R.', 'Gal', 'MRG', NULL, 'Makilala, Cotabato', '1985-03-29', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Makilala, North Cotabato', NULL, NULL, '09468912462', NULL, NULL, NULL, NULL, NULL, 'Makilala, North Cotabato', 'Makilala, North Cotabato', 'Marciano Gal', 'Poblacion, Makilala, Cotabato', 'Tailor', NULL, NULL, 'Leonida Gal', 'Poblacion, Makilala, Cotabato', 'Dress Maker', NULL, NULL, 'Mary Agnes Gallano', 'Makilala, North Cotabato', 'Housewife', NULL, NULL, '2016-09-15', 48, 3, 212, 82, NULL, NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(792, NULL, NULL, 4, NULL, 'Rudini', 'G.', 'Galdo', NULL, NULL, NULL, '1981-08-22', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '194 Paseo del Carmen St., Monte Maria Village, Cat', NULL, NULL, '09323007363', NULL, 'galdo.rudini@yahoo.com', NULL, NULL, NULL, '194 Paseo del Carmen St., Monte Maria Village, Cataluna Grande, Davao City', '194 Paseo del Carmen St., Monte Maria Village, Cataluna Grande, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-03', 402, 3, 3, 82, NULL, NULL, NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(802, NULL, NULL, 4, NULL, 'Arturo', 'G.', 'Lopez Jr.', 'AGL', NULL, 'Digos City', '1984-06-26', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Christian Village, Digos City', NULL, NULL, '09481371494', NULL, 'kristine_del@yahoo.com', NULL, NULL, NULL, 'Christian Village, Digos City', 'Christian Village, Digos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kristine Ann D. Lopez', 'Christian Village, Digos City', 'Teacher', NULL, NULL, '2017-02-21', 422, 3, 172, 82, '0929775063', '160252612308', '121180477483', '425186753', 'Probationary', '2017-05-25 13:31:17'),
+	(812, NULL, NULL, 4, NULL, 'Jose Miguel', 'P.', 'Jonelas', 'JPJ', NULL, NULL, '1994-04-09', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '321 Molave St., DDF Village Mndug, Davao City', NULL, NULL, '09124813756', NULL, 'mjonelas@gmail.com', NULL, NULL, NULL, '321 Molave St., DDF Village Mndug, Davao City', '321 Molave St., DDF Village Mndug, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-01-05', 382, 3, 162, 82, '0941836113', '162506888417', '917004406258', NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(822, NULL, NULL, 1, NULL, 'Jessa', 'Datulayta', 'Bayking', NULL, NULL, NULL, '1993-12-07', 'Single', 1, 'Female', 'Filipino', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-01-04', 59, 11, 182, 122, '09-35775620', '160256016613', '121177270191', '492-048-158', 'Regular', '2017-05-25 13:31:17'),
+	(832, NULL, NULL, 1, NULL, 'Ralph Nicko', 'Alcober', 'Olam', NULL, NULL, 'Zamboamga , Sibugay', '1991-02-24', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'5"', '59Kgs', NULL, NULL, NULL, 'Taguanao, Indahag CDOC', NULL, NULL, '09161641159', NULL, NULL, NULL, NULL, NULL, 'Taguanao, Indahag CDOC', 'Taguanao, Indahag CDOC', 'Robinson Olam Sr.', 'Nazareth Kabaslan Zamboanga Sibugay', NULL, NULL, NULL, 'Bernadeta Olam', 'Nazareth Kabaslan Zamboanga Sibugay', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-09-11', 432, 11, 182, 122, '08-1977086-4', '150503440239', '916215856747', '492-049-415', 'Regular', '2017-05-25 13:31:17'),
+	(842, NULL, NULL, 1, NULL, 'Armando', 'L.', 'Bagac', NULL, NULL, NULL, '1993-01-14', 'Single', 1, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-10-01', 562, 11, 202, 122, '08-23845222', '150503550425', '121138563124', '492-048-869', 'Regular', '2017-05-25 13:31:17'),
+	(852, NULL, NULL, 4, NULL, 'Harold', 'Domo', 'Aparicio', NULL, NULL, 'Manolo Fortich, Bukidnon', '1989-03-21', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', NULL, NULL, '09177096134', NULL, 'aparicio.haroldd@gmail.com', NULL, NULL, NULL, 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', 'Engr. Norberto L. Aparicio', 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', '', NULL, NULL, 'Engr, Milagros S. Domo', 'Blk25 L6 Phase 2 Villa Trinitas Subd. Bugo, CDOC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-12-04', 58, 11, 4, 122, NULL, '150252810651', NULL, NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(862, NULL, NULL, 1, NULL, 'John Gleen', 'Diaz', 'Panebio', NULL, NULL, 'Pagadian City', '1987-02-25', 'Married', 2, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Dist. 01, Canitoan CDOC', NULL, NULL, '09258116774', NULL, NULL, NULL, NULL, NULL, 'Dist. 01, Canitoan CDOC', 'Dist. 01, Canitoan CDOC', 'Mario D. Panebio', 'Dist. 01, Canitoan CDOC', NULL, NULL, NULL, 'Edna D. Panebio', 'Dist. 01, Canitoan CDOC', NULL, NULL, NULL, 'Zeta Ranile Panebio', 'Dist. 01, Canitoan CDOC', NULL, NULL, NULL, '2014-03-10', 57, 11, 4, 122, '08-1461106-7', '030501829486', '121004908041', '288-518-234', 'Regular', '2017-05-25 13:31:17'),
+	(872, NULL, NULL, 1, NULL, 'Arnulfo', 'V.', 'Layco', 'AVL', NULL, 'Manila', '1980-05-30', 'Married', 8, 'Male', 'Filipino', 'Christian Catholic', 'English, Filipino', '5\'5"', '120lbs', NULL, NULL, NULL, 'Blk 8 L8 New Washington  Village Maa, Davao City', NULL, NULL, '09177220531', '09988660531', 'arnie.layco@norminring.com', 'Ma. Felicita a. Layco', NULL, NULL, 'Blk 8 L8 New Washington  Village Maa, Davao City', 'Blk 8 L8 New Washington  Village Maa, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ma. Felicita A. Layco', 'Blk 8 L8 New Washington  Village Maa, Davao City', NULL, NULL, '09177150504', '2007-03-01', 452, 3, 162, 82, '33-5724371', '020500083639', '1040-0040-57', '213-811-070', 'Regular', '2017-05-25 13:31:17'),
+	(882, NULL, NULL, 4, NULL, 'Stephanie', 'A.', 'Somoza', 'SAS', NULL, 'Davao City', '1995-12-12', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Visayan, Tagalog', '5\'5"', NULL, NULL, NULL, NULL, 'Sales St. Magsaysay Avenue, Davao City', NULL, NULL, '09496971557', '09335626715', 'enahpetsmae12@gmail.com', NULL, NULL, NULL, 'Sales St. Magsaysay Avenue, Davao City', 'Sales St. Magsaysay Avenue, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-20', 65, 3, 3, 82, NULL, NULL, NULL, NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(892, NULL, NULL, 1, NULL, 'Jaymar', 'R.', 'Coresis', 'JRC', NULL, NULL, '1986-07-17', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'4"', NULL, NULL, NULL, NULL, '76-A Purok 5 Bucana Trading, Q. Boulevard, Davao C', NULL, NULL, '09225360187', NULL, 'jaymarcoresis@gmail.com', NULL, NULL, NULL, '76-A Purok 5 Bucana Trading, Q. Boulevard, Davao City', '76-A Purok 5 Bucana Trading, Q. Boulevard, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-01', 792, 3, 172, 82, '09-2984886-4', '060503261070', NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(902, NULL, NULL, 1, NULL, 'Mark Anthony', 'M.', 'Montera', 'MMM', NULL, 'Davao Oriental', '1981-03-13', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', NULL, NULL, '09422674185', NULL, NULL, NULL, NULL, NULL, 'Poblacion, San Isidro, Davao Oriental', 'Poblacion, San Isidro, Davao Oriental', 'Moises O. Montera', NULL, NULL, NULL, NULL, 'Roberta M. Montera', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-07-12', 462, 3, 212, 82, '0920192988', '162003621529', NULL, '924469729', 'Regular', '2017-05-25 13:31:17'),
+	(912, NULL, NULL, 4, NULL, 'Rizza Mae', 'C.', 'Lapinid', 'RCL', NULL, 'Kidapawan', '1991-09-13', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Upper Kalaisan,Kidapawan City', NULL, NULL, '09104739964', NULL, NULL, NULL, NULL, NULL, 'Upper Kalaisan,Kidapawan City', 'Upper Kalaisan,Kidapawan City', 'Edgardo Lapinid', 'Upper Kalaisan,Kidapawan City', NULL, NULL, NULL, 'Elena Lapinid', 'Upper Kalaisan,Kidapawan City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-02-20', 65, 3, 3, 82, '0942047011', '170253314020', '4866783', '485272573', 'Probationary', '2017-05-25 13:31:17'),
+	(922, NULL, NULL, 1, NULL, 'Pamela Ivy', 'A.', 'Improgo', 'PAI', NULL, 'Manolo Fortich', '1979-02-20', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Magallones Compound, Manolo Fortich, Bukidnon', NULL, NULL, '09173176151', NULL, 'pam.improgo@ktmdavao.com', NULL, NULL, NULL, 'Magallones Compound, Manolo Fortich, Bukidnon', 'Magallones Compound, Manolo Fortich, Bukidnon', NULL, NULL, NULL, NULL, NULL, 'Lourdes A. Improgo', 'Magallones Compound, Manolo Fortich, Bukidnon', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2005-02-01', 472, 3, 162, 72, NULL, NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(932, NULL, NULL, 1, NULL, 'Jenner Nino', 'B.', 'Moneba', 'JBM', NULL, 'Davao City', '1983-01-15', 'Married', NULL, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao', NULL, NULL, '09773452163', NULL, 'jennermonebaducaiktm@gmail.com', NULL, NULL, NULL, 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao City', 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Mericrist C. Moneba', 'Blk. 21 Lot 12 Samantha Homes, Bago Gallera, Davao City', NULL, NULL, '2147483647', '2013-09-22', 482, 3, 5, 82, '0924271258', '160501354306', NULL, '928767649', 'Regular', '2017-05-25 13:31:17'),
+	(942, NULL, NULL, 1, NULL, 'Joesus', 'L.', 'Rabadan', 'JLR', NULL, 'Zone 3 Kauswagan, Cdo', NULL, 'Single', 3, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Taguanao,Indahag Cagayan de oro City', NULL, NULL, '09153761466', NULL, NULL, 'Alfie M. Antillas', NULL, NULL, 'Taguanao,Indahag Cagayan de oro City', 'Taguanao,Indahag Cagayan de oro City', 'Ismael Rabadan', 'Taguanao,Indahag Cagayan de oro City', NULL, NULL, NULL, 'Evelyn Rabadan', 'Taguanao,Indahag Cagayan de oro City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-06-01', 39, 3, 212, 72, NULL, NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(952, NULL, NULL, 1, NULL, 'Michael Angelou', 'H.', 'Ponte', 'MHP', NULL, 'San Isidro, Davao Oriental', '1990-04-06', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'65"', '63lbs', NULL, NULL, NULL, 'Blk 5 Lot 3 Cory Village, Dacudao Ave. Davao City', NULL, NULL, '09484374461', NULL, 'michaelangelouponte@yahoo.com', NULL, NULL, NULL, 'Blk 5 Lot 3 Cory Village, Dacudao Ave. Davao City', 'Blk 5 Lot 3 Cory Village, Dacudao Ave. Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-01-01', 412, 3, 3, 72, NULL, '160504101026', NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(962, NULL, NULL, 1, NULL, 'Leo Alfie', 'A.', 'Quipanes', 'LAQ', NULL, 'Tagbilaran City', '1985-04-21', 'Married', 3, 'Male', 'Filipino', 'Roman Catholic', 'English, Visayan', '5\'5"', '64Kgs', NULL, NULL, NULL, 'Santol St. Manggahan Toril Davao City', NULL, NULL, '09466432634', NULL, 'gleoalfie@yahoo.com', NULL, NULL, NULL, 'Santol St. Manggahan Toril Davao City', 'Santol St. Manggahan Toril Davao City', 'Leonardo Quipanes', 'Santol St. Manggahan Toril Davao City', NULL, NULL, NULL, 'Maria Salome A. Quipanes', 'Santol St. Manggahan Toril Davao City', NULL, NULL, NULL, 'Emily R. Quipanes', 'Santol St. Manggahan Toril Davao City', NULL, NULL, NULL, '2015-05-11', 68, 3, 172, 92, '06-2515281-2', '120508612104', '913030000320', '289493450000', 'Regular', '2017-05-25 13:31:17'),
+	(972, NULL, NULL, 1, NULL, 'Norben Jay', 'Leron', 'Ruiz', 'NLR', NULL, 'Digos City', '1983-03-02', 'Married', 9, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'0"', '50Kgs', NULL, NULL, NULL, '1944 Purok Talisay Roxas Ext. Digos City', NULL, NULL, '09302220566', NULL, 'norbenjayrui78@gmail.com', 'Emelyn Ruiz', NULL, NULL, '1944 Purok Talisay Roxas Ext. Digos City', '1944 Purok Talisay Roxas Ext. Digos City', 'Ruben Ruiz', '1944 Purok Talisay Roxas Ext. Digos City', NULL, NULL, NULL, 'Norma Ruiz', '1944 Purok Talisay Roxas Ext. Digos City', NULL, NULL, NULL, 'Emelyn Ruiz', '1944 Purok Talisay Roxas Ext. Digos City', NULL, NULL, NULL, '2014-07-01', 492, 3, 172, 82, '11-0370996-4', '160504245400', '121135281185', '297110378000', 'Regular', '2017-05-25 13:31:17'),
+	(992, NULL, NULL, 1, NULL, 'Danilo', 'T.', 'Palo Jr.', 'DTP', NULL, 'Kidapawan City', '1981-11-11', 'Married', NULL, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Lopez St., Kidapawan City', NULL, NULL, '09998501799', NULL, NULL, NULL, NULL, NULL, 'Lopez St., Kidapawan City', 'Lopez St., Kidapawan City', 'Danilo Palo Sr.', 'Kidapawan City', 'Carpenter', NULL, NULL, 'Helen T. Palo', 'Kidapawan City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-02-01', 68, 3, 212, 112, '0923935935', '160501224674', '188000522089', '929085069', 'Regular', '2017-05-25 13:31:17'),
+	(1002, NULL, NULL, 1, NULL, 'Nelson', 'S.', 'Tacoloy', 'NST', NULL, 'San Jose Surigao del Sure', '1982-04-30', 'Married', 7, 'Male', 'Filipino', 'Alliance', 'English,Tagalog,Visayan', '5\'6"', '59', NULL, NULL, NULL, 'Block 7,Lot3,Don Lorenzo Homes, Dumoy Toril Davao ', NULL, NULL, '09075584160', NULL, NULL, 'Jocy Ann LLabore', NULL, NULL, 'Block 7,Lot3,Don Lorenzo Homes, Dumoy Toril Davao City', 'Block 7,Lot3,Don Lorenzo Homes, Dumoy Toril Davao City', 'Anecito Tacoloy', 'San Jose Surigao City', NULL, NULL, NULL, 'Antonita Tacoloy', 'San Jose Surigao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-10-26', 502, 3, 212, 82, '0927359096', NULL, '188001482849', '412120768', 'Regular', '2017-05-25 13:31:17'),
+	(1012, NULL, NULL, 1, NULL, 'Roland', 'C.', 'Sarce', 'RCS', NULL, 'Laak, ComVal Province', '1982-04-22', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. 6A, Bago Gallera, Talomo District, Davao City', NULL, NULL, '09212094647', NULL, NULL, NULL, NULL, NULL, 'Prk. 6A, Bago Gallera, Talomo District, Davao City', 'Prk. 6A, Bago Gallera, Talomo District, Davao City', 'Romy Sarce', NULL, NULL, NULL, NULL, 'Trinidad Salem', 'Posalina III, Dumoy Toril, Davao City', 'Business Woman', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-10-26', 502, 3, 172, 82, '0922452639', NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(1022, NULL, NULL, 4, NULL, 'Jasper', 'B.', 'Saludes', 'JBS', NULL, 'Davao City', '1996-01-21', 'Single', 1, 'Male', 'Filipino', 'Iglesia Ni Cristo', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. 8 Upper Catitipan Buhangin, Davao City', NULL, NULL, '09103841058', NULL, 'jaspersaludes@gmail.com', NULL, NULL, NULL, 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Lordioso Saludes', 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Electronic Technician', NULL, NULL, 'Gina Saludes', 'Prk. 8 Upper Catitipan Buhangin, Davao City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-11-02', 67, 3, 172, 82, '09-3982708-2', NULL, '1211-5491-23', NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(1032, NULL, NULL, 1, NULL, 'Ivan', 'Orbeta', 'Paredes', 'IOP', NULL, 'Davao City', '1978-09-14', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'7"', NULL, NULL, NULL, NULL, '#27 San Roque St., Toril, Davao City', NULL, NULL, '09088678993', NULL, 'ivan.paredes@norminring.com', NULL, NULL, NULL, '#27 San Roque St., Toril, Davao City', '#27 San Roque St., Toril, Davao City', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2006-05-02', 472, 3, 162, 102, '09-2319395-5', '160501550229', '915043561517', '922203402', 'Regular', '2017-05-25 13:31:17'),
+	(1042, NULL, NULL, 1, NULL, 'Girlie', 'G.', 'Tolosa', 'GGT', NULL, NULL, '1983-04-02', 'Single', NULL, 'Female', 'Filipino', 'Protestant', 'English,Tagalog, Chavacano', NULL, NULL, NULL, NULL, NULL, 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', NULL, NULL, '09177038681', NULL, 'tolosagirlie02@gmail.com', NULL, NULL, NULL, 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Ramon Tolosa', 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Company Driver', NULL, NULL, 'Melodina Tolosa', 'Tumaga Road, Luyahan, Pasonanca Zamboanga City', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2013-12-07', 402, 3, 162, 92, NULL, NULL, NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(1052, NULL, NULL, 1, NULL, 'Kirbay Jay', 'A.', 'Ragol', 'KAR', NULL, 'Davao City', '1989-06-06', 'Married', NULL, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Abella Subd., Digos City', NULL, NULL, '09268389931', NULL, 'Kirbyjayragol@yahoo.com', NULL, NULL, NULL, 'Abella Subd., Digos City', 'Abella Subd., Digos City', 'Ortodome M. Ragol', 'Abella Subd., Digos City', 'Driver', NULL, NULL, 'Josephine A. Ragol', 'Abella Subd., Digos City', 'Housweife', NULL, NULL, 'Sissy R. Ragol', 'Abella Subd., Digos City', 'Teacher', NULL, NULL, '2016-10-13', 67, 3, 172, 82, '09-4205318-6', '162010570662', NULL, NULL, 'Regular', '2017-05-25 13:31:17'),
+	(1062, NULL, NULL, 1, NULL, 'Lovely Judy May', 'P.', 'Villar', 'LPV', NULL, 'Davao City', '1996-05-31', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, '5\'4"', '48Kgs', NULL, NULL, NULL, 'Arroyo Comp. Crossing, Davao City', NULL, NULL, '09179333291', NULL, NULL, NULL, NULL, NULL, 'Arroyo Comp. Crossing, Davao City', 'Arroyo Comp. Crossing, Davao City', 'Carlos P. Villar', 'Arroyo Comp. Crossing, Davao City', NULL, NULL, NULL, 'Anatalia P. Villar', 'Arroyo Comp. Crossing, Davao City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-10-17', 65, 3, 3, 82, '0941445135', '160507400628', '121192880142', NULL, 'Regular', '2017-05-25 13:31:17'),
+	(1072, NULL, NULL, 1, NULL, 'Anthony Greg', 'L.', 'Naduma', 'ALN', NULL, NULL, '1985-11-04', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, '426 Arjuville Subd., Libertad, Butuan City', NULL, NULL, '09179842214', NULL, 'anthonygregnaduma0411@gmail.com', 'Nancy L. Naduma', NULL, NULL, '426 Arjuville Subd., Libertad, Butuan City', '426 Arjuville Subd., Libertad, Butuan City', NULL, NULL, NULL, NULL, NULL, 'Nancy L. Naduma', '426 Arjuville Subd., Libertad, Butuan City', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-06-16', 522, 3, 3, 72, '06-2877441-7', '180252527352', '121143095233', '460-398-585', 'Probationary', '2017-05-25 13:31:17'),
+	(1082, NULL, NULL, 1, NULL, 'Joer', 'S.', 'Delas Penas', 'JSD', NULL, 'Tagum City', NULL, 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. Bulaklak II Lafortuna Magugpo North Tagum Cit', NULL, NULL, '09353302690', NULL, 'delaspenas_joer@yahoo.com', NULL, NULL, NULL, 'Prk. Bulaklak II Lafortuna Magugpo North Tagum City', 'Prk. Bulaklak II Lafortuna Magugpo North Tagum City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-03-01', 412, 3, 3, 82, NULL, '170501971165', NULL, '280184534', 'Regular', '2017-05-25 13:31:17'),
+	(1092, NULL, NULL, 1, NULL, 'Ivy', 'R.', 'Florentino', NULL, NULL, NULL, '1994-01-27', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Prk. Sambag, Lower Kiagot, Digos City', NULL, NULL, '09952284322', NULL, 'ivyflorentino27@gmail.com', NULL, NULL, NULL, 'Prk. Sambag, Lower Kiagot, Digos City', 'Prk. Sambag, Lower Kiagot, Digos City', 'Ike B. Florentino', 'Prk. Sambag, Lower Kiagot, Digos City', NULL, NULL, NULL, 'Ma. Dulsora R. Florentino', 'Prk. Sambag, Lower Kiagot, Digos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-07-21', 41, 6, 222, NULL, '0941791452', '162511202515', '916236620041', '‎498-109-584', NULL, '2017-05-30 05:39:23'),
+	(1102, NULL, NULL, 1, NULL, 'April Dan', 'S.', 'Borromeo', NULL, NULL, 'Kapalong', '1995-04-09', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Luna Kapalong, Davao del Norte', NULL, NULL, '09486794342', NULL, 'april09dan@gmail.com', NULL, NULL, NULL, 'Luna Kapalong, Davao del Norte', 'Luna Kapalong, Davao del Norte', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-08-27', 542, 6, 222, NULL, '940335961', '162500434732', '916273954122', '‎498-110-152', NULL, '2017-05-30 06:19:19'),
+	(1112, NULL, NULL, 4, NULL, 'Junalona', 'R.', 'Basalo', NULL, NULL, 'Malalag, Davao del Sur', '1993-06-21', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', NULL, NULL, NULL, NULL, NULL, NULL, 'Padre Gomez, Bonifacio St. Davao City', NULL, NULL, '09109128219', NULL, NULL, NULL, NULL, NULL, 'Prk. 2, IBO, Malalag, Davao del Sur', 'Prk. 2, IBO, Malalag, Davao del Sur', 'Leonardo L. Basalo Sr.', 'Prk. 2, IBO, Malalag, Davao del Sur', 'Farmer', NULL, NULL, 'Evelyn R. Basalo', 'Prk. 2, IBO, Malalag, Davao del Sur', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-03-01', 43, 6, 232, NULL, NULL, NULL, NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(1122, NULL, NULL, 5, NULL, 'Margilen', 'Edrozo', 'Abuhan', 'MEA', NULL, 'Opol Misamis Oriental', '1980-12-28', 'Widow', NULL, 'Female', 'Filipino', 'Born Again Christian', NULL, '5\'2"', '54Kgs', NULL, 'Black', NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, '09265287804', NULL, NULL, NULL, NULL, NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Diomedes Edoso', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Farmer', NULL, NULL, 'Jeanitha Edroso', 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-03-01', 56, 10, NULL, NULL, NULL, '150254168765', NULL, '461537289', NULL, '2017-05-25 13:31:17'),
+	(1132, NULL, NULL, 1, NULL, 'Alejando', 'Tilos', 'Paloma', 'ATP', NULL, 'Badas Mati City, Davao Oriental', '1971-10-05', 'Married', 7, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'7"', '150lbs', NULL, NULL, NULL, 'Princeton St. Cambridge Subd. Iponan Cagayan de Or', NULL, NULL, '09366279530', NULL, 'ali.paloma@gmail.com', 'Emelie P. Paloma', NULL, NULL, 'Princeton St. Cambridge Subd. Iponan Cagayan de Oro City', 'Misamis Oreintal', 'Alfredo D. Paloma', 'Purok #2 Maitum Tubaon Tarrangona Davao Oriental', 'deceased', NULL, NULL, 'Lilia T. Paloma', 'Purok #2 Maitum Tubaon Tarrangona Davao Oriental', NULL, NULL, NULL, 'Emelie P. Paloma', 'Princeton St. Cambridge Subd. Iponan Cagayan de Oro City', NULL, NULL, '2147483647', '2017-04-10', 56, 10, NULL, NULL, '09-2341709-7', '162005511844', NULL, '291789935', NULL, '2017-05-25 13:31:17'),
+	(1142, NULL, NULL, 5, NULL, 'Alex', 'Alejandro', 'Paloma', 'AAP', NULL, 'Tokwal Sarangani Province', '1976-07-26', 'Single', NULL, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Purok 2 Brgy. Tinagakan General Santos City', NULL, NULL, '09752343045', NULL, NULL, NULL, NULL, NULL, 'Purok 2 Brgy. Tinagakan General Santos City', 'Purok 2 Brgy. Tinagakan General Santos City', 'Anisito Paloma', 'Purok 2 Brgy. Tinagakan General Santos City', NULL, NULL, NULL, 'Julia Paloma', 'Purok 2 Brgy. Tinagakan General Santos City', 'Housewife', NULL, NULL, 'Cristy Paloma', 'Purok 2 Brgy. Tinagakan General Santos City', NULL, NULL, NULL, '2017-04-01', 56, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(1152, NULL, NULL, 5, NULL, 'Danilo', 'Delgado', 'Vedida Jr.', NULL, NULL, 'Sarangani Provinve', NULL, 'Single', NULL, 'Male', 'Filipino', NULL, NULL, '5\'4"', '52Kgs', NULL, NULL, NULL, 'Brgy, Tinagacan General Santos City', NULL, NULL, '09261565861', NULL, NULL, NULL, NULL, NULL, 'Brgy, Tinagacan General Santos City', 'Brgy, Tinagacan General Santos City', 'Danilo Verdida Sr.', 'Yanzon Village, Lagao General Santos City', 'Taxi Driver', NULL, '2147483647', 'Merlinda Verdida', 'Yanzon Village, Lagao General Santos City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-03-27', 56, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(1162, NULL, NULL, 5, NULL, 'Ronald', 'Eduave', 'Tawacal', NULL, NULL, 'Taglimao, Cdoc', '1982-01-26', 'Married', NULL, 'Male', 'Filipino', 'Born Again Christian', NULL, '5\'4"', '72Kgs', NULL, 'Black', NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, '09756516313', NULL, NULL, NULL, NULL, NULL, 'Poblacion, Bagocboc Opol Misamis Oriental', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Felizardo Tawacal', 'Barra, Opol Misamis Oriental', 'Farmer', NULL, NULL, 'Elviera Tawacal', 'Poblacion, Bagocboc Opol Misamis Oriental', 'Housewife', NULL, NULL, 'Lonie E. Tawacal', 'Poblacion, Bagocboc Opol Misamis Oriental', NULL, NULL, '0', '2017-04-02', 56, 10, NULL, NULL, NULL, '230027168227', NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(1172, NULL, NULL, 5, NULL, 'Anthony', 'Sanchez', 'Potot', NULL, NULL, 'Tubod Lanao del Norte', '1991-09-12', 'Single', NULL, 'Male', 'Filipino', 'Roman Catholic', NULL, '5\'7"', '90lbs', NULL, NULL, NULL, 'Zone 7 Patag, Opol Misamis Oriental', NULL, NULL, '09351307015', NULL, NULL, NULL, NULL, NULL, 'Zone 7 Patag, Opol Misamis Oriental', 'Zone 7 Patag, Opol Misamis Oriental', NULL, 'Purok 2 San Jose Libona', 'deceased', NULL, NULL, 'Nora Sanchez Potot', 'Purok 2 San Jose Libona', NULL, NULL, NULL, 'Receil Fernandez', 'Zone 7 Patag, Opol Misamis Oriental', 'Housewife', NULL, '2147483647', '2017-04-09', 56, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-05-25 13:31:17'),
+	(1182, NULL, '112', 1, NULL, 'Janine', 'Llanos', 'Jasmin', 'JLJ', NULL, 'Iligan City, Lanao del Norte', '1993-01-14', 'Single', 3, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'11"', '47Kgs', NULL, NULL, NULL, 'Purok Masilakon 1, Lugait Misamis Oriental', NULL, NULL, '09207522982', NULL, 'nicegal17@gmail.com', 'Rosanna Jasmin', NULL, 'Purok Masilakon 1, Lugait Misamis Oriental', 'Purok Masilakon 1, Lugait Misamis Oriental', 'Purok Masilakon 1, Lugait Misamis Oriental', 'Eleuterio Jasmin', 'Purok Masilakon 1, Lugait Misamis Oriental', 'deceased', NULL, NULL, 'Rosanna Llanos Jasmin', 'Purok Masilakon 1, Lugait Misamis Oriental', 'Housewife', NULL, NULL, 'Philip Cesar Bagares Garay', NULL, NULL, NULL, '‎093934049310', '2013-05-20', 71, 1, 1, 32, '08-2399113-4', '150503497044', '121098502267', '440560910', 'Regular', '2017-05-25 13:31:17'),
+	(1192, NULL, NULL, 4, NULL, 'Christian', 'Morden', 'Rebuyas', 'CMR', NULL, 'Bislig, Surigao del Sur', '1998-05-18', 'Single', NULL, 'Male', 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'B19 Garcia Heights, Bacaca Road Davao City', NULL, NULL, '09078977962', NULL, 'christian984@yahoo.com', NULL, NULL, NULL, 'B19 Garcia Heights, Bacaca Road Davao City', 'B19 Garcia Heights, Bacaca Road Davao City', NULL, NULL, NULL, NULL, NULL, 'Cristina M. Rebuyas', 'B19 Garcia Heights, Bacaca Road Davao City', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-10-24', 84, 9, 14, 42, '09-4212214-3', '162519095378', '917059132863', NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(1202, NULL, NULL, 1, NULL, 'Joseph', 'R.', 'Giron II', 'JRG', NULL, 'Benguet, Baguio City', '1984-03-02', 'Single', 1, 'Male', 'Filipino', '', 'English, Filipino', '', NULL, NULL, NULL, NULL, 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon C', NULL, NULL, '0917344855', '09228382307', 'bluepeach7@yahoo.com', 'Kamille Joyce Giron', '09228874303', NULL, 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', 'Joseph Fernandez Giron Sr.', 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', 'deceased', NULL, NULL, 'Teresita Rosales Giron', 'Unit 4D Twin Park Building, Road 3 Proj 6 Quezon City', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-01', 76, 1, 1, 32, '339-6120-303', '150502868960', '914343835204', '290055877000', 'Regular', '2017-05-25 13:31:17'),
+	(1212, NULL, '10022', 1, NULL, 'Chad Louei', 'C.', 'Sullaga', 'CCS', NULL, 'Kapatagan, Digos, Davao del Sur', '1994-11-23', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'4', '43 kg.', NULL, NULL, NULL, 'Kapatagan, Digos, Davao del Sur', NULL, NULL, '09124544095', NULL, 'chadsullaga1123@gmail.com', 'Raul R. Sullaga', '2147483647', 'Kapatagan, Digos, Davao del Sur', 'Kapatagan, Digos, Davao del Sur', 'Kapatagan, Digos, Davao del Sur', 'Raul R. Sullaga', 'Kapatagan, Digos, Davao del Sur', 'Farmer', NULL, '2147483647', 'Cecilia C. Sullaga', 'Kapatagan, Digos, Davao del Sur', 'Brgy. Health Worker', NULL, '', NULL, NULL, NULL, NULL, NULL, '2016-11-21', 73, 1, 1, 32, '0941828228', '162013068828', '121189041310', '335284227', 'Regular', '2017-05-25 07:35:25'),
+	(1222, NULL, NULL, 4, NULL, 'Franco', 'Puzon', 'Amesola', 'FPA', NULL, 'Iligan City', '1980-01-30', 'Single', 1, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'7\'\'', '63kg', NULL, NULL, NULL, 'Siay Batu , Zamboanga Sibugay', NULL, NULL, '09278434744', NULL, NULL, NULL, NULL, NULL, 'Siay Batu, Zamboanga Sibugay', 'Siay Batu , Zamboanga Sibugay', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Arlyn C. Benito', 'Siay Batu , Zamboanga Sibugay', NULL, NULL, '09366704289', '2017-04-24', 572, 3, 172, 72, '011101706862', '030205910474', '107012316640', '', 'Probationary', '2017-05-25 13:31:17'),
+	(1232, NULL, NULL, 4, NULL, 'Mary Grace', 'A.', 'Escalona', NULL, NULL, 'Luz Village, Mlang, North Cotabato', '1974-05-03', 'Married', 8, 'Female', 'Filipino', 'Roman Catholic', 'English, Visayan, Tagalof', '5\'2"', '47', NULL, NULL, NULL, 'Prk. 6B Lanao, Kidapawan City', NULL, NULL, '09194880606', NULL, 'mgeaescalona@yahoo.com', NULL, NULL, NULL, 'Prk. 6B Lanao, Kidapawan City', 'Prk. 6B Lanao, Kidapawan City', NULL, NULL, NULL, NULL, NULL, 'Clarita E. Albutra', 'Prk. 6B Lanao, Kidapawan City', 'Housewife', NULL, '09302395832', NULL, NULL, NULL, NULL, NULL, '2017-04-06', 592, 6, 222, 132, NULL, NULL, NULL, NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(1242, NULL, NULL, 4, NULL, 'Noel', 'P.', 'Sobejana', 'NPS', NULL, 'Davao', '1979-08-09', 'Single', 3, 'Male', 'Filipino', 'Roman Catholic', 'English, Tagalog, Visayan', '5\'7 1/2"', '68', 'O +', 'black', NULL, 'Prk. Tamsi, Sitio Upper Quinokol, Brgy. Inawayan, ', NULL, NULL, '09484539197', NULL, 'noelpsobejana@gmail.com', NULL, NULL, NULL, 'Prk. Tamsi, Sitio Upper Quinokol, Brgy. Inawayan, Municipality of Sta. Cruz, Davao del Sur', 'Prk. Tamsi, Sitio Upper Quinokol, Brgy. Inawayan, Municipality of Sta. Cruz, Davao del Sur', 'Narciso Sobejana Sr.', 'F. Lopez St. Kidapawan City', 'Government employee', NULL, '09198882577', 'Agnes Sobejana', 'F. Lopez St. Kidapawan City', 'Housewife', NULL, '09287846797', NULL, NULL, NULL, NULL, NULL, '2016-07-04', 602, 6, 222, 132, '0813387680', '190895509276', '1900958641', '215413654', 'Probationary', '2017-05-25 13:31:17'),
+	(1252, NULL, NULL, 4, NULL, 'Kareen', 'J.', 'De Guzman', NULL, NULL, 'Digos City', '1997-05-03', 'Single', 1, 'Female', 'Filipino', 'Roman Catholic', 'English, Tagalog, Cebuano', '5\'1"', '55', NULL, NULL, NULL, 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', NULL, NULL, '09462442253', NULL, 'kareen.deguzman0503@gmail.com', NULL, NULL, NULL, 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Virgilio H. de Guzman Jr.', 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Stock Custodian', NULL, NULL, 'Sonia J. de Guzman', 'Blk. 2,Lot 3 Perfect Homes Subdivision, Digos City', 'Liaison Officer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-04-06', 44, 6, 232, 132, NULL, NULL, NULL, NULL, 'Probationary', '2017-05-25 13:31:17'),
+	(1262, NULL, '', 1, NULL, 'Franco', 'Custodio', 'Pimentel', 'FCP', NULL, NULL, '1968-10-21', NULL, NULL, 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2009-10-15', 562, 11, 182, 122, NULL, NULL, NULL, NULL, 'Probationary', '2017-05-29 01:11:59'),
+	(1272, NULL, NULL, 4, NULL, 'Arlyn', 'Cainglet', 'Benito', 'ACB', NULL, 'Zamboanga Sibugay', '1978-11-09', 'Single', 5, 'Female', 'Filipino', 'Roman Catholic', 'Engl,Visayanish,Tagalog', '5\'4"', '65', 'B +', NULL, NULL, 'Pagatpat,Cagayan de Oro City', NULL, 0, '09366704289', NULL, NULL, 'Franco P. Amesola', '09278434744', 'Pagatpat,cagayan De Oro City', 'Batu Siay Zamboanga Sibugay', 'Batu Siay Zamboanga Sibugay', NULL, NULL, NULL, NULL, NULL, 'Lolita C. Benito', 'Batu Siay Zamboanga Sibugay', 'Housewife', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-05-17', 102, 1, 2, 32, '0814214095', '150501615953', '121060054763', '935614238', 'Probationary', '2017-05-31 01:44:28');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.employees_temp
-DROP TABLE IF EXISTS `employees_temp`;
-CREATE TABLE IF NOT EXISTS `employees_temp` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `id_employee` int(11) DEFAULT NULL,
-  `emp_id` varchar(50) DEFAULT NULL,
-  `emp_bio_id` varchar(50) DEFAULT NULL,
-  `fName` varchar(50) DEFAULT NULL,
-  `mName` varchar(50) DEFAULT NULL,
-  `lName` varchar(50) DEFAULT NULL,
-  `shiftgroup` varchar(50) DEFAULT NULL,
-  `sss_id` varchar(50) DEFAULT NULL,
-  `phic_id` varchar(50) DEFAULT NULL,
-  `hdmf_id` varchar(50) DEFAULT NULL,
-  `tin` varchar(50) DEFAULT NULL,
-  `company` varchar(50) DEFAULT NULL,
-  `branch` varchar(50) DEFAULT NULL,
-  `position` varchar(50) DEFAULT NULL,
-  `rank` varchar(50) DEFAULT NULL,
-  `tax_status` varchar(50) DEFAULT NULL,
-  `employment_status` varchar(50) DEFAULT NULL,
-  `basic_salary` int(10) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_employee` (`id_employee`)
-) ENGINE=MyISAM AUTO_INCREMENT=801 DEFAULT CHARSET=latin1;
-
--- Dumping data for table heroku_760d4109a89e3f8.employees_temp: 115 rows
-/*!40000 ALTER TABLE `employees_temp` DISABLE KEYS */;
-INSERT INTO `employees_temp` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`, `mName`, `lName`, `shiftgroup`, `sss_id`, `phic_id`, `hdmf_id`, `tin`, `company`, `branch`, `position`, `rank`, `tax_status`, `employment_status`, `basic_salary`) VALUES
-	(686, 1, '310-98-4', '1005', 'Jennifer', 'Palo', 'Dantes', 'Permanent', '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HRD Head', 'Level 10', 'M1', 'Regular', 10000),
-	(687, 2, '', '10025', 'Charizze Mae', 'Taboada', 'Lumagsao', 'Part-Time', '8-15700359', '150501399622', '121025696574', '', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'Level 2', 'S', 'Resigned', 0),
-	(688, 12, '', '1004', 'Shiela', 'L.', 'Achas', 'Permanent', '08-2580153-6', '150504178309', '121148071155', '330785488000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'Level 1', 'S', 'Regular', 11000),
-	(689, 22, '', '10023', 'Daina Jane', 'Layar', 'Lungtad', 'Part-Time', '08-2663610-8', '150253033462', '121148247833', '331694187', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Staff', 'Level 1', 'S', 'Regular', 11),
-	(690, 32, '', '', 'Angelito', 'Diaz', 'Delada', 'Permanent', '09-28611092', '160504045878', '121031718739', '945606122', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'S', 'Regular', 0),
-	(691, 42, '', '', 'Kimberly', 'Arcena', 'Bicong', 'Permanent', '', '162506289777', '915170351768', '429744351', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', '', 'Regular', 0),
-	(692, 52, '', '', 'Rachel', 'Likit', 'Brua', 'Permanent', '09-3103097-4', '170252743289', '121101750577', '445-307-079', 'Primo Partners Phils, Inc.', 'Davao', 'Admin Supervisor/Cash Custodian/HR', '', 'S', 'Regular', 15),
-	(693, 62, '', '', 'Cheryrose', 'Nepomuceno', 'Gabaton', 'Permanent', '0933035427', '160504739322', '121115018624', '444168187000', 'Primo Partners Phils, Inc.', 'Davao', 'Bookkeeper', '', 'S', 'Regular', 0),
-	(694, 72, '', '', 'Nathaniel', 'Pasco', 'Dela Pena', 'Permanent', '09-08358948', '160500375997', '005064402507', '124010444', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', '', 'M', 'Regular', 0),
-	(695, 82, '', '', 'Amalia', 'Demapitan', 'Frias', 'Part-Time', '09-15874295', '170502340371', '121030580785', '450957189', 'Primo Partners Phils, Inc.', 'Davao', 'Chef/Cold Section', '', 'S', 'Regular', 0),
-	(696, 92, '', '', 'Leny', 'Serue', 'Lastrella', 'Permanent', '09278694176', '170501695087', '18000768907', '429743909', 'Primo Partners Phils, Inc.', 'Davao', 'Inventory Controller', '', 'S', 'Regular', 0),
-	(697, 102, '', '', 'Erlyn', 'Bolante', 'Lim', 'Permanent', '09-30062419', '160503475631', '121032392549', '286335650', 'Primo Partners Phils, Inc.', 'Davao', 'Cashier', '', 'S', 'Regular', 0),
-	(698, 112, '', '', 'Aldrin', 'Cotamora', 'Loma', 'Part-Time', '09-38159793', '160506389620', '121157478629', '', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', 'S', 'Resigned', 0),
-	(699, 122, '', '', 'Lyrie Mae', 'Lustre', 'Magbutay', 'Permanent', '09-3230107-1', '121028563644', '160504463106', '460-769-947', 'Primo Partners Phils, Inc.', 'Davao', 'Cashier/Dining', '', 'S1', 'Regular', 0),
-	(700, 132, '', '', 'Rodel', 'Esmedina', 'Villegas', 'Permanent', '09-3345227-5', '150504925215', '121029330515', '415-610-167', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', '', 'S', 'Probationary', 20),
-	(701, 142, '', '', 'Henilito', 'Gonzales', 'Polia Jr.', 'Permanent', '09-3208339-9', '160504315484', '121029358912', '400-672-745', 'Primo Partners Phils, Inc.', 'Davao', 'Bartender', '', 'S', 'Regular', 0),
-	(702, 152, '', '', 'Nestor', 'Masing', 'Bantilan', 'Permanent', '09-1244652-9', '160500046756', '913169041227', '124-651-296', 'Primo Partners Phils, Inc.', 'Davao', 'Dining Supervisor', '', 'M', 'Regular', 0),
-	(703, 162, '', '', 'Roberto', 'Celerio', 'Jambaro Jr.', 'Permanent', '0925830148', '160503436059', '188000743398', '308884166000', 'Primo Partners Phils, Inc.', 'Davao', 'Kitchen Supervisor', '', 'S1', 'Regular', 0),
-	(704, 192, '', '', 'Junmer', 'Rebuyas', 'Talindog', 'Permanent', '09-300-44709', '160505841848', '91320145691', '', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', 'S', 'Regular', 0),
-	(705, 202, '', '', 'Ryan', 'Dodoso', 'Florencio', 'Permanent', '09-3164239-1', '160504252636', '121086740639', '291-191-248', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', '', 'S', 'Regular', 0),
-	(706, 212, '', '', 'Arnold', 'Aboyme', 'Plaza', 'Part-Time', '09-4157916-6', '162508071957', '', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'S', 'Probationary', 0),
-	(707, 222, 'null', 'null', 'Jimrey', 'R.', 'Abenoja', 'Permanent', '09-3224951-5', '160506266820', '121122325178', '455239111', 'Currahee Construction Corporation', 'CDO', 'General Maintenance Service', '', 'S1', 'Regular', 0),
-	(708, 232, '', '', 'Nerio', 'Gildore', 'Amper', 'Permanent', '', '190902066156', '', '922208289', 'Currahee Construction Corporation', 'CDO', 'Financial comptroller', '', 'S1', 'Regular', 0),
-	(709, 262, '', '', 'James', 'C.', 'Baldosano', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'CDO', 'Field Engineer', '', '', 'Regular', 0),
-	(710, 282, '', '', 'Renante', 'M.', 'Cabigas', 'Permanent', '0613995298', '152016370597', '', '', 'Currahee Construction Corporation', 'CDO', 'Liaison and Purchaser', '', 'M2', 'Regular', 0),
-	(711, 292, '', '', 'Gerald', 'Detoyato', 'Caro', 'Permanent', '3430488752', '112021267328', '', '', 'Currahee Construction Corporation', 'CDO', 'Draftsman', '', 'M1', 'Probationary', 0),
-	(712, 312, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Permanent', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'Level 6', 'M', 'Regular', 32),
-	(713, 322, '', '', 'Elgin', 'Cabunilas', 'Camilotes', 'Permanent', '09-3653870-9', '160505803776', '121098218437', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'S', 'Regular', 0),
-	(714, 332, '', '', 'Aileen Joy', 'C', 'Castro', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Project Based', 0),
-	(715, 352, '', '108', 'Elvira', 'Carvajal', 'Montera', 'Permanent', '09-2211068-3', '160501550245', '121042672683', '928503260', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Acctg & Audit Head', 'Level 5', 'M3', 'Regular', 0),
-	(716, 362, '', '', 'Kristine Joy', 'Carreon', 'Dealca', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0),
-	(717, 372, '', '10021', 'Raul Adrian', 'Apuli', 'Altavano', 'Part-Time', '3464059636', '150504494774', '121144034952', '445182360', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S', 'Regular', 11000),
-	(718, 382, '', '', 'May', 'Abroguena', 'Ebalang', 'Permanent', '08-1441611-0', '150251158837', '121030943288', '930-840161', 'Currahee Construction Corporation', 'CDO', 'Administrative Staff', '', 'S', 'Probationary', 0),
-	(719, 392, '', '10002', 'Charlene', 'Jomoc', 'Almuete', 'Permanent', '0826525316', '150504277390', '', '330785931', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S', 'Regular', 12000),
-	(720, 402, '', '', 'Patricio', 'R.', 'Galdo', 'Permanent', '', '', '', '', 'Manila Teachers Mutual Aid System, Inc.', 'Iligan', 'USP', '', 'S', 'Regular', 0),
-	(721, 412, '', '1003', 'Marco', 'Costamero', 'Arangco', 'Permanent', '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'System Analyst/Developer', 'Level 2', 'M2', 'Regular', 16000),
-	(722, 422, '', '', 'Izza Honey', 'C.', 'Manluza', 'Permanent', '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Currahee Construction Corporation', 'CDO', 'Office Engineer', '', 'M', 'Regular', 0),
-	(723, 442, '', '', 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'Permanent', '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Currahee Construction Corporation', 'CDO', 'Bookkeeper', '', 'S', 'Regular', 0),
-	(724, 452, '', '', 'Arnaldo', 'Arguilles', 'Mantillas', 'Permanent', '08-1075836-1', '', '310101797702', '180-027-122', 'Currahee Construction Corporation', 'CDO', 'Operations Manager', 'Level 10', 'M1', 'Regular', 0),
-	(725, 462, '', '', 'Brazzel Gay', 'J.', 'Cabaltera', 'Permanent', '0939595806', '010520667240', '121151311466', '472885607', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Social Media/ Sales and Marketing Staff', 'Level 1', 'S', 'Probationary', 10),
-	(726, 472, '', '110', 'Renan', 'A.', 'Moreno', 'Permanent', '0816173053', '150502397216', '182000543107', '410675176', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Web Lead', 'Level 3', 'M', 'Regular', 0),
-	(727, 482, '', '', 'Rolando', 'T.', 'Mosqueda', 'Permanent', '09-2739922-1', '160505100007', '104002257284', '422-012-424', 'Currahee Construction Corporation', 'DVO', 'Utility Service Personnel', '', 'S', 'Project Based', 0),
-	(728, 502, '', '111', 'Jean', 'S.', 'Godornes', 'Permanent', '0816613128', '150501858430', '182000563981', '950159075', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Operations Supervisor', 'Level 5', 'M', 'Regular', 15000),
-	(729, 512, '', '116', 'Michael', 'Dayag', 'Baculio', 'Permanent', '08-1605491-0', '010505744239', '109002186565', '256027612', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'M1', 'Regular', 10000),
-	(730, 542, '', '', 'Robert', 'Batonghinog', 'Bersano', 'Permanent', '0815082802', '020503777364', '104002242398', '937694691', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Lead', 'Level 3', 'M1', 'Regular', 0),
-	(731, 552, '', '', 'Pete Emmanuell', 'L.', 'Balagosa', 'Permanent', '08-1801748-9', '150503883890', '121134979348', '330784605', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'S', 'Regular', 11),
-	(732, 562, '', '', 'Khristian Darylle Joe', 'Bona', 'Battad', 'Permanent', '3442813205', '020262108512', '121131509835', '468727860', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'S', 'Regular', 0),
-	(733, 582, '', '', 'John', 'M.', 'Mingo', 'Permanent', '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Currahee Construction Corporation', 'DVO', 'Field Engineer', '', 'S', 'Regular', 0),
-	(734, 592, '', '', 'Gina', 'Aboyme', 'Micoy', 'Permanent', '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Currahee Construction Corporation', 'DVO', 'Accounting Supervisor', '', 'M2', 'Regular', 0),
-	(735, 602, '', '', 'Lowie', 'G.', 'Ulo', 'Permanent', '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Currahee Construction Corporation', 'DVO', 'General Maintenance Service', '', 'M', 'Regular', 0),
-	(736, 612, '', '', 'Mario', 'Quiam', 'Tolosa', 'Project Based', '33-2666182-9', '082011907160', '', '', 'Currahee Construction Corporation', 'CDO', 'Foreman', '', 'M3', 'Project Based', 0),
-	(737, 622, '', '', 'Julius', 'B.', 'Lascano', 'Part-Time', '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Currahee Construction Corporation', 'CDO', 'Logistic Manager', '', 'S', 'Probationary', 0),
-	(738, 632, '', '', 'Romnick June', 'A.', 'Elcana', 'Part-Time', '09-2857476-0', '160502796558', '121194643961', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'S', 'Probationary', 10),
-	(739, 642, '', '10019', 'Diane Joy', 'Yu', 'Mapano', 'Permanent', '1010277291', '140251731043', '121007858757', '452117419', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Accounting Technician', '', 'S', 'Regular', 12),
-	(740, 652, '', '10014', 'Cresar John', 'Reyes', 'Arce', 'Permanent', '0922273135', '162003641023', '190000056276', '947987046', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'M2', 'Regular', 12500),
-	(741, 662, '', '10013', 'Lorman', 'S.', 'Saladaga', 'Permanent', '1009497752', '140251248725', '914301364780', '816667', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 12),
-	(742, 672, '', '10009', 'Geneth', 'L.', 'Sayson', 'Permanent', '0935125869', '160505344984', '121070911178', '429361074', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 15),
-	(743, 682, '', '', 'Nancy', 'Montebon', 'Wong', 'Permanent', '0919148684', '160501640325', '101000063572', '940042814', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', '', 'S1', 'Regular', 24),
-	(744, 692, '', '', 'Jeffrey', 'Moneba', 'Antoque', 'Permanent', '0937380136', '160255309649', '121111591247', '409174979', 'Norminring Development Corporation', 'CDO', 'Service Mechanic', '', 'S', 'Regular', 0),
-	(745, 702, '', '', 'Salome', 'M.', 'Bodiongan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Inventory Controller', '', 'S', 'Regular', 14),
-	(746, 712, '', '', 'Ryan Evan', 'P.', 'Almacin', 'Part-Time', '09-2732070-8', '', '', '432-197-977', 'Norminring Development Corporation', 'DVO', 'GSP', '', 'M', 'Probationary', 10),
-	(747, 722, '', '', 'Raquel', 'A.', 'Baldecantos', 'Permanent', '3458063803', '140502131016', '121167253093', '', 'Norminring Development Corporation', 'DPL', 'Sales and Marketing', '', 'S', 'Probationary', 0),
-	(748, 732, '', '', 'Gwyne', 'G.', 'Delos Reyes', 'Permanent', '0922110900', '160501436590', '121029344671', '931745676', 'Norminring Development Corporation', 'DVO', 'Bookkeeper', '', 'M', 'Regular', 0),
-	(749, 742, '', '', 'Miejor', 'T.', 'Dela Cruz', 'Permanent', '', '150502394209', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Supervisor', '', 'M2', 'Regular', 14),
-	(750, 752, '', '', 'Rudini', 'G.', 'Galdo', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Branch Cashier', '', '', 'Probationary', 0),
-	(751, 762, '', '', 'Allyn', 'C.', 'Angustia', 'Part-Time', '0939076231', '162509528500', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Regular', 11),
-	(752, 772, '', '', 'Reil Hazzin', 'Batilona', 'Bicoy', 'Permanent', '1011114502', '120513230309', '121142125817', '438-892-350', 'Norminring Development Corporation', 'DPL', 'MRP - Sales', '', 'M1', 'Regular', 0),
-	(753, 782, '', '', 'Marlon', 'R.', 'Gal', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'General Service Maintenance', '', 'M', 'Regular', 0),
-	(754, 792, '', '', 'Rudini', 'G.', 'Galdo', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Branch Cashier', '', 'S', '', 0),
-	(755, 802, '', '', 'Arturo', 'G.', 'Lopez Jr.', 'Part-Time', '0929775063', '160252612308', '121180477483', '425186753', 'Norminring Development Corporation', 'DVO', 'Driver/Mechanic', '', 'M', 'Probationary', 10),
-	(756, 812, '', '', 'Jose Miguel', 'P.', 'Jonelas', 'Part-Time', '0941836113', '162506888417', '917004406258', '', 'Norminring Development Corporation', 'DVO', 'Assistant Bookkeeper', '', 'S', 'Probationary', 10),
-	(757, 822, '', '', 'Jessa', 'Datulayta', 'Bayking', 'Permanent', '09-35775620', '160256016613', '121177270191', '492-048-158', 'Mindanao Precast Structures Inc.', 'CDO', 'Secretary/Admin', '', 'S', 'Regular', 0),
-	(758, 832, '', '', 'Ralph Nicko', 'Alcober', 'Olam', 'Permanent', '08-1977086-4', '150503440239', '916215856747', '492-049-415', 'Mindanao Precast Structures Inc.', 'CDO', 'Company Driver', '', 'S', 'Regular', 0),
-	(759, 842, '', '', 'Armando', 'L.', 'Bagac', 'Permanent', '08-23845222', '150503550425', '121138563124', '492-048-869', 'Mindanao Precast Structures Inc.', 'CDO', 'General Maintenance', '', 'S', 'Regular', 0),
-	(760, 852, '', '', 'Harold', 'Domo', 'Aparicio', 'Part-Time', '', '150252810651', '', '', 'Mindanao Precast Structures Inc.', 'CDO', 'Production Supervisor', '', 'S', 'Probationary', 0),
-	(761, 862, '', '', 'John Gleen', 'Diaz', 'Panebio', 'Permanent', '08-1461106-7', '030501829486', '121004908041', '288-518-234', 'Mindanao Precast Structures Inc.', 'CDO', 'Production Head', '', 'M', 'Regular', 0),
-	(762, 872, '', '', 'Arnulfo', 'V.', 'Layco', 'Permanent', '', '', '', '', 'Manila Teachers Mutual Aid System, Inc.', 'Cagayan de Oro', 'Associate Project Manager', '', 'S', 'Regular', 0),
-	(763, 882, '', '', 'Stephanie', 'A.', 'Somoza', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Probationary', 10),
-	(764, 892, '', '', 'Jaymar', 'R.', 'Coresis', 'Permanent', '09-2984886-4', '060503261070', '', '', 'Norminring Development Corporation', 'DVO', 'Partsman', '', 'S', 'Regular', 11),
-	(765, 902, '', '', 'Mark Anthony', 'M.', 'Montera', 'Permanent', '0920192988', '162003621529', '', '924469729', 'Norminring Development Corporation', 'DVO', 'Utility Service Personnel', '', 'S', 'Probationary', 0),
-	(766, 912, '', '', 'Rizza Mae', 'C.', 'Lapinid', 'Part-Time', '0942047011', '170253314020', '4866783', '485272573', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S1', 'Probationary', 10),
-	(767, 922, '', '', 'Pamela Ivy', 'A.', 'Improgo', 'Permanent', '', '', '', '', 'Manila Teachers Mutual Aid System, Inc.', 'Malaybalay', 'Branch Manager', '', 'S1', 'Regular', 0),
-	(768, 932, '', '', 'Jenner Nino', 'B.', 'Moneba', 'Permanent', '0924271258', '160501354306', '', '928767649', 'Norminring Development Corporation', 'DVO', 'Service & After Sales Manager', '', '', 'Regular', 0),
-	(769, 942, '', '', 'Joesus', 'L.', 'Rabadan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'CDO', 'Utility Service Personnel', '', 'S1', 'Probationary', 0),
-	(770, 952, '', '', 'Michael Angelou', 'H.', 'Ponte', 'Permanent', '', '160504101026', '', '', 'Norminring Development Corporation', 'CDO', 'MRP - Sales', '', 'S', 'Regular', 0),
-	(771, 962, '', '', 'Leo Alfie', 'A.', 'Quipanes', 'Permanent', '06-2515281-2', '120508612104', '913030000320', '289493450000', 'Norminring Development Corporation', 'ZBO', 'Service Mechanic', '', 'S1', 'Project Based', 0),
-	(772, 972, '', '', 'Norben Jay', 'Leron', 'Ruiz', 'Permanent', '11-0370996-4', '160504245400', '121135281185', '297110378000', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', 'M3', 'Regular', 0),
-	(773, 992, '', '', 'Danilo', 'T.', 'Palo Jr.', 'Permanent', '0923935935', '160501224674', '188000522089', '929085069', 'Norminring Development Corporation', 'KID', 'Service Mechanic', '', '', 'Project Based', 0),
-	(774, 1002, '', '', 'Nelson', 'S.', 'Tacoloy', 'Permanent', '0927359096', '', '188001482849', '412120768', 'Norminring Development Corporation', 'DVO', 'Junior Service Mechanic', '', 'M1', 'Regular', 12),
-	(775, 1012, '', '', 'Roland', 'C.', 'Sarce', 'Permanent', '0922452639', '', '', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', 'S', 'Probationary', 0),
-	(776, 1022, '', '', 'Jasper', 'B.', 'Saludes', 'Part-Time', '09-3982708-2', '', '1211-5491-23', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', 'S', 'Probationary', 10),
-	(777, 1032, '', '', 'Ivan', 'Orbeta', 'Paredes', 'Permanent', '09-2319395-5', '160501550229', '915043561517', '922203402', 'Norminring Development Corporation', 'DPL', 'Branch Manager', '', 'S', 'Regular', 0),
-	(778, 1042, '', '', 'Girlie', 'G.', 'Tolosa', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'ZBO', 'Branch Cashier', '', '', 'Regular', 0),
-	(779, 1052, '', '', 'Kirbay Jay', 'A.', 'Ragol', 'Permanent', '09-4205318-6', '162010570662', '', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', '', 'Regular', 11),
-	(780, 1062, '', '', 'Lovely Judy May', 'P.', 'Villar', 'Permanent', '0941445135', '160507400628', '121192880142', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Probationary', 10),
-	(781, 1072, '', '', 'Anthony Greg', 'L.', 'Naduma', 'Permanent', '06-2877441-7', '180252527352', '121143095233', '460-398-585', 'Norminring Development Corporation', 'CDO', 'Marketing Associate', '', 'S', 'Regular', 0),
-	(782, 1082, '', '', 'Joer', 'S.', 'Delas Penas', 'Permanent', '', '170501971165', '', '280184534', 'Norminring Development Corporation', 'DVO', 'MRP - Sales', '', 'S', 'Regular', 11),
-	(783, 1092, '', '', 'Ivy', 'R.', 'Florentino', 'Permanent', '0941791452', '162511202515', '916236620041', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Student Affairs Officer', '', 'S', 'Regular', 0),
-	(784, 1102, '', '', 'April Dan', 'S.', 'Borromeo', 'Permanent', '940335961', '162500434732', '916273954122', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Maintenance/Marketing Assistant', '', 'S', 'Regular', 0),
-	(785, 1112, '', '', 'Junalona', 'R.', 'Basalo', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', '', 'Trainer-Full Time', '', 'S', '', 0),
-	(786, 1122, '', '', 'Margilen', 'Edrozo', 'Abuhan', 'Project Based', '', '150254168765', '', '461537289', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0),
-	(787, 1132, '', '', 'Alejando', 'Tilos', 'Paloma', 'Permanent', '09-2341709-7', '162005511844', '', '291789935', 'My Only Way, Inc.', '', 'Farm Caretaker', '', 'M1', '', 0),
-	(788, 1142, '', '', 'Alex', 'Alejandro', 'Paloma', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0),
-	(789, 1152, '', '', 'Danilo', 'Delgado', 'Vedida Jr.', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0),
-	(790, 1162, '', '', 'Ronald', 'Eduave', 'Tawacal', 'Project Based', '', '230027168227', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0),
-	(791, 1172, '', '', 'Anthony', 'Sanchez', 'Potot', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0),
-	(792, 1182, '', '', 'Janine', 'Llanos', 'Jasmin', 'Permanent', '08-2399113-4', '150503497044', '121098502267', '440560910', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S1', 'Regular', 0),
-	(793, 1192, '', '', 'Christian', 'Morden', 'Rebuyas', 'Part-Time', '09-4212214-3', '162519095378', '917059132863', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', '', 'Probationary', 0),
-	(794, 1202, '', '', 'Joseph', 'R.', 'Giron II', 'Permanent', '339-6120-303', '150502868960', '914343835204', '290055877000', 'Manila Teachers Mutual Aid System, Inc.', 'Manila', 'Technical Support Staff', '', 'S', 'Regular', 0),
-	(795, 1212, '', '10022', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'Level 1', 'S', 'Regular', 11),
-	(796, 1222, '', '', 'Franco', 'P.', 'Amesola', 'Part-Time', '011101706862', '030205910474', '107012316640', '', 'Norminring Development Corporation', 'CDO', 'Sales Associate/Operations', '', 'S', 'Probationary', 12),
-	(797, 1232, '', '', 'Mary Grace', 'A.', 'Escalona', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Admin Head/Bookkeeper/HR Point Person', '', 'M2', 'Probationary', 10),
-	(798, 1242, '', '', 'Noel', 'P.', 'Sobejana', 'Part-Time', '0813387680', '190895509276', '1900958641', '215413654', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Administrator', '', 'S1', 'Project Based', 0),
-	(799, 1252, '', '', 'Kareen', 'J.', 'De Guzman', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Trainer-Part time', '', 'S', 'Probationary', 0),
-	(800, 1262, '', '', 'Arlyn', 'C.', 'Benito', 'Part-Time', '08-1421409-5', '150501615953', '121060054763', '935-614-238', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'Level 2', 'S3', 'Probationary', 0);
-/*!40000 ALTER TABLE `employees_temp` ENABLE KEYS */;
-
--- Dumping structure for table heroku_760d4109a89e3f8.incident
-DROP TABLE IF EXISTS `incident`;
+-- Dumping structure for table hris.incident
 CREATE TABLE IF NOT EXISTS `incident` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `occurence` text COLLATE utf8_unicode_ci NOT NULL,
@@ -869,12 +722,11 @@ CREATE TABLE IF NOT EXISTS `incident` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.incident: 0 rows
+-- Dumping data for table hris.incident: 1 rows
 /*!40000 ALTER TABLE `incident` DISABLE KEYS */;
 /*!40000 ALTER TABLE `incident` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.incidentinvolve
-DROP TABLE IF EXISTS `incidentinvolve`;
+-- Dumping structure for table hris.incidentinvolve
 CREATE TABLE IF NOT EXISTS `incidentinvolve` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `incident_id` int(10) DEFAULT NULL,
@@ -882,12 +734,11 @@ CREATE TABLE IF NOT EXISTS `incidentinvolve` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.incidentinvolve: 0 rows
+-- Dumping data for table hris.incidentinvolve: 0 rows
 /*!40000 ALTER TABLE `incidentinvolve` DISABLE KEYS */;
 /*!40000 ALTER TABLE `incidentinvolve` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.jobs
-DROP TABLE IF EXISTS `jobs`;
+-- Dumping structure for table hris.jobs
 CREATE TABLE IF NOT EXISTS `jobs` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `position_id` int(11) NOT NULL DEFAULT '0',
@@ -902,12 +753,11 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.jobs: 0 rows
+-- Dumping data for table hris.jobs: 2 rows
 /*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.leaveapp
-DROP TABLE IF EXISTS `leaveapp`;
+-- Dumping structure for table hris.leaveapp
 CREATE TABLE IF NOT EXISTS `leaveapp` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
@@ -916,20 +766,23 @@ CREATE TABLE IF NOT EXISTS `leaveapp` (
   `dateFiled` date NOT NULL,
   `leave_id` int(11) NOT NULL,
   `days_applied` double(3,1) DEFAULT NULL,
+  `days_approved` double(3,1) DEFAULT NULL,
   `mode` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reason` text COLLATE utf8_unicode_ci NOT NULL,
   `status` text COLLATE utf8_unicode_ci NOT NULL,
   `reasonToDissaprove` text COLLATE utf8_unicode_ci NOT NULL,
   `dateVerified` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.leaveapp: 0 rows
+-- Dumping data for table hris.leaveapp: 3 rows
 /*!40000 ALTER TABLE `leaveapp` DISABLE KEYS */;
+INSERT INTO `leaveapp` (`id`, `employee_id`, `durFrom`, `durTo`, `dateFiled`, `leave_id`, `days_applied`, `days_approved`, `mode`, `reason`, `status`, `reasonToDissaprove`, `dateVerified`) VALUES
+	(2, '12', '2017-05-16', '2017-05-16', '2017-05-23', 4, 1.0, NULL, 'with pay', 'Birthday of my mother', 'Approved by HR', '', '2017-05-23'),
+	(12, '22', '2017-05-20', '2017-05-20', '2017-05-23', 4, 0.5, NULL, 'with pay', 'Attend wedding of my cousin', 'For HR Approval', '', '0000-00-00');
 /*!40000 ALTER TABLE `leaveapp` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.leavedates
-DROP TABLE IF EXISTS `leavedates`;
+-- Dumping structure for table hris.leavedates
 CREATE TABLE IF NOT EXISTS `leavedates` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `leaveapp_id` int(10) DEFAULT NULL,
@@ -938,19 +791,18 @@ CREATE TABLE IF NOT EXISTS `leavedates` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.leavedates: ~0 rows (approximately)
+-- Dumping data for table hris.leavedates: 4 rows
 /*!40000 ALTER TABLE `leavedates` DISABLE KEYS */;
 /*!40000 ALTER TABLE `leavedates` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.leaves
-DROP TABLE IF EXISTS `leaves`;
+-- Dumping structure for table hris.leaves
 CREATE TABLE IF NOT EXISTS `leaves` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.leaves: 8 rows
+-- Dumping data for table hris.leaves: 8 rows
 /*!40000 ALTER TABLE `leaves` DISABLE KEYS */;
 INSERT INTO `leaves` (`id`, `name`) VALUES
 	(6, 'Parental Leave'),
@@ -963,15 +815,14 @@ INSERT INTO `leaves` (`id`, `name`) VALUES
 	(17, 'Bereavement Leave');
 /*!40000 ALTER TABLE `leaves` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.lendingcompany
-DROP TABLE IF EXISTS `lendingcompany`;
+-- Dumping structure for table hris.lendingcompany
 CREATE TABLE IF NOT EXISTS `lendingcompany` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.lendingcompany: 4 rows
+-- Dumping data for table hris.lendingcompany: 3 rows
 /*!40000 ALTER TABLE `lendingcompany` DISABLE KEYS */;
 INSERT INTO `lendingcompany` (`id`, `name`) VALUES
 	(1, 'SSS'),
@@ -980,32 +831,33 @@ INSERT INTO `lendingcompany` (`id`, `name`) VALUES
 	(12, 'MEMBA');
 /*!40000 ALTER TABLE `lendingcompany` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.licensures
-DROP TABLE IF EXISTS `licensures`;
+-- Dumping structure for table hris.licensures
 CREATE TABLE IF NOT EXISTS `licensures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
   `name` text COLLATE utf8_unicode_ci,
-  `rating` double(3,2) DEFAULT NULL,
+  `rating` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `licenseNo` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `examDate` date DEFAULT NULL,
   `image` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_licensures_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.licensures: ~6 rows (approximately)
+-- Dumping data for table hris.licensures: ~0 rows (approximately)
 /*!40000 ALTER TABLE `licensures` DISABLE KEYS */;
-INSERT INTO `licensures` (`id`, `employee_id`, `name`, `rating`, `licenseNo`, `image`) VALUES
-	(1, 1, 'Civil Service SubProof', NULL, NULL, NULL),
-	(12, 312, 'Board Passer - Licensure Exam for Teachers', NULL, NULL, NULL),
-	(22, 452, 'Civil Service Subprofessional', 9.99, NULL, NULL),
-	(32, 452, 'Civil Service Professional', 9.99, NULL, NULL),
-	(42, 512, 'Computer Hardware Servicing NCII', NULL, NULL, NULL),
-	(52, 12, 'Certificate of Eligibility', 9.99, NULL, NULL);
+INSERT INTO `licensures` (`id`, `employee_id`, `name`, `rating`, `licenseNo`, `examDate`, `image`) VALUES
+	(1, 1, 'Civil Service SubProof', NULL, NULL, NULL, NULL),
+	(12, 312, 'Board Passer - Licensure Exam for Teachers', NULL, NULL, NULL, NULL),
+	(22, 452, 'Civil Service Subprofessional', '9.99', NULL, NULL, NULL),
+	(32, 452, 'Civil Service Professional', '9.99', NULL, NULL, NULL),
+	(42, 512, 'Computer Hardware Servicing NCII', NULL, NULL, NULL, NULL),
+	(62, 502, 'Career Service Professional Eligibility', '80.29', NULL, '2011-10-16', NULL),
+	(72, 12, 'Career Service Professional Examination', '80.79', NULL, '2013-04-14', NULL),
+	(82, 372, 'Career Service Professional Examination', '82.72', NULL, '2014-10-20', NULL);
 /*!40000 ALTER TABLE `licensures` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.loans
-DROP TABLE IF EXISTS `loans`;
+-- Dumping structure for table hris.loans
 CREATE TABLE IF NOT EXISTS `loans` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) DEFAULT NULL,
@@ -1019,9 +871,9 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `loanGranted` date DEFAULT NULL,
   `remarks` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.loans: 7 rows
+-- Dumping data for table hris.loans: 5 rows
 /*!40000 ALTER TABLE `loans` DISABLE KEYS */;
 INSERT INTO `loans` (`id`, `employee_id`, `loanType_id`, `lendingCompany_id`, `amount`, `term`, `monthlyAmortization`, `startDate`, `endDate`, `loanGranted`, `remarks`) VALUES
 	(22, 502, 12, 2, 80000.00, '24', 1892.00, '2017-05-15', '2019-05-15', '2017-05-12', 'Reloan'),
@@ -1030,18 +882,20 @@ INSERT INTO `loans` (`id`, `employee_id`, `loanType_id`, `lendingCompany_id`, `a
 	(72, 542, 12, 2, 100000.00, '24', 2396.00, '2016-08-30', '2018-08-30', '2016-08-18', 'Reloan'),
 	(82, 562, 12, 2, 50000.00, '12', 2365.00, '2016-10-15', '2017-10-30', '2016-10-06', 'New Loan'),
 	(92, 512, 12, 2, 30000.00, '12', 1419.00, '2016-06-15', '2017-06-15', '2016-06-08', 'New Loan'),
-	(102, 472, 12, 2, 100000.00, '24', 2396.00, '2015-12-30', '2018-01-30', '2016-12-22', 'Reloan');
+	(102, 472, 12, 2, 100000.00, '24', 2396.00, '2015-12-30', '2018-01-30', '2016-12-22', 'Reloan'),
+	(112, 412, 1, 2, 50000.00, '18 mos.', 4792.00, '2016-03-30', '2017-03-15', NULL, 'Fully Paid'),
+	(122, 1182, 12, 2, 50000.00, '24 mos', 2396.00, '2015-05-15', '2017-04-30', '2015-04-15', NULL),
+	(132, 352, 12, 2, 150000.00, '24mos', 7188.00, '2015-03-15', '2016-02-28', NULL, NULL);
 /*!40000 ALTER TABLE `loans` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.loantype
-DROP TABLE IF EXISTS `loantype`;
+-- Dumping structure for table hris.loantype
 CREATE TABLE IF NOT EXISTS `loantype` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `loanType` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.loantype: 4 rows
+-- Dumping data for table hris.loantype: 2 rows
 /*!40000 ALTER TABLE `loantype` DISABLE KEYS */;
 INSERT INTO `loantype` (`id`, `loanType`) VALUES
 	(1, 'Salary Loan'),
@@ -1050,8 +904,7 @@ INSERT INTO `loantype` (`id`, `loanType`) VALUES
 	(22, 'Multi-Purpose Loan (MPL)');
 /*!40000 ALTER TABLE `loantype` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.medicals
-DROP TABLE IF EXISTS `medicals`;
+-- Dumping structure for table hris.medicals
 CREATE TABLE IF NOT EXISTS `medicals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -1061,14 +914,15 @@ CREATE TABLE IF NOT EXISTS `medicals` (
   `disability` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_medicals_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.medicals: ~0 rows (approximately)
+-- Dumping data for table hris.medicals: ~0 rows (approximately)
 /*!40000 ALTER TABLE `medicals` DISABLE KEYS */;
+INSERT INTO `medicals` (`id`, `employee_id`, `conditions`, `started`, `physician`, `disability`) VALUES
+	(12, 552, 'Negative Chest Findings', '2016', 'Ronald K Caumban,MD.,FPCR', NULL);
 /*!40000 ALTER TABLE `medicals` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.organizations
-DROP TABLE IF EXISTS `organizations`;
+-- Dumping structure for table hris.organizations
 CREATE TABLE IF NOT EXISTS `organizations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -1080,7 +934,7 @@ CREATE TABLE IF NOT EXISTS `organizations` (
   KEY `index_organizations_on_employee_id` (`employee_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.organizations: ~12 rows (approximately)
+-- Dumping data for table hris.organizations: ~0 rows (approximately)
 /*!40000 ALTER TABLE `organizations` DISABLE KEYS */;
 INSERT INTO `organizations` (`id`, `employee_id`, `institution`, `title`, `started`, `ended`) VALUES
 	(2, 312, 'Philippine Eagles - The Fraternal Order of Eagles Royal Vectors Eagles Club', 'Vice President', NULL, NULL),
@@ -1097,8 +951,7 @@ INSERT INTO `organizations` (`id`, `employee_id`, `institution`, `title`, `start
 	(122, 852, 'College of Engineering Student Councol (COESCO)', 'Vice Chairman', '2008-01', '2009-01');
 /*!40000 ALTER TABLE `organizations` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.overtime
-DROP TABLE IF EXISTS `overtime`;
+-- Dumping structure for table hris.overtime
 CREATE TABLE IF NOT EXISTS `overtime` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1113,14 +966,20 @@ CREATE TABLE IF NOT EXISTS `overtime` (
   `dateConfirm` date DEFAULT NULL,
   `cutoffDate` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.overtime: 0 rows
+-- Dumping data for table hris.overtime: 4 rows
 /*!40000 ALTER TABLE `overtime` DISABLE KEYS */;
+INSERT INTO `overtime` (`id`, `employee_id`, `dateFiled`, `dateRequested`, `timeStart`, `timeEnd`, `totalHours`, `reason`, `status`, `reasonToDissaprove`, `dateConfirm`, `cutoffDate`) VALUES
+	(2, '832', '2017-05-24', '2017-01-11', '8:00', '12:00', '04:00', 'Site visit Kalilangan Project and AMAARA fencing', 'Approved by HR', NULL, '2017-05-24', NULL),
+	(12, '212', '2017-05-24', '2017-01-20', '6:00', '9:04', '03:04', NULL, 'Approved by HR', NULL, '2017-05-24', NULL),
+	(22, '212', '2017-05-24', '2017-01-21', '6:00', '9:00', '03:00', NULL, 'Approved by HR', NULL, '2017-05-24', NULL),
+	(32, '832', '2017-05-24', '2017-02-06', '5:00 am', '10:40 pm', '08:40', 'Site visit Opol', 'Approved by HR', NULL, '2017-05-24', NULL),
+	(42, '832', '2017-05-24', '2017-02-07', '5:00', '9:00', '07:00', 'Meeting Archem @ Malberry Suitesw/ Engr. Padayhag', 'Approved by HR', NULL, '2017-05-24', NULL),
+	(52, '832', '2017-05-24', '2017-02-07', '4:00 am', '8:00 pm', '04:00', 'Bili ng drum at hatid sa opol', 'Approved by HR', NULL, '2017-05-24', NULL);
 /*!40000 ALTER TABLE `overtime` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.payslip
-DROP TABLE IF EXISTS `payslip`;
+-- Dumping structure for table hris.payslip
 CREATE TABLE IF NOT EXISTS `payslip` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `From` date DEFAULT NULL,
@@ -1145,12 +1004,11 @@ CREATE TABLE IF NOT EXISTS `payslip` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.payslip: 0 rows
+-- Dumping data for table hris.payslip: 2 rows
 /*!40000 ALTER TABLE `payslip` DISABLE KEYS */;
 /*!40000 ALTER TABLE `payslip` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.performance
-DROP TABLE IF EXISTS `performance`;
+-- Dumping structure for table hris.performance
 CREATE TABLE IF NOT EXISTS `performance` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) NOT NULL DEFAULT '0',
@@ -1160,12 +1018,11 @@ CREATE TABLE IF NOT EXISTS `performance` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.performance: 0 rows
+-- Dumping data for table hris.performance: 2 rows
 /*!40000 ALTER TABLE `performance` DISABLE KEYS */;
 /*!40000 ALTER TABLE `performance` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.positions
-DROP TABLE IF EXISTS `positions`;
+-- Dumping structure for table hris.positions
 CREATE TABLE IF NOT EXISTS `positions` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `company_id` int(10) NOT NULL DEFAULT '0',
@@ -1175,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `positions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=853 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.positions: 152 rows
+-- Dumping data for table hris.positions: 5 rows
 /*!40000 ALTER TABLE `positions` DISABLE KEYS */;
 INSERT INTO `positions` (`id`, `company_id`, `rank_id`, `name`, `skills`) VALUES
 	(17, 7, NULL, 'Corporate Legal', NULL),
@@ -1332,8 +1189,7 @@ INSERT INTO `positions` (`id`, `company_id`, `rank_id`, `name`, `skills`) VALUES
 	(852, 6, NULL, 'Student Affairs Officer', NULL);
 /*!40000 ALTER TABLE `positions` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.promotions
-DROP TABLE IF EXISTS `promotions`;
+-- Dumping structure for table hris.promotions
 CREATE TABLE IF NOT EXISTS `promotions` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) NOT NULL,
@@ -1344,12 +1200,11 @@ CREATE TABLE IF NOT EXISTS `promotions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.promotions: 0 rows
+-- Dumping data for table hris.promotions: 0 rows
 /*!40000 ALTER TABLE `promotions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `promotions` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.properties
-DROP TABLE IF EXISTS `properties`;
+-- Dumping structure for table hris.properties
 CREATE TABLE IF NOT EXISTS `properties` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) NOT NULL DEFAULT '0',
@@ -1361,19 +1216,18 @@ CREATE TABLE IF NOT EXISTS `properties` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.properties: 0 rows
+-- Dumping data for table hris.properties: 0 rows
 /*!40000 ALTER TABLE `properties` DISABLE KEYS */;
 /*!40000 ALTER TABLE `properties` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.rank
-DROP TABLE IF EXISTS `rank`;
+-- Dumping structure for table hris.rank
 CREATE TABLE IF NOT EXISTS `rank` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `rank` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.rank: 10 rows
+-- Dumping data for table hris.rank: 10 rows
 /*!40000 ALTER TABLE `rank` DISABLE KEYS */;
 INSERT INTO `rank` (`id`, `rank`) VALUES
 	(1, 'Level 1'),
@@ -1388,8 +1242,7 @@ INSERT INTO `rank` (`id`, `rank`) VALUES
 	(10, 'Level 10');
 /*!40000 ALTER TABLE `rank` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.recognition
-DROP TABLE IF EXISTS `recognition`;
+-- Dumping structure for table hris.recognition
 CREATE TABLE IF NOT EXISTS `recognition` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -1398,19 +1251,18 @@ CREATE TABLE IF NOT EXISTS `recognition` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.recognition: 0 rows
+-- Dumping data for table hris.recognition: 0 rows
 /*!40000 ALTER TABLE `recognition` DISABLE KEYS */;
 /*!40000 ALTER TABLE `recognition` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.role
-DROP TABLE IF EXISTS `role`;
+-- Dumping structure for table hris.role
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `role` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.role: 6 rows
+-- Dumping data for table hris.role: 7 rows
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role` (`id`, `role`) VALUES
 	(1, 'Human Resource-1'),
@@ -1421,8 +1273,7 @@ INSERT INTO `role` (`id`, `role`) VALUES
 	(6, 'Manager');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.serviceallowance
-DROP TABLE IF EXISTS `serviceallowance`;
+-- Dumping structure for table hris.serviceallowance
 CREATE TABLE IF NOT EXISTS `serviceallowance` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `service_id` int(10) DEFAULT NULL,
@@ -1430,9 +1281,9 @@ CREATE TABLE IF NOT EXISTS `serviceallowance` (
   `allowance_id` int(10) DEFAULT NULL,
   `amount` double(10,6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3473 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4713 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.serviceallowance: 334 rows
+-- Dumping data for table hris.serviceallowance: 2 rows
 /*!40000 ALTER TABLE `serviceallowance` DISABLE KEYS */;
 INSERT INTO `serviceallowance` (`id`, `service_id`, `employee_id`, `allowance_id`, `amount`) VALUES
 	(2, 72, 512, 1, 500.000000),
@@ -1772,11 +1623,134 @@ INSERT INTO `serviceallowance` (`id`, `service_id`, `employee_id`, `allowance_id
 	(3442, 32, 392, NULL, NULL),
 	(3452, 32, 392, NULL, NULL),
 	(3462, 32, 392, NULL, NULL),
-	(3472, 32, 392, NULL, NULL);
+	(3472, 32, 392, NULL, NULL),
+	(3482, 32, 392, NULL, NULL),
+	(3492, 32, 392, NULL, NULL),
+	(3502, 32, 392, NULL, NULL),
+	(3512, 32, 392, NULL, NULL),
+	(3522, 32, 392, NULL, NULL),
+	(3532, 32, 392, NULL, NULL),
+	(3542, 32, 392, NULL, NULL),
+	(3552, 32, 392, NULL, NULL),
+	(3562, 32, 392, NULL, NULL),
+	(3572, 32, 392, NULL, NULL),
+	(3582, 32, 392, NULL, NULL),
+	(3592, 32, 392, NULL, NULL),
+	(3602, 32, 392, NULL, NULL),
+	(3612, 32, 392, NULL, NULL),
+	(3622, 32, 392, NULL, NULL),
+	(3632, 32, 392, NULL, NULL),
+	(3642, 32, 392, NULL, NULL),
+	(3652, 32, 392, NULL, NULL),
+	(3662, 32, 392, NULL, NULL),
+	(3672, 32, 392, NULL, NULL),
+	(3682, 32, 392, NULL, NULL),
+	(3692, 32, 392, NULL, NULL),
+	(3702, 32, 392, NULL, NULL),
+	(3712, 32, 392, NULL, NULL),
+	(3722, 32, 392, NULL, NULL),
+	(3732, 32, 392, NULL, NULL),
+	(3742, 32, 392, NULL, NULL),
+	(3752, 32, 392, NULL, NULL),
+	(3762, 32, 392, NULL, NULL),
+	(3772, 32, 392, NULL, NULL),
+	(3782, 32, 392, NULL, NULL),
+	(3792, 32, 392, NULL, NULL),
+	(3802, 32, 392, NULL, NULL),
+	(3812, 32, 392, NULL, NULL),
+	(3822, 32, 392, NULL, NULL),
+	(3832, 32, 392, NULL, NULL),
+	(3842, 32, 392, NULL, NULL),
+	(3852, 32, 392, NULL, NULL),
+	(3862, 32, 392, NULL, NULL),
+	(3872, 32, 392, NULL, NULL),
+	(3882, 32, 392, NULL, NULL),
+	(3892, 32, 392, NULL, NULL),
+	(3902, 32, 392, NULL, NULL),
+	(3912, 32, 392, NULL, NULL),
+	(3922, 32, 392, NULL, NULL),
+	(3932, 32, 392, NULL, NULL),
+	(3942, 32, 392, NULL, NULL),
+	(3952, 32, 392, NULL, NULL),
+	(3962, 32, 392, NULL, NULL),
+	(3972, 32, 392, NULL, NULL),
+	(3982, 32, 392, NULL, NULL),
+	(3992, 32, 392, NULL, NULL),
+	(4002, 32, 392, NULL, NULL),
+	(4012, 32, 392, NULL, NULL),
+	(4022, 32, 392, NULL, NULL),
+	(4032, 32, 392, NULL, NULL),
+	(4042, 32, 392, NULL, NULL),
+	(4052, 32, 392, NULL, NULL),
+	(4062, 32, 392, NULL, NULL),
+	(4072, 32, 392, NULL, NULL),
+	(4082, 32, 392, NULL, NULL),
+	(4092, 32, 392, NULL, NULL),
+	(4102, 32, 392, NULL, NULL),
+	(4112, 32, 392, NULL, NULL),
+	(4122, 32, 392, NULL, NULL),
+	(4132, 32, 392, NULL, NULL),
+	(4142, 32, 392, NULL, NULL),
+	(4152, 32, 392, NULL, NULL),
+	(4162, 32, 392, NULL, NULL),
+	(4172, 32, 392, NULL, NULL),
+	(4182, 32, 392, NULL, NULL),
+	(4192, 32, 392, NULL, NULL),
+	(4202, 32, 392, NULL, NULL),
+	(4212, 32, 392, NULL, NULL),
+	(4222, 32, 392, NULL, NULL),
+	(4232, 32, 392, NULL, NULL),
+	(4242, 32, 392, NULL, NULL),
+	(4252, 32, 392, NULL, NULL),
+	(4262, 32, 392, NULL, NULL),
+	(4272, 32, 392, NULL, NULL),
+	(4282, 32, 392, NULL, NULL),
+	(4292, 32, 392, NULL, NULL),
+	(4302, 32, 392, NULL, NULL),
+	(4312, 32, 392, NULL, NULL),
+	(4322, 32, 392, NULL, NULL),
+	(4332, 32, 392, NULL, NULL),
+	(4342, 32, 392, NULL, NULL),
+	(4352, 32, 392, NULL, NULL),
+	(4362, 32, 392, NULL, NULL),
+	(4372, 32, 392, NULL, NULL),
+	(4382, 32, 392, NULL, NULL),
+	(4392, 32, 392, NULL, NULL),
+	(4402, 32, 392, NULL, NULL),
+	(4412, 32, 392, NULL, NULL),
+	(4422, 32, 392, NULL, NULL),
+	(4432, 32, 392, NULL, NULL),
+	(4442, 32, 392, NULL, NULL),
+	(4452, 32, 392, NULL, NULL),
+	(4462, 32, 392, NULL, NULL),
+	(4472, 32, 392, NULL, NULL),
+	(4482, 32, 392, NULL, NULL),
+	(4492, 32, 392, NULL, NULL),
+	(4502, 32, 392, NULL, NULL),
+	(4512, 32, 392, NULL, NULL),
+	(4522, 32, 392, NULL, NULL),
+	(4532, 32, 392, NULL, NULL),
+	(4542, 32, 392, NULL, NULL),
+	(4552, 32, 392, NULL, NULL),
+	(4562, 32, 392, NULL, NULL),
+	(4572, 32, 392, NULL, NULL),
+	(4582, 32, 392, NULL, NULL),
+	(4592, 32, 392, NULL, NULL),
+	(4602, 32, 392, NULL, NULL),
+	(4612, 32, 392, NULL, NULL),
+	(4622, 32, 392, NULL, NULL),
+	(4632, 32, 392, NULL, NULL),
+	(4642, 32, 392, NULL, NULL),
+	(4652, 32, 392, NULL, NULL),
+	(4662, 32, 392, NULL, NULL),
+	(4672, 32, 392, NULL, NULL),
+	(4682, 32, 392, NULL, NULL),
+	(4692, 32, 392, NULL, NULL),
+	(4702, 32, 392, NULL, NULL),
+	(4712, 32, 392, NULL, NULL);
 /*!40000 ALTER TABLE `serviceallowance` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.serviceallowancetemp
-DROP TABLE IF EXISTS `serviceallowancetemp`;
+-- Dumping structure for table hris.serviceallowancetemp
 CREATE TABLE IF NOT EXISTS `serviceallowancetemp` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `serviceallowance_id` int(10) NOT NULL DEFAULT '0',
@@ -1787,18 +1761,16 @@ CREATE TABLE IF NOT EXISTS `serviceallowancetemp` (
   `remarks` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8413 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8823 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.serviceallowancetemp: 3 rows
+-- Dumping data for table hris.serviceallowancetemp: 0 rows
 /*!40000 ALTER TABLE `serviceallowancetemp` DISABLE KEYS */;
 INSERT INTO `serviceallowancetemp` (`id`, `serviceallowance_id`, `service_id`, `employee_id`, `allowance_id`, `amount`, `remarks`, `user_id`) VALUES
 	(532, 0, 32, 392, NULL, NULL, 'Added', 502),
-	(8412, 132, 1142, 502, 1, 500.00, 'Edited', 22),
-	(8402, 122, 1142, 502, 2, 1500.00, 'Edited', 22);
+	(8822, 3102, 2402, 372, NULL, NULL, 'Edited', 372);
 /*!40000 ALTER TABLE `serviceallowancetemp` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.servicebenefit
-DROP TABLE IF EXISTS `servicebenefit`;
+-- Dumping structure for table hris.servicebenefit
 CREATE TABLE IF NOT EXISTS `servicebenefit` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) DEFAULT NULL,
@@ -1807,12 +1779,11 @@ CREATE TABLE IF NOT EXISTS `servicebenefit` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.servicebenefit: 0 rows
+-- Dumping data for table hris.servicebenefit: 0 rows
 /*!40000 ALTER TABLE `servicebenefit` DISABLE KEYS */;
 /*!40000 ALTER TABLE `servicebenefit` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.serviceleave
-DROP TABLE IF EXISTS `serviceleave`;
+-- Dumping structure for table hris.serviceleave
 CREATE TABLE IF NOT EXISTS `serviceleave` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `service_id` int(10) NOT NULL DEFAULT '0',
@@ -1820,34 +1791,49 @@ CREATE TABLE IF NOT EXISTS `serviceleave` (
   `leave_id` int(10) DEFAULT NULL,
   `leavedays` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4943 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5793 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.serviceleave: 250 rows
+-- Dumping data for table hris.serviceleave: 6 rows
 /*!40000 ALTER TABLE `serviceleave` DISABLE KEYS */;
 INSERT INTO `serviceleave` (`id`, `service_id`, `employee_id`, `leave_id`, `leavedays`) VALUES
 	(4912, 1142, 502, 17, '5'),
 	(4922, 1142, 502, 7, '1'),
 	(4932, 1142, 502, 2, '15'),
-	(202, 62, 652, 17, '5'),
-	(212, 62, 652, 7, '1'),
-	(222, 62, 652, 2, '10'),
-	(232, 62, 652, 4, '10'),
-	(242, 72, 512, 17, '5'),
-	(252, 72, 512, 7, '1'),
-	(262, 72, 512, 2, '10'),
-	(272, 72, 512, 4, '10'),
+	(5792, 1682, 602, 4, '10'),
+	(5782, 1682, 602, 2, '10'),
+	(5772, 1682, 602, 7, '1'),
+	(5762, 1682, 602, 17, '5'),
+	(5712, 1632, 582, 4, '15'),
+	(5702, 1632, 582, 2, '15'),
+	(5692, 1632, 582, 7, '1'),
+	(5682, 1632, 582, 17, '5'),
+	(5602, 1472, 232, 17, '5'),
+	(5592, 1312, 422, 4, '10'),
+	(5582, 1312, 422, 2, '10'),
+	(5572, 1312, 422, 7, '1'),
 	(362, 102, 462, 17, '5'),
 	(372, 102, 462, 7, '1'),
 	(382, 102, 462, 2, '10'),
 	(392, 102, 462, 4, '10'),
 	(4942, 1142, 502, 4, '15'),
+	(5452, 1172, 262, 7, '1'),
+	(5442, 1172, 262, 17, '5'),
+	(5432, 2542, 332, 4, '15'),
+	(5422, 2542, 332, 2, '15'),
+	(5412, 2542, 332, 7, '1'),
+	(5402, 2542, 332, 17, '5'),
+	(5372, 1532, 322, 4, '15'),
+	(5242, 1812, 672, 4, '15'),
+	(5232, 1812, 672, 2, '15'),
+	(5222, 1812, 672, 5, '60'),
+	(5212, 1812, 672, 7, '1'),
 	(4902, 1382, 1202, 4, '15'),
 	(4892, 1382, 1202, 2, '15'),
 	(4882, 1382, 1202, 7, '1'),
 	(4862, 1212, 552, 4, '10'),
 	(4812, 1502, 222, 7, '1'),
-	(4802, 1502, 222, 4, '15'),
-	(4792, 1502, 222, 2, '15'),
+	(4802, 1502, 222, 4, '10'),
+	(4792, 1502, 222, 2, '10'),
 	(4782, 1182, 512, 2, '10'),
 	(4772, 1182, 512, 7, '1'),
 	(4762, 0, 512, 2, '10'),
@@ -1874,16 +1860,16 @@ INSERT INTO `serviceleave` (`id`, `service_id`, `employee_id`, `leave_id`, `leav
 	(4212, 2432, 652, 17, '5'),
 	(4202, 2432, 652, 7, '1'),
 	(4172, 0, 652, 4, '10'),
-	(862, 292, 702, 17, '5'),
-	(872, 292, 702, 1, '1'),
-	(882, 292, 702, 7, '1'),
-	(892, 292, 702, 2, '10'),
-	(902, 292, 702, 4, '10'),
-	(912, 302, 892, 17, '5'),
-	(922, 302, 892, 7, '1'),
-	(932, 302, 892, 1, '1'),
-	(942, 302, 892, 2, '8'),
-	(952, 302, 892, 4, '8'),
+	(5362, 1532, 322, 2, '15'),
+	(5282, 1942, 702, 7, '1'),
+	(5272, 1942, 702, 4, '10'),
+	(5262, 1942, 702, 2, '10'),
+	(5252, 1942, 702, 17, '5'),
+	(5332, 1952, 892, 4, '8'),
+	(5322, 1952, 892, 2, '8'),
+	(5312, 1952, 892, 1, '1'),
+	(5302, 1952, 892, 7, '1'),
+	(5292, 1952, 892, 17, '5'),
 	(4572, 0, 562, 7, '1'),
 	(4582, 1932, 562, 17, '5'),
 	(4592, 1932, 562, 7, '1'),
@@ -1967,29 +1953,64 @@ INSERT INTO `serviceleave` (`id`, `service_id`, `employee_id`, `leave_id`, `leav
 	(1792, 562, 1062, 7, '1'),
 	(1802, 562, 1062, 2, '7'),
 	(1812, 562, 1062, 4, '7'),
-	(1902, 592, 262, 17, '5'),
-	(1912, 592, 262, 7, '1'),
-	(1922, 592, 262, 2, '15'),
-	(1932, 592, 262, 4, '15'),
+	(5202, 1812, 672, 17, '5'),
+	(5192, 0, 672, 7, '1'),
+	(5182, 1782, 662, 4, '15'),
+	(5172, 1782, 662, 2, '15'),
+	(5522, 1362, 442, 7, '1'),
+	(5512, 1222, 402, 4, '15'),
+	(5502, 1222, 402, 2, '15'),
+	(5342, 1532, 322, 17, '5'),
+	(5352, 1532, 322, 7, '1'),
 	(1942, 602, 282, 17, '5'),
 	(1952, 602, 282, 7, '1'),
-	(1962, 602, 282, 2, '10'),
-	(1972, 602, 282, 4, '10'),
-	(2022, 622, 292, 17, '5'),
-	(2032, 622, 292, 7, '1'),
-	(2042, 622, 292, 2, '15'),
-	(2052, 622, 292, 4, '15'),
+	(1962, 602, 282, 2, '15'),
+	(1972, 602, 282, 4, '15'),
+	(5162, 1782, 662, 7, '1'),
+	(5152, 1782, 662, 17, '5'),
+	(5142, 1762, 472, 4, '15'),
+	(5132, 1762, 472, 2, '15'),
+	(5022, 1512, 642, 4, '15'),
+	(5012, 1512, 642, 2, '15'),
+	(5002, 1512, 642, 7, '1'),
+	(4992, 1512, 642, 17, '5'),
 	(4432, 1922, 762, 2, '7'),
 	(4412, 0, 762, 2, '7'),
 	(4422, 1922, 762, 7, '1'),
+	(5122, 1762, 472, 7, '1'),
+	(5112, 1762, 472, 17, '5'),
 	(2142, 652, 382, 17, '5'),
 	(2152, 652, 382, 7, '1'),
 	(2162, 652, 382, 2, '10'),
 	(2172, 652, 382, 4, '10'),
+	(5752, 1642, 482, 4, '15'),
+	(5742, 1642, 482, 2, '15'),
+	(5732, 1642, 482, 7, '1'),
+	(5722, 1642, 482, 17, '5'),
+	(5642, 1612, 592, 17, '5'),
+	(5632, 1472, 232, 4, '15'),
+	(5622, 1472, 232, 2, '15'),
+	(5612, 1472, 232, 7, '1'),
+	(5562, 1312, 422, 17, '5'),
+	(5552, 1362, 442, 17, '5'),
+	(5542, 1362, 442, 4, '10'),
+	(5532, 1362, 442, 2, '10'),
 	(2302, 712, 452, 17, '5'),
 	(2312, 712, 452, 7, '1'),
 	(2342, 712, 452, 4, '10'),
 	(2332, 712, 452, 2, '10'),
+	(5102, 1722, 352, 4, '15'),
+	(5092, 1722, 352, 2, '15'),
+	(5082, 1722, 352, 7, '1'),
+	(5072, 1722, 352, 17, '5'),
+	(5392, 2512, 292, 2, '10'),
+	(5052, 2512, 292, 7, '1'),
+	(5042, 2512, 292, 17, '5'),
+	(5032, 2512, 642, 4, '15'),
+	(4982, 1462, 22, 4, '7'),
+	(4972, 1462, 22, 2, '7'),
+	(4962, 1462, 22, 7, '1'),
+	(4952, 1462, 22, 17, '5'),
 	(4852, 1212, 552, 2, '10'),
 	(4842, 1212, 552, 7, '1'),
 	(4832, 1182, 512, 4, '10'),
@@ -2047,6 +2068,13 @@ INSERT INTO `serviceleave` (`id`, `service_id`, `employee_id`, `leave_id`, `leav
 	(3042, 992, 682, 2, '10'),
 	(3052, 992, 682, 7, '1'),
 	(3062, 992, 682, 17, '5'),
+	(5492, 1222, 402, 7, '1'),
+	(5482, 1222, 402, 17, '5'),
+	(5472, 0, 402, 7, '1'),
+	(5462, 1172, 262, 4, '15'),
+	(5672, 1612, 592, 4, '15'),
+	(5662, 1612, 592, 2, '15'),
+	(5652, 1612, 592, 7, '1'),
 	(4032, 2142, 692, 7, '1'),
 	(4022, 2142, 692, 17, '5'),
 	(4012, 2142, 692, 2, '10'),
@@ -2081,8 +2109,7 @@ INSERT INTO `serviceleave` (`id`, `service_id`, `employee_id`, `leave_id`, `leav
 	(3792, 1152, 412, 4, '10');
 /*!40000 ALTER TABLE `serviceleave` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.serviceleavestatus
-DROP TABLE IF EXISTS `serviceleavestatus`;
+-- Dumping structure for table hris.serviceleavestatus
 CREATE TABLE IF NOT EXISTS `serviceleavestatus` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) DEFAULT NULL,
@@ -2093,9 +2120,9 @@ CREATE TABLE IF NOT EXISTS `serviceleavestatus` (
   `slc` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `vlt` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4693 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5543 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.serviceleavestatus: 413 rows
+-- Dumping data for table hris.serviceleavestatus: 7 rows
 /*!40000 ALTER TABLE `serviceleavestatus` DISABLE KEYS */;
 INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, `useddays`, `leftdays`, `slc`, `vlt`) VALUES
 	(2, 502, 7, '1', '0', '1', NULL, NULL),
@@ -2104,7 +2131,7 @@ INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, 
 	(32, 502, 2, '15', '0', '15', NULL, NULL),
 	(42, 12, 17, '5', '0', '5', NULL, NULL),
 	(52, 12, 7, '1', '0', '1', NULL, NULL),
-	(62, 12, 4, '10', '0', '10', NULL, NULL),
+	(62, 12, 4, '10', '1', '9', NULL, NULL),
 	(72, 12, 2, '10', '0', '10', NULL, NULL),
 	(4042, 552, 17, '5', '0', '5', NULL, NULL),
 	(4032, 552, 7, '1', '0', '1', NULL, NULL),
@@ -2140,7 +2167,7 @@ INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, 
 	(422, 1182, 2, '10', '0', '10', NULL, NULL),
 	(432, 1182, 4, '10', '0', '10', NULL, NULL),
 	(442, 1182, 17, '5', '0', '5', NULL, NULL),
-	(452, 22, 4, '7', '0', '7', NULL, NULL),
+	(452, 22, 4, '7', '254.', '2.5', NULL, NULL),
 	(462, 22, 7, '1', '0', '1', NULL, NULL),
 	(472, 22, 17, '5', '0', '5', NULL, NULL),
 	(482, 22, 2, '7', '0', '7', NULL, NULL),
@@ -2279,8 +2306,8 @@ INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, 
 	(1812, 1062, 4, '7', '0', '7', NULL, NULL),
 	(1822, 222, 17, '5', '0', '5', NULL, NULL),
 	(1832, 222, 7, '1', '0', '1', NULL, NULL),
-	(1842, 222, 4, '15', '0', '15', NULL, NULL),
-	(1852, 222, 2, '15', '0', '15', NULL, NULL),
+	(1842, 222, 4, '10', '0', '10', NULL, NULL),
+	(1852, 222, 2, '10', '0', '10', NULL, NULL),
 	(1862, 232, 17, '5', '0', '5', NULL, NULL),
 	(1872, 232, 7, '1', '0', '1', NULL, NULL),
 	(1882, 232, 2, '15', '0', '15', NULL, NULL),
@@ -2291,8 +2318,8 @@ INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, 
 	(1932, 262, 4, '15', '0', '15', NULL, NULL),
 	(1942, 282, 17, '5', '0', '5', NULL, NULL),
 	(1952, 282, 7, '1', '0', '1', NULL, NULL),
-	(1962, 282, 2, '10', '0', '10', NULL, NULL),
-	(1972, 282, 4, '10', '0', '10', NULL, NULL),
+	(1962, 282, 2, '15', '0', '15', NULL, NULL),
+	(1972, 282, 4, '15', '0', '15', NULL, NULL),
 	(1982, 322, 17, '5', '0', '5', NULL, NULL),
 	(1992, 322, 7, '1', '0', '8', NULL, NULL),
 	(2002, 322, 2, '15', '0', '15', NULL, NULL),
@@ -2499,8 +2526,8 @@ INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, 
 	(4512, 512, 2, '10', '0', '10', NULL, NULL),
 	(4522, 512, 7, '1', '0', '1', NULL, NULL),
 	(4532, 512, 2, '10', '0', '10', NULL, NULL),
-	(4542, 222, 2, '15', '0', '15', NULL, NULL),
-	(4552, 222, 4, '15', '0', '15', NULL, NULL),
+	(4542, 222, 2, '10', '0', '10', NULL, NULL),
+	(4552, 222, 4, '10', '0', '10', NULL, NULL),
 	(4562, 222, 7, '1', '0', '1', NULL, NULL),
 	(4572, 222, 17, '5', '0', '5', NULL, NULL),
 	(4582, 512, 4, '10', '0', '10', NULL, NULL),
@@ -2514,11 +2541,95 @@ INSERT INTO `serviceleavestatus` (`id`, `employee_id`, `leave_id`, `leavedays`, 
 	(4662, 502, 17, '5', '0', '5', NULL, NULL),
 	(4672, 502, 7, '1', '0', '1', NULL, NULL),
 	(4682, 502, 2, '15', '0', '15', NULL, NULL),
-	(4692, 502, 4, '15', '0', '15', NULL, NULL);
+	(4692, 502, 4, '15', '0', '15', NULL, NULL),
+	(4702, 22, 17, '5', '0', '5', NULL, NULL),
+	(4712, 22, 7, '1', '0', '1', NULL, NULL),
+	(4722, 22, 2, '7', '0', '7', NULL, NULL),
+	(4732, 22, 4, '7', '254.', '2.5', NULL, NULL),
+	(4742, 642, 17, '5', '0', '5', NULL, NULL),
+	(4752, 642, 7, '1', '0', '1', NULL, NULL),
+	(4762, 642, 2, '15', '0', '15', NULL, NULL),
+	(4772, 642, 4, '15', '0', '15', NULL, NULL),
+	(4782, 642, 4, '15', '0', '15', NULL, NULL),
+	(4792, 292, 17, '5', '0', '5', NULL, NULL),
+	(4802, 292, 7, '1', '0', '1', NULL, NULL),
+	(4812, 292, 2, '15', '0', '15', NULL, NULL),
+	(4822, 352, 17, '5', '0', '5', NULL, NULL),
+	(4832, 352, 7, '1', '0', '1', NULL, NULL),
+	(4842, 352, 2, '15', '0', '15', NULL, NULL),
+	(4852, 352, 4, '15', '0', '15', NULL, NULL),
+	(4862, 472, 17, '5', '0', '5', NULL, NULL),
+	(4872, 472, 7, '1', '0', '1', NULL, NULL),
+	(4882, 472, 2, '15', '0', '15', NULL, NULL),
+	(4892, 472, 4, '15', '0', '15', NULL, NULL),
+	(4902, 662, 17, '5', '0', '5', NULL, NULL),
+	(4912, 662, 7, '1', '0', '1', NULL, NULL),
+	(4922, 662, 2, '15', '0', '15', NULL, NULL),
+	(4932, 662, 4, '15', '0', '15', NULL, NULL),
+	(4942, 672, 7, '1', '0', '1', NULL, NULL),
+	(4952, 672, 17, '5', '0', '5', NULL, NULL),
+	(4962, 672, 7, '1', '0', '1', NULL, NULL),
+	(4972, 672, 5, '60', '0', '60', NULL, NULL),
+	(4982, 672, 2, '15', '0', '15', NULL, NULL),
+	(4992, 672, 4, '15', '0', '15', NULL, NULL),
+	(5002, 702, 17, '5', '0', '5', NULL, NULL),
+	(5012, 702, 2, '10', '0', '10', NULL, NULL),
+	(5022, 702, 4, '10', '0', '10', NULL, NULL),
+	(5032, 702, 7, '1', '0', '1', NULL, NULL),
+	(5042, 892, 17, '5', '0', '5', NULL, NULL),
+	(5052, 892, 7, '1', '0', '1', NULL, NULL),
+	(5062, 892, 1, '1', '0', '1', NULL, NULL),
+	(5072, 892, 2, '8', '0', '8', NULL, NULL),
+	(5082, 892, 4, '8', '0', '8', NULL, NULL),
+	(5092, 322, 17, '5', '0', '5', NULL, NULL),
+	(5102, 322, 7, '1', '0', '1', NULL, NULL),
+	(5112, 322, 2, '15', '0', '15', NULL, NULL),
+	(5122, 322, 4, '15', '0', '15', NULL, NULL),
+	(5132, 292, 2, '10', '0', '10', NULL, NULL),
+	(5142, 292, 2, '10', '0', '10', NULL, NULL),
+	(5152, 332, 17, '5', '0', '5', NULL, NULL),
+	(5162, 332, 7, '1', '0', '1', NULL, NULL),
+	(5172, 332, 2, '15', '0', '15', NULL, NULL),
+	(5182, 332, 4, '15', '0', '15', NULL, NULL),
+	(5192, 262, 17, '5', '0', '5', NULL, NULL),
+	(5202, 262, 7, '1', '0', '1', NULL, NULL),
+	(5212, 262, 4, '15', '0', '15', NULL, NULL),
+	(5222, 402, 7, '1', '0', '1', NULL, NULL),
+	(5232, 402, 17, '5', '0', '5', NULL, NULL),
+	(5242, 402, 7, '1', '0', '1', NULL, NULL),
+	(5252, 402, 2, '15', '0', '15', NULL, NULL),
+	(5262, 402, 4, '15', '0', '15', NULL, NULL),
+	(5272, 442, 7, '1', '0', '1', NULL, NULL),
+	(5282, 442, 2, '10', '0', '10', NULL, NULL),
+	(5292, 442, 4, '10', '0', '10', NULL, NULL),
+	(5302, 442, 17, '5', '0', '5', NULL, NULL),
+	(5312, 422, 17, '5', '0', '5', NULL, NULL),
+	(5322, 422, 7, '1', '0', '1', NULL, NULL),
+	(5332, 422, 2, '10', '0', '10', NULL, NULL),
+	(5342, 422, 4, '10', '0', '10', NULL, NULL),
+	(5352, 232, 17, '5', '0', '5', NULL, NULL),
+	(5362, 232, 7, '1', '0', '1', NULL, NULL),
+	(5372, 232, 2, '15', '0', '15', NULL, NULL),
+	(5382, 232, 4, '15', '0', '15', NULL, NULL),
+	(5392, 592, 17, '5', '0', '5', NULL, NULL),
+	(5402, 592, 7, '1', '0', '1', NULL, NULL),
+	(5412, 592, 2, '15', '0', '15', NULL, NULL),
+	(5422, 592, 4, '15', '0', '15', NULL, NULL),
+	(5432, 582, 17, '5', '0', '5', NULL, NULL),
+	(5442, 582, 7, '1', '0', '1', NULL, NULL),
+	(5452, 582, 2, '15', '0', '15', NULL, NULL),
+	(5462, 582, 4, '15', '0', '15', NULL, NULL),
+	(5472, 482, 17, '5', '0', '5', NULL, NULL),
+	(5482, 482, 7, '1', '0', '1', NULL, NULL),
+	(5492, 482, 2, '15', '0', '15', NULL, NULL),
+	(5502, 482, 4, '15', '0', '15', NULL, NULL),
+	(5512, 602, 17, '5', '0', '5', NULL, NULL),
+	(5522, 602, 7, '1', '0', '1', NULL, NULL),
+	(5532, 602, 2, '10', '0', '10', NULL, NULL),
+	(5542, 602, 4, '10', '0', '10', NULL, NULL);
 /*!40000 ALTER TABLE `serviceleavestatus` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.serviceleavestatustemp
-DROP TABLE IF EXISTS `serviceleavestatustemp`;
+-- Dumping structure for table hris.serviceleavestatustemp
 CREATE TABLE IF NOT EXISTS `serviceleavestatustemp` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) NOT NULL DEFAULT '0',
@@ -2532,9 +2643,9 @@ CREATE TABLE IF NOT EXISTS `serviceleavestatustemp` (
   `vlt` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `remarks` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41622 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.serviceleavestatustemp: ~64 rows (approximately)
+-- Dumping data for table hris.serviceleavestatustemp: 5 rows
 /*!40000 ALTER TABLE `serviceleavestatustemp` DISABLE KEYS */;
 INSERT INTO `serviceleavestatustemp` (`id`, `user_id`, `leavestatus_id`, `employee_id`, `leave_id`, `leavedays`, `useddays`, `leftdays`, `slc`, `vlt`, `remarks`) VALUES
 	(5622, 502, 82, 392, 7, '1', '0', '1', NULL, NULL, 'Edited'),
@@ -2549,26 +2660,17 @@ INSERT INTO `serviceleavestatustemp` (`id`, `user_id`, `leavestatus_id`, `employ
 	(5712, 502, 3492, 392, 2, '10', '0', '10', NULL, NULL, 'Edited'),
 	(5722, 502, 3502, 392, 17, '5', '0', '5', NULL, NULL, 'Edited'),
 	(5732, 502, 3512, 392, 7, '1', '0', '1', NULL, NULL, 'Edited'),
-	(37312, 3, 202, 652, 2, '10', '0', '10', NULL, NULL, 'Edited'),
-	(37322, 3, 212, 652, 7, '1', '0', '1', NULL, NULL, 'Edited'),
-	(37332, 3, 222, 652, 17, '5', '0', '5', NULL, NULL, 'Edited'),
-	(37342, 3, 232, 652, 4, '10', '0', '10', NULL, NULL, 'Edited'),
-	(37352, 3, 3962, 652, 4, '10', '0', '10', NULL, NULL, 'Edited'),
-	(37362, 3, 3952, 652, 17, '5', '0', '5', NULL, NULL, 'Edited'),
-	(37372, 3, 3932, 652, 7, '1', '0', '1', NULL, NULL, 'Edited'),
-	(37382, 3, 3942, 652, 2, '10', '0', '10', NULL, NULL, 'Edited'),
-	(41542, 22, 2, 502, 7, '1', '0', '1', NULL, NULL, 'Edited'),
-	(41552, 22, 22, 502, 17, '5', '0', '5', NULL, NULL, 'Edited'),
-	(41562, 22, 32, 502, 2, '15', '0', '15', NULL, NULL, 'Edited'),
-	(41572, 22, 402, 502, 4, '15', '0', '15', NULL, NULL, 'Edited'),
-	(41582, 22, 4662, 502, 17, '5', '0', '5', NULL, NULL, 'Edited'),
-	(41592, 22, 4672, 502, 7, '1', '0', '1', NULL, NULL, 'Edited'),
-	(41602, 22, 4682, 502, 2, '15', '0', '15', NULL, NULL, 'Edited'),
-	(41612, 22, 402, 502, 4, '15', NULL, NULL, NULL, NULL, 'Added');
+	(70982, 3, 1822, 222, 17, '5', '0', '5', NULL, NULL, 'Edited'),
+	(70992, 3, 1832, 222, 7, '1', '0', '1', NULL, NULL, 'Edited'),
+	(71002, 3, 1842, 222, 4, '10', '0', '10', NULL, NULL, 'Edited'),
+	(71012, 3, 1852, 222, 2, '10', '0', '10', NULL, NULL, 'Edited'),
+	(71022, 3, 4542, 222, 2, '10', '0', '10', NULL, NULL, 'Edited'),
+	(71032, 3, 4552, 222, 4, '10', '0', '10', NULL, NULL, 'Edited'),
+	(71042, 3, 4562, 222, 7, '1', '0', '1', NULL, NULL, 'Edited'),
+	(71052, 3, 4572, 222, 17, '5', '0', '5', NULL, NULL, 'Edited');
 /*!40000 ALTER TABLE `serviceleavestatustemp` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.serviceleavetemp
-DROP TABLE IF EXISTS `serviceleavetemp`;
+-- Dumping structure for table hris.serviceleavetemp
 CREATE TABLE IF NOT EXISTS `serviceleavetemp` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `serviceleave_id` int(10) NOT NULL DEFAULT '0',
@@ -2579,31 +2681,30 @@ CREATE TABLE IF NOT EXISTS `serviceleavetemp` (
   `remarks` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13243 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19303 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.serviceleavetemp: 12 rows
+-- Dumping data for table hris.serviceleavetemp: 1 rows
 /*!40000 ALTER TABLE `serviceleavetemp` DISABLE KEYS */;
 INSERT INTO `serviceleavetemp` (`id`, `serviceleave_id`, `service_id`, `employee_id`, `leave_id`, `leavedays`, `remarks`, `user_id`) VALUES
 	(8372, 3792, 1152, 412, 4, '10', 'Edited', 412),
-	(13242, 0, 1142, 502, 4, '15', 'Added', 22),
-	(13232, 4932, 1142, 502, 2, '15', 'Edited', 22),
-	(13222, 4922, 1142, 502, 7, '1', 'Edited', 22),
-	(13212, 4912, 1142, 502, 17, '5', 'Edited', 22),
-	(12222, 4182, 2432, 652, 4, '10', 'Edited', 3),
-	(12212, 4192, 2432, 652, 2, '10', 'Edited', 3),
+	(19262, 4222, 2402, 372, 4, '7', 'Edited', 372),
 	(3502, 112, 32, 392, 7, '1', 'Edited', 502),
 	(3492, 102, 32, 392, 17, '5', 'Edited', 502),
 	(3482, 92, 32, 392, 4, '10', 'Edited', 502),
 	(3472, 82, 32, 392, 2, '10', 'Edited', 502),
-	(12202, 4202, 2432, 652, 7, '1', 'Edited', 3),
 	(8362, 3582, 1152, 412, 7, '1', 'Edited', 412),
 	(8352, 3562, 1152, 412, 2, '10', 'Edited', 412),
 	(8342, 3772, 1152, 412, 17, '5', 'Edited', 412),
-	(12192, 4212, 2432, 652, 17, '5', 'Edited', 3);
+	(19302, 4822, 1502, 222, 17, '5', 'Edited', 3),
+	(19252, 4232, 2402, 372, 2, '7', 'Edited', 372),
+	(19242, 4082, 2402, 372, 17, '5', 'Edited', 372),
+	(19232, 4092, 2402, 372, 7, '1', 'Edited', 372),
+	(19292, 4792, 1502, 222, 2, '10', 'Edited', 3),
+	(19282, 4802, 1502, 222, 4, '10', 'Edited', 3),
+	(19272, 4812, 1502, 222, 7, '1', 'Edited', 3);
 /*!40000 ALTER TABLE `serviceleavetemp` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.services
-DROP TABLE IF EXISTS `services`;
+-- Dumping structure for table hris.services
 CREATE TABLE IF NOT EXISTS `services` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL DEFAULT '0',
@@ -2618,9 +2719,9 @@ CREATE TABLE IF NOT EXISTS `services` (
   `remarks` text COLLATE utf8_unicode_ci,
   `ifcurrent` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2512 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2572 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.services: ~5 rows (approximately)
+-- Dumping data for table hris.services: ~13 rows (approximately)
 /*!40000 ALTER TABLE `services` DISABLE KEYS */;
 INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `position_id`, `employmentStatus`, `company_id`, `department_id`, `branch_id`, `basicSalary`, `remarks`, `ifcurrent`) VALUES
 	(13, 1, '2017-03-01', '', 92, 'Regular', 1, 2, 32, 10000.00, 'Promotion', 1),
@@ -2656,8 +2757,7 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(562, 1062, '2017-04-17', '2016-10-17', 65, 'Regular', 3, 3, 82, 11.00, 'l', 0),
 	(592, 262, '2011-11-02', '2012-05-02', 182, 'Probationary', 8, 112, 52, 0.00, 'l', 0),
 	(602, 282, '2011-11-01', NULL, 222, 'Regular', 8, 82, 52, 0.00, 'l', 1),
-	(622, 292, '2016-03-16', '2016-03-17', 192, 'Probationary', 8, 112, 52, 0.00, 'l', 0),
-	(652, 382, '2016-05-04', '2016-05-03', 662, 'Regular', 8, 92, 52, 0.00, 'l', 0),
+	(652, 382, '2016-11-05', '2016-05-03', 662, 'Regular', 8, 92, 52, 0.00, 'l', 0),
 	(662, 632, '2017-01-16', '2017-07-16', 192, 'Probationary', 8, 112, 62, 10.00, 'l', 1),
 	(682, 622, '2017-03-01', '2017-09-01', 342, 'Probationary', 8, 112, 52, 0.00, 'l', 1),
 	(712, 452, '2016-05-01', NULL, 292, 'Regular', 8, 112, 52, 0.00, 'l', 1),
@@ -2692,10 +2792,10 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(1112, 502, '2012-06-15', '2015-01-15', 612, 'Regular', 1, 22, 32, 9000.00, 'Salary Adjustment', 0),
 	(1132, 502, '2015-01-15', '2016-06-15', 112, 'Regular', 1, 22, 32, 12000.00, 'Additional Job Responsibilities; Salary Adjustment', 0),
 	(1142, 502, '2016-06-15', NULL, 18, 'Regular', 1, 22, 32, 15000.00, 'Additional Job Responsibilities; Salary Adjustment', 1),
-	(1152, 412, '2016-02-06', NULL, 632, 'Regular', 1, 1, 32, 16000.00, 'Regular', 1),
+	(1152, 412, '2016-02-06', NULL, 72, 'Regular', 1, 1, 32, 16000.00, 'Regular', 1),
 	(1172, 262, '2012-05-02', NULL, 182, 'Regular', 8, 112, 52, 0.00, 'Regular', 1),
 	(1182, 512, '2015-06-01', NULL, 302, 'Regular', 1, 1, 32, 10000.00, 'Regular', 1),
-	(1192, 382, '2016-05-03', '2016-11-03', 252, 'Probationary', 8, 92, 52, 0.00, 'l', 1),
+	(1192, 382, '2016-05-04', '2016-11-04', 252, 'Probationary', 8, 92, 52, 0.00, 'l', 1),
 	(1202, 552, '2016-03-16', '2016-09-01', 76, 'Probationary', 1, 1, 32, 318.00, 'l', 0),
 	(1212, 552, '2016-09-01', NULL, 302, 'Regular', 1, 1, 32, 11.00, 'Regular', 1),
 	(1222, 402, '2007-11-01', NULL, 282, 'Regular', 8, 82, 52, 0.00, 'l', 1),
@@ -2707,12 +2807,12 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(1312, 422, '2016-02-01', NULL, 272, 'Regular', 8, 112, 52, 0.00, 'l', 1),
 	(1322, 542, '2012-05-11', NULL, 20, 'Regular', 1, 1, 32, 0.00, 'l', 1),
 	(1332, 612, '2016-03-01', NULL, 332, 'Project Based', 8, 112, 52, 0.00, 'l', 1),
-	(1342, 462, '2016-05-23', '2016-11-16', 692, 'Probationary', 1, 1, 32, 10.00, 'For regularization', 1),
+	(1342, 462, '2016-05-23', '2016-11-16', 74, 'Probationary', 1, 1, 32, 10.00, 'For regularization', 1),
 	(1352, 442, '2015-03-16', '2016-02-01', 202, 'Probationary', 8, 102, 52, 0.00, 'l', 0),
 	(1362, 442, '2016-02-01', NULL, 202, 'Regular', 8, 102, 52, 0.00, 'l', 1),
 	(1372, 1202, '2010-12-01', '2011-04-01', 302, 'Probationary', 1, 1, 32, 576.92, '0', 0),
 	(1382, 1202, '2011-04-01', '2012-06-14', 302, 'Regular', 1, 1, 32, 0.00, '0', 0),
-	(1392, 1202, '2012-06-14', NULL, 682, 'Regular', 7, 6, 3, 0.00, '0', 1),
+	(1392, 1202, '2012-06-14', NULL, 76, 'Regular', 1, 1, 32, 0.00, '0', 1),
 	(1402, 232, '2003-12-11', '2004-04-01', 31, 'Regular', 7, 11, 1, 0.00, 'l', 0),
 	(1412, 232, '2004-04-01', '2013-10-01', 642, 'Regular', 7, 11, 1, 0.00, 'l', 0),
 	(1422, 1182, '2013-05-20', '2013-09-01', 71, 'Probationary', 1, 1, 32, 8.00, 'For regularization', 0),
@@ -2727,9 +2827,6 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(1512, 642, '2016-08-01', NULL, 352, 'Regular', 1, 7, 32, 12.00, 'l', 1),
 	(1522, 322, '2013-08-01', '2014-02-01', 192, 'Probationary', 8, 112, 62, 0.00, 'l', 0),
 	(1532, 322, '2014-02-01', NULL, 192, 'Regular', 8, 112, 62, 0.00, 'l', 1),
-	(1552, 332, '2016-02-16', '2016-12-01', 202, 'Probationary', 8, 102, 62, 0.00, 'l', 0),
-	(1562, 332, '2016-12-01', '2015-11-16', 202, 'Regular', 8, 102, 62, 0.00, 'l', 0),
-	(1572, 332, '2015-11-16', NULL, 202, 'Project Based', 8, 102, 62, 0.00, 'l', 1),
 	(1582, 362, '2014-05-04', '2016-02-01', 202, 'Probationary', 8, 102, 62, 0.00, 'l', 0),
 	(1592, 362, '2016-02-01', NULL, 202, 'Regular', 8, 102, 62, 0.00, 'l', 1),
 	(1602, 592, '2015-09-01', '2016-03-01', 312, 'Project Based', 8, 102, 62, 0.00, 'l', 0),
@@ -2737,7 +2834,6 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(1622, 582, '2014-03-01', '2015-04-01', 182, 'Probationary', 8, 112, 62, 0.00, 'l', 0),
 	(1632, 582, '2015-04-01', NULL, 182, 'Regular', 8, 112, 62, 0.00, 'l', 1),
 	(1642, 482, '2011-10-01', NULL, 282, 'Project Based', 8, 112, 62, 0.00, 'l', 1),
-	(1652, 352, '2008-01-09', '2008-05-21', 722, 'Probationary', 1, 22, 32, 0.00, '2', 0),
 	(1662, 352, '2008-05-21', '2008-08-21', 722, 'Probationary', 1, 22, 32, 1.00, '0', 0),
 	(1672, 602, '2014-04-17', '2015-04-01', 322, 'Probationary', 8, 112, 62, 0.00, 'l', 0),
 	(1682, 602, '2015-04-01', NULL, 322, 'Regular', 8, 112, 62, 0.00, 'l', 1),
@@ -2749,7 +2845,7 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(1742, 472, '2011-12-01', '2011-08-16', 762, 'Regular', 1, 1, 32, 0.00, '0', 0),
 	(1752, 472, '2011-08-16', '2016-12-01', 762, 'Probationary', 1, 1, 32, 8.00, '0', 0),
 	(1762, 472, '2016-12-01', NULL, 21, 'Regular', 1, 1, 32, 0.00, '0', 1),
-	(1772, 662, '2014-05-01', '2016-08-01', 642, 'Regular', 4, 11, 1, 0.00, '0', 0),
+	(1772, 662, '2014-05-01', '2016-08-01', 642, 'Probationary', 7, 11, 1, 0.00, '0', 0),
 	(1782, 662, '2016-08-01', NULL, 24, 'Regular', 1, 7, 32, 12.00, '0', 1),
 	(1792, 672, '2015-07-20', '2016-06-01', 772, 'Project Based', 4, 262, 142, 275.00, '0', 0),
 	(1802, 672, '2016-06-01', '2016-08-01', 642, 'Regular', 7, 11, 1, 0.00, '0', 0),
@@ -2762,13 +2858,13 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(1872, 152, '2015-12-01', NULL, 80, 'Regular', 9, 14, 42, 0.00, '0', 1),
 	(1882, 52, '2017-02-01', NULL, 81, 'Regular', 9, 52, 42, 15.00, 'Newly Appointed', 1),
 	(1892, 162, '2016-09-01', NULL, 82, 'Regular', 9, 15, 42, 0.00, '0', 1),
-	(1902, 132, '2016-07-15', '2016-12-15', 362, 'Probationary', 9, 42, 42, 20.00, '0', 1),
+	(1902, 132, '2016-07-15', '2016-12-15', 83, 'Probationary', 9, 15, 42, 20.00, '0', 1),
 	(1912, 682, '2017-02-01', NULL, 362, 'Regular', 9, 42, 42, 24.00, '0', 1),
 	(1922, 762, '2017-04-17', NULL, 65, 'Regular', 3, 3, 82, 11.00, '0', 1),
-	(1932, 562, '2017-05-08', NULL, 302, 'Regular', 1, 1, 32, 0.00, 'Transfer from NDC to SMSi', 1),
+	(1932, 562, '2017-05-08', NULL, 76, 'Regular', 1, 1, 32, 0.00, 'Transfer from NDC to SMSi', 1),
 	(1942, 702, '2016-08-01', NULL, 33, 'Regular', 3, 172, 82, 14.00, '0', 1),
 	(1952, 892, '2017-04-01', NULL, 792, 'Regular', 3, 172, 82, 11.00, '0', 1),
-	(1962, 742, '2017-01-12', NULL, 35, 'Regular', 3, 3, 82, 14.00, '0', 1),
+	(1962, 742, '2017-01-12', NULL, 63, 'Regular', 3, 3, 82, 14.00, '0', 1),
 	(1972, 1082, '2017-02-01', NULL, 412, 'Regular', 3, 3, 82, 11.00, '0', 1),
 	(1982, 872, '2007-10-01', NULL, 802, 'Regular', 7, 6, 1, 0.00, '0', 1),
 	(1992, 932, '2013-08-23', '2013-12-01', 812, 'Probationary', 3, 172, 82, 0.00, '0', 0),
@@ -2778,49 +2874,53 @@ INSERT INTO `services` (`id`, `employee_id`, `dateAssigned`, `datePrompt`, `posi
 	(2042, 902, '2011-10-01', '2011-04-01', 832, 'Probationary', 3, 212, 82, 0.00, '0', 1),
 	(2052, 1052, '2017-04-17', NULL, 67, 'Regular', 3, 172, 82, 11.00, '0', 1),
 	(2062, 972, '2014-11-01', '2015-04-16', 67, 'Probationary', 3, 172, 82, 0.00, '0', 0),
-	(2072, 972, '2015-04-16', NULL, 67, 'Regular', 3, 172, 82, 0.00, '0', 1),
-	(2082, 1012, '2016-02-01', '2016-08-01', 67, 'Probationary', 3, 172, 82, 0.00, '0', 1),
+	(2072, 972, '2015-04-16', NULL, 492, 'Regular', 3, 172, 82, 0.00, '0', 1),
+	(2082, 1012, '2016-02-01', '2016-08-01', 502, 'Probationary', 3, 172, 82, 0.00, '0', 1),
 	(2092, 1002, '2016-02-01', '2016-08-01', 67, 'Probationary', 3, 172, 82, 0.00, '0', 0),
-	(2102, 1002, '2016-08-01', NULL, 502, 'Regular', 3, 172, 82, 12.00, '0', 1),
+	(2102, 1002, '2016-08-01', NULL, 502, 'Regular', 3, 212, 82, 12.00, '0', 1),
 	(2112, 1062, '2016-10-17', '2017-04-17', 65, 'Probationary', 3, 3, 82, 10.00, '0', 1),
 	(2122, 962, '2015-09-01', '2015-05-11', 67, 'Probationary', 3, 172, 92, 0.00, '0', 0),
-	(2132, 962, '2015-05-11', '2015-08-11', 67, 'Project Based', 3, 172, 92, 0.00, '0', 1),
+	(2132, 962, '2015-05-11', '2015-08-11', 68, 'Project Based', 3, 172, 92, 0.00, '0', 1),
 	(2142, 692, '2014-03-01', NULL, 67, 'Regular', 3, 172, 72, 0.00, '0', 1),
-	(2152, 1262, '2017-05-17', '2017-11-17', 102, 'Probationary', 1, 2, 32, 0.00, '0', 1),
+	(2152, 1262, '2017-05-17', '2017-11-17', 562, 'Probationary', 11, 182, 122, 0.00, '0', 1),
 	(2192, 922, '2005-02-01', '2004-11-08', 27, 'Regular', 7, 6, 9, 0.00, 'l', 0),
 	(2202, 922, '2004-11-08', '2008-08-01', 27, 'Probationary', 7, 6, 1, 0.00, 'l', 0),
-	(2222, 1072, '2017-02-01', '2016-03-16', 37, 'Regular', 3, 3, 72, 0.00, 'l', 0),
-	(2232, 1072, '2016-03-16', '2016-09-03', 37, 'Regular', 3, 3, 72, 0.00, 'l', 1),
+	(2222, 1072, '2017-02-01', '2016-03-17', 37, 'Regular', 3, 3, 72, 0.00, 'l', 0),
 	(2242, 922, '2008-08-01', NULL, 13, 'Regular', 7, 6, 10, 0.00, 'l', 1),
 	(2252, 952, '2015-01-12', '2015-05-01', 642, 'Project Based', 7, 6, 4, 0.00, 'l', 0),
 	(2262, 952, '2015-05-01', '2016-03-16', 642, 'Probationary', 7, 6, 4, 0.00, 'Transfer to NDC', 0),
 	(2282, 952, '2016-03-16', NULL, 412, 'Regular', 3, 3, 72, 0.00, 'l', 1),
 	(2292, 942, '2015-06-15', '2015-09-15', 832, 'Project Based', 3, 172, 72, 0.00, 'l', 0),
-	(2302, 942, '2015-09-15', '2016-03-15', 832, 'Probationary', 3, 172, 72, 0.00, 'l', 1),
+	(2302, 942, '2015-09-15', '2016-03-15', 39, 'Probationary', 3, 212, 72, 0.00, 'l', 1),
 	(2312, 772, '2016-05-14', '2016-11-15', 412, 'Probationary', 3, 3, 102, 0.00, 'l', 0),
 	(2322, 772, '2016-11-15', NULL, 412, 'Regular', 3, 3, 102, 0.00, 'l', 1),
 	(2332, 722, '2015-11-01', '2016-05-01', 522, 'Probationary', 3, 3, 102, 0.00, 'l', 1),
 	(2342, 1032, '2006-09-01', '2015-03-03', 642, 'Regular', 7, 11, 1, 0.00, 'l', 0),
 	(2352, 1032, '2015-03-03', '2016-03-16', 50, 'Regular', 3, 172, 72, 0.00, 'l', 0),
-	(2362, 1032, '2016-03-16', NULL, 472, 'Regular', 3, 172, 102, 0.00, 'l', 1),
+	(2362, 1032, '2016-03-16', NULL, 472, 'Regular', 3, 162, 102, 0.00, 'l', 1),
 	(2372, 782, '2016-09-15', '2017-03-15', 48, 'Probationary', 3, 172, 82, 0.00, 'l', 0),
-	(2382, 782, '2017-03-15', NULL, 48, 'Regular', 3, 172, 82, 0.00, 'l', 1),
-	(2392, 992, '2016-02-01', '2016-05-01', 67, 'Project Based', 3, 172, 112, 0.00, 'l', 1),
-	(2402, 372, '2017-04-17', NULL, 71, 'Regular', 1, 1, 32, 11000.00, 'Regular', 1),
+	(2382, 782, '2017-03-15', NULL, 48, 'Regular', 3, 212, 82, 0.00, 'l', 1),
+	(2392, 992, '2016-02-01', '2016-05-01', 68, 'Project Based', 3, 212, 112, 0.00, 'l', 1),
+	(2402, 372, '2017-04-17', NULL, 72, 'Regular', 1, 1, 32, 11000.00, 'Regular', 1),
 	(2412, 392, '2016-10-03', NULL, 72, 'Regular', 1, 1, 32, 12000.00, 'Regular', 1),
 	(2422, 652, '2016-06-01', '2016-08-01', 642, 'Probationary', 7, 11, 1, 0.00, 'Transfer to SMSi', 0),
-	(2432, 652, '2016-08-01', NULL, 24, 'Regular', 1, 7, 32, 12500.00, 'Regular', 1),
+	(2432, 652, '2016-08-01', NULL, 112, 'Regular', 1, 7, 32, 12500.00, 'Regular', 1),
 	(2442, 1102, '2016-08-27', '2017-02-28', 542, 'Probationary', 6, 232, 132, 0.00, 'l', 0),
 	(2452, 1102, '2017-02-28', NULL, 542, 'Regular', 6, 222, 132, 0.00, 'l', 1),
 	(2462, 1092, '2016-07-21', '2017-01-22', 41, 'Probationary', 6, 232, 132, 0.00, 'l', 0),
 	(2472, 1092, '2017-01-22', NULL, 852, 'Regular', 6, 232, 132, 0.00, 'l', 1),
 	(2482, 1242, '2016-07-04', '2017-01-05', 602, 'Probationary', 6, 222, 132, 0.00, 'l', 0),
 	(2492, 1242, '2017-01-05', '2017-06-05', 602, 'Project Based', 6, 232, 132, 0.00, 'l', 1),
-	(2502, 292, '2016-03-17', '2016-09-17', 192, 'Probationary', 8, 112, 52, 0.00, 'l', 1);
+	(2502, 292, '2016-03-17', '2016-09-17', 192, 'Probationary', 8, 112, 52, 0.00, 'l', 0),
+	(2512, 292, '2016-09-17', NULL, 192, 'Regular', 8, 112, 52, 0.00, 'l', 1),
+	(2522, 332, '2015-11-16', '2016-02-16', 202, 'Project Based', 8, 102, 62, 0.00, 'For Probationary', 0),
+	(2532, 332, '2016-02-16', '2016-08-16', 202, 'Probationary', 8, 102, 52, 0.00, 'l', 0),
+	(2542, 332, '2016-12-01', NULL, 202, 'Regular', 8, 102, 62, 0.00, 'l', 1),
+	(2552, 1072, '2016-03-17', '2016-09-17', 522, 'Probationary', 3, 3, 72, 0.00, 'l', 1),
+	(2562, 1272, '2017-05-17', '2017-11-17', 102, 'Probationary', 1, 2, 32, 0.00, 'l', 1);
 /*!40000 ALTER TABLE `services` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.settings
-DROP TABLE IF EXISTS `settings`;
+-- Dumping structure for table hris.settings
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `item` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -2828,7 +2928,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.settings: 4 rows
+-- Dumping data for table hris.settings: 4 rows
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`id`, `item`, `value`) VALUES
 	(1, 'Sick Leave Conversion ', 'February'),
@@ -2837,8 +2937,7 @@ INSERT INTO `settings` (`id`, `item`, `value`) VALUES
 	(4, 'Maximum VL Credit ', '5');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.shifts
-DROP TABLE IF EXISTS `shifts`;
+-- Dumping structure for table hris.shifts
 CREATE TABLE IF NOT EXISTS `shifts` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `day` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -2848,21 +2947,20 @@ CREATE TABLE IF NOT EXISTS `shifts` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.shifts: 1 rows
+-- Dumping data for table hris.shifts: 2 rows
 /*!40000 ALTER TABLE `shifts` DISABLE KEYS */;
 INSERT INTO `shifts` (`id`, `day`, `timein`, `timeout`, `shiftgroup_id`) VALUES
 	(6, 'Monday', '09:00', '06:00', 3);
 /*!40000 ALTER TABLE `shifts` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.shiftsgroup
-DROP TABLE IF EXISTS `shiftsgroup`;
+-- Dumping structure for table hris.shiftsgroup
 CREATE TABLE IF NOT EXISTS `shiftsgroup` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `shiftName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.shiftsgroup: 4 rows
+-- Dumping data for table hris.shiftsgroup: 3 rows
 /*!40000 ALTER TABLE `shiftsgroup` DISABLE KEYS */;
 INSERT INTO `shiftsgroup` (`id`, `shiftName`) VALUES
 	(1, 'Permanent'),
@@ -2871,8 +2969,7 @@ INSERT INTO `shiftsgroup` (`id`, `shiftName`) VALUES
 	(5, 'Project Based');
 /*!40000 ALTER TABLE `shiftsgroup` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.skills
-DROP TABLE IF EXISTS `skills`;
+-- Dumping structure for table hris.skills
 CREATE TABLE IF NOT EXISTS `skills` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -2881,16 +2978,71 @@ CREATE TABLE IF NOT EXISTS `skills` (
   `level` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_skills_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=592 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.skills: ~1 rows (approximately)
+-- Dumping data for table hris.skills: ~0 rows (approximately)
 /*!40000 ALTER TABLE `skills` DISABLE KEYS */;
 INSERT INTO `skills` (`id`, `employee_id`, `type`, `name`, `level`) VALUES
-	(1, 1, 'Management', NULL, 'Professional');
+	(1, 1, 'Management', NULL, 'Professional'),
+	(22, 392, 'Technical', 'Installation of operating system(Win 7,8& 8.1)', 'Advance'),
+	(32, 392, 'Technical', 'Installation of drives and applications', NULL),
+	(42, 392, 'Technical', 'Assemble and dissemble of system unit', NULL),
+	(52, 392, 'Technical', 'Networking (cabling,file sharing,printer sharing,router configuration,website blocking', NULL),
+	(62, 412, 'Technical', 'Programming Languages Ruby on Rails,PHP,and Visu', NULL),
+	(72, 412, 'Technical', 'Expert in MS Office Applications (Word,Excel & power point)', NULL),
+	(82, 412, 'Technical', 'Graphic designing Tools (Adobo Photoshop,Lightroom & Macromedia firefox)', NULL),
+	(92, 412, 'Technical', 'Internet Savvy', NULL),
+	(102, 552, 'Technical', 'Computer Installation and Hardware/Software Troubleshooting', NULL),
+	(112, 552, 'Technical', 'Networking (Cisco Networking Academy Program)', NULL),
+	(122, 552, 'Technical', 'Software ( Autocad,skechup,photoshop,illustrator,and corelDRAWold)', NULL),
+	(132, 552, 'Technical', 'Basic Programming(HTML and Visual Basic)', NULL),
+	(142, 552, 'Technical', 'Microsoft Office Applications(MSword,MSExcel,MSPowerpoint)', NULL),
+	(152, 562, 'Technical', 'Computer Troubleshoot', NULL),
+	(162, 562, 'Technical', 'Networking', NULL),
+	(172, 562, 'Technical', 'Microsoft Office 2007-2010', NULL),
+	(182, 562, 'Technical', 'Windows XP/7', NULL),
+	(192, 562, 'Technical', 'Related in open Source Operating system', NULL),
+	(202, 562, 'Technical', 'Setting up Cisco Routers,CCTV Camera', NULL),
+	(212, 542, 'Technical', 'Windows Operation(windows 95,98,2000,XP)', NULL),
+	(222, 542, 'Technical', 'Operate MSword,Excel,PowerPoint,frontPage,and AdobePhotoshop 5.5', NULL),
+	(232, 542, 'Technical', 'Design WebThrough HTML', NULL),
+	(242, 542, 'Technical', 'Programming Logic(PROLOG)', NULL),
+	(252, 542, 'Technical', 'Networking', NULL),
+	(262, 462, 'Technical', 'Microsoft Office', NULL),
+	(272, 462, 'Technical', 'Microsoft PowerPoint', NULL),
+	(282, 462, 'Technical', 'Media and Internet Literacy', NULL),
+	(292, 462, 'Management', 'Fluent in English and Filipino', NULL),
+	(302, 1202, 'Technical', 'powerPoint Presentation', NULL),
+	(312, 1202, 'Technical', 'Microsoft word,Excel,Internet,Adobe Photoshop,Illustrator', NULL),
+	(322, 1202, 'Technical', 'Computer Troubleshooting and repairs windows XP,Windows Vista,MAC Os X Leopard,MAC Os Snow Leopard', NULL),
+	(332, 1202, 'Technical', 'Computer Networking Infrastructure Design Cable layout and Installation', NULL),
+	(342, 1202, 'Technical', 'Web Design and Graphic', NULL),
+	(352, 642, 'Management', 'Highly Motivated Self-Starter', NULL),
+	(362, 642, 'Management', 'Fast learner', NULL),
+	(372, 642, 'Management', 'Responsible and can work under pressure', NULL),
+	(382, 642, 'Management', 'Hardworking and can easily adapt to a new environment', NULL),
+	(392, 642, 'Management', 'Computer literate(MS word, MS power point', NULL),
+	(402, 472, 'Technical', 'Adobe photoshop CS3,CS4,CS5', NULL),
+	(412, 472, 'Technical', 'Adobe Illustrator CS3,CS4,CS5', NULL),
+	(422, 472, 'Technical', 'Corel draw 12,X3,X4, and X5', NULL),
+	(432, 472, 'Technical', 'Basic Wordpress', NULL),
+	(442, 472, 'Technical', 'Basic Joomla', NULL),
+	(462, 1182, 'Technical', 'Programming Languages Jva,VB.net,HTML,PHP,CSS,Object Pascal,Javas ript', NULL),
+	(472, 1182, 'Technical', 'Development Platforms Dreamweaver,Delphi,WAMP Server,Visual Studio(2010), Adobe Photoshop,Joomla', NULL),
+	(482, 1182, 'Technical', 'Backend RDBMS Flamerobin,MySQL,Firebird', NULL),
+	(492, 1182, 'Technical', 'Operations System/Softwares Windows(XP,7,8)Linux (Ubuntu) Microsoft Office(Word,Excel,Powerpoint', NULL),
+	(502, 1102, 'Technical', 'Food and Beverage Services NC II', 'Functional'),
+	(512, 1102, 'Technical', 'Trainers Methodology Certificate I', 'Functional'),
+	(522, 1102, 'Technical', 'Food and Beverage Services', 'Functional'),
+	(532, 1212, 'Technical', 'Adobe Photoshop', NULL),
+	(542, 1212, 'Technical', 'Adobe Illustrator', NULL),
+	(552, 1212, 'Technical', 'Adobe fireworks', NULL),
+	(562, 1212, 'Technical', 'Power Director', NULL),
+	(572, 1212, 'Technical', 'VideoPad Editor', NULL),
+	(582, 1212, 'Technical', 'Microsoft Offices', NULL);
 /*!40000 ALTER TABLE `skills` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.suspension
-DROP TABLE IF EXISTS `suspension`;
+-- Dumping structure for table hris.suspension
 CREATE TABLE IF NOT EXISTS `suspension` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(10) DEFAULT NULL,
@@ -2898,12 +3050,11 @@ CREATE TABLE IF NOT EXISTS `suspension` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.suspension: 0 rows
+-- Dumping data for table hris.suspension: 0 rows
 /*!40000 ALTER TABLE `suspension` DISABLE KEYS */;
 /*!40000 ALTER TABLE `suspension` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.taxstatus
-DROP TABLE IF EXISTS `taxstatus`;
+-- Dumping structure for table hris.taxstatus
 CREATE TABLE IF NOT EXISTS `taxstatus` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `taxstatus` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -2911,7 +3062,7 @@ CREATE TABLE IF NOT EXISTS `taxstatus` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.taxstatus: 10 rows
+-- Dumping data for table hris.taxstatus: 10 rows
 /*!40000 ALTER TABLE `taxstatus` DISABLE KEYS */;
 INSERT INTO `taxstatus` (`id`, `taxstatus`, `taxcode`) VALUES
 	(1, 'Single', 'S'),
@@ -2926,8 +3077,7 @@ INSERT INTO `taxstatus` (`id`, `taxstatus`, `taxcode`) VALUES
 	(10, 'Married w/ 4 Dependent', 'M4');
 /*!40000 ALTER TABLE `taxstatus` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.timesheet
-DROP TABLE IF EXISTS `timesheet`;
+-- Dumping structure for table hris.timesheet
 CREATE TABLE IF NOT EXISTS `timesheet` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `emp_bio_id` int(10) NOT NULL DEFAULT '0',
@@ -2940,14 +3090,153 @@ CREATE TABLE IF NOT EXISTS `timesheet` (
   `overtime` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `remarks` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1392 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.timesheet: ~0 rows (approximately)
+-- Dumping data for table hris.timesheet: 45 rows
 /*!40000 ALTER TABLE `timesheet` DISABLE KEYS */;
+INSERT INTO `timesheet` (`id`, `emp_bio_id`, `dateLog`, `timein`, `timeout`, `totalHours`, `late`, `undertime`, `overtime`, `remarks`) VALUES
+	(2, 10002, '2017-05-03', '07:59:29', '17:49:41', '8.83', '0', '0', '0', 'Regular'),
+	(12, 10002, '2017-05-04', '08:08:20', '17:17:35', '8.29', '0', '0', '0', 'Regular'),
+	(22, 10002, '2017-05-05', '07:56:28', '17:20:42', '8.35', '0', '0', '0', 'Regular'),
+	(32, 10002, '2017-05-08', '07:57:35', '17:36:39', '8.61', '0', '0', '0', 'Regular'),
+	(42, 10002, '2017-05-09', '07:46:26', '18:18:53', '9.31', '0', '0', '1.31', 'Overtime'),
+	(52, 10002, '2017-05-10', '08:04:23', '17:33:26', '8.56', '0', '0', '0', 'Regular'),
+	(62, 10002, '2017-05-11', '07:57:31', '17:34:23', '8.57', '0', '0', '0', 'Regular'),
+	(72, 10002, '2017-05-12', '08:02:48', '17:12:20', '8.21', '0', '0', '0', 'Regular'),
+	(82, 10002, '2017-05-15', '07:59:03', '17:31:48', '8.53', '0', '0', '0', 'Regular'),
+	(92, 10013, '2017-05-02', '08:53:54', '17:22:49', '8.38', '0', '0', '0', 'Regular'),
+	(102, 10013, '2017-05-03', '08:34:58', '21:44:45', '12.75', '0', '0', '4.75', 'Overtime'),
+	(112, 10013, '2017-05-05', '08:48:32', '17:25:32', '8.43', '0', '0', '0', 'Regular'),
+	(122, 10013, '2017-05-06', '08:51:13', '15:32:34', '6.54', '0', '0', '0', 'Regular'),
+	(132, 10013, '2017-05-08', '08:52:54', '17:34:20', '8.57', '0', '0', '0', 'Regular'),
+	(142, 10013, '2017-05-09', '08:51:50', '17:37:56', '8.63', '0', '0', '0', 'Regular'),
+	(152, 10013, '2017-05-10', '09:02:15', '17:37:33', '8.59', '2.25', '0', '0', 'Regular'),
+	(162, 10013, '2017-05-11', '08:56:23', '17:27:37', '8.46', '0', '0', '0', 'Regular'),
+	(172, 10013, '2017-05-12', '08:54:42', '19:33:36', '10.56', '0', '0', '2.56', 'Overtime'),
+	(182, 10013, '2017-05-13', '08:41:23', '20:52:08', '11.87', '0', '0', '5.87', 'Overtime'),
+	(192, 10013, '2017-05-15', '08:48:37', '17:43:55', '8.73', '0', '0', '0', 'Regular'),
+	(202, 10014, '2017-05-02', '08:56:01', '17:21:14', '8.35', '0', '0', '0', 'Regular'),
+	(212, 10014, '2017-05-03', '08:54:04', '18:23:37', '9.39', '0', '0', '1.39', 'Overtime'),
+	(222, 10014, '2017-05-04', '08:14:44', '21:28:31', '12.48', '0', '0', '4.48', 'Overtime'),
+	(232, 10014, '2017-05-05', '09:00:41', '19:32:34', '10.53', '0.68', '0', '2.54', 'Overtime'),
+	(242, 10014, '2017-05-06', '08:57:10', '22:53:27', '13.89', '0', '0', '7.89', 'Overtime'),
+	(252, 10014, '2017-05-08', '09:10:24', '17:13:53', '8.06', '10.4', '0', '0', 'Regular'),
+	(262, 10014, '2017-05-09', '08:58:28', '18:20:12', '9.34', '0', '0', '1.34', 'Overtime'),
+	(272, 10014, '2017-05-10', '09:04:16', '17:11:10', '8.12', '4.27', '0', '0', 'Regular'),
+	(282, 10014, '2017-05-11', '09:07:41', '17:37:17', '8.49', '7.68', '0', '0', 'Regular'),
+	(292, 10014, '2017-05-12', '09:09:04', '17:18:37', '8.16', '9.07', '0', '0', 'Regular'),
+	(302, 10014, '2017-05-13', '08:52:02', '16:11:13', '7.19', '0', '0', '1.19', 'Overtime'),
+	(312, 10014, '2017-05-15', '08:47:59', '19:19:37', '10.33', '0', '0', '2.33', 'Overtime'),
+	(322, 10017, '2017-05-02', '08:32:46', '17:02:03', '8.03', '0', '0', '0', 'Regular'),
+	(332, 10017, '2017-05-03', '08:42:11', '17:21:21', '8.36', '0', '0', '0', 'Regular'),
+	(342, 10017, '2017-05-04', '08:31:54', '17:25:48', '8.43', '0', '0', '0', 'Regular'),
+	(352, 10017, '2017-05-05', '08:40:43', '17:36:33', '8.61', '0', '0', '0', 'Regular'),
+	(362, 10017, '2017-05-06', '08:31:17', '15:16:23', '6.27', '0', '0', '0', 'Regular'),
+	(372, 10017, '2017-05-08', '08:13:37', '17:12:05', '8.2', '0', '0', '0', 'Regular'),
+	(382, 10017, '2017-05-09', '08:25:49', '17:10:48', '8.18', '0', '0', '0', 'Regular'),
+	(392, 10017, '2017-05-10', '09:00:29', '17:08:55', '8.14', '0.48', '0', '0', 'Regular'),
+	(402, 10017, '2017-05-11', '08:52:32', '17:17:14', '8.29', '0', '0', '0', 'Regular'),
+	(412, 10017, '2017-05-12', '08:19:45', '17:16:33', '8.28', '0', '0', '0', 'Regular'),
+	(422, 10017, '2017-05-13', '08:36:36', '15:13:14', '6.22', '0', '0', '0', 'Regular'),
+	(432, 10017, '2017-05-15', '08:30:28', '17:14:25', '8.24', '0', '0', '0', 'Regular'),
+	(442, 10019, '2017-05-02', '08:37:11', '17:23:06', '8.38', '0', '0', '0', 'Regular'),
+	(452, 10019, '2017-05-03', '08:38:50', '19:24:28', '10.41', '0', '0', '2.41', 'Overtime'),
+	(462, 10019, '2017-05-04', '08:48:55', '17:26:42', '8.44', '0', '0', '0', 'Regular'),
+	(472, 10019, '2017-05-06', '08:56:53', '20:11:59', '11.2', '0', '0', '5.2', 'Overtime'),
+	(482, 10019, '2017-05-08', '08:54:20', '17:34:02', '8.57', '0', '0', '0', 'Regular'),
+	(492, 10019, '2017-05-09', '08:59:44', '17:53:38', '8.89', '0', '0', '0', 'Regular'),
+	(502, 10019, '2017-05-11', '08:28:16', '17:27:34', '8.46', '0', '0', '0', 'Regular'),
+	(512, 10021, '2017-05-02', '08:30:57', '17:19:56', '8.33', '0', '0', '0', 'Regular'),
+	(522, 10021, '2017-05-03', '08:34:23', '17:06:25', '8.11', '0', '0', '0', 'Regular'),
+	(532, 10021, '2017-05-04', '08:33:48', '17:11:02', '8.18', '0', '0', '0', 'Regular'),
+	(542, 10021, '2017-05-05', '09:07:14', '17:15:10', '8.13', '7.23', '0', '0', 'Regular'),
+	(552, 10021, '2017-05-06', '08:21:22', '15:24:01', '6.4', '0', '0', '0', 'Regular'),
+	(562, 10021, '2017-05-09', '08:48:39', '17:13:48', '8.23', '0', '0', '0', 'Regular'),
+	(572, 10021, '2017-05-10', '08:53:39', '17:24:03', '8.4', '0', '0', '0', 'Regular'),
+	(582, 10021, '2017-05-11', '08:32:11', '17:07:41', '8.13', '0', '0', '0', 'Regular'),
+	(592, 10021, '2017-05-12', '08:34:34', '17:08:17', '8.14', '0', '0', '0', 'Regular'),
+	(602, 10021, '2017-05-13', '08:35:33', '15:00:10', '6', '0', '0', '0', 'Regular'),
+	(612, 10021, '2017-05-15', '08:20:42', '17:07:37', '8.13', '0', '0', '0', 'Regular'),
+	(622, 10022, '2017-05-02', '08:53:00', '17:26:22', '8.44', '0', '0', '0', 'Regular'),
+	(632, 10022, '2017-05-03', '08:55:06', '17:50:17', '8.84', '0', '0', '0', 'Regular'),
+	(642, 10022, '2017-05-05', '09:03:59', '17:38:32', '8.58', '3.98', '0', '0', 'Regular'),
+	(652, 10022, '2017-05-06', '08:56:08', '16:07:27', '7.12', '0', '0', '1.12', 'Overtime'),
+	(662, 10022, '2017-05-08', '08:55:54', '17:56:30', '8.94', '0', '0', '0', 'Regular'),
+	(672, 10022, '2017-05-10', '08:57:47', '17:25:08', '8.42', '0', '0', '0', 'Regular'),
+	(682, 10022, '2017-05-11', '08:53:30', '17:43:20', '8.72', '0', '0', '0', 'Regular'),
+	(692, 10022, '2017-05-12', '08:53:54', '17:42:51', '8.71', '0', '0', '0', 'Regular'),
+	(702, 10022, '2017-05-13', '08:58:22', '15:30:26', '6.51', '0', '0', '0', 'Regular'),
+	(712, 10022, '2017-05-15', '08:55:34', '17:37:24', '8.62', '0', '0', '0', 'Regular'),
+	(722, 1003, '2017-05-02', '08:39:09', '20:49:21', '11.82', '0', '0', '3.82', 'Overtime'),
+	(732, 1003, '2017-05-03', '08:45:10', '17:29:41', '8.49', '0', '0', '0', 'Regular'),
+	(742, 1003, '2017-05-04', '08:53:02', '19:18:14', '10.3', '0', '0', '2.3', 'Overtime'),
+	(752, 1003, '2017-05-05', '08:59:06', '17:19:06', '8.32', '0', '0', '0', 'Regular'),
+	(762, 1003, '2017-05-06', '08:59:19', '15:13:39', '6.23', '0', '0', '0', 'Regular'),
+	(772, 1003, '2017-05-08', '08:31:46', '17:13:09', '8.22', '0', '0', '0', 'Regular'),
+	(782, 1003, '2017-05-09', '09:00:14', '18:20:16', '9.33', '0.23', '0', '1.34', 'Overtime'),
+	(792, 1003, '2017-05-11', '08:58:08', '18:00:23', '9.01', '0', '0', '1.01', 'Overtime'),
+	(802, 1003, '2017-05-12', '08:49:32', '17:19:14', '8.32', '0', '0', '0', 'Regular'),
+	(812, 1003, '2017-05-15', '08:52:43', '17:24:27', '8.41', '0', '0', '0', 'Regular'),
+	(822, 1004, '2017-05-02', '08:01:11', '17:18:41', '8.31', '0', '0', '0', 'Regular'),
+	(832, 1004, '2017-05-03', '08:40:06', '17:07:48', '8.13', '0', '0', '0', 'Regular'),
+	(842, 1004, '2017-05-04', '08:42:51', '17:10:53', '8.18', '0', '0', '0', 'Regular'),
+	(852, 1004, '2017-05-05', '08:47:10', '17:16:28', '8.27', '0', '0', '0', 'Regular'),
+	(862, 1004, '2017-05-08', '08:49:52', '17:12:15', '8.2', '0', '0', '0', 'Regular'),
+	(872, 1004, '2017-05-09', '08:45:23', '17:13:01', '8.22', '0', '0', '0', 'Regular'),
+	(882, 1004, '2017-05-11', '08:40:01', '17:09:03', '8.15', '0', '0', '0', 'Regular'),
+	(892, 1004, '2017-05-12', '08:40:13', '17:19:10', '8.32', '0', '0', '0', 'Regular'),
+	(902, 1004, '2017-05-13', '08:39:50', '15:21:11', '6.35', '0', '0', '0', 'Regular'),
+	(912, 1006, '2017-05-02', '08:56:50', '17:32:04', '8.53', '0', '0', '0', 'Regular'),
+	(922, 1006, '2017-05-03', '08:53:59', '17:13:24', '8.22', '0', '0', '0', 'Regular'),
+	(932, 1006, '2017-05-04', '09:09:19', '17:08:47', '7.99', '9.32', '0', '0', 'Regular'),
+	(942, 1006, '2017-05-05', '08:53:03', '17:12:09', '8.2', '0', '0', '0', 'Regular'),
+	(952, 1006, '2017-05-06', '08:57:38', '17:20:32', '8.34', '0', '0', '2.34', 'Overtime'),
+	(962, 1006, '2017-05-09', '08:57:21', '17:16:53', '8.28', '0', '0', '0', 'Regular'),
+	(972, 1006, '2017-05-11', '08:50:40', '17:08:29', '8.14', '0', '0', '0', 'Regular'),
+	(982, 1006, '2017-05-12', '08:59:01', '17:38:42', '8.64', '0', '0', '0', 'Regular'),
+	(992, 1006, '2017-05-13', '08:59:03', '15:07:10', '6.12', '0', '0', '0', 'Regular'),
+	(1002, 1006, '2017-05-15', '09:01:59', '17:19:09', '8.29', '1.98', '0', '0', 'Regular'),
+	(1012, 104, '2017-05-03', '09:01:24', '17:36:45', '8.59', '1.4', '0', '0', 'Regular'),
+	(1022, 104, '2017-05-04', '08:59:57', '17:26:12', '8.44', '0', '0', '0', 'Regular'),
+	(1032, 104, '2017-05-05', '09:03:29', '17:24:11', '8.35', '3.48', '0', '0', 'Regular'),
+	(1042, 104, '2017-05-06', '08:06:18', '18:23:20', '9.39', '0', '0', '3.39', 'Overtime'),
+	(1052, 104, '2017-05-10', '08:52:25', '17:37:20', '8.62', '0', '0', '0', 'Regular'),
+	(1062, 104, '2017-05-11', '08:59:45', '17:44:35', '8.74', '0', '0', '0', 'Regular'),
+	(1072, 104, '2017-05-12', '08:50:00', '17:20:03', '8.33', '0', '0', '0', 'Regular'),
+	(1082, 110, '2017-05-02', '08:54:33', '17:06:13', '8.1', '0', '0', '0', 'Regular'),
+	(1092, 110, '2017-05-03', '08:59:10', '17:13:30', '8.22', '0', '0', '0', 'Regular'),
+	(1102, 110, '2017-05-04', '08:53:23', '17:06:32', '8.11', '0', '0', '0', 'Regular'),
+	(1112, 110, '2017-05-05', '08:53:22', '17:17:17', '8.29', '0', '0', '0', 'Regular'),
+	(1122, 110, '2017-05-06', '08:54:39', '15:16:08', '6.27', '0', '0', '0', 'Regular'),
+	(1132, 110, '2017-05-08', '08:49:58', '17:04:34', '8.08', '0', '0', '0', 'Regular'),
+	(1142, 110, '2017-05-09', '08:52:19', '17:15:22', '8.26', '0', '0', '0', 'Regular'),
+	(1152, 110, '2017-05-10', '09:01:52', '17:14:58', '8.22', '1.87', '0', '0', 'Regular'),
+	(1162, 110, '2017-05-11', '08:41:48', '17:09:14', '8.15', '0', '0', '0', 'Regular'),
+	(1172, 110, '2017-05-12', '08:46:48', '17:13:34', '8.23', '0', '0', '0', 'Regular'),
+	(1182, 110, '2017-05-13', '08:48:51', '15:01:25', '6.02', '0', '0', '0', 'Regular'),
+	(1192, 110, '2017-05-15', '08:54:16', '17:23:18', '8.39', '0', '0', '0', 'Regular'),
+	(1202, 112, '2017-05-02', '08:52:45', '17:21:05', '8.35', '0', '0', '0', 'Regular'),
+	(1212, 112, '2017-05-03', '09:02:25', '17:28:00', '8.43', '2.42', '0', '0', 'Regular'),
+	(1222, 112, '2017-05-04', '08:58:35', '17:13:53', '8.23', '0', '0', '0', 'Regular'),
+	(1232, 112, '2017-05-06', '08:58:00', '15:22:34', '6.38', '0', '0', '0', 'Regular'),
+	(1242, 112, '2017-05-08', '08:55:39', '17:27:17', '8.45', '0', '0', '0', 'Regular'),
+	(1252, 112, '2017-05-10', '08:55:21', '17:13:51', '8.23', '0', '0', '0', 'Regular'),
+	(1262, 112, '2017-05-11', '09:03:10', '17:17:06', '8.23', '3.17', '0', '0', 'Regular'),
+	(1272, 112, '2017-05-12', '09:01:55', '17:36:32', '8.58', '1.92', '0', '0', 'Regular'),
+	(1282, 112, '2017-05-15', '08:11:11', '17:25:43', '8.43', '0', '0', '0', 'Regular'),
+	(1292, 116, '2017-05-02', '08:59:11', '17:29:29', '8.49', '0', '0', '0', 'Regular'),
+	(1302, 116, '2017-05-04', '08:52:26', '17:10:25', '8.17', '0', '0', '0', 'Regular'),
+	(1312, 116, '2017-05-05', '08:53:12', '17:16:02', '8.27', '0', '0', '0', 'Regular'),
+	(1322, 116, '2017-05-09', '09:02:16', '17:19:45', '8.29', '2.27', '0', '0', 'Regular'),
+	(1332, 116, '2017-05-10', '08:59:36', '17:15:03', '8.25', '0', '0', '0', 'Regular'),
+	(1342, 116, '2017-05-11', '08:57:52', '17:20:28', '8.34', '0', '0', '0', 'Regular'),
+	(1352, 116, '2017-05-12', '08:58:06', '17:13:01', '8.22', '0', '0', '0', 'Regular'),
+	(1362, 116, '2017-05-13', '08:54:14', '15:07:07', '6.12', '0', '0', '0', 'Regular'),
+	(1372, 117, '2017-05-10', '08:49:00', '17:33:08', '8.55', '0', '0', '0', 'Regular'),
+	(1382, 117, '2017-05-11', '09:14:47', '17:22:52', '8.13', '14.78', '0', '0', 'Regular');
 /*!40000 ALTER TABLE `timesheet` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.timesheettemp
-DROP TABLE IF EXISTS `timesheettemp`;
+-- Dumping structure for table hris.timesheettemp
 CREATE TABLE IF NOT EXISTS `timesheettemp` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `emp_bio_id` int(10) NOT NULL DEFAULT '0',
@@ -2962,12 +3251,11 @@ CREATE TABLE IF NOT EXISTS `timesheettemp` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
--- Dumping data for table heroku_760d4109a89e3f8.timesheettemp: ~0 rows (approximately)
+-- Dumping data for table hris.timesheettemp: 29 rows
 /*!40000 ALTER TABLE `timesheettemp` DISABLE KEYS */;
 /*!40000 ALTER TABLE `timesheettemp` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.trainingdev
-DROP TABLE IF EXISTS `trainingdev`;
+-- Dumping structure for table hris.trainingdev
 CREATE TABLE IF NOT EXISTS `trainingdev` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `training` text COLLATE utf8_unicode_ci NOT NULL,
@@ -2981,14 +3269,11 @@ CREATE TABLE IF NOT EXISTS `trainingdev` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.trainingdev: ~1 rows (approximately)
+-- Dumping data for table hris.trainingdev: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trainingdev` DISABLE KEYS */;
-INSERT INTO `trainingdev` (`id`, `training`, `topic`, `duration`, `cost`, `venue`, `speaker`, `benefit`, `dateConduct`) VALUES
-	(2, 'SEO', 'Search Engine', '3 hours', 9999.99, 'SMSi office', 'Robert Bersano', 'Enhance skills', '2017-05-08');
 /*!40000 ALTER TABLE `trainingdev` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.trainings
-DROP TABLE IF EXISTS `trainings`;
+-- Dumping structure for table hris.trainings
 CREATE TABLE IF NOT EXISTS `trainings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
@@ -3001,16 +3286,50 @@ CREATE TABLE IF NOT EXISTS `trainings` (
   `remarks` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_trainings_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=362 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.trainings: ~1 rows (approximately)
+-- Dumping data for table hris.trainings: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trainings` DISABLE KEYS */;
 INSERT INTO `trainings` (`id`, `employee_id`, `name`, `started`, `ended`, `institution`, `venue`, `speaker`, `remarks`) VALUES
-	(2, 352, 'Elvira C. Montera', '2011-05-16', '2011-05-18', NULL, NULL, NULL, 'IT PROJECT MANAGEMENT TRAINING');
+	(2, 352, 'Skills For Success', '2011-05-16', '2011-05-18', NULL, 'Active Learning Training Center Manila', NULL, 'IT PROJECT MANAGEMENT TRAINING'),
+	(12, 502, 'Search Engine Optimization', '2011-02-26', '2011-03-26', 'Informatics Computer Institutes', 'Informatics Center', NULL, NULL),
+	(22, 502, 'Mustard Seed Software Appreciation Seminar on Payroll system', '2016-06-04', '2016-06-04', 'Mustard Seed Corporation', 'Dr 3/4 Promenade Bldg.,Kauswagan Highway CDOC', NULL, NULL),
+	(32, 12, 'English and IELTS Conversational English', '2015-03-03', '2013-03-03', NULL, NULL, NULL, NULL),
+	(42, 12, 'Financial Literacy and Estate Tax Seminar', '2015-05-06', '2015-05-06', NULL, NULL, NULL, NULL),
+	(52, 392, 'CCNA Exploration Accessing the WAN', '2014-05-07', '2014-05-07', 'Cisco Networking Academy', NULL, NULL, NULL),
+	(62, 392, 'CCNA Exploration Routing Protocols and Concept', '2014-03-11', '2014-04-11', 'Cisco Networking academy', NULL, NULL, NULL),
+	(72, 392, 'CCNA exploration', '2014-07-09', '2014-07-07', NULL, 'Cisco Networking Academy', NULL, NULL),
+	(82, 392, 'Computer Hardware Servicing (NC11)', '2015-02-11', '2015-02-11', NULL, 'All-in-One Technical School,Carmen Cagayan de Oro City', NULL, NULL),
+	(92, 372, 'Google I/O Extended', '2015-07-07', '2015-07-07', NULL, 'BU Amphitheater', NULL, NULL),
+	(102, 372, '9ormation Technologyth Philippine Youth Congress in Inf', '2011-09-20', '2011-09-22', 'University of the Philippines', 'University of the Philippine Diliman Campus', NULL, NULL),
+	(112, 372, 'BUCS Student Leadership Training', '2010-08-20', '2010-08-22', NULL, 'BU College of Science', NULL, NULL),
+	(122, 512, 'Software Installation and Cloning', '2008-02-01', '2008-02-01', 'Vocational Technology College of Engineering', 'Liceo de Cagayan University RN Pelaez Blvd.', NULL, NULL),
+	(132, 512, 'Data and Harddisk recovery', '2008-02-02', '2008-02-02', 'Vngocational Technology of Engineeri', 'Liceo de Cagayan University RN Pelaez Blvd', NULL, NULL),
+	(142, 512, 'Software Clean up', '2008-02-03', '2008-02-03', 'Vocational Technology Collage of Engineering', 'Liceo de Cagayan university RN Pelaez Blvd', NULL, NULL),
+	(152, 552, 'PLDT(Philcom)', '2009-06-15', '2009-10-15', NULL, NULL, NULL, NULL),
+	(162, 552, 'CDO Polymedic Medical Plaza Hospital', '2009-04-07', '2009-06-05', NULL, NULL, NULL, NULL),
+	(172, 552, 'Career Planning and Self -Improvement', '2009-08-11', '2009-08-11', 'Liceo de Cagayan University', 'Audio Visual-Room 2 Liceo de Cagayan University', NULL, NULL),
+	(182, 552, 'Multimedia Seminar', '2009-08-16', '2009-08-16', 'Liceo de Cagayan University', 'Audio Visual Room 2 Liceo de Cagayan University', NULL, NULL),
+	(192, 552, 'Job Search management', '2009-09-01', '2009-09-01', 'Liceo de Cagayan University', 'AudioVisual Room 2 Liceo de Cagayan University', NULL, NULL),
+	(202, 542, 'Networking', '2003-02-05', '2003-02-05', NULL, NULL, NULL, NULL),
+	(212, 542, 'The Challenging World of Cyber Intelligence and step Beyond Time', '2000-09-05', '2000-09-05', NULL, NULL, NULL, NULL),
+	(222, 502, 'Effective Leadership and Management Skills I Training & Development', '2016-10-25', '2016-10-27', 'Management X Consuting Professional ELMS Currahee QSC', 'Cagayan de Oro City', NULL, NULL),
+	(232, 332, 'Business Quality Traning', '2012-01-18', '2012-01-20', NULL, 'Ladislawa Garden Village, Buhangin, Davao City', NULL, 'Basic Client Service and Branch Operations Training'),
+	(242, 332, 'Customer Service Course', '2008-02-08', NULL, NULL, 'Shiela Mae Restaurant, Road to Wharf, Panabo City', NULL, NULL),
+	(252, 332, 'Team Building Workshop', '2007-10-13', NULL, NULL, 'Magnaga Beach Resort, Comval Province', NULL, NULL),
+	(262, 332, 'Comprehensive Seminar for Tax Agents and Practitioners(TAP)', '2014-07-16', '2014-07-17', NULL, 'PICPA House, Jacinto Ext. araullo St., Davao City', NULL, NULL),
+	(272, 1182, 'Call Center Agent NC II', '2009-07-06', '2009-07-22', 'Trilink Training and Development Corporation', 'Mindanao State University Naawan', NULL, NULL),
+	(282, 1102, 'Leadership Training Service', '2015-08-10', NULL, 'Kabataan Partylist', 'UP/Mintal, Davao City', NULL, NULL),
+	(292, 1102, 'Administrators\' Conference and Capability Building', '2017-02-27', '2017-02-28', NULL, 'Eden Nature Park and Resort, Davao City', NULL, NULL),
+	(302, 1102, 'Tayo talk', '2015-07-24', NULL, 'UIC', 'UIC/Bonifacio', NULL, NULL),
+	(312, 1102, 'Youth of The Nation Address', '2015-07-01', NULL, 'Kabataan Party List', 'Ateneo de Davao', NULL, NULL),
+	(322, 1102, 'Consultative Forum on Philippine Education', '2015-08-25', NULL, 'Kabataan Party List', 'Museo Dabawenyo', NULL, NULL),
+	(332, 1102, 'Speaker Training Workshop', '2015-09-01', NULL, 'SAGIPP', 'UIC/ Bankerohon', NULL, NULL),
+	(342, 1102, 'Leadership Training', '2012-07-02', NULL, 'Full Value Corp.', 'Marikina City', NULL, NULL),
+	(352, 1102, 'HIV-AID Seminar', '2012-09-02', NULL, 'RED CROSS', 'Marikina City', NULL, NULL);
 /*!40000 ALTER TABLE `trainings` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.users
-DROP TABLE IF EXISTS `users`;
+-- Dumping structure for table hris.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -3019,9 +3338,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role_id` int(10) DEFAULT NULL,
   `userStatus` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1433 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1453 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.users: 116 rows
+-- Dumping data for table hris.users: 8 rows
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `userStatus`) VALUES
 	(1, '1', 'jennifer.dantes', 'b787d22d9cb06342658bf546039117bc', 1, 'Active'),
@@ -3042,7 +3361,8 @@ INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `us
 	(312, '142', 'henilito.poliajr.', '8c1bb328d03bcc318634540319a24e9f', 4, 'New'),
 	(322, '152', 'nestor.bantilan', 'b1bc858dcf49c6086b180eae50b01ef0', 4, 'New'),
 	(332, '162', 'roberto.jambarojr.', '0e370c7faeeb1506fc14e5233c7fc05a', 4, 'New'),
-	(352, '192', 'junmer.talindog', '0885f2a6a5221890e2e2521232e65f3b', 4, 'New'),
+	(1442, '1262', 'franco.pimentel', '3e40921aa061a433c138fe6ab22a61af', 4, 'New'),
+	(352, '192', 'junmer.talidong', '61af1850d6b8f29e9aa0d469dbb4ee5c', 4, 'New'),
 	(362, '202', 'ryan.florencio', '5556356816fbe7018c606e582c21970f', 4, 'New'),
 	(372, '212', 'arnold.plaza', 'cc2e557ea904c2c1dc597304c49bc37a', 4, 'New'),
 	(382, '222', 'jimrey.abenoja', '352abb16f864aac389dbc3bbed2ec6bc', 4, 'New'),
@@ -3050,7 +3370,7 @@ INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `us
 	(422, '262', 'james.baldosano', '4a83d9e47b52c99c2f940b061ac65ed5', 4, 'New'),
 	(442, '282', 'renante.cabigas', '5ab00f35632b804c29b10a24b23a206a', 4, 'New'),
 	(452, '292', 'gerald.caro', '3ce3a470cdfa52919ac82a554a7b3b8b', 4, 'New'),
-	(1432, '1262', 'arlyn.benito', 'a6266cd591bdcd5c36d106e2406679e5', 4, 'New'),
+	(1432, '1262', 'franco.pimentel', '3e40921aa061a433c138fe6ab22a61af', 4, 'New'),
 	(472, '312', 'ramonalejandro.valleser', '266575d3c2b8a34f83817458f96152b1', 4, 'Active'),
 	(482, '322', 'elgin.camilotes', 'c148528289a904f04a9aff212f38003b', 4, 'New'),
 	(492, '332', 'aileenjoy.castro', 'f2f48802cf9e310b1251be9017d0e56b', 4, 'New'),
@@ -3069,7 +3389,7 @@ INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `us
 	(632, '472', 'renan.moreno', '49e7ba1dec7e1a139f0bf3b2cd1af89c', 4, 'New'),
 	(642, '482', 'rolando.mosqueda', '922d12136b719ff8b183480a1a1173c6', 4, 'New'),
 	(1412, '1242', 'noel.sobejana', '4a8c6425106c2fc13fdca4727e37801a', 4, 'New'),
-	(662, '502', 'jean.godornes', '6d84ba0d884646c7965503a3f6b319eb', 3, 'Active'),
+	(662, '502', 'jean.godornes', '6d84ba0d884646c7965503a3f6b319eb', 1, 'Active'),
 	(672, '512', 'michael.baculio', 'a739edc5ce327e65bd6f1a0100da560b', 4, 'New'),
 	(1402, '1232', 'marygrace.escalona', '15e6f36d42327adaa3d3686ecaf3629e', 4, 'New'),
 	(702, '542', 'robert.bersano', 'e20dabfe8c672741c14731b3461b31a8', 4, 'New'),
@@ -3084,7 +3404,7 @@ INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `us
 	(802, '642', 'dianejoy.mapano', '7e444ed60745374480872bde2e9bbe86', 4, 'New'),
 	(812, '652', 'cresarjohn.arce', '182d236271b6616a0e8d5459e3f0f819', 4, 'New'),
 	(822, '662', 'lorman.saladaga', 'e5ea41b11dd24fda333be9ff22e2efda', 4, 'New'),
-	(832, '672', 'geneth.sayson', '47d64202037252fb3a7f29ddf63e1542', 4, 'New'),
+	(832, '672', 'geneth.jadulan', 'c11adb56b774afc1f7375fe20d4a1e60', 4, 'New'),
 	(842, '682', 'nancy.wong', '4d21d3adc937fd19574e732d81fffdf0', 4, 'New'),
 	(852, '692', 'jeffrey.antoque', '7b7fdd4ef1ef1ee6ada25733eb5720a5', 4, 'New'),
 	(862, '702', 'salome.bodiongan', '7dde0cfd5a93d7e3958a079c59dfc7c2', 4, 'New'),
@@ -3139,11 +3459,11 @@ INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `role_id`, `us
 	(1352, '1192', 'christian.rebuyas', '1db45abb274c0962515fbe9a06425634', 4, 'New'),
 	(1362, '1202', 'joseph.gironii', '916e2d7cfd789e282d207bd4ea689394', 4, 'New'),
 	(1372, '1212', 'chadlouei.sullaga', '19ac3b61df8a84aec094e262243c5aed', 4, 'Active'),
-	(1382, '3', 'superadmin', 'ad9ca1fc3577ff3c753fb1714a78296e', 8, 'Active');
+	(1382, '3', 'superadmin', 'ad9ca1fc3577ff3c753fb1714a78296e', 8, 'Active'),
+	(1452, '1272', 'arlyn.benito', 'a6266cd591bdcd5c36d106e2406679e5', 4, 'New');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.violation
-DROP TABLE IF EXISTS `violation`;
+-- Dumping structure for table hris.violation
 CREATE TABLE IF NOT EXISTS `violation` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
@@ -3157,62 +3477,70 @@ CREATE TABLE IF NOT EXISTS `violation` (
   `effectOnPenalties` text COLLATE utf8_unicode_ci,
   `effectivePeriod` text COLLATE utf8_unicode_ci,
   `memo` text COLLATE utf8_unicode_ci,
+  `image` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=453 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.violation: 31 rows
+-- Dumping data for table hris.violation: 12 rows
 /*!40000 ALTER TABLE `violation` DISABLE KEYS */;
-INSERT INTO `violation` (`id`, `employee_id`, `memoNo`, `subject`, `dateOfMemo`, `signedBy`, `noOfOffense`, `categoryOfOffense`, `penalties`, `effectOnPenalties`, `effectivePeriod`, `memo`) VALUES
-	(2, 222, 1, 'Failing to Wear Clothing Uniform', '2016-08-17', 'Jennifer P. Dantes', '1st Offense', 'Minor', NULL, NULL, NULL, NULL),
-	(12, 222, 2, 'Ignoring work duties', '2016-08-12', '', '2nd Offense', 'Minor', NULL, NULL, NULL, NULL),
-	(222, 872, 1, 'Involved in a vehicular accident', '2010-07-15', 'JRL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(32, 222, 3, 'Sleeping During working hours', '2016-08-17', 'Jennifer P. Dantes', '3rd Offense', 'Minor', NULL, NULL, NULL, NULL),
-	(42, 282, 1, 'Deliberately log in and log out', '2015-03-04', 'Arch. Neil P. Braw', '1st Offense', NULL, NULL, NULL, NULL, NULL),
-	(62, 402, 1, 'Absence without Official Leave or Notice', '2016-12-03', 'CSL/AAM', '3rd Offense', NULL, 'Suspension', NULL, NULL, NULL),
-	(72, 402, 2, 'Failure to Reply on the Notice to Explain Last 11 Jan \'16', '2016-04-13', 'ECQ', NULL, NULL, NULL, NULL, NULL, NULL),
-	(82, 402, 3, 'Notice to Explain', '2016-01-07', 'NPB', NULL, NULL, '', NULL, NULL, NULL),
-	(102, 902, NULL, 'Failed to Obey', '2015-04-12', 'JRL', '1st Offense', NULL, 'Suspension', NULL, NULL, NULL),
-	(112, 902, NULL, 'Insubordination and Negligence', '2015-04-15', 'ECQ', NULL, NULL, 'Reprimand', NULL, NULL, NULL),
-	(122, 72, 2015, 'Portion of Tendon', '2015-02-11', 'Roberto Jambaro Jr.', '1st Offense', NULL, 'Suspension', NULL, NULL, NULL),
-	(132, 102, 2014, 'For Your information', '2014-04-21', 'Alex S. Tiaoqui', '1st Offense', NULL, NULL, NULL, NULL, NULL),
-	(142, 142, 2014, 'For Your Information', '2014-04-21', 'Alex S. Tiaoqui', '1st Offense', NULL, 'Reprimand', NULL, NULL, NULL),
-	(152, 142, 2014, 'Notice to Explain', '2014-06-18', 'Alex S. Tiaoqui', '2nd Offense', NULL, 'Reprimand', NULL, NULL, NULL),
-	(162, 702, 1, 'Notice To Explain', '2017-03-02', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(172, 702, 2, 'Notice to Explain', '2017-03-03', 'AVL', '2nd Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(182, 742, 1, 'Notice to explain', '2017-03-02', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(192, 1082, 1, 'Leave without Notice', '2016-09-22', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(202, 1082, 2, 'Notice to Explain', '2016-09-23', 'AVL', '2nd Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(212, 1082, 3, 'Failed and Ignore Company Procedures', '2017-01-07', 'AVL', '3rd Offense', 'Minor', 'Suspension', NULL, '3', NULL),
-	(232, 932, 1, 'Failed to report for work', '2015-01-05', 'ECQ', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(242, 932, 2, 'Failed to securely lock the clean room and your office door', '2015-04-24', 'JRL', '2nd Offense', 'Minor', 'Reprimand', NULL, NULL, NULL),
-	(252, 972, 1, 'Failed and Ignore Company Procedures.', '2017-01-07', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, 'null days', NULL),
-	(262, 1072, 1, 'Delayed deposit and missing/lost money', '2016-09-15', 'PAI', '1st Offense', 'Minor', 'Reprimand', NULL, 'undefined days', NULL),
-	(272, 1032, 1, 'Suspension of driving privileges', '2016-05-10', 'JRL', '1st Offense', 'Grave', 'Suspension', NULL, 'undefined days', NULL),
-	(302, 22, 1, 'Duties and Responsibilities', '2016-11-21', 'JPD', NULL, NULL, NULL, NULL, '-', NULL),
-	(292, 1202, 1, 'Work Schedule', '2015-08-26', 'JRL', '1st Offense', 'Minor', NULL, NULL, '-', NULL),
-	(312, 32, 1, 'Using Cell phone', '2014-04-21', 'Alex S. Tiaoqui', '1st Offense', 'Minor', NULL, NULL, '-', NULL),
-	(322, 772, 1, 'Reassignment', '2017-05-17', 'JPD', NULL, NULL, NULL, NULL, '-', NULL),
-	(332, 1032, 2, 'Additional Duties and Responsibilities', '2017-05-15', 'DJS', NULL, NULL, NULL, NULL, '-', NULL),
-	(342, 282, NULL, 'Notice To Explain', '2015-03-04', 'Arch.Neil Braw', '1st Offense', 'Minor', 'Reprimand', NULL, '-', NULL);
+INSERT INTO `violation` (`id`, `employee_id`, `memoNo`, `subject`, `dateOfMemo`, `signedBy`, `noOfOffense`, `categoryOfOffense`, `penalties`, `effectOnPenalties`, `effectivePeriod`, `memo`, `image`) VALUES
+	(2, 222, 1, 'Failing to Wear Clothing Uniform', '2016-08-17', 'Jennifer P. Dantes', '1st Offense', 'Minor', NULL, NULL, NULL, NULL, NULL),
+	(12, 222, 2, 'Ignoring work duties', '2016-08-12', '', '2nd Offense', 'Minor', NULL, NULL, NULL, NULL, NULL),
+	(222, 872, 1, 'Involved in a vehicular accident', '2010-07-15', 'JRL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(32, 222, 3, 'Sleeping During working hours', '2016-08-17', 'Jennifer P. Dantes', '3rd Offense', 'Minor', NULL, NULL, NULL, NULL, NULL),
+	(42, 282, 1, 'Deliberately log in and log out', '2015-03-04', 'Arch. Neil P. Braw', '1st Offense', NULL, NULL, NULL, NULL, NULL, NULL),
+	(62, 402, 1, 'Absence without Official Leave or Notice', '2016-12-03', 'CSL/AAM', '3rd Offense', NULL, 'Suspension', NULL, NULL, NULL, NULL),
+	(72, 402, 2, 'Failure to Reply on the Notice to Explain Last 11 Jan \'16', '2016-04-13', 'ECQ', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(82, 402, 3, 'Notice to Explain', '2016-01-07', 'NPB', NULL, NULL, '', NULL, NULL, NULL, NULL),
+	(102, 902, NULL, 'Failed to Obey', '2015-04-12', 'JRL', '1st Offense', NULL, 'Suspension', NULL, NULL, NULL, NULL),
+	(112, 902, NULL, 'Insubordination and Negligence', '2015-04-15', 'ECQ', NULL, NULL, 'Reprimand', NULL, NULL, NULL, NULL),
+	(122, 72, 2015, 'Portion of Tendon', '2015-02-11', 'Roberto Jambaro Jr.', '1st Offense', NULL, 'Suspension', NULL, NULL, NULL, NULL),
+	(132, 102, 2014, 'For Your information', '2014-04-21', 'Alex S. Tiaoqui', '1st Offense', NULL, NULL, NULL, NULL, NULL, NULL),
+	(142, 142, 2014, 'For Your Information', '2014-04-21', 'Alex S. Tiaoqui', '1st Offense', NULL, 'Reprimand', NULL, NULL, NULL, NULL),
+	(152, 142, 2014, 'Notice to Explain', '2014-06-18', 'Alex S. Tiaoqui', '2nd Offense', NULL, 'Reprimand', NULL, NULL, NULL, NULL),
+	(162, 702, 1, 'Notice To Explain', '2017-03-02', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(172, 702, 2, 'Notice to Explain', '2017-03-03', 'AVL', '2nd Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(182, 742, 1, 'Notice to explain', '2017-03-02', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(192, 1082, 1, 'Leave without Notice', '2016-09-22', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(202, 1082, 2, 'Notice to Explain', '2016-09-23', 'AVL', '2nd Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(212, 1082, 3, 'Failed and Ignore Company Procedures', '2017-01-07', 'AVL', '3rd Offense', 'Minor', 'Suspension', NULL, '3', NULL, NULL),
+	(232, 932, 1, 'Failed to report for work', '2015-01-05', 'ECQ', '1st Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(242, 932, 2, 'Failed to securely lock the clean room and your office door', '2015-04-24', 'JRL', '2nd Offense', 'Minor', 'Reprimand', NULL, NULL, NULL, NULL),
+	(252, 972, 1, 'Failed and Ignore Company Procedures.', '2017-01-07', 'AVL', '1st Offense', 'Minor', 'Reprimand', NULL, 'null days', NULL, NULL),
+	(262, 1072, 1, 'Delayed deposit and missing/lost money', '2016-09-15', 'PAI', '1st Offense', 'Minor', 'Reprimand', NULL, 'undefined days', NULL, NULL),
+	(272, 1032, 1, 'Suspension of driving privileges', '2016-05-10', 'JRL', '1st Offense', 'Grave', 'Suspension', NULL, 'undefined days', NULL, NULL),
+	(302, 22, 1, 'Duties and Responsibilities', '2016-11-21', 'JPD', NULL, NULL, NULL, NULL, '-', NULL, NULL),
+	(422, 642, NULL, 'Reassignment', '2016-03-28', 'RJL', NULL, NULL, NULL, 'temporarily transferred/reassigned from Manila teachers CDO Accounting & Finance dept. To MT Head office as auditor', '-', NULL, NULL),
+	(312, 32, 1, 'Using Cell phone', '2014-04-21', 'Alex S. Tiaoqui', '1st Offense', 'Minor', NULL, NULL, '-', NULL, NULL),
+	(322, 772, 1, 'Reassignment', '2017-05-17', 'JPD', NULL, NULL, NULL, NULL, '-', NULL, NULL),
+	(332, 1032, 2, 'Additional Duties and Responsibilities', '2017-05-15', 'DJS', NULL, NULL, NULL, NULL, '-', NULL, NULL),
+	(352, 402, 0, 'Notice to Explain', '2016-01-07', 'NPB', '1st Offense', 'Minor', 'Reprimand', NULL, '-', NULL, NULL),
+	(362, 702, NULL, 'Notice to  Explain', '2017-03-02', 'JPD', '1st Offense', 'Minor', NULL, NULL, '-', NULL, NULL),
+	(382, 382, NULL, 'Assignment as Cashier', '2016-08-10', 'Enrique Jaime C. Quema IV', NULL, NULL, NULL, 'Additional Position', '-', NULL, NULL),
+	(392, 1202, NULL, 'Work Schedule', '2015-08-26', 'JRL', '1st Offense', 'Minor', 'Reprimand', NULL, '-', NULL, NULL),
+	(402, 562, NULL, 'Warning Notice', '2017-05-25', 'RMV', '1st Offense', 'Minor', 'Reprimand', NULL, '-', NULL, NULL),
+	(412, 562, NULL, 'Reassignment', '2017-05-02', 'RMV', NULL, NULL, NULL, 'reassign from NDC to SMSI\'s main office', '-', NULL, NULL),
+	(432, 352, NULL, 'Provisional Assignment', '2014-11-01', 'JRL', NULL, NULL, NULL, 'Temporarily Appointed as Operations Manager SMSI', '-', NULL, NULL),
+	(442, 352, NULL, 'Transfer/Reassignment', '2016-08-01', 'JRL', NULL, NULL, NULL, 'Transferred/Reassigned as Division Head of Accounting & Audit Services', '-', NULL, NULL),
+	(452, 472, NULL, 'Reassignment', '2016-12-01', 'JRL', NULL, NULL, NULL, 'Reassign from web designer to Web lead trainee of IT Division', '-', NULL, NULL);
 /*!40000 ALTER TABLE `violation` ENABLE KEYS */;
 
--- Dumping structure for table heroku_760d4109a89e3f8.works
-DROP TABLE IF EXISTS `works`;
+-- Dumping structure for table hris.works
 CREATE TABLE IF NOT EXISTS `works` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
   `position` text COLLATE utf8_unicode_ci,
   `company` text COLLATE utf8_unicode_ci,
-  `durFrom` date DEFAULT NULL,
-  `durTo` date DEFAULT NULL,
+  `durFrom` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `durTo` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `empStatus` text COLLATE utf8_unicode_ci,
   `salary` text COLLATE utf8_unicode_ci,
   `reason` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_works_on_employee_id` (`employee_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2352 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2572 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table heroku_760d4109a89e3f8.works: ~367 rows (approximately)
+-- Dumping data for table hris.works: ~0 rows (approximately)
 /*!40000 ALTER TABLE `works` DISABLE KEYS */;
 INSERT INTO `works` (`id`, `employee_id`, `position`, `company`, `durFrom`, `durTo`, `empStatus`, `salary`, `reason`) VALUES
 	(1, 1, 'Bookkeeper', 'MTMAS', NULL, NULL, 'Permanent', NULL, 'Promoted in the same Company'),
@@ -3289,11 +3617,11 @@ INSERT INTO `works` (`id`, `employee_id`, `position`, `company`, `durFrom`, `dur
 	(672, 312, 'Territory Manager', 'Xeno Pharmaceuticals Philippines Inc.', '2007-01-03', '2011-01-05', 'Permanent', NULL, 'Personal'),
 	(682, 312, 'Acting Sales Supervisor', 'Dexa Medica - Philippines Visayas and Northern Mindanao', '2012-01-05', '2013-01-06', 'Permanent', NULL, 'Personal'),
 	(712, 312, 'District Sales Manager', 'Alkem Laboratories Corp. Philippines Mindanao (&Visayas)', '2013-01-07', '2016-03-06', 'Permanent', NULL, 'Personal'),
-	(762, 372, 'IT Support', 'DAR', '2015-01-01', '2016-01-01', 'Job Order', '10,000', 'End of Contract'),
-	(772, 372, 'Programmer', 'Provincial Capitol', '2016-10-02', '2016-11-22', 'Job Order', '7,000', NULL),
-	(782, 382, 'Cashier/Clerk Collector', 'Oro Habitat for Humanity, Inc. (OHH)', '0000-00-00', '0000-00-00', NULL, NULL, NULL),
-	(792, 382, 'Cashier', 'Pueblo de Oro Development Corp.', NULL, NULL, NULL, NULL, NULL),
-	(802, 382, 'Registration Assistant/Clerk', 'Filinvest Land Inc.', NULL, NULL, NULL, NULL, NULL),
+	(762, 372, 'IT Support', 'DAR', '2015-01', '2016-01', 'Job Order', '0', 'End of Contract'),
+	(772, 372, 'Programmer', 'Provincial Capitol', '2016-10', '2016-11', 'Job Order', '0', NULL),
+	(782, 382, 'Cashier/Clerk Collector', 'Oro Habitat for Humanity, Inc. (OHH)', '2002-08', '2008-05', NULL, NULL, 'Due Rate'),
+	(792, 382, 'Cashier', 'Pueblo de Oro Development Corp.', '2011-12', '2014-11', NULL, NULL, 'Health Reason'),
+	(802, 382, 'Registration Assistant/Clerk', 'Filinvest Land Inc.', '2015-03', '2015-05', NULL, NULL, NULL),
 	(812, 402, 'Weigher', 'Evergreen -Lapanday', NULL, NULL, NULL, NULL, NULL),
 	(822, 402, 'Auto Painter', 'G.T.S', NULL, NULL, NULL, NULL, NULL),
 	(832, 412, 'Liaison Staff/ Marketing ( Loans Dept.)', 'WealthDevelopment Bank Corp.', '2012-01-01', '2013-01-01', 'Permanent', NULL, 'Personal'),
@@ -3313,7 +3641,7 @@ INSERT INTO `works` (`id`, `employee_id`, `position`, `company`, `durFrom`, `dur
 	(972, 452, 'Branch Accountant', 'Fastcargo Logistics Corp-Butuan', NULL, NULL, 'Permanent', NULL, NULL),
 	(982, 452, 'Officer-In-Charge', 'Fastcargo Logistics Corp-Butuan', NULL, NULL, 'Permanent', NULL, NULL),
 	(992, 452, 'Branch Manager', 'Fastcargo Logistics Corp.-Butuan', NULL, NULL, 'Permanent', NULL, NULL),
-	(1002, 472, 'Senior Graphic Designer/DGI/Mutoh Operator', 'Magnet Advertising', NULL, NULL, NULL, NULL, NULL),
+	(1002, 472, 'Senior Graphic Designer/DGI/Mutoh Operator', 'Magnet Advertising', '2006-02', '2011-02', NULL, '12000', 'No salary increased'),
 	(1012, 492, 'Graphic Designer', 'Adrexus Outsorcing', NULL, NULL, 'Contractual', '10,000', 'Conflict with Heads'),
 	(1022, 492, 'Graphic Designer', 'Louie Photography', NULL, NULL, 'Contractual', '6,500', 'Sickness'),
 	(1032, 542, NULL, 'SmartShoppe Computer Center', NULL, '1999-01-01', NULL, NULL, NULL),
@@ -3335,8 +3663,8 @@ INSERT INTO `works` (`id`, `employee_id`, `position`, `company`, `durFrom`, `dur
 	(1192, 622, 'Account Executive', 'Spark Promotions & Marketing', NULL, NULL, 'Permanent', NULL, 'Company Closed'),
 	(1202, 622, 'Events Supervisor', 'Publicis-Spark Inc.', NULL, NULL, 'Permanent', NULL, 'Change Management'),
 	(1212, 652, 'Assistant Manager/ Manager', 'Egyp Mobile Communication Corporation', NULL, NULL, NULL, NULL, NULL),
-	(1222, 652, 'Basic Accounting/ Bookkeeping/Accounts Executive', 'Egyp Mobile Communication Corporation', NULL, NULL, NULL, NULL, NULL),
-	(1232, 652, 'Assistant Manager/ Manager', 'Rural Bank of Montevista', NULL, NULL, NULL, NULL, NULL),
+	(1222, 652, 'Basic Accounting/ Bookkeeping/Accounts Executive', 'Egyp Mobile Communication Corporation', '2014-09', '2015-12', NULL, NULL, NULL),
+	(1232, 652, 'Assistant Manager/ Manager', 'Rural Bank of Montevista', '2003-09', '2013-07', NULL, NULL, NULL),
 	(1242, 662, 'Encoder/Printing', 'Bureau of Internal Revenue', NULL, NULL, NULL, NULL, NULL),
 	(1252, 662, 'Office Clerk/ Cash Teller/ Accounting Clerk', 'RD Pawnshop Inc.', NULL, NULL, NULL, NULL, NULL),
 	(1262, 672, 'Accounting Clerk', 'Balmar Farms, Inc.', NULL, NULL, NULL, NULL, NULL),
@@ -3427,8 +3755,8 @@ INSERT INTO `works` (`id`, `employee_id`, `position`, `company`, `durFrom`, `dur
 	(2122, 1202, 'IT Consultant', 'Sol Oil Corporation', NULL, NULL, NULL, NULL, NULL),
 	(2132, 1202, 'IT Consultant', 'JCV Trade and Exhibits Co.', NULL, NULL, NULL, NULL, NULL),
 	(2142, 1202, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(2152, 1212, 'Graphic Designer', 'Adrexus Outsourcing', NULL, NULL, NULL, NULL, NULL),
-	(2162, 1212, 'Graphic Designer', 'Louie Photography', NULL, NULL, NULL, NULL, NULL),
+	(2152, 1212, 'Graphic Designer', 'Adrexus Outsourcing', NULL, NULL, NULL, '10000', NULL),
+	(2162, 1212, 'Graphic Designer', 'Louie Photography', NULL, NULL, NULL, '6500', NULL),
 	(2172, 1222, 'Waiter', 'Frosting Bar & Restaurant', '0000-00-00', '0000-00-00', 'Permanent', NULL, NULL),
 	(2182, 1222, 'Promoter', 'Dickies/Diadora', NULL, NULL, 'Contractual', NULL, NULL),
 	(2192, 1232, 'Secretary', 'John Ray Developer & Supplies', '1970-01-01', '1970-01-01', NULL, NULL, NULL),
@@ -3443,8 +3771,1248 @@ INSERT INTO `works` (`id`, `employee_id`, `position`, `company`, `durFrom`, `dur
 	(2312, 1262, 'Cashier', 'Frostway Restobar', NULL, NULL, NULL, NULL, NULL),
 	(2322, 1262, 'Cashier', 'Only In Cagayan Bar And Grill', NULL, NULL, NULL, NULL, NULL),
 	(2332, 1262, 'Administrative Assistant', 'Mindanao Precast Structure Inc.', NULL, NULL, NULL, NULL, NULL),
-	(2342, 1252, 'Intern-Pre auditing office', 'City accounting office-Digos City', NULL, NULL, NULL, NULL, NULL);
+	(2342, 1252, 'Intern-Pre auditing office', 'City accounting office-Digos City', NULL, NULL, NULL, NULL, NULL),
+	(2352, 752, 'Production Staff', 'Eagle Multi Purpose Cooperative', '0000-00-00', '0000-00-00', NULL, NULL, NULL),
+	(2362, 752, 'Cashier/Accounting Clerk', 'Davao Coca-cola plant', NULL, NULL, NULL, NULL, NULL),
+	(2372, 752, 'Station agent', 'Air 21 mindanao Operation', NULL, NULL, NULL, NULL, NULL),
+	(2382, 1222, 'Sales Representative', 'Samsung electronicPhils', NULL, NULL, NULL, NULL, NULL),
+	(2392, 552, 'Artist & IT Staff', 'Blue Sky Advertising', '2010-02', '2014-02', NULL, NULL, 'No Benefits'),
+	(2402, 552, 'IT Support', 'Southern Arms', '2015-03', '2015-09', NULL, NULL, NULL),
+	(2412, 462, 'Technical Support Agent', 'Teleperformance Philippines', '2015-05', '2016-02', NULL, '16000-17000', 'working Schedule'),
+	(2422, 352, 'Senior Audit Staff', 'LC Bonguyan & Co.CPA\'s', '2000-12', '2006-12', NULL, '7500', NULL),
+	(2432, 472, 'Web/ Graphic Designer', 'Freelance', '2011-05', '2011-11', NULL, NULL, NULL),
+	(2442, 12, 'Marketing staff', 'ETU Exams and Training Unlimited', '2014-05', '2015-03', NULL, NULL, NULL),
+	(2452, 282, 'Painter', 'Luis Rivera Construction', NULL, NULL, NULL, NULL, NULL),
+	(2462, 282, 'Leadman Paitnter', 'JPM Designs', NULL, NULL, NULL, NULL, NULL),
+	(2472, 282, 'Leadman/Purchaser', 'Magan Construction', NULL, NULL, NULL, NULL, NULL),
+	(2482, 222, 'Labor', 'NCCC Mall Davao', '2006-08', '2006-10', NULL, NULL, NULL),
+	(2492, 222, 'Security', 'Last Terrazas Mall', '2009-11', '2010-01', NULL, NULL, NULL),
+	(2502, 222, 'Mason', 'UM Matina High School', '2011-02', '2011-06', NULL, NULL, NULL),
+	(2512, 642, 'Trainee', 'Social Security System (SSS)', NULL, NULL, NULL, NULL, NULL),
+	(2522, 1272, 'Cashier', 'frostway Ice Cream & Juice Bar', '2000-06', '2003-07', NULL, NULL, NULL),
+	(2532, 1272, 'Cashier', 'Frostway Restobar', '2003-07', '2007-09', NULL, NULL, NULL),
+	(2542, 1272, 'Cashier', 'Only in Cagayan Bar & Grill (OIC)', '2007-09', '2009-09', NULL, NULL, NULL),
+	(2552, 1272, 'Administrative Assistant', 'Mindanao Precast structure Inc.(MPSI)', '2009-10', '2015-08', NULL, NULL, NULL),
+	(2562, 1212, 'Graphic Artist', 'The Vinta', '2013-02', '2015-06', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `works` ENABLE KEYS */;
+
+
+-- Dumping database structure for hris_payroll
+CREATE DATABASE IF NOT EXISTS `hris_payroll` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `hris_payroll`;
+
+-- Dumping structure for table hris_payroll.tblref_holiday
+CREATE TABLE IF NOT EXISTS `tblref_holiday` (
+  `idHoliday` int(3) NOT NULL AUTO_INCREMENT,
+  `date1` date NOT NULL,
+  `holiday` varchar(50) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  PRIMARY KEY (`idHoliday`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tblref_holiday: 18 rows
+/*!40000 ALTER TABLE `tblref_holiday` DISABLE KEYS */;
+INSERT INTO `tblref_holiday` (`idHoliday`, `date1`, `holiday`, `type`) VALUES
+	(3, '2017-01-01', 'New Years Day', 'Regular Holidays'),
+	(4, '2017-05-01', 'Labor Day', 'Regular Holidays'),
+	(5, '2016-06-12', 'Independence Day', 'Regular Holidays'),
+	(6, '2016-04-02', 'Maunday Thursday', 'Regular Holidays'),
+	(7, '2016-04-03', 'Good Friday', 'Regular Holidays'),
+	(8, '2016-04-09', 'Araw ng Kagitingan', 'Regular Holidays'),
+	(9, '2016-08-31', 'National Heroes Day', 'Regular Holidays'),
+	(10, '2016-11-30', 'Bonifacio Day', 'Regular Holidays'),
+	(11, '2016-12-25', 'Christmas Day', 'Regular Holidays'),
+	(12, '2016-12-30', 'Rizal Day', 'Regular Holidays'),
+	(13, '2016-01-02', 'New years Extension', 'Special (Non-Working) Days'),
+	(14, '2016-02-08', 'Chinese New Year', 'Special (Non-Working) Days'),
+	(15, '2016-04-04', 'Black Saturday', 'Special (Non-Working) Days'),
+	(16, '2016-08-11', 'Ninoy Aquino Day', 'Special (Non-Working) Days'),
+	(17, '2016-11-01', 'All Saints Day', 'Special (Non-Working) Days'),
+	(18, '2016-12-24', 'Pre Christmas Day', 'Special (Non-Working) Days'),
+	(19, '2016-12-31', 'Year End', 'Special (Non-Working) Days'),
+	(28, '2016-10-08', 'something special sa holidays', 'Special (Non-Working) Days');
+/*!40000 ALTER TABLE `tblref_holiday` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tblref_occurences
+CREATE TABLE IF NOT EXISTS `tblref_occurences` (
+  `occurence_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`occurence_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tblref_occurences: 3 rows
+/*!40000 ALTER TABLE `tblref_occurences` DISABLE KEYS */;
+INSERT INTO `tblref_occurences` (`occurence_id`, `name`) VALUES
+	(1, 'Monthly'),
+	(2, 'Semi-Monthly'),
+	(3, 'Weekly');
+/*!40000 ALTER TABLE `tblref_occurences` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tblref_philhealth
+CREATE TABLE IF NOT EXISTS `tblref_philhealth` (
+  `phil_id` int(10) NOT NULL AUTO_INCREMENT,
+  `salary` double(10,2) DEFAULT NULL,
+  `employer` double(10,2) DEFAULT NULL,
+  `employee` double(10,2) DEFAULT NULL,
+  `total` double(10,2) DEFAULT NULL,
+  PRIMARY KEY (`phil_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tblref_philhealth: 28 rows
+/*!40000 ALTER TABLE `tblref_philhealth` DISABLE KEYS */;
+INSERT INTO `tblref_philhealth` (`phil_id`, `salary`, `employer`, `employee`, `total`) VALUES
+	(1, 8000.00, 100.00, 100.00, 200.00),
+	(2, 9000.00, 112.50, 112.50, 225.00),
+	(3, 10000.00, 125.00, 125.00, 250.00),
+	(4, 11000.00, 137.50, 137.50, 275.00),
+	(5, 12000.00, 150.00, 150.00, 300.00),
+	(6, 13000.00, 162.50, 162.50, 325.00),
+	(7, 14000.00, 175.00, 175.00, 350.00),
+	(8, 15000.00, 187.50, 187.50, 375.00),
+	(9, 16000.00, 200.00, 200.00, 400.00),
+	(10, 17000.00, 212.50, 212.50, 425.00),
+	(11, 18000.00, 225.00, 225.00, 450.00),
+	(12, 19000.00, 237.50, 237.50, 475.00),
+	(13, 20000.00, 250.00, 250.00, 500.00),
+	(14, 21000.00, 262.50, 262.50, 525.00),
+	(15, 22000.00, 275.00, 275.00, 550.00),
+	(16, 23000.00, 287.50, 287.50, 575.00),
+	(17, 24000.00, 300.00, 300.00, 600.00),
+	(18, 25000.00, 312.50, 312.50, 625.00),
+	(19, 26000.00, 325.00, 325.00, 650.00),
+	(20, 27000.00, 337.50, 337.50, 675.00),
+	(21, 28000.00, 350.00, 350.00, 700.00),
+	(22, 29000.00, 362.50, 362.50, 725.00),
+	(23, 30000.00, 375.00, 375.00, 750.00),
+	(24, 31000.00, 387.50, 387.50, 775.00),
+	(25, 32000.00, 400.00, 400.00, 800.00),
+	(26, 33000.00, 412.50, 412.50, 825.00),
+	(27, 34000.00, 425.00, 425.00, 850.00),
+	(28, 35000.00, 437.50, 437.50, 875.00);
+/*!40000 ALTER TABLE `tblref_philhealth` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tblref_settings
+CREATE TABLE IF NOT EXISTS `tblref_settings` (
+  `setting_name` varchar(50) DEFAULT NULL,
+  `value` varchar(100) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tblref_settings: 4 rows
+/*!40000 ALTER TABLE `tblref_settings` DISABLE KEYS */;
+INSERT INTO `tblref_settings` (`setting_name`, `value`) VALUES
+	('current_cutoff', '1 May 2017 to 15 May 2017'),
+	('current_company', 'Solutions Management Systems Inc.'),
+	('app_mode', 'integrate'),
+	('process', 'regular');
+/*!40000 ALTER TABLE `tblref_settings` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tblref_sss
+CREATE TABLE IF NOT EXISTS `tblref_sss` (
+  `idSSS` int(10) NOT NULL AUTO_INCREMENT,
+  `salary` double(18,2) DEFAULT NULL,
+  `employer` double(18,2) DEFAULT NULL,
+  `employee` double(18,2) DEFAULT NULL,
+  `total` double(18,2) DEFAULT NULL,
+  PRIMARY KEY (`idSSS`)
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tblref_sss: 31 rows
+/*!40000 ALTER TABLE `tblref_sss` DISABLE KEYS */;
+INSERT INTO `tblref_sss` (`idSSS`, `salary`, `employer`, `employee`, `total`) VALUES
+	(1, 1000.00, 83.70, 36.30, 120.00),
+	(2, 1250.00, 120.50, 54.50, 175.00),
+	(3, 1750.00, 157.30, 72.70, 230.00),
+	(4, 2250.00, 194.20, 90.80, 285.00),
+	(5, 2750.00, 231.00, 109.00, 340.00),
+	(6, 3250.00, 267.80, 127.20, 395.00),
+	(7, 3750.00, 304.70, 145.30, 450.00),
+	(8, 4250.00, 341.50, 163.50, 505.00),
+	(9, 4750.00, 378.30, 181.70, 560.00),
+	(10, 5250.00, 415.20, 199.80, 615.00),
+	(11, 5750.00, 452.00, 218.00, 670.00),
+	(12, 6250.00, 488.80, 236.20, 725.00),
+	(13, 6750.00, 525.70, 254.30, 780.00),
+	(14, 7250.00, 562.50, 272.50, 835.00),
+	(15, 7750.00, 599.30, 290.70, 890.00),
+	(16, 8250.00, 636.20, 308.80, 945.00),
+	(17, 8750.00, 673.00, 327.00, 1000.00),
+	(18, 9250.00, 709.80, 345.20, 1055.00),
+	(19, 9750.00, 746.70, 363.30, 1110.00),
+	(20, 10250.00, 783.50, 381.50, 1165.00),
+	(21, 10750.00, 820.30, 399.70, 1220.00),
+	(22, 11250.00, 857.20, 417.80, 1275.00),
+	(23, 11750.00, 894.00, 436.00, 1330.00),
+	(24, 12250.00, 930.80, 454.20, 1385.00),
+	(25, 12750.00, 967.70, 472.30, 1440.00),
+	(26, 13250.00, 1004.50, 490.50, 1495.00),
+	(27, 13750.00, 1041.30, 508.70, 1550.00),
+	(28, 14250.00, 1078.20, 526.80, 1605.00),
+	(29, 14750.00, 1135.00, 545.00, 1680.00),
+	(30, 15250.00, 1171.80, 563.20, 1735.00),
+	(31, 15750.00, 1208.70, 581.30, 1790.00);
+/*!40000 ALTER TABLE `tblref_sss` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tblref_tax
+CREATE TABLE IF NOT EXISTS `tblref_tax` (
+  `idTax` int(10) NOT NULL AUTO_INCREMENT,
+  `status` varchar(10) NOT NULL,
+  `salary` double(10,2) NOT NULL DEFAULT '0.00',
+  `percentage` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `excemption` double(10,2) NOT NULL DEFAULT '0.00',
+  `occurence` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idTax`)
+) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tblref_tax: 144 rows
+/*!40000 ALTER TABLE `tblref_tax` DISABLE KEYS */;
+INSERT INTO `tblref_tax` (`idTax`, `status`, `salary`, `percentage`, `excemption`, `occurence`) VALUES
+	(1, 'Z', 1.00, 0.00, 0.00, 'Monthly'),
+	(3, 'ME1/S1', 1.00, 0.00, 0.00, 'Monthly'),
+	(2, 'S/ME', 1.00, 0.00, 0.00, 'Monthly'),
+	(4, 'ME2/S2', 1.00, 0.00, 0.00, 'Monthly'),
+	(5, 'ME3/S3', 1.00, 0.00, 0.00, 'Monthly'),
+	(6, 'ME4/S4', 1.00, 0.00, 0.00, 'Monthly'),
+	(7, 'Z', 0.00, 0.05, 0.00, 'Monthly'),
+	(8, 'S/ME', 4167.00, 0.05, 0.00, 'Monthly'),
+	(9, 'ME1/S1', 6250.00, 0.05, 0.00, 'Monthly'),
+	(10, 'ME2/S2', 8333.00, 0.05, 0.00, 'Monthly'),
+	(11, 'ME3/S3', 10417.00, 0.05, 0.00, 'Monthly'),
+	(12, 'ME4/S4', 12500.00, 0.05, 0.00, 'Monthly'),
+	(13, 'Z', 833.00, 0.10, 41.67, 'Monthly'),
+	(14, 'S/ME', 5000.00, 0.10, 41.67, 'Monthly'),
+	(15, 'ME1/S1', 7083.00, 0.10, 41.67, 'Monthly'),
+	(16, 'ME2/S2', 9167.00, 0.10, 41.67, 'Monthly'),
+	(17, 'ME3/S3', 11250.00, 0.10, 41.67, 'Monthly'),
+	(18, 'ME4/S4', 13333.00, 0.10, 41.67, 'Monthly'),
+	(19, 'Z', 2500.00, 0.15, 208.33, 'Monthly'),
+	(20, 'S/ME', 6667.00, 0.15, 208.33, 'Monthly'),
+	(21, 'ME1/S1', 8750.00, 0.15, 208.33, 'Monthly'),
+	(22, 'ME2/S2', 10833.00, 0.15, 208.33, 'Monthly'),
+	(23, 'ME3/S3', 12917.00, 0.15, 208.33, 'Monthly'),
+	(24, 'ME4/S4', 15000.00, 0.15, 208.33, 'Monthly'),
+	(25, 'Z', 5833.00, 0.20, 708.33, 'Monthly'),
+	(26, 'S/ME', 10000.00, 0.20, 708.33, 'Monthly'),
+	(27, 'ME1/S1', 12083.00, 0.20, 708.33, 'Monthly'),
+	(28, 'ME2/S2', 14167.00, 0.20, 708.33, 'Monthly'),
+	(29, 'ME3/S3', 16250.00, 0.20, 708.33, 'Monthly'),
+	(30, 'ME4/S4', 18333.00, 0.20, 708.33, 'Monthly'),
+	(31, 'Z', 11667.00, 0.25, 1875.00, 'Monthly'),
+	(32, 'S/ME', 15833.00, 0.25, 1875.00, 'Monthly'),
+	(33, 'ME1/S1', 17917.00, 0.25, 1875.00, 'Monthly'),
+	(34, 'ME2/S2', 20000.00, 0.25, 1875.00, 'Monthly'),
+	(35, 'ME3/S3', 22083.00, 0.25, 1875.00, 'Monthly'),
+	(36, 'ME4/S4', 24167.00, 0.25, 1875.00, 'Monthly'),
+	(37, 'Z', 20833.00, 0.30, 4166.67, 'Monthly'),
+	(38, 'S/ME', 25000.00, 0.30, 4166.67, 'Monthly'),
+	(39, 'ME1/S1', 27083.00, 0.30, 4166.67, 'Monthly'),
+	(40, 'ME2/S2', 29167.00, 0.30, 4166.67, 'Monthly'),
+	(41, 'ME3/S3', 31250.00, 0.30, 4166.67, 'Monthly'),
+	(42, 'ME4/S4', 33333.00, 0.30, 4166.67, 'Monthly'),
+	(43, 'Z', 41667.00, 0.32, 10416.67, 'Monthly'),
+	(44, 'S/ME', 45833.00, 0.32, 10416.67, 'Monthly'),
+	(45, 'ME1/S1', 47917.00, 0.32, 10416.67, 'Monthly'),
+	(46, 'ME2/S2', 50000.00, 0.32, 10416.67, 'Monthly'),
+	(47, 'ME3/S3', 52083.00, 0.32, 10416.67, 'Monthly'),
+	(48, 'ME4/S4', 54167.00, 0.32, 10416.67, 'Monthly'),
+	(49, 'Z', 1.00, 0.00, 0.00, 'Semi-Monthly'),
+	(50, 'S/ME', 1.00, 0.00, 0.00, 'Semi-Monthly'),
+	(51, 'ME1/S1', 1.00, 0.00, 0.00, 'Semi-Monthly'),
+	(52, 'ME2/S2', 1.00, 0.00, 0.00, 'Semi-Monthly'),
+	(53, 'ME3/S3', 1.00, 0.00, 0.00, 'Semi-Monthly'),
+	(54, 'ME4/S4', 1.00, 0.00, 0.00, 'Semi-Monthly'),
+	(55, 'Z', 0.00, 0.05, 0.00, 'Semi-Monthly'),
+	(56, 'S/ME', 2083.00, 0.05, 0.00, 'Semi-Monthly'),
+	(57, 'ME1/S1', 3125.00, 0.05, 0.00, 'Semi-Monthly'),
+	(58, 'ME2/S2', 4167.00, 0.05, 0.00, 'Semi-Monthly'),
+	(59, 'ME3/S3', 5208.00, 0.05, 0.00, 'Semi-Monthly'),
+	(60, 'ME4/S4', 6250.00, 0.05, 0.00, 'Semi-Monthly'),
+	(61, 'Z', 417.00, 0.10, 20.83, 'Semi-Monthly'),
+	(62, 'S/ME', 2500.00, 0.10, 20.83, 'Semi-Monthly'),
+	(63, 'ME1/S1', 3542.00, 0.10, 20.83, 'Semi-Monthly'),
+	(64, 'ME2/S2', 4583.00, 0.10, 20.83, 'Semi-Monthly'),
+	(65, 'ME3/S3', 5625.00, 0.10, 20.83, 'Semi-Monthly'),
+	(66, 'ME4/S4', 6667.00, 0.10, 20.83, 'Semi-Monthly'),
+	(67, 'Z', 1250.00, 0.15, 104.17, 'Semi-Monthly'),
+	(68, 'S/ME', 3333.00, 0.15, 104.17, 'Semi-Monthly'),
+	(69, 'ME1/S1', 4375.00, 0.15, 104.17, 'Semi-Monthly'),
+	(70, 'ME2/S2', 5417.00, 0.15, 104.17, 'Semi-Monthly'),
+	(71, 'ME3/S3', 6458.00, 0.15, 104.17, 'Semi-Monthly'),
+	(72, 'ME4/S4', 7500.00, 0.15, 104.17, 'Semi-Monthly'),
+	(73, 'Z', 2917.00, 0.20, 354.17, 'Semi-Monthly'),
+	(74, 'S/ME', 5000.00, 0.20, 354.17, 'Semi-Monthly'),
+	(75, 'ME1/S1', 6042.00, 0.20, 354.17, 'Semi-Monthly'),
+	(76, 'ME2/S2', 7083.00, 0.20, 354.17, 'Semi-Monthly'),
+	(77, 'ME3/S3', 8125.00, 0.20, 354.17, 'Semi-Monthly'),
+	(78, 'ME4/S4', 9167.00, 0.20, 354.17, 'Semi-Monthly'),
+	(79, 'Z', 5833.00, 0.25, 937.50, 'Semi-Monthly'),
+	(80, 'S/ME', 7917.00, 0.25, 937.50, 'Semi-Monthly'),
+	(81, 'ME1/S1', 8958.00, 0.25, 937.50, 'Semi-Monthly'),
+	(82, 'ME2/S2', 10000.00, 0.25, 937.50, 'Semi-Monthly'),
+	(83, 'ME3/S3', 11042.00, 0.25, 937.50, 'Semi-Monthly'),
+	(84, 'ME4/S4', 12083.00, 0.25, 937.50, 'Semi-Monthly'),
+	(85, 'Z', 10417.00, 0.30, 2083.33, 'Semi-Monthly'),
+	(86, 'S/ME', 12500.00, 0.30, 2083.33, 'Semi-Monthly'),
+	(87, 'ME1/S1', 13542.00, 0.30, 2083.33, 'Semi-Monthly'),
+	(88, 'ME2/S2', 14583.00, 0.30, 2083.33, 'Semi-Monthly'),
+	(89, 'ME3/S3', 15625.00, 0.30, 2083.33, 'Semi-Monthly'),
+	(90, 'ME4/S4', 16667.00, 0.30, 2083.33, 'Semi-Monthly'),
+	(91, 'Z', 20833.00, 0.32, 5028.33, 'Semi-Monthly'),
+	(92, 'S/ME', 22917.00, 0.32, 5028.33, 'Semi-Monthly'),
+	(93, 'ME1/S1', 23958.00, 0.32, 5028.33, 'Semi-Monthly'),
+	(94, 'ME2/S2', 25000.00, 0.32, 5028.33, 'Semi-Monthly'),
+	(95, 'ME3/S3', 26042.00, 0.32, 5028.33, 'Semi-Monthly'),
+	(96, 'ME4/S4', 27083.00, 0.32, 5028.33, 'Semi-Monthly'),
+	(97, 'Z', 1.00, 0.00, 0.00, 'Weekly'),
+	(98, 'S/ME', 1.00, 0.00, 0.00, 'Weekly'),
+	(99, 'ME1/S1', 1.00, 0.00, 0.00, 'Weekly'),
+	(100, 'ME2/S2', 1.00, 0.00, 0.00, 'Weekly'),
+	(101, 'ME3/S3', 1.00, 0.00, 0.00, 'Weekly'),
+	(102, 'ME4/S4', 1.00, 0.00, 0.00, 'Weekly'),
+	(103, 'Z', 0.00, 0.05, 0.00, 'Weekly'),
+	(104, 'S/ME', 962.00, 0.05, 0.00, 'Weekly'),
+	(105, 'ME1/S1', 1442.00, 0.05, 0.00, 'Weekly'),
+	(106, 'ME2/S2', 1923.00, 0.05, 0.00, 'Weekly'),
+	(107, 'ME3/S3', 2404.00, 0.05, 0.00, 'Weekly'),
+	(108, 'ME4/S4', 2885.00, 0.05, 0.00, 'Weekly'),
+	(109, 'Z', 192.00, 0.10, 9.62, 'Weekly'),
+	(110, 'S/ME', 1154.00, 0.10, 9.62, 'Weekly'),
+	(111, 'ME1/S1', 1635.00, 0.10, 9.62, 'Weekly'),
+	(112, 'ME2/S2', 2115.00, 0.10, 9.62, 'Weekly'),
+	(113, 'ME3/S3', 2596.00, 0.10, 9.62, 'Weekly'),
+	(114, 'ME4/S4', 3007.00, 0.10, 9.62, 'Weekly'),
+	(115, 'Z', 577.00, 0.15, 48.08, 'Weekly'),
+	(116, 'S/ME', 1538.00, 0.15, 48.08, 'Weekly'),
+	(117, 'ME1/S1', 2019.00, 0.15, 48.08, 'Weekly'),
+	(118, 'ME2/S2', 2500.00, 0.15, 48.08, 'Weekly'),
+	(119, 'ME3/S3', 2981.00, 0.15, 48.08, 'Weekly'),
+	(120, 'ME4/S4', 3462.00, 0.15, 48.08, 'Weekly'),
+	(121, 'Z', 1346.00, 0.20, 163.46, 'Weekly'),
+	(122, 'S/ME', 2308.00, 0.20, 163.46, 'Weekly'),
+	(123, 'ME1/S1', 2788.00, 0.20, 163.46, 'Weekly'),
+	(124, 'ME2/S2', 3269.00, 0.20, 163.46, 'Weekly'),
+	(125, 'ME3/S3', 3750.00, 0.20, 163.46, 'Weekly'),
+	(126, 'ME4/S4', 4231.00, 0.20, 163.46, 'Weekly'),
+	(127, 'Z', 2692.00, 0.25, 432.69, 'Weekly'),
+	(128, 'S/ME', 3654.00, 0.25, 432.69, 'Weekly'),
+	(129, 'ME1/S1', 4135.00, 0.25, 432.69, 'Weekly'),
+	(130, 'ME2/S2', 4615.00, 0.25, 432.69, 'Weekly'),
+	(131, 'ME3/S3', 5096.00, 0.25, 432.69, 'Weekly'),
+	(132, 'ME4/S4', 5577.00, 0.25, 432.69, 'Weekly'),
+	(133, 'Z', 4808.00, 0.30, 961.54, 'Weekly'),
+	(134, 'S/ME', 5769.00, 0.30, 961.54, 'Weekly'),
+	(135, 'ME1/S1', 6250.00, 0.30, 961.54, 'Weekly'),
+	(136, 'ME2/S2', 6731.00, 0.30, 961.54, 'Weekly'),
+	(137, 'ME3/S3', 7212.00, 0.30, 961.54, 'Weekly'),
+	(138, 'ME4/S4', 7692.00, 0.30, 961.54, 'Weekly'),
+	(139, 'Z', 9615.00, 0.32, 2403.85, 'Weekly'),
+	(140, 'S/ME', 10577.00, 0.32, 2403.85, 'Weekly'),
+	(141, 'ME1/S1', 11058.00, 0.32, 2403.85, 'Weekly'),
+	(142, 'ME2/S2', 11538.00, 0.32, 2403.85, 'Weekly'),
+	(143, 'ME3/S3', 12019.00, 0.32, 2403.85, 'Weekly'),
+	(144, 'ME4/S4', 12500.00, 0.32, 2403.85, 'Weekly');
+/*!40000 ALTER TABLE `tblref_tax` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_allowances
+CREATE TABLE IF NOT EXISTS `tbl_allowances` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_allowances: 3 rows
+/*!40000 ALTER TABLE `tbl_allowances` DISABLE KEYS */;
+INSERT INTO `tbl_allowances` (`id`, `employee_id`, `name`, `amount`) VALUES
+	(1, 502, 'Rice', 1500),
+	(2, 502, 'Housing', 500),
+	(3, 512, 'Rice', 1500);
+/*!40000 ALTER TABLE `tbl_allowances` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_attendance
+CREATE TABLE IF NOT EXISTS `tbl_attendance` (
+  `att_id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_employee` int(10) NOT NULL DEFAULT '0',
+  `emp_bio_id` varchar(50) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time_in` varchar(50) DEFAULT NULL,
+  `time_out` varchar(50) DEFAULT NULL,
+  `totalHours` varchar(50) DEFAULT NULL,
+  `late` varchar(50) DEFAULT NULL,
+  `undertime` varchar(50) DEFAULT NULL,
+  `overtime` varchar(50) DEFAULT NULL,
+  `remarks` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`att_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=141 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_attendance: 140 rows
+/*!40000 ALTER TABLE `tbl_attendance` DISABLE KEYS */;
+INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `time_in`, `time_out`, `totalHours`, `late`, `undertime`, `overtime`, `remarks`) VALUES
+	(1, 0, '10002', '2017-05-03', '5/3/2017 7:59:29 AM', '5/3/2017 5:49:41 PM', '8.83', '0', '0', '0', 'Regular'),
+	(2, 0, '10002', '2017-05-04', '5/4/2017 8:08:20 AM', '5/4/2017 5:17:35 PM', '8.29', '0', '0', '0', 'Regular'),
+	(3, 0, '10002', '2017-05-05', '5/5/2017 7:56:28 AM', '5/5/2017 5:20:42 PM', '8.35', '0', '0', '0', 'Regular'),
+	(4, 0, '10002', '2017-05-08', '5/8/2017 7:57:35 AM', '5/8/2017 5:36:39 PM', '8.61', '0', '0', '0', 'Regular'),
+	(5, 0, '10002', '2017-05-09', '5/9/2017 7:46:26 AM', '5/9/2017 6:18:53 PM', '9.31', '0', '0', '1.31', 'Overtime'),
+	(6, 0, '10002', '2017-05-10', '5/10/2017 8:04:23 AM', '5/10/2017 5:33:26 PM', '8.56', '0', '0', '0', 'Regular'),
+	(7, 0, '10002', '2017-05-11', '5/11/2017 7:57:31 AM', '5/11/2017 5:34:23 PM', '8.57', '0', '0', '0', 'Regular'),
+	(8, 0, '10002', '2017-05-12', '5/12/2017 8:02:48 AM', '5/12/2017 5:12:20 PM', '8.21', '0', '0', '0', 'Regular'),
+	(9, 0, '10002', '2017-05-15', '5/15/2017 7:59:03 AM', '5/15/2017 5:31:48 PM', '8.53', '0', '0', '0', 'Regular'),
+	(10, 0, '10013', '2017-05-02', '5/2/2017 8:53:54 AM', '5/2/2017 5:22:49 PM', '8.38', '0', '0', '0', 'Regular'),
+	(11, 0, '10013', '2017-05-03', '5/3/2017 8:34:58 AM', '5/3/2017 9:44:45 PM', '12.75', '0', '0', '4.75', 'Overtime'),
+	(12, 0, '10013', '2017-05-05', '5/5/2017 8:48:32 AM', '5/5/2017 5:25:32 PM', '8.43', '0', '0', '0', 'Regular'),
+	(13, 0, '10013', '2017-05-06', '5/6/2017 8:51:13 AM', '5/6/2017 3:32:34 PM', '6.54', '0', '0', '0', 'Regular'),
+	(14, 0, '10013', '2017-05-08', '5/8/2017 8:52:54 AM', '5/8/2017 5:34:20 PM', '8.57', '0', '0', '0', 'Regular'),
+	(15, 0, '10013', '2017-05-09', '5/9/2017 8:51:50 AM', '5/9/2017 5:37:56 PM', '8.63', '0', '0', '0', 'Regular'),
+	(16, 0, '10013', '2017-05-10', '5/10/2017 9:02:15 AM', '5/10/2017 5:37:33 PM', '8.59', '2.25', '0', '0', 'Regular'),
+	(17, 0, '10013', '2017-05-11', '5/11/2017 8:56:23 AM', '5/11/2017 5:27:37 PM', '8.46', '0', '0', '0', 'Regular'),
+	(18, 0, '10013', '2017-05-12', '5/12/2017 8:54:42 AM', '5/12/2017 7:33:36 PM', '10.56', '0', '0', '2.56', 'Overtime'),
+	(19, 0, '10013', '2017-05-13', '5/13/2017 8:41:23 AM', '5/13/2017 8:52:08 PM', '11.87', '0', '0', '5.87', 'Overtime'),
+	(20, 0, '10013', '2017-05-15', '5/15/2017 8:48:37 AM', '5/15/2017 5:43:55 PM', '8.73', '0', '0', '0', 'Regular'),
+	(21, 0, '10014', '2017-05-02', '5/2/2017 8:56:01 AM', '5/2/2017 5:21:14 PM', '8.35', '0', '0', '0', 'Regular'),
+	(22, 0, '10014', '2017-05-03', '5/3/2017 8:54:04 AM', '5/3/2017 6:23:37 PM', '9.39', '0', '0', '1.39', 'Overtime'),
+	(23, 0, '10014', '2017-05-04', '5/4/2017 8:14:44 AM', '5/4/2017 9:28:31 PM', '12.48', '0', '0', '4.48', 'Overtime'),
+	(24, 0, '10014', '2017-05-05', '5/5/2017 9:00:41 AM', '5/5/2017 7:32:34 PM', '10.53', '0.68', '0', '2.54', 'Overtime'),
+	(25, 0, '10014', '2017-05-06', '5/6/2017 8:57:10 AM', '5/6/2017 10:53:27 PM', '13.89', '0', '0', '7.89', 'Overtime'),
+	(26, 0, '10014', '2017-05-08', '5/8/2017 9:10:24 AM', '5/8/2017 5:13:53 PM', '8.06', '10.4', '0', '0', 'Regular'),
+	(27, 0, '10014', '2017-05-09', '5/9/2017 8:58:28 AM', '5/9/2017 6:20:12 PM', '9.34', '0', '0', '1.34', 'Overtime'),
+	(28, 0, '10014', '2017-05-10', '5/10/2017 9:04:16 AM', '5/10/2017 5:11:10 PM', '8.12', '4.27', '0', '0', 'Regular'),
+	(29, 0, '10014', '2017-05-11', '5/11/2017 9:07:41 AM', '5/11/2017 5:37:17 PM', '8.49', '7.68', '0', '0', 'Regular'),
+	(30, 0, '10014', '2017-05-12', '5/12/2017 9:09:04 AM', '5/12/2017 5:18:37 PM', '8.16', '9.07', '0', '0', 'Regular'),
+	(31, 0, '10014', '2017-05-13', '5/13/2017 8:52:02 AM', '5/13/2017 4:11:13 PM', '7.19', '0', '0', '1.19', 'Overtime'),
+	(32, 0, '10014', '2017-05-15', '5/15/2017 8:47:59 AM', '5/15/2017 7:19:37 PM', '10.33', '0', '0', '2.33', 'Overtime'),
+	(33, 0, '10017', '2017-05-02', '5/2/2017 8:32:46 AM', '5/2/2017 5:02:03 PM', '8.03', '0', '0', '0', 'Regular'),
+	(34, 0, '10017', '2017-05-03', '5/3/2017 8:42:11 AM', '5/3/2017 5:21:21 PM', '8.36', '0', '0', '0', 'Regular'),
+	(35, 0, '10017', '2017-05-04', '5/4/2017 8:31:54 AM', '5/4/2017 5:25:48 PM', '8.43', '0', '0', '0', 'Regular'),
+	(36, 0, '10017', '2017-05-05', '5/5/2017 8:40:43 AM', '5/5/2017 5:36:33 PM', '8.61', '0', '0', '0', 'Regular'),
+	(37, 0, '10017', '2017-05-06', '5/6/2017 8:31:17 AM', '5/6/2017 3:16:23 PM', '6.27', '0', '0', '0', 'Regular'),
+	(38, 0, '10017', '2017-05-08', '5/8/2017 8:13:37 AM', '5/8/2017 5:12:05 PM', '8.2', '0', '0', '0', 'Regular'),
+	(39, 0, '10017', '2017-05-09', '5/9/2017 8:25:49 AM', '5/9/2017 5:10:48 PM', '8.18', '0', '0', '0', 'Regular'),
+	(40, 0, '10017', '2017-05-10', '5/10/2017 9:00:29 AM', '5/10/2017 5:08:55 PM', '8.14', '0.48', '0', '0', 'Regular'),
+	(41, 0, '10017', '2017-05-11', '5/11/2017 8:52:32 AM', '5/11/2017 5:17:14 PM', '8.29', '0', '0', '0', 'Regular'),
+	(42, 0, '10017', '2017-05-12', '5/12/2017 8:19:45 AM', '5/12/2017 5:16:33 PM', '8.28', '0', '0', '0', 'Regular'),
+	(43, 0, '10017', '2017-05-13', '5/13/2017 8:36:36 AM', '5/13/2017 3:13:14 PM', '6.22', '0', '0', '0', 'Regular'),
+	(44, 0, '10017', '2017-05-15', '5/15/2017 8:30:28 AM', '5/15/2017 5:14:25 PM', '8.24', '0', '0', '0', 'Regular'),
+	(45, 0, '10019', '2017-05-02', '5/2/2017 8:37:11 AM', '5/2/2017 5:23:06 PM', '8.38', '0', '0', '0', 'Regular'),
+	(46, 0, '10019', '2017-05-03', '5/3/2017 8:38:50 AM', '5/3/2017 7:24:28 PM', '10.41', '0', '0', '2.41', 'Overtime'),
+	(47, 0, '10019', '2017-05-04', '5/4/2017 8:48:55 AM', '5/4/2017 5:26:42 PM', '8.44', '0', '0', '0', 'Regular'),
+	(48, 0, '10019', '2017-05-06', '5/6/2017 8:56:53 AM', '5/6/2017 8:11:59 PM', '11.2', '0', '0', '5.2', 'Overtime'),
+	(49, 0, '10019', '2017-05-08', '5/8/2017 8:54:20 AM', '5/8/2017 5:34:02 PM', '8.57', '0', '0', '0', 'Regular'),
+	(50, 0, '10019', '2017-05-09', '5/9/2017 8:59:44 AM', '5/9/2017 5:53:38 PM', '8.89', '0', '0', '0', 'Regular'),
+	(51, 0, '10019', '2017-05-11', '5/11/2017 8:28:16 AM', '5/11/2017 5:27:34 PM', '8.46', '0', '0', '0', 'Regular'),
+	(52, 0, '10021', '2017-05-02', '5/2/2017 8:30:57 AM', '5/2/2017 5:19:56 PM', '8.33', '0', '0', '0', 'Regular'),
+	(53, 0, '10021', '2017-05-03', '5/3/2017 8:34:23 AM', '5/3/2017 5:06:25 PM', '8.11', '0', '0', '0', 'Regular'),
+	(54, 0, '10021', '2017-05-04', '5/4/2017 8:33:48 AM', '5/4/2017 5:11:02 PM', '8.18', '0', '0', '0', 'Regular'),
+	(55, 0, '10021', '2017-05-05', '5/5/2017 9:07:14 AM', '5/5/2017 5:15:10 PM', '8.13', '7.23', '0', '0', 'Regular'),
+	(56, 0, '10021', '2017-05-06', '5/6/2017 8:21:22 AM', '5/6/2017 3:24:01 PM', '6.4', '0', '0', '0', 'Regular'),
+	(57, 0, '10021', '2017-05-09', '5/9/2017 8:48:39 AM', '5/9/2017 5:13:48 PM', '8.23', '0', '0', '0', 'Regular'),
+	(58, 0, '10021', '2017-05-10', '5/10/2017 8:53:39 AM', '5/10/2017 5:24:03 PM', '8.4', '0', '0', '0', 'Regular'),
+	(59, 0, '10021', '2017-05-11', '5/11/2017 8:32:11 AM', '5/11/2017 5:07:41 PM', '8.13', '0', '0', '0', 'Regular'),
+	(60, 0, '10021', '2017-05-12', '5/12/2017 8:34:34 AM', '5/12/2017 5:08:17 PM', '8.14', '0', '0', '0', 'Regular'),
+	(61, 0, '10021', '2017-05-13', '5/13/2017 8:35:33 AM', '5/13/2017 3:00:10 PM', '6', '0', '0', '0', 'Regular'),
+	(62, 0, '10021', '2017-05-15', '5/15/2017 8:20:42 AM', '5/15/2017 5:07:37 PM', '8.13', '0', '0', '0', 'Regular'),
+	(63, 0, '10022', '2017-05-02', '5/2/2017 8:53:00 AM', '5/2/2017 5:26:22 PM', '8.44', '0', '0', '0', 'Regular'),
+	(64, 0, '10022', '2017-05-03', '5/3/2017 8:55:06 AM', '5/3/2017 5:50:17 PM', '8.84', '0', '0', '0', 'Regular'),
+	(65, 0, '10022', '2017-05-05', '5/5/2017 9:03:59 AM', '5/5/2017 5:38:32 PM', '8.58', '3.98', '0', '0', 'Regular'),
+	(66, 0, '10022', '2017-05-06', '5/6/2017 8:56:08 AM', '5/6/2017 4:07:27 PM', '7.12', '0', '0', '1.12', 'Overtime'),
+	(67, 0, '10022', '2017-05-08', '5/8/2017 8:55:54 AM', '5/8/2017 5:56:30 PM', '8.94', '0', '0', '0', 'Regular'),
+	(68, 0, '10022', '2017-05-10', '5/10/2017 8:57:47 AM', '5/10/2017 5:25:08 PM', '8.42', '0', '0', '0', 'Regular'),
+	(69, 0, '10022', '2017-05-11', '5/11/2017 8:53:30 AM', '5/11/2017 5:43:20 PM', '8.72', '0', '0', '0', 'Regular'),
+	(70, 0, '10022', '2017-05-12', '5/12/2017 8:53:54 AM', '5/12/2017 5:42:51 PM', '8.71', '0', '0', '0', 'Regular'),
+	(71, 0, '10022', '2017-05-13', '5/13/2017 8:58:22 AM', '5/13/2017 3:30:26 PM', '6.51', '0', '0', '0', 'Regular'),
+	(72, 0, '10022', '2017-05-15', '5/15/2017 8:55:34 AM', '5/15/2017 5:37:24 PM', '8.62', '0', '0', '0', 'Regular'),
+	(73, 0, '1003', '2017-05-02', '5/2/2017 8:39:09 AM', '5/2/2017 8:49:21 PM', '11.82', '0', '0', '3.82', 'Overtime'),
+	(74, 0, '1003', '2017-05-03', '5/3/2017 8:45:10 AM', '5/3/2017 5:29:41 PM', '8.49', '0', '0', '0', 'Regular'),
+	(75, 0, '1003', '2017-05-04', '5/4/2017 8:53:02 AM', '5/4/2017 7:18:14 PM', '10.3', '0', '0', '2.3', 'Overtime'),
+	(76, 0, '1003', '2017-05-05', '5/5/2017 8:59:06 AM', '5/5/2017 5:19:06 PM', '8.32', '0', '0', '0', 'Regular'),
+	(77, 0, '1003', '2017-05-06', '5/6/2017 8:59:19 AM', '5/6/2017 3:13:39 PM', '6.23', '0', '0', '0', 'Regular'),
+	(78, 0, '1003', '2017-05-08', '5/8/2017 8:31:46 AM', '5/8/2017 5:13:09 PM', '8.22', '0', '0', '0', 'Regular'),
+	(79, 0, '1003', '2017-05-09', '5/9/2017 9:00:14 AM', '5/9/2017 6:20:16 PM', '9.33', '0.23', '0', '1.34', 'Overtime'),
+	(80, 0, '1003', '2017-05-11', '5/11/2017 8:58:08 AM', '5/11/2017 6:00:23 PM', '9.01', '0', '0', '1.01', 'Overtime'),
+	(81, 0, '1003', '2017-05-12', '5/12/2017 8:49:32 AM', '5/12/2017 5:19:14 PM', '8.32', '0', '0', '0', 'Regular'),
+	(82, 0, '1003', '2017-05-15', '5/15/2017 8:52:43 AM', '5/15/2017 5:24:27 PM', '8.41', '0', '0', '0', 'Regular'),
+	(83, 0, '1004', '2017-05-02', '5/2/2017 8:01:11 AM', '5/2/2017 5:18:41 PM', '8.31', '0', '0', '0', 'Regular'),
+	(84, 0, '1004', '2017-05-03', '5/3/2017 8:40:06 AM', '5/3/2017 5:07:48 PM', '8.13', '0', '0', '0', 'Regular'),
+	(85, 0, '1004', '2017-05-04', '5/4/2017 8:42:51 AM', '5/4/2017 5:10:53 PM', '8.18', '0', '0', '0', 'Regular'),
+	(86, 0, '1004', '2017-05-05', '5/5/2017 8:47:10 AM', '5/5/2017 5:16:28 PM', '8.27', '0', '0', '0', 'Regular'),
+	(87, 0, '1004', '2017-05-08', '5/8/2017 8:49:52 AM', '5/8/2017 5:12:15 PM', '8.2', '0', '0', '0', 'Regular'),
+	(88, 0, '1004', '2017-05-09', '5/9/2017 8:45:23 AM', '5/9/2017 5:13:01 PM', '8.22', '0', '0', '0', 'Regular'),
+	(89, 0, '1004', '2017-05-11', '5/11/2017 8:40:01 AM', '5/11/2017 5:09:03 PM', '8.15', '0', '0', '0', 'Regular'),
+	(90, 0, '1004', '2017-05-12', '5/12/2017 8:40:13 AM', '5/12/2017 5:19:10 PM', '8.32', '0', '0', '0', 'Regular'),
+	(91, 0, '1004', '2017-05-13', '5/13/2017 8:39:50 AM', '5/13/2017 3:21:11 PM', '6.35', '0', '0', '0', 'Regular'),
+	(92, 0, '1006', '2017-05-02', '5/2/2017 8:56:50 AM', '5/2/2017 5:32:04 PM', '8.53', '0', '0', '0', 'Regular'),
+	(93, 0, '1006', '2017-05-03', '5/3/2017 8:53:59 AM', '5/3/2017 5:13:24 PM', '8.22', '0', '0', '0', 'Regular'),
+	(94, 0, '1006', '2017-05-04', '5/4/2017 9:09:19 AM', '5/4/2017 5:08:47 PM', '7.99', '9.32', '0', '0', 'Regular'),
+	(95, 0, '1006', '2017-05-05', '5/5/2017 8:53:03 AM', '5/5/2017 5:12:09 PM', '8.2', '0', '0', '0', 'Regular'),
+	(96, 0, '1006', '2017-05-06', '5/6/2017 8:57:38 AM', '5/6/2017 5:20:32 PM', '8.34', '0', '0', '2.34', 'Overtime'),
+	(97, 0, '1006', '2017-05-09', '5/9/2017 8:57:21 AM', '5/9/2017 5:16:53 PM', '8.28', '0', '0', '0', 'Regular'),
+	(98, 0, '1006', '2017-05-11', '5/11/2017 8:50:40 AM', '5/11/2017 5:08:29 PM', '8.14', '0', '0', '0', 'Regular'),
+	(99, 0, '1006', '2017-05-12', '5/12/2017 8:59:01 AM', '5/12/2017 5:38:42 PM', '8.64', '0', '0', '0', 'Regular'),
+	(100, 0, '1006', '2017-05-13', '5/13/2017 8:59:03 AM', '5/13/2017 3:07:10 PM', '6.12', '0', '0', '0', 'Regular'),
+	(101, 0, '1006', '2017-05-15', '5/15/2017 9:01:59 AM', '5/15/2017 5:19:09 PM', '8.29', '1.98', '0', '0', 'Regular'),
+	(102, 0, '104', '2017-05-03', '5/3/2017 9:01:24 AM', '5/3/2017 5:36:45 PM', '8.59', '1.4', '0', '0', 'Regular'),
+	(103, 0, '104', '2017-05-04', '5/4/2017 8:59:57 AM', '5/4/2017 5:26:12 PM', '8.44', '0', '0', '0', 'Regular'),
+	(104, 0, '104', '2017-05-05', '5/5/2017 9:03:29 AM', '5/5/2017 5:24:11 PM', '8.35', '3.48', '0', '0', 'Regular'),
+	(105, 0, '104', '2017-05-06', '5/6/2017 8:06:18 AM', '5/6/2017 6:23:20 PM', '9.39', '0', '0', '3.39', 'Overtime'),
+	(106, 0, '104', '2017-05-10', '5/10/2017 8:52:25 AM', '5/10/2017 5:37:20 PM', '8.62', '0', '0', '0', 'Regular'),
+	(107, 0, '104', '2017-05-11', '5/11/2017 8:59:45 AM', '5/11/2017 5:44:35 PM', '8.74', '0', '0', '0', 'Regular'),
+	(108, 0, '104', '2017-05-12', '5/12/2017 8:50:00 AM', '5/12/2017 5:20:03 PM', '8.33', '0', '0', '0', 'Regular'),
+	(109, 0, '110', '2017-05-02', '5/2/2017 8:54:33 AM', '5/2/2017 5:06:13 PM', '8.1', '0', '0', '0', 'Regular'),
+	(110, 0, '110', '2017-05-03', '5/3/2017 8:59:10 AM', '5/3/2017 5:13:30 PM', '8.22', '0', '0', '0', 'Regular'),
+	(111, 0, '110', '2017-05-04', '5/4/2017 8:53:23 AM', '5/4/2017 5:06:32 PM', '8.11', '0', '0', '0', 'Regular'),
+	(112, 0, '110', '2017-05-05', '5/5/2017 8:53:22 AM', '5/5/2017 5:17:17 PM', '8.29', '0', '0', '0', 'Regular'),
+	(113, 0, '110', '2017-05-06', '5/6/2017 8:54:39 AM', '5/6/2017 3:16:08 PM', '6.27', '0', '0', '0', 'Regular'),
+	(114, 0, '110', '2017-05-08', '5/8/2017 8:49:58 AM', '5/8/2017 5:04:34 PM', '8.08', '0', '0', '0', 'Regular'),
+	(115, 0, '110', '2017-05-09', '5/9/2017 8:52:19 AM', '5/9/2017 5:15:22 PM', '8.26', '0', '0', '0', 'Regular'),
+	(116, 0, '110', '2017-05-10', '5/10/2017 9:01:52 AM', '5/10/2017 5:14:58 PM', '8.22', '1.87', '0', '0', 'Regular'),
+	(117, 0, '110', '2017-05-11', '5/11/2017 8:41:48 AM', '5/11/2017 5:09:14 PM', '8.15', '0', '0', '0', 'Regular'),
+	(118, 0, '110', '2017-05-12', '5/12/2017 8:46:48 AM', '5/12/2017 5:13:34 PM', '8.23', '0', '0', '0', 'Regular'),
+	(119, 0, '110', '2017-05-13', '5/13/2017 8:48:51 AM', '5/13/2017 3:01:25 PM', '6.02', '0', '0', '0', 'Regular'),
+	(120, 0, '110', '2017-05-15', '5/15/2017 8:54:16 AM', '5/15/2017 5:23:18 PM', '8.39', '0', '0', '0', 'Regular'),
+	(121, 0, '112', '2017-05-02', '5/2/2017 8:52:45 AM', '5/2/2017 5:21:05 PM', '8.35', '0', '0', '0', 'Regular'),
+	(122, 0, '112', '2017-05-03', '5/3/2017 9:02:25 AM', '5/3/2017 5:28:00 PM', '8.43', '2.42', '0', '0', 'Regular'),
+	(123, 0, '112', '2017-05-04', '5/4/2017 8:58:35 AM', '5/4/2017 5:13:53 PM', '8.23', '0', '0', '0', 'Regular'),
+	(124, 0, '112', '2017-05-06', '5/6/2017 8:58:00 AM', '5/6/2017 3:22:34 PM', '6.38', '0', '0', '0', 'Regular'),
+	(125, 0, '112', '2017-05-08', '5/8/2017 8:55:39 AM', '5/8/2017 5:27:17 PM', '8.45', '0', '0', '0', 'Regular'),
+	(126, 0, '112', '2017-05-10', '5/10/2017 8:55:21 AM', '5/10/2017 5:13:51 PM', '8.23', '0', '0', '0', 'Regular'),
+	(127, 0, '112', '2017-05-11', '5/11/2017 9:03:10 AM', '5/11/2017 5:17:06 PM', '8.23', '3.17', '0', '0', 'Regular'),
+	(128, 0, '112', '2017-05-12', '5/12/2017 9:01:55 AM', '5/12/2017 5:36:32 PM', '8.58', '1.92', '0', '0', 'Regular'),
+	(129, 0, '112', '2017-05-15', '5/15/2017 8:11:11 AM', '5/15/2017 5:25:43 PM', '8.43', '0', '0', '0', 'Regular'),
+	(130, 0, '116', '2017-05-02', '5/2/2017 8:59:11 AM', '5/2/2017 5:29:29 PM', '8.49', '0', '0', '0', 'Regular'),
+	(131, 0, '116', '2017-05-04', '5/4/2017 8:52:26 AM', '5/4/2017 5:10:25 PM', '8.17', '0', '0', '0', 'Regular'),
+	(132, 0, '116', '2017-05-05', '5/5/2017 8:53:12 AM', '5/5/2017 5:16:02 PM', '8.27', '0', '0', '0', 'Regular'),
+	(133, 0, '116', '2017-05-09', '5/9/2017 9:02:16 AM', '5/9/2017 5:19:45 PM', '8.29', '2.27', '0', '0', 'Regular'),
+	(134, 0, '116', '2017-05-10', '5/10/2017 8:59:36 AM', '5/10/2017 5:15:03 PM', '8.25', '0', '0', '0', 'Regular'),
+	(135, 0, '116', '2017-05-11', '5/11/2017 8:57:52 AM', '5/11/2017 5:20:28 PM', '8.34', '0', '0', '0', 'Regular'),
+	(136, 0, '116', '2017-05-12', '5/12/2017 8:58:06 AM', '5/12/2017 5:13:01 PM', '8.22', '0', '0', '0', 'Regular'),
+	(137, 0, '116', '2017-05-13', '5/13/2017 8:54:14 AM', '5/13/2017 3:07:07 PM', '6.12', '0', '0', '0', 'Regular'),
+	(138, 0, '117', '2017-05-10', '5/10/2017 8:49:00 AM', '5/10/2017 5:33:08 PM', '8.55', '0', '0', '0', 'Regular'),
+	(139, 0, '117', '2017-05-11', '5/11/2017 9:14:47 AM', '5/11/2017 5:22:52 PM', '8.13', '14.78', '0', '0', 'Regular'),
+	(140, 372, '10021', '2017-05-08', '9:00:00 AM', '5:17:19 PM', '8', '0', '0', '0', 'Regular');
+/*!40000 ALTER TABLE `tbl_attendance` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_attendanceraw
+CREATE TABLE IF NOT EXISTS `tbl_attendanceraw` (
+  `rawatt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Department` varchar(50) DEFAULT NULL,
+  `Name` varchar(50) DEFAULT NULL,
+  `No` varchar(50) DEFAULT NULL,
+  `Date_Time` varchar(50) DEFAULT NULL,
+  `Status` varchar(50) DEFAULT NULL,
+  `LogTime` varchar(50) DEFAULT NULL,
+  `LogDate` varchar(50) DEFAULT NULL,
+  `ifMapped` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`rawatt_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=347 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table hris_payroll.tbl_attendanceraw: 346 rows
+/*!40000 ALTER TABLE `tbl_attendanceraw` DISABLE KEYS */;
+INSERT INTO `tbl_attendanceraw` (`rawatt_id`, `Department`, `Name`, `No`, `Date_Time`, `Status`, `LogTime`, `LogDate`, `ifMapped`) VALUES
+	(1, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/3/2017 7:59:29 AM', 'C/In', '07:59 AM', '05/03/2017', 1),
+	(2, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/3/2017 5:49:41 PM', 'C/Out', '05:49 PM', '05/03/2017', 1),
+	(3, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/4/2017 8:08:20 AM', 'C/In', '08:08 AM', '05/04/2017', 1),
+	(4, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/4/2017 5:17:35 PM', 'C/Out', '05:17 PM', '05/04/2017', 1),
+	(5, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/5/2017 7:56:28 AM', 'C/In', '07:56 AM', '05/05/2017', 1),
+	(6, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/5/2017 5:20:42 PM', 'C/Out', '05:20 PM', '05/05/2017', 1),
+	(7, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/8/2017 7:57:35 AM', 'C/In', '07:57 AM', '05/08/2017', 1),
+	(8, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/8/2017 5:36:39 PM', 'C/Out', '05:36 PM', '05/08/2017', 1),
+	(9, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/9/2017 7:46:26 AM', 'C/In', '07:46 AM', '05/09/2017', 1),
+	(10, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/9/2017 6:18:53 PM', 'C/Out', '06:18 PM', '05/09/2017', 1),
+	(11, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/10/2017 8:04:23 AM', 'C/In', '08:04 AM', '05/10/2017', 1),
+	(12, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/10/2017 5:33:26 PM', 'C/Out', '05:33 PM', '05/10/2017', 1),
+	(13, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/11/2017 7:57:31 AM', 'C/In', '07:57 AM', '05/11/2017', 1),
+	(14, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/11/2017 5:34:23 PM', 'C/Out', '05:34 PM', '05/11/2017', 1),
+	(15, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/12/2017 8:02:48 AM', 'C/In', '08:02 AM', '05/12/2017', 1),
+	(16, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/12/2017 5:12:20 PM', 'C/Out', '05:12 PM', '05/12/2017', 1),
+	(17, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/15/2017 7:59:03 AM', 'C/In', '07:59 AM', '05/15/2017', 1),
+	(18, 'SMSI', 'ALMUETE, CHARLENE J.', '10002', '5/15/2017 5:31:48 PM', 'C/Out', '05:31 PM', '05/15/2017', 1),
+	(19, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/2/2017 8:53:54 AM', 'C/In', '08:53 AM', '05/02/2017', 1),
+	(20, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/2/2017 5:22:49 PM', 'C/Out', '05:22 PM', '05/02/2017', 1),
+	(21, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/3/2017 8:34:58 AM', 'C/In', '08:34 AM', '05/03/2017', 1),
+	(22, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/3/2017 9:44:45 PM', 'C/Out', '09:44 PM', '05/03/2017', 1),
+	(23, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/4/2017 8:56:50 AM', 'C/In', '08:56 AM', '05/04/2017', 0),
+	(24, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/5/2017 8:48:32 AM', 'C/In', '08:48 AM', '05/05/2017', 1),
+	(25, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/5/2017 5:25:32 PM', 'C/Out', '05:25 PM', '05/05/2017', 1),
+	(26, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/6/2017 8:51:13 AM', 'C/In', '08:51 AM', '05/06/2017', 1),
+	(27, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/6/2017 3:32:34 PM', 'C/Out', '03:32 PM', '05/06/2017', 1),
+	(28, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/8/2017 8:52:54 AM', 'C/In', '08:52 AM', '05/08/2017', 1),
+	(29, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/8/2017 5:34:20 PM', 'C/Out', '05:34 PM', '05/08/2017', 1),
+	(30, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/9/2017 8:51:50 AM', 'C/In', '08:51 AM', '05/09/2017', 1),
+	(31, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/9/2017 5:37:56 PM', 'C/Out', '05:37 PM', '05/09/2017', 1),
+	(32, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/10/2017 9:02:15 AM', 'C/In', '09:02 AM', '05/10/2017', 1),
+	(33, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/10/2017 5:37:33 PM', 'C/Out', '05:37 PM', '05/10/2017', 1),
+	(34, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/11/2017 8:56:23 AM', 'C/In', '08:56 AM', '05/11/2017', 1),
+	(35, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/11/2017 5:27:37 PM', 'C/Out', '05:27 PM', '05/11/2017', 1),
+	(36, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/12/2017 8:54:42 AM', 'C/In', '08:54 AM', '05/12/2017', 1),
+	(37, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/12/2017 7:33:36 PM', 'C/Out', '07:33 PM', '05/12/2017', 1),
+	(38, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/13/2017 8:41:23 AM', 'C/In', '08:41 AM', '05/13/2017', 1),
+	(39, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/13/2017 8:52:08 PM', 'C/Out', '08:52 PM', '05/13/2017', 1),
+	(40, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/15/2017 8:48:37 AM', 'C/In', '08:48 AM', '05/15/2017', 1),
+	(41, 'SMSI', 'SALADAGA, LORMAN S.', '10013', '5/15/2017 5:43:55 PM', 'C/Out', '05:43 PM', '05/15/2017', 1),
+	(42, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/2/2017 8:56:01 AM', 'C/In', '08:56 AM', '05/02/2017', 1),
+	(43, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/2/2017 5:21:14 PM', 'C/Out', '05:21 PM', '05/02/2017', 1),
+	(44, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/2/2017 8:49:08 PM', 'C/Out', '08:49 PM', '05/02/2017', 1),
+	(45, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/3/2017 8:54:04 AM', 'C/In', '08:54 AM', '05/03/2017', 1),
+	(46, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/3/2017 6:23:37 PM', 'C/Out', '06:23 PM', '05/03/2017', 1),
+	(47, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/3/2017 9:44:40 PM', 'C/Out', '09:44 PM', '05/03/2017', 1),
+	(48, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/4/2017 8:14:44 AM', 'C/In', '08:14 AM', '05/04/2017', 1),
+	(49, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/4/2017 9:28:31 PM', 'C/Out', '09:28 PM', '05/04/2017', 1),
+	(50, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/5/2017 9:00:41 AM', 'C/In', '09:00 AM', '05/05/2017', 1),
+	(51, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/5/2017 7:32:34 PM', 'C/Out', '07:32 PM', '05/05/2017', 1),
+	(52, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/6/2017 8:57:10 AM', 'C/In', '08:57 AM', '05/06/2017', 1),
+	(53, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/6/2017 10:53:27 PM', 'C/Out', '10:53 PM', '05/06/2017', 1),
+	(54, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/8/2017 9:10:24 AM', 'C/In', '09:10 AM', '05/08/2017', 1),
+	(55, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/8/2017 5:13:53 PM', 'C/Out', '05:13 PM', '05/08/2017', 1),
+	(56, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/8/2017 5:33:51 PM', 'C/Out', '05:33 PM', '05/08/2017', 1),
+	(57, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/9/2017 8:58:28 AM', 'C/In', '08:58 AM', '05/09/2017', 1),
+	(58, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/9/2017 6:20:12 PM', 'C/Out', '06:20 PM', '05/09/2017', 1),
+	(59, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/10/2017 9:04:16 AM', 'C/In', '09:04 AM', '05/10/2017', 1),
+	(60, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/10/2017 5:11:10 PM', 'C/Out', '05:11 PM', '05/10/2017', 1),
+	(61, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/10/2017 9:13:07 PM', 'C/Out', '09:13 PM', '05/10/2017', 1),
+	(62, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/11/2017 9:07:41 AM', 'C/In', '09:07 AM', '05/11/2017', 1),
+	(63, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/11/2017 5:37:17 PM', 'C/Out', '05:37 PM', '05/11/2017', 1),
+	(64, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/12/2017 9:09:04 AM', 'C/In', '09:09 AM', '05/12/2017', 1),
+	(65, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/12/2017 5:18:37 PM', 'C/Out', '05:18 PM', '05/12/2017', 1),
+	(66, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/13/2017 8:52:02 AM', 'C/In', '08:52 AM', '05/13/2017', 1),
+	(67, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/13/2017 4:11:13 PM', 'C/Out', '04:11 PM', '05/13/2017', 1),
+	(68, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/13/2017 8:52:01 PM', 'C/Out', '08:52 PM', '05/13/2017', 1),
+	(69, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/15/2017 8:47:59 AM', 'C/In', '08:47 AM', '05/15/2017', 1),
+	(70, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/15/2017 5:13:05 PM', 'C/In', '05:13 PM', '05/15/2017', 1),
+	(71, 'SMSI', 'ARCE, CRESAR JOHN R.', '10014', '5/15/2017 7:19:37 PM', 'C/Out', '07:19 PM', '05/15/2017', 1),
+	(72, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/2/2017 8:32:46 AM', 'C/In', '08:32 AM', '05/02/2017', 1),
+	(73, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/2/2017 5:02:03 PM', 'C/Out', '05:02 PM', '05/02/2017', 1),
+	(74, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/3/2017 8:42:11 AM', 'C/In', '08:42 AM', '05/03/2017', 1),
+	(75, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/3/2017 8:42:20 AM', 'C/In', '08:42 AM', '05/03/2017', 1),
+	(76, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/3/2017 5:21:21 PM', 'C/Out', '05:21 PM', '05/03/2017', 1),
+	(77, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/4/2017 8:31:54 AM', 'C/In', '08:31 AM', '05/04/2017', 1),
+	(78, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/4/2017 5:25:48 PM', 'C/Out', '05:25 PM', '05/04/2017', 1),
+	(79, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/5/2017 8:40:43 AM', 'C/In', '08:40 AM', '05/05/2017', 1),
+	(80, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/5/2017 5:36:33 PM', 'C/Out', '05:36 PM', '05/05/2017', 1),
+	(81, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/5/2017 5:36:37 PM', 'C/Out', '05:36 PM', '05/05/2017', 1),
+	(82, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/6/2017 8:31:17 AM', 'C/In', '08:31 AM', '05/06/2017', 1),
+	(83, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/6/2017 3:16:23 PM', 'C/Out', '03:16 PM', '05/06/2017', 1),
+	(84, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/8/2017 8:13:37 AM', 'C/In', '08:13 AM', '05/08/2017', 1),
+	(85, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/8/2017 8:13:40 AM', 'C/In', '08:13 AM', '05/08/2017', 1),
+	(86, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/8/2017 5:12:05 PM', 'C/Out', '05:12 PM', '05/08/2017', 1),
+	(87, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/9/2017 8:25:49 AM', 'C/In', '08:25 AM', '05/09/2017', 1),
+	(88, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/9/2017 8:25:51 AM', 'C/In', '08:25 AM', '05/09/2017', 1),
+	(89, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/9/2017 5:10:48 PM', 'C/Out', '05:10 PM', '05/09/2017', 1),
+	(90, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/10/2017 9:00:29 AM', 'C/In', '09:00 AM', '05/10/2017', 1),
+	(91, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/10/2017 5:08:55 PM', 'C/Out', '05:08 PM', '05/10/2017', 1),
+	(92, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/11/2017 8:52:32 AM', 'C/In', '08:52 AM', '05/11/2017', 1),
+	(93, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/11/2017 5:17:14 PM', 'C/Out', '05:17 PM', '05/11/2017', 1),
+	(94, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/12/2017 8:19:45 AM', 'C/In', '08:19 AM', '05/12/2017', 1),
+	(95, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/12/2017 5:16:33 PM', 'C/Out', '05:16 PM', '05/12/2017', 1),
+	(96, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/13/2017 8:36:36 AM', 'C/In', '08:36 AM', '05/13/2017', 1),
+	(97, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/13/2017 3:13:14 PM', 'C/Out', '03:13 PM', '05/13/2017', 1),
+	(98, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/15/2017 8:30:28 AM', 'C/In', '08:30 AM', '05/15/2017', 1),
+	(99, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/15/2017 5:14:22 PM', 'C/In', '05:14 PM', '05/15/2017', 1),
+	(100, 'SMSI', 'CABALTERA, BRAZZEL', '10017', '5/15/2017 5:14:25 PM', 'C/Out', '05:14 PM', '05/15/2017', 1),
+	(101, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/2/2017 8:37:11 AM', 'C/In', '08:37 AM', '05/02/2017', 1),
+	(102, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/2/2017 5:23:06 PM', 'C/Out', '05:23 PM', '05/02/2017', 1),
+	(103, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/3/2017 8:38:50 AM', 'C/In', '08:38 AM', '05/03/2017', 1),
+	(104, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/3/2017 7:24:28 PM', 'C/Out', '07:24 PM', '05/03/2017', 1),
+	(105, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/4/2017 8:48:55 AM', 'C/In', '08:48 AM', '05/04/2017', 1),
+	(106, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/4/2017 5:26:42 PM', 'C/Out', '05:26 PM', '05/04/2017', 1),
+	(107, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/5/2017 8:54:31 AM', 'C/In', '08:54 AM', '05/05/2017', 0),
+	(108, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/6/2017 8:56:53 AM', 'C/In', '08:56 AM', '05/06/2017', 1),
+	(109, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/6/2017 8:11:59 PM', 'C/Out', '08:11 PM', '05/06/2017', 1),
+	(110, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/8/2017 8:54:20 AM', 'C/In', '08:54 AM', '05/08/2017', 1),
+	(111, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/8/2017 5:34:02 PM', 'C/Out', '05:34 PM', '05/08/2017', 1),
+	(112, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/9/2017 8:59:44 AM', 'C/In', '08:59 AM', '05/09/2017', 1),
+	(113, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/9/2017 5:53:38 PM', 'C/Out', '05:53 PM', '05/09/2017', 1),
+	(114, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/10/2017 8:55:17 AM', 'C/In', '08:55 AM', '05/10/2017', 0),
+	(115, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/11/2017 8:28:16 AM', 'C/In', '08:28 AM', '05/11/2017', 1),
+	(116, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/11/2017 5:27:34 PM', 'C/Out', '05:27 PM', '05/11/2017', 1),
+	(117, 'SMSI', 'MAPANAO, DIANE Y.', '10019', '5/12/2017 8:50:18 AM', 'C/In', '08:50 AM', '05/12/2017', 0),
+	(118, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/2/2017 8:30:57 AM', 'C/In', '08:30 AM', '05/02/2017', 1),
+	(119, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/2/2017 5:19:56 PM', 'C/Out', '05:19 PM', '05/02/2017', 1),
+	(120, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/3/2017 8:34:23 AM', 'C/In', '08:34 AM', '05/03/2017', 1),
+	(121, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/3/2017 5:06:25 PM', 'C/Out', '05:06 PM', '05/03/2017', 1),
+	(122, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/4/2017 8:33:48 AM', 'C/In', '08:33 AM', '05/04/2017', 1),
+	(123, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/4/2017 5:11:02 PM', 'C/Out', '05:11 PM', '05/04/2017', 1),
+	(124, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/5/2017 9:07:14 AM', 'C/In', '09:07 AM', '05/05/2017', 1),
+	(125, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/5/2017 5:15:10 PM', 'C/Out', '05:15 PM', '05/05/2017', 1),
+	(126, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/6/2017 8:21:22 AM', 'C/In', '08:21 AM', '05/06/2017', 1),
+	(127, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/6/2017 3:24:01 PM', 'C/Out', '03:24 PM', '05/06/2017', 1),
+	(128, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/9/2017 8:48:39 AM', 'C/In', '08:48 AM', '05/09/2017', 1),
+	(129, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/9/2017 5:13:48 PM', 'C/Out', '05:13 PM', '05/09/2017', 1),
+	(130, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/10/2017 8:53:39 AM', 'C/In', '08:53 AM', '05/10/2017', 1),
+	(131, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/10/2017 5:24:03 PM', 'C/Out', '05:24 PM', '05/10/2017', 1),
+	(132, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/11/2017 8:32:11 AM', 'C/In', '08:32 AM', '05/11/2017', 1),
+	(133, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/11/2017 5:07:41 PM', 'C/Out', '05:07 PM', '05/11/2017', 1),
+	(134, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/12/2017 8:34:34 AM', 'C/In', '08:34 AM', '05/12/2017', 1),
+	(135, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/12/2017 5:08:17 PM', 'C/Out', '05:08 PM', '05/12/2017', 1),
+	(136, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/13/2017 8:35:33 AM', 'C/In', '08:35 AM', '05/13/2017', 1),
+	(137, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/13/2017 3:00:10 PM', 'C/Out', '03:00 PM', '05/13/2017', 1),
+	(138, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/15/2017 8:20:42 AM', 'C/In', '08:20 AM', '05/15/2017', 1),
+	(139, 'SMSI', 'ALTAVANO, RAUL ADRIAN', '10021', '5/15/2017 5:07:37 PM', 'C/Out', '05:07 PM', '05/15/2017', 1),
+	(140, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/2/2017 8:53:00 AM', 'C/In', '08:53 AM', '05/02/2017', 1),
+	(141, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/2/2017 5:26:22 PM', 'C/Out', '05:26 PM', '05/02/2017', 1),
+	(142, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/3/2017 8:55:06 AM', 'C/In', '08:55 AM', '05/03/2017', 1),
+	(143, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/3/2017 5:50:17 PM', 'C/Out', '05:50 PM', '05/03/2017', 1),
+	(144, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/4/2017 8:54:14 AM', 'C/In', '08:54 AM', '05/04/2017', 0),
+	(145, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/5/2017 9:03:59 AM', 'C/In', '09:03 AM', '05/05/2017', 1),
+	(146, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/5/2017 5:38:32 PM', 'C/Out', '05:38 PM', '05/05/2017', 1),
+	(147, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/6/2017 8:56:08 AM', 'C/In', '08:56 AM', '05/06/2017', 1),
+	(148, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/6/2017 4:07:27 PM', 'C/Out', '04:07 PM', '05/06/2017', 1),
+	(149, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/8/2017 8:55:54 AM', 'C/In', '08:55 AM', '05/08/2017', 1),
+	(150, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/8/2017 5:56:30 PM', 'C/Out', '05:56 PM', '05/08/2017', 1),
+	(151, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/9/2017 8:56:04 AM', 'C/In', '08:56 AM', '05/09/2017', 0),
+	(152, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/9/2017 6:34:03 PM', 'C/In', '06:34 PM', '05/09/2017', 0),
+	(153, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/10/2017 8:57:47 AM', 'C/In', '08:57 AM', '05/10/2017', 1),
+	(154, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/10/2017 5:25:08 PM', 'C/Out', '05:25 PM', '05/10/2017', 1),
+	(155, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/11/2017 8:53:30 AM', 'C/In', '08:53 AM', '05/11/2017', 1),
+	(156, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/11/2017 5:43:20 PM', 'C/Out', '05:43 PM', '05/11/2017', 1),
+	(157, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/12/2017 8:53:54 AM', 'C/In', '08:53 AM', '05/12/2017', 1),
+	(158, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/12/2017 5:42:51 PM', 'C/Out', '05:42 PM', '05/12/2017', 1),
+	(159, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/13/2017 8:58:22 AM', 'C/In', '08:58 AM', '05/13/2017', 1),
+	(160, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/13/2017 3:30:26 PM', 'C/Out', '03:30 PM', '05/13/2017', 1),
+	(161, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/15/2017 8:55:34 AM', 'C/In', '08:55 AM', '05/15/2017', 1),
+	(162, 'SMSI', 'SULLAGA, CHAD LOUEI C.', '10022', '5/15/2017 5:37:24 PM', 'C/Out', '05:37 PM', '05/15/2017', 1),
+	(163, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/8/2017 8:52:59 AM', 'C/In', '08:52 AM', '05/08/2017', 0),
+	(164, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/8/2017 5:33:38 PM', 'C/Out', '05:33 PM', '05/08/2017', 0),
+	(165, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/9/2017 8:54:22 AM', 'C/In', '08:54 AM', '05/09/2017', 0),
+	(166, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/9/2017 5:53:35 PM', 'C/Out', '05:53 PM', '05/09/2017', 0),
+	(167, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/10/2017 8:47:24 AM', 'C/In', '08:47 AM', '05/10/2017', 0),
+	(168, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/10/2017 6:10:34 PM', 'C/Out', '06:10 PM', '05/10/2017', 0),
+	(169, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/11/2017 8:28:09 AM', 'C/In', '08:28 AM', '05/11/2017', 0),
+	(170, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/12/2017 8:28:08 AM', 'C/In', '08:28 AM', '05/12/2017', 0),
+	(171, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/13/2017 8:57:40 AM', 'C/In', '08:57 AM', '05/13/2017', 0),
+	(172, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/13/2017 3:26:16 PM', 'C/Out', '03:26 PM', '05/13/2017', 0),
+	(173, 'SMSI', 'LUNGTAD, DAINA L.', '10023', '5/15/2017 8:33:48 AM', 'C/In', '08:33 AM', '05/15/2017', 0),
+	(174, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/2/2017 8:39:09 AM', 'C/In', '08:39 AM', '05/02/2017', 1),
+	(175, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/2/2017 8:49:21 PM', 'C/Out', '08:49 PM', '05/02/2017', 1),
+	(176, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/3/2017 8:45:10 AM', 'C/In', '08:45 AM', '05/03/2017', 1),
+	(177, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/3/2017 5:29:41 PM', 'C/Out', '05:29 PM', '05/03/2017', 1),
+	(178, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/4/2017 8:53:02 AM', 'C/In', '08:53 AM', '05/04/2017', 1),
+	(179, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/4/2017 7:18:14 PM', 'C/Out', '07:18 PM', '05/04/2017', 1),
+	(180, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/5/2017 8:59:06 AM', 'C/In', '08:59 AM', '05/05/2017', 1),
+	(181, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/5/2017 5:19:06 PM', 'C/Out', '05:19 PM', '05/05/2017', 1),
+	(182, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/5/2017 5:38:22 PM', 'C/Out', '05:38 PM', '05/05/2017', 1),
+	(183, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/6/2017 8:59:19 AM', 'C/In', '08:59 AM', '05/06/2017', 1),
+	(184, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/6/2017 3:13:39 PM', 'C/Out', '03:13 PM', '05/06/2017', 1),
+	(185, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/8/2017 8:31:46 AM', 'C/In', '08:31 AM', '05/08/2017', 1),
+	(186, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/8/2017 5:13:09 PM', 'C/Out', '05:13 PM', '05/08/2017', 1),
+	(187, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/9/2017 9:00:14 AM', 'C/In', '09:00 AM', '05/09/2017', 1),
+	(188, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/9/2017 6:20:16 PM', 'C/Out', '06:20 PM', '05/09/2017', 1),
+	(189, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/9/2017 8:04:37 PM', 'C/In', '08:04 PM', '05/09/2017', 1),
+	(190, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/10/2017 9:01:57 AM', 'C/In', '09:01 AM', '05/10/2017', 0),
+	(191, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/11/2017 8:58:08 AM', 'C/In', '08:58 AM', '05/11/2017', 1),
+	(192, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/11/2017 6:00:23 PM', 'C/Out', '06:00 PM', '05/11/2017', 1),
+	(193, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/12/2017 8:49:32 AM', 'C/In', '08:49 AM', '05/12/2017', 1),
+	(194, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/12/2017 5:19:14 PM', 'C/Out', '05:19 PM', '05/12/2017', 1),
+	(195, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/13/2017 8:50:33 AM', 'C/In', '08:50 AM', '05/13/2017', 0),
+	(196, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/15/2017 8:52:43 AM', 'C/In', '08:52 AM', '05/15/2017', 1),
+	(197, 'SMSI', 'ARANGCO, MARCO C.', '1003', '5/15/2017 5:24:27 PM', 'C/Out', '05:24 PM', '05/15/2017', 1),
+	(198, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/2/2017 8:01:11 AM', 'C/In', '08:01 AM', '05/02/2017', 1),
+	(199, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/2/2017 5:18:41 PM', 'C/Out', '05:18 PM', '05/02/2017', 1),
+	(200, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/3/2017 8:40:06 AM', 'C/In', '08:40 AM', '05/03/2017', 1),
+	(201, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/3/2017 5:07:48 PM', 'C/Out', '05:07 PM', '05/03/2017', 1),
+	(202, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/4/2017 8:42:51 AM', 'C/In', '08:42 AM', '05/04/2017', 1),
+	(203, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/4/2017 5:10:53 PM', 'C/Out', '05:10 PM', '05/04/2017', 1),
+	(204, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/5/2017 8:47:10 AM', 'C/In', '08:47 AM', '05/05/2017', 1),
+	(205, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/5/2017 5:16:28 PM', 'C/Out', '05:16 PM', '05/05/2017', 1),
+	(206, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/6/2017 8:21:49 AM', 'C/In', '08:21 AM', '05/06/2017', 0),
+	(207, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/8/2017 8:49:52 AM', 'C/In', '08:49 AM', '05/08/2017', 1),
+	(208, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/8/2017 5:12:15 PM', 'C/Out', '05:12 PM', '05/08/2017', 1),
+	(209, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/9/2017 8:45:23 AM', 'C/In', '08:45 AM', '05/09/2017', 1),
+	(210, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/9/2017 5:13:01 PM', 'C/Out', '05:13 PM', '05/09/2017', 1),
+	(211, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/10/2017 8:37:14 AM', 'C/In', '08:37 AM', '05/10/2017', 0),
+	(212, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/11/2017 8:40:01 AM', 'C/In', '08:40 AM', '05/11/2017', 1),
+	(213, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/11/2017 5:09:03 PM', 'C/Out', '05:09 PM', '05/11/2017', 1),
+	(214, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/12/2017 8:40:13 AM', 'C/In', '08:40 AM', '05/12/2017', 1),
+	(215, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/12/2017 5:19:10 PM', 'C/Out', '05:19 PM', '05/12/2017', 1),
+	(216, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/13/2017 8:39:50 AM', 'C/In', '08:39 AM', '05/13/2017', 1),
+	(217, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/13/2017 3:21:11 PM', 'C/Out', '03:21 PM', '05/13/2017', 1),
+	(218, 'SMSI', 'ACHAS, SHEILA L.', '1004', '5/15/2017 5:14:04 PM', 'C/In', '05:14 PM', '05/15/2017', 0),
+	(219, 'SMSI', 'DANTES, JENNIFER', '1005', '5/4/2017 9:02:18 AM', 'C/In', '09:02 AM', '05/04/2017', 0),
+	(220, 'SMSI', 'DANTES, JENNIFER', '1005', '5/5/2017 8:35:55 AM', 'C/In', '08:35 AM', '05/05/2017', 0),
+	(221, 'SMSI', 'DANTES, JENNIFER', '1005', '5/15/2017 8:50:14 AM', 'C/In', '08:50 AM', '05/15/2017', 0),
+	(222, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/2/2017 8:56:50 AM', 'C/In', '08:56 AM', '05/02/2017', 1),
+	(223, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/2/2017 5:32:04 PM', 'C/Out', '05:32 PM', '05/02/2017', 1),
+	(224, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/3/2017 8:53:59 AM', 'C/In', '08:53 AM', '05/03/2017', 1),
+	(225, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/3/2017 5:13:24 PM', 'C/Out', '05:13 PM', '05/03/2017', 1),
+	(226, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/4/2017 9:09:19 AM', 'C/In', '09:09 AM', '05/04/2017', 1),
+	(227, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/4/2017 5:08:47 PM', 'C/Out', '05:08 PM', '05/04/2017', 1),
+	(228, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/5/2017 8:53:03 AM', 'C/In', '08:53 AM', '05/05/2017', 1),
+	(229, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/5/2017 5:12:09 PM', 'C/Out', '05:12 PM', '05/05/2017', 1),
+	(230, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/6/2017 8:57:38 AM', 'C/In', '08:57 AM', '05/06/2017', 1),
+	(231, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/6/2017 5:20:32 PM', 'C/Out', '05:20 PM', '05/06/2017', 1),
+	(232, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/9/2017 8:57:21 AM', 'C/In', '08:57 AM', '05/09/2017', 1),
+	(233, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/9/2017 5:16:53 PM', 'C/Out', '05:16 PM', '05/09/2017', 1),
+	(234, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/11/2017 8:50:40 AM', 'C/In', '08:50 AM', '05/11/2017', 1),
+	(235, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/11/2017 8:51:25 AM', 'C/In', '08:51 AM', '05/11/2017', 1),
+	(236, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/11/2017 5:08:29 PM', 'C/Out', '05:08 PM', '05/11/2017', 1),
+	(237, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/11/2017 5:18:08 PM', 'C/Out', '05:18 PM', '05/11/2017', 1),
+	(238, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/12/2017 8:59:01 AM', 'C/In', '08:59 AM', '05/12/2017', 1),
+	(239, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/12/2017 8:59:07 AM', 'C/In', '08:59 AM', '05/12/2017', 1),
+	(240, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/12/2017 5:38:42 PM', 'C/Out', '05:38 PM', '05/12/2017', 1),
+	(241, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/13/2017 8:59:03 AM', 'C/In', '08:59 AM', '05/13/2017', 1),
+	(242, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/13/2017 8:59:08 AM', 'C/In', '08:59 AM', '05/13/2017', 1),
+	(243, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/13/2017 3:07:10 PM', 'C/Out', '03:07 PM', '05/13/2017', 1),
+	(244, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/15/2017 9:01:59 AM', 'C/In', '09:01 AM', '05/15/2017', 1),
+	(245, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/15/2017 5:19:09 PM', 'C/Out', '05:19 PM', '05/15/2017', 1),
+	(246, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/15/2017 5:19:13 PM', 'C/Out', '05:19 PM', '05/15/2017', 1),
+	(247, 'SMSI', 'BALAGOSA, PETE EMANUELL', '1006', '5/15/2017 5:24:31 PM', 'C/Out', '05:24 PM', '05/15/2017', 1),
+	(248, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/3/2017 9:01:24 AM', 'C/In', '09:01 AM', '05/03/2017', 1),
+	(249, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/3/2017 5:36:45 PM', 'C/Out', '05:36 PM', '05/03/2017', 1),
+	(250, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/4/2017 8:59:57 AM', 'C/In', '08:59 AM', '05/04/2017', 1),
+	(251, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/4/2017 5:26:12 PM', 'C/Out', '05:26 PM', '05/04/2017', 1),
+	(252, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/5/2017 9:03:29 AM', 'C/In', '09:03 AM', '05/05/2017', 1),
+	(253, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/5/2017 5:24:11 PM', 'C/Out', '05:24 PM', '05/05/2017', 1),
+	(254, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/6/2017 8:06:18 AM', 'C/In', '08:06 AM', '05/06/2017', 1),
+	(255, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/6/2017 6:23:20 PM', 'C/Out', '06:23 PM', '05/06/2017', 1),
+	(256, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/10/2017 8:52:25 AM', 'C/In', '08:52 AM', '05/10/2017', 1),
+	(257, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/10/2017 5:37:20 PM', 'C/Out', '05:37 PM', '05/10/2017', 1),
+	(258, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/11/2017 8:59:45 AM', 'C/In', '08:59 AM', '05/11/2017', 1),
+	(259, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/11/2017 5:44:35 PM', 'C/Out', '05:44 PM', '05/11/2017', 1),
+	(260, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/12/2017 8:50:00 AM', 'C/In', '08:50 AM', '05/12/2017', 1),
+	(261, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/12/2017 5:20:03 PM', 'C/Out', '05:20 PM', '05/12/2017', 1),
+	(262, 'SMSI', 'BERSANO, ROBERT B.', '104', '5/13/2017 8:08:09 AM', 'C/In', '08:08 AM', '05/13/2017', 0),
+	(263, 'SMSI', 'MORENO, RENAN A.', '110', '5/2/2017 8:54:33 AM', 'C/In', '08:54 AM', '05/02/2017', 1),
+	(264, 'SMSI', 'MORENO, RENAN A.', '110', '5/2/2017 5:06:13 PM', 'C/Out', '05:06 PM', '05/02/2017', 1),
+	(265, 'SMSI', 'MORENO, RENAN A.', '110', '5/3/2017 8:59:10 AM', 'C/In', '08:59 AM', '05/03/2017', 1),
+	(266, 'SMSI', 'MORENO, RENAN A.', '110', '5/3/2017 5:13:30 PM', 'C/Out', '05:13 PM', '05/03/2017', 1),
+	(267, 'SMSI', 'MORENO, RENAN A.', '110', '5/4/2017 8:53:23 AM', 'C/In', '08:53 AM', '05/04/2017', 1),
+	(268, 'SMSI', 'MORENO, RENAN A.', '110', '5/4/2017 5:06:32 PM', 'C/Out', '05:06 PM', '05/04/2017', 1),
+	(269, 'SMSI', 'MORENO, RENAN A.', '110', '5/5/2017 8:53:22 AM', 'C/In', '08:53 AM', '05/05/2017', 1),
+	(270, 'SMSI', 'MORENO, RENAN A.', '110', '5/5/2017 5:17:17 PM', 'C/Out', '05:17 PM', '05/05/2017', 1),
+	(271, 'SMSI', 'MORENO, RENAN A.', '110', '5/6/2017 8:54:39 AM', 'C/In', '08:54 AM', '05/06/2017', 1),
+	(272, 'SMSI', 'MORENO, RENAN A.', '110', '5/6/2017 3:16:08 PM', 'C/Out', '03:16 PM', '05/06/2017', 1),
+	(273, 'SMSI', 'MORENO, RENAN A.', '110', '5/8/2017 8:49:58 AM', 'C/In', '08:49 AM', '05/08/2017', 1),
+	(274, 'SMSI', 'MORENO, RENAN A.', '110', '5/8/2017 5:04:34 PM', 'C/Out', '05:04 PM', '05/08/2017', 1),
+	(275, 'SMSI', 'MORENO, RENAN A.', '110', '5/9/2017 8:52:19 AM', 'C/In', '08:52 AM', '05/09/2017', 1),
+	(276, 'SMSI', 'MORENO, RENAN A.', '110', '5/9/2017 5:15:22 PM', 'C/Out', '05:15 PM', '05/09/2017', 1),
+	(277, 'SMSI', 'MORENO, RENAN A.', '110', '5/10/2017 9:01:52 AM', 'C/In', '09:01 AM', '05/10/2017', 1),
+	(278, 'SMSI', 'MORENO, RENAN A.', '110', '5/10/2017 5:14:58 PM', 'C/Out', '05:14 PM', '05/10/2017', 1),
+	(279, 'SMSI', 'MORENO, RENAN A.', '110', '5/11/2017 8:41:48 AM', 'C/In', '08:41 AM', '05/11/2017', 1),
+	(280, 'SMSI', 'MORENO, RENAN A.', '110', '5/11/2017 5:09:14 PM', 'C/Out', '05:09 PM', '05/11/2017', 1),
+	(281, 'SMSI', 'MORENO, RENAN A.', '110', '5/12/2017 8:46:48 AM', 'C/In', '08:46 AM', '05/12/2017', 1),
+	(282, 'SMSI', 'MORENO, RENAN A.', '110', '5/12/2017 5:13:34 PM', 'C/Out', '05:13 PM', '05/12/2017', 1),
+	(283, 'SMSI', 'MORENO, RENAN A.', '110', '5/13/2017 8:48:51 AM', 'C/In', '08:48 AM', '05/13/2017', 1),
+	(284, 'SMSI', 'MORENO, RENAN A.', '110', '5/13/2017 3:01:25 PM', 'C/Out', '03:01 PM', '05/13/2017', 1),
+	(285, 'SMSI', 'MORENO, RENAN A.', '110', '5/15/2017 8:54:16 AM', 'C/In', '08:54 AM', '05/15/2017', 1),
+	(286, 'SMSI', 'MORENO, RENAN A.', '110', '5/15/2017 5:23:18 PM', 'C/Out', '05:23 PM', '05/15/2017', 1),
+	(287, 'SMSI', 'SALVAN, JEAN A.', '111', '5/2/2017 5:20:57 PM', 'C/Out', '05:20 PM', '05/02/2017', 0),
+	(288, 'SMSI', 'SALVAN, JEAN A.', '111', '5/3/2017 5:46:28 PM', 'C/Out', '05:46 PM', '05/03/2017', 0),
+	(289, 'SMSI', 'SALVAN, JEAN A.', '111', '5/4/2017 5:39:56 PM', 'C/Out', '05:39 PM', '05/04/2017', 0),
+	(290, 'SMSI', 'SALVAN, JEAN A.', '111', '5/8/2017 5:09:39 PM', 'C/Out', '05:09 PM', '05/08/2017', 0),
+	(291, 'SMSI', 'SALVAN, JEAN A.', '111', '5/12/2017 5:42:54 PM', 'C/Out', '05:42 PM', '05/12/2017', 0),
+	(292, 'SMSI', 'SALVAN, JEAN A.', '111', '5/13/2017 2:59:48 PM', 'C/In', '02:59 PM', '05/13/2017', 0),
+	(293, 'SMSI', 'JASMIN, JANINE L.', '112', '5/2/2017 8:52:45 AM', 'C/In', '08:52 AM', '05/02/2017', 1),
+	(294, 'SMSI', 'JASMIN, JANINE L.', '112', '5/2/2017 5:21:05 PM', 'C/Out', '05:21 PM', '05/02/2017', 1),
+	(295, 'SMSI', 'JASMIN, JANINE L.', '112', '5/3/2017 9:02:25 AM', 'C/In', '09:02 AM', '05/03/2017', 1),
+	(296, 'SMSI', 'JASMIN, JANINE L.', '112', '5/3/2017 5:28:00 PM', 'C/Out', '05:28 PM', '05/03/2017', 1),
+	(297, 'SMSI', 'JASMIN, JANINE L.', '112', '5/4/2017 8:58:35 AM', 'C/In', '08:58 AM', '05/04/2017', 1),
+	(298, 'SMSI', 'JASMIN, JANINE L.', '112', '5/4/2017 5:13:53 PM', 'C/Out', '05:13 PM', '05/04/2017', 1),
+	(299, 'SMSI', 'JASMIN, JANINE L.', '112', '5/5/2017 8:59:40 AM', 'C/In', '08:59 AM', '05/05/2017', 0),
+	(300, 'SMSI', 'JASMIN, JANINE L.', '112', '5/5/2017 2:33:21 PM', 'C/In', '02:33 PM', '05/05/2017', 0),
+	(301, 'SMSI', 'JASMIN, JANINE L.', '112', '5/6/2017 8:58:00 AM', 'C/In', '08:58 AM', '05/06/2017', 1),
+	(302, 'SMSI', 'JASMIN, JANINE L.', '112', '5/6/2017 3:22:34 PM', 'C/Out', '03:22 PM', '05/06/2017', 1),
+	(303, 'SMSI', 'JASMIN, JANINE L.', '112', '5/8/2017 8:55:39 AM', 'C/In', '08:55 AM', '05/08/2017', 1),
+	(304, 'SMSI', 'JASMIN, JANINE L.', '112', '5/8/2017 5:27:17 PM', 'C/Out', '05:27 PM', '05/08/2017', 1),
+	(305, 'SMSI', 'JASMIN, JANINE L.', '112', '5/9/2017 8:43:55 AM', 'C/In', '08:43 AM', '05/09/2017', 0),
+	(306, 'SMSI', 'JASMIN, JANINE L.', '112', '5/9/2017 6:33:56 PM', 'C/In', '06:33 PM', '05/09/2017', 0),
+	(307, 'SMSI', 'JASMIN, JANINE L.', '112', '5/10/2017 8:55:21 AM', 'C/In', '08:55 AM', '05/10/2017', 1),
+	(308, 'SMSI', 'JASMIN, JANINE L.', '112', '5/10/2017 5:13:51 PM', 'C/Out', '05:13 PM', '05/10/2017', 1),
+	(309, 'SMSI', 'JASMIN, JANINE L.', '112', '5/11/2017 9:03:10 AM', 'C/In', '09:03 AM', '05/11/2017', 1),
+	(310, 'SMSI', 'JASMIN, JANINE L.', '112', '5/11/2017 5:17:06 PM', 'C/Out', '05:17 PM', '05/11/2017', 1),
+	(311, 'SMSI', 'JASMIN, JANINE L.', '112', '5/12/2017 9:01:55 AM', 'C/In', '09:01 AM', '05/12/2017', 1),
+	(312, 'SMSI', 'JASMIN, JANINE L.', '112', '5/12/2017 5:36:32 PM', 'C/Out', '05:36 PM', '05/12/2017', 1),
+	(313, 'SMSI', 'JASMIN, JANINE L.', '112', '5/15/2017 8:11:11 AM', 'C/In', '08:11 AM', '05/15/2017', 1),
+	(314, 'SMSI', 'JASMIN, JANINE L.', '112', '5/15/2017 5:25:43 PM', 'C/Out', '05:25 PM', '05/15/2017', 1),
+	(315, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/2/2017 8:59:11 AM', 'C/In', '08:59 AM', '05/02/2017', 1),
+	(316, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/2/2017 5:29:29 PM', 'C/Out', '05:29 PM', '05/02/2017', 1),
+	(317, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/4/2017 8:52:26 AM', 'C/In', '08:52 AM', '05/04/2017', 1),
+	(318, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/4/2017 5:10:25 PM', 'C/Out', '05:10 PM', '05/04/2017', 1),
+	(319, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/5/2017 8:53:12 AM', 'C/In', '08:53 AM', '05/05/2017', 1),
+	(320, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/5/2017 8:54:58 AM', 'C/In', '08:54 AM', '05/05/2017', 1),
+	(321, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/5/2017 5:16:02 PM', 'C/Out', '05:16 PM', '05/05/2017', 1),
+	(322, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/6/2017 8:59:54 AM', 'C/In', '08:59 AM', '05/06/2017', 0),
+	(323, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/9/2017 9:02:16 AM', 'C/In', '09:02 AM', '05/09/2017', 1),
+	(324, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/9/2017 5:19:45 PM', 'C/Out', '05:19 PM', '05/09/2017', 1),
+	(325, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/9/2017 5:20:54 PM', 'C/Out', '05:20 PM', '05/09/2017', 1),
+	(326, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/10/2017 8:59:36 AM', 'C/In', '08:59 AM', '05/10/2017', 1),
+	(327, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/10/2017 5:15:03 PM', 'C/Out', '05:15 PM', '05/10/2017', 1),
+	(328, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/10/2017 5:23:54 PM', 'C/Out', '05:23 PM', '05/10/2017', 1),
+	(329, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/11/2017 8:57:52 AM', 'C/In', '08:57 AM', '05/11/2017', 1),
+	(330, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/11/2017 5:20:28 PM', 'C/Out', '05:20 PM', '05/11/2017', 1),
+	(331, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/12/2017 8:58:06 AM', 'C/In', '08:58 AM', '05/12/2017', 1),
+	(332, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/12/2017 5:13:01 PM', 'C/Out', '05:13 PM', '05/12/2017', 1),
+	(333, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/13/2017 8:54:14 AM', 'C/In', '08:54 AM', '05/13/2017', 1),
+	(334, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/13/2017 3:07:07 PM', 'C/Out', '03:07 PM', '05/13/2017', 1),
+	(335, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/15/2017 9:00:09 AM', 'C/In', '09:00 AM', '05/15/2017', 0),
+	(336, 'SMSI', 'BACULIO, MICHAEL D.', '116', '5/15/2017 5:13:36 PM', 'C/In', '05:13 PM', '05/15/2017', 0),
+	(337, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/9/2017 8:59:29 AM', 'C/In', '08:59 AM', '05/09/2017', 0),
+	(338, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/9/2017 6:31:37 PM', 'C/In', '06:31 PM', '05/09/2017', 0),
+	(339, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/10/2017 8:49:00 AM', 'C/In', '08:49 AM', '05/10/2017', 1),
+	(340, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/10/2017 5:33:08 PM', 'C/Out', '05:33 PM', '05/10/2017', 1),
+	(341, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/11/2017 9:14:47 AM', 'C/In', '09:14 AM', '05/11/2017', 1),
+	(342, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/11/2017 5:22:52 PM', 'C/Out', '05:22 PM', '05/11/2017', 1),
+	(343, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/12/2017 8:52:53 AM', 'C/In', '08:52 AM', '05/12/2017', 0),
+	(344, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/13/2017 3:02:57 PM', 'C/Out', '03:02 PM', '05/13/2017', 0),
+	(345, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/15/2017 8:42:28 AM', 'C/In', '08:42 AM', '05/15/2017', 0),
+	(346, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '5/15/2017 5:07:55 PM', 'C/In', '05:07 PM', '05/15/2017', 0);
+/*!40000 ALTER TABLE `tbl_attendanceraw` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_company
+CREATE TABLE IF NOT EXISTS `tbl_company` (
+  `company_id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`company_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table hris_payroll.tbl_company: 12 rows
+/*!40000 ALTER TABLE `tbl_company` DISABLE KEYS */;
+INSERT INTO `tbl_company` (`company_id`, `name`, `code`) VALUES
+	(1, 'Solutions Management Systems Inc.', 'SMSI'),
+	(2, 'Amaara Financial Corporation', 'AFC'),
+	(3, 'Norminring Development Corporation', 'NDC'),
+	(4, 'Mindanao Educators Mutual Benefit Association , Inc.', 'MEMBAI'),
+	(5, 'Bellarmine Magister Enrichment Corporation', 'BELLMEC'),
+	(6, 'Manila Teachers Mutual Aid System, Inc.', 'MTMAS'),
+	(7, 'Currahee Construction Corporation', 'C3'),
+	(8, 'Primo Partners Phils, Inc.', 'PRIMO'),
+	(9, 'My Only Way, Inc.', 'MOWI'),
+	(10, 'Mindanao Precast Structures Inc.', 'MPSI'),
+	(11, 'Amaara Corporation', 'AMAARA CORP'),
+	(12, 'Currahee Group of Companies', 'CGC');
+/*!40000 ALTER TABLE `tbl_company` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_cutoff
+CREATE TABLE IF NOT EXISTS `tbl_cutoff` (
+  `cutoff_id` int(10) NOT NULL AUTO_INCREMENT,
+  `cutoff_range` varchar(50) DEFAULT NULL,
+  `company_id` varchar(50) DEFAULT NULL,
+  `occurence_id` int(11) DEFAULT NULL,
+  `from_date` date DEFAULT NULL,
+  `to_date` date DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cutoff_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table hris_payroll.tbl_cutoff: 2 rows
+/*!40000 ALTER TABLE `tbl_cutoff` DISABLE KEYS */;
+INSERT INTO `tbl_cutoff` (`cutoff_id`, `cutoff_range`, `company_id`, `occurence_id`, `from_date`, `to_date`, `status`) VALUES
+	(1, '15 May 2017 to 30 May 2017', 'Solutions Management Systems Inc.', 2, '2017-05-15', '2017-05-30', 'Done'),
+	(2, '1 May 2017 to 15 May 2017', 'Solutions Management Systems Inc.', 2, '2017-05-01', '2017-05-15', 'Processing');
+/*!40000 ALTER TABLE `tbl_cutoff` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_employee
+CREATE TABLE IF NOT EXISTS `tbl_employee` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_employee` int(11) DEFAULT NULL,
+  `emp_id` varchar(50) DEFAULT NULL,
+  `emp_bio_id` varchar(50) DEFAULT NULL,
+  `fName` varchar(50) DEFAULT NULL,
+  `mName` varchar(50) DEFAULT NULL,
+  `lName` varchar(50) DEFAULT NULL,
+  `shiftgroup` varchar(50) DEFAULT NULL,
+  `sss_id` varchar(50) DEFAULT NULL,
+  `phic_id` varchar(50) DEFAULT NULL,
+  `hdmf_id` varchar(50) DEFAULT NULL,
+  `tin` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `company` varchar(50) DEFAULT NULL,
+  `branch` varchar(50) DEFAULT NULL,
+  `position` varchar(50) DEFAULT NULL,
+  `rank` varchar(50) DEFAULT NULL,
+  `tax_status` varchar(50) DEFAULT NULL,
+  `employment_status` varchar(50) DEFAULT NULL,
+  `basic_salary` int(10) DEFAULT '0',
+  `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_employee` (`id_employee`)
+) ENGINE=MyISAM AUTO_INCREMENT=2117 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table hris_payroll.tbl_employee: 116 rows
+/*!40000 ALTER TABLE `tbl_employee` DISABLE KEYS */;
+INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`, `mName`, `lName`, `shiftgroup`, `sss_id`, `phic_id`, `hdmf_id`, `tin`, `company`, `branch`, `position`, `rank`, `tax_status`, `employment_status`, `basic_salary`, `lastUpdated`) VALUES
+	(2003, 1, '310-98-4', '1005', 'Jennifer', 'Palo', 'Dantes', 'Permanent', '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HRD Head', 'Level 10', 'M1', 'Regular', 10000, '2017-05-25 13:31:17'),
+	(2004, 2, '', '10025', 'Charizze Mae', 'Taboada', 'Lumagsao', 'Part-Time', '8-15700359', '150501399622', '121025696574', '', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'Level 2', 'S', 'Resigned', 0, '2017-05-25 13:31:17'),
+	(2005, 12, '', '1004', 'Shiela', 'L.', 'Achas', 'Permanent', '08-2580153-6', '150504178309', '121148071155', '330785488000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'Level 1', 'S', 'Regular', 11000, '2017-05-25 13:31:17'),
+	(2006, 22, '', '10023', 'Daina Jane', 'Layar', 'Lungtad', 'Part-Time', '08-2663610-8', '150253033462', '121148247833', '331694187', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Staff', 'Level 1', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
+	(2007, 32, '', '', 'Angelito', 'Diaz', 'Delada', 'Permanent', '09-28611092', '160504045878', '121031718739', '945606122', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2008, 42, '', '', 'Kimberly', 'Arcena', 'Bicong', 'Permanent', '', '162506289777', '915170351768', '429744351', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', '', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2009, 52, '', '', 'Rachel', 'Likit', 'Brua', 'Permanent', '09-3103097-4', '170252743289', '121101750577', '445-307-079', 'Primo Partners Phils, Inc.', 'Davao', 'Admin Supervisor/Cash Custodian/HR', '', 'S', 'Regular', 15, '2017-05-25 13:31:17'),
+	(2010, 62, '', '', 'Cheryrose', 'Nepomuceno', 'Gabaton', 'Permanent', '0933035427', '160504739322', '121115018624', '444168187000', 'Primo Partners Phils, Inc.', 'Davao', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2011, 72, '', '', 'Nathaniel', 'Pasco', 'Dela Pena', 'Permanent', '09-08358948', '160500375997', '005064402507', '124010444', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2012, 82, '', '', 'Amalia', 'Demapitan', 'Frias', 'Part-Time', '09-15874295', '170502340371', '121030580785', '450957189', 'Primo Partners Phils, Inc.', 'Davao', 'Chef/Cold Section', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2013, 92, '', '', 'Leny', 'Serue', 'Lastrella', 'Permanent', '09278694176', '170501695087', '18000768907', '429743909', 'Primo Partners Phils, Inc.', 'Davao', 'Inventory Controller', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2014, 102, '', '', 'Erlyn', 'Bolante', 'Lim', 'Permanent', '09-30062419', '160503475631', '121032392549', '286335650', 'Primo Partners Phils, Inc.', 'Davao', 'Cashier', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2015, 112, '', '', 'Aldrin', 'Cotamora', 'Loma', 'Part-Time', '09-38159793', '160506389620', '121157478629', '', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', 'S', 'Resigned', 0, '2017-05-25 13:31:17'),
+	(2016, 122, '', '', 'Lyrie Mae', 'Lustre', 'Magbutay', 'Permanent', '09-3230107-1', '121028563644', '160504463106', '460-769-947', 'Primo Partners Phils, Inc.', 'Davao', 'Cashier/Dining', '', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2017, 132, '', '', 'Rodel', 'Esmedina', 'Villegas', 'Permanent', '09-3345227-5', '150504925215', '121029330515', '415-610-167', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', '', 'S', 'Regular', 20, '2017-05-25 13:31:17'),
+	(2018, 142, '', '', 'Henilito', 'Gonzales', 'Polia Jr.', 'Permanent', '09-3208339-9', '160504315484', '121029358912', '400-672-745', 'Primo Partners Phils, Inc.', 'Davao', 'Bartender', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2019, 152, '', '', 'Nestor', 'Masing', 'Bantilan', 'Permanent', '09-1244652-9', '160500046756', '913169041227', '124-651-296', 'Primo Partners Phils, Inc.', 'Davao', 'Dining Supervisor', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2020, 162, '', '', 'Roberto', 'Celerio', 'Jambaro Jr.', 'Permanent', '0925830148', '160503436059', '188000743398', '308884166000', 'Primo Partners Phils, Inc.', 'Davao', 'Kitchen Supervisor', '', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2021, 192, '', '', 'Junmer', 'Rebuyas', 'Talidong', 'Permanent', '09-300-44709', '160505841848', '91320145691', '', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2022, 202, '', '', 'Ryan', 'Dodoso', 'Florencio', 'Permanent', '09-3164239-1', '160504252636', '121086740639', '291-191-248', 'Primo Partners Phils, Inc.', 'Davao', 'Cook', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2023, 212, '', '', 'Arnold', 'Aboyme', 'Plaza', 'Part-Time', '09-4157916-6', '162508071957', '', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2024, 222, '', '', 'Jimrey', 'R.', 'Abenoja', 'Permanent', '09-3224951-5', '160506266820', '121122325178', '455239111', 'Currahee Construction Corporation', 'CDO', 'General Maintenance Service', '', 'S1', 'Regular', 0, '2017-05-29 02:07:23'),
+	(2025, 232, '', '', 'Nerio', 'Gildore', 'Amper', 'Permanent', '0916548070', '190902066156', '388004036012', '922208289', 'Currahee Construction Corporation', 'DVO', 'Financial comptroller', '', 'M2', 'Regular', 0, '2017-05-29 01:58:25'),
+	(2026, 262, '', '', 'James', 'C.', 'Baldosano', 'Permanent', '08-1841488-8', '150502798830', '121028250041', '405322115', 'Currahee Construction Corporation', 'CDO', 'Field Engineer', '', 'M1', 'Regular', 0, '2017-05-30 01:17:23'),
+	(2027, 282, '', '', 'Renante', 'M.', 'Cabigas', 'Permanent', '0613995298', '152016370597', '111129529206', '422012853', 'Currahee Construction Corporation', 'CDO', 'Liaison and Purchaser', '', 'M2', 'Regular', 0, '2017-05-30 01:19:47'),
+	(2028, 292, '', '', 'Gerald', 'Detoyato', 'Caro', 'Permanent', '3430488752', '112021267328', '121166288885', '', 'Currahee Construction Corporation', 'CDO', 'Draftsman', '', 'M1', 'Regular', 0, '2017-05-30 01:25:07'),
+	(2029, 312, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Permanent', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'Level 6', 'M', 'Regular', 32, '2017-05-25 13:31:17'),
+	(2030, 322, '', '', 'Elgin', 'Cabunilas', 'Camilotes', 'Permanent', '09-3653870-9', '160505803776', '121098218437', '440119377', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'M2', 'Regular', 0, '2017-05-29 01:43:57'),
+	(2031, 332, '', '', 'Aileen Joy', 'C', 'Castro', 'Permanent', '0928422634', '160502867331', '188000966823', '945454280', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-29 01:56:18'),
+	(2032, 352, '', '', 'Elvira', 'Carvajal', 'Montera', 'Permanent', '09-2211068-3', '160501550245', '121042672683', '928503260', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Acctg & Audit Head', 'Level 5', 'M3', 'Regular', 0, '2017-05-25 05:52:49'),
+	(2033, 362, '', '', 'Kristine Joy', 'Carreon', 'Dealca', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2034, 372, '', '10021', 'Raul Adrian', 'Apuli', 'Altavano', 'Permanent', '34-6405963-6', '150504494774', '121144034952', '445182360', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'S', 'Regular', 11000, '2017-05-25 13:31:17'),
+	(2035, 382, '', '', 'May', 'Abroguena', 'Ebalang', 'Permanent', '08-1441611-0', '150251158837', '121030943288', '930-840161', 'Currahee Construction Corporation', 'CDO', 'Administrative Staff', '', 'S', 'Probationary', 0, '2017-05-25 05:44:42'),
+	(2036, 392, '', '10002', 'Charlene', 'Jomoc', 'Almuete', 'Permanent', '0826525316', '150504277390', '', '330785931', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'S', 'Regular', 12000, '2017-05-25 13:31:17'),
+	(2037, 402, '', '', 'Patricio', 'R.', 'Galdo', 'Permanent', '08-1623217-2', '020506435049', '104002270786', '272572003', 'Currahee Construction Corporation', 'CDO', 'Utility Service Personnel', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2038, 412, '', '1003', 'Marco', 'Costamero', 'Arangco', 'Permanent', '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'M2', 'Regular', 16000, '2017-05-25 13:31:17'),
+	(2039, 422, '', '', 'Izza Honey', 'C.', 'Manluza', 'Permanent', '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Currahee Construction Corporation', 'CDO', 'Office Engineer', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2040, 442, '', '', 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'Permanent', '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Currahee Construction Corporation', 'CDO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2041, 452, '', '', 'Arnaldo', 'Arguilles', 'Mantillas', 'Permanent', '08-1075836-1', '180514581443', '310101797702', '180-027-122', 'Currahee Construction Corporation', 'CDO', 'Operations Manager', 'Level 10', 'M1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2042, 462, '', '10017', 'Brazzel Gay', 'J.', 'Cabaltera', 'Permanent', '0939595806', '010520667240', '121151311466', '472885607', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Social Media Associate', 'Level 1', 'S', 'Regular', 10, '2017-05-25 13:31:17'),
+	(2043, 472, '', '110', 'Renan', 'A.', 'Moreno', 'Permanent', '0816173053', '150502397216', '182000543107', '410675176', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Web Lead', 'Level 3', 'M', 'Regular', 0, '2017-05-25 06:20:18'),
+	(2044, 482, '', '', 'Rolando', 'T.', 'Mosqueda', 'Permanent', '09-2739922-1', '160505100007', '104002257284', '422-012-424', 'Currahee Construction Corporation', 'DVO', 'Utility Service Personnel', '', 'M1', 'Project Based', 0, '2017-05-30 01:07:46'),
+	(2045, 502, '', '111', 'Jean', 'S.', 'Godornes', 'Permanent', '0816613128', '150501858430', '182000563981', '950159075', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Operations Supervisor', 'Level 5', 'M', 'Regular', 15000, '2017-05-25 07:56:03'),
+	(2046, 512, '', '116', 'Michael', 'Dayag', 'Baculio', 'Permanent', '08-1605491-0', '010505744239', '109002186565', '256027612', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'M1', 'Regular', 10000, '2017-05-25 13:31:17'),
+	(2047, 542, '', '104', 'Robert', 'Batonghinog', 'Bersano', 'Permanent', '0815082802', '020503777364', '104002242398', '937694691', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Lead', 'Level 3', 'M1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2048, 552, '', '1006', 'Pete Emmanuell', 'L.', 'Balagosa', 'Permanent', '08-1801748-9', '150503883890', '121134979348', '330784605', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
+	(2049, 562, '', '117', 'Khristian Darylle Joe', 'Bona', 'Battad', 'Permanent', '3442813205', '020262108512', '121131509835', '468727860', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2050, 582, '', '', 'John', 'M.', 'Mingo', 'Permanent', '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Currahee Construction Corporation', 'DVO', 'Field Engineer', '', 'S', 'Regular', 0, '2017-05-29 02:26:11'),
+	(2051, 592, '', '', 'Gina', 'Aboyme', 'Micoy', 'Permanent', '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Currahee Construction Corporation', 'DVO', 'Accounting Supervisor', '', 'M2', 'Regular', 0, '2017-05-29 02:23:27'),
+	(2052, 602, '', '', 'Lowie', 'G.', 'Ulo', 'Permanent', '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Currahee Construction Corporation', 'DVO', 'General Maintenance Service', '', 'M', 'Regular', 0, '2017-05-30 01:14:08'),
+	(2053, 612, '', '', 'Mario', 'Quiam', 'Tolosa', 'Project Based', '33-2666182-9', '082011907160', '', '', 'Currahee Construction Corporation', 'CDO', 'Foreman', '', 'M3', 'Regular', 0, '2017-05-27 06:39:05'),
+	(2054, 622, '', '', 'Julius', 'B.', 'Lascano', 'Part-Time', '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Currahee Construction Corporation', 'CDO', 'Logistic Manager', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2055, 632, '', '', 'Romnick June', 'A.', 'Elcana', 'Part-Time', '09-2857476-0', '160502796558', '121194643961', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'S', 'Probationary', 10, '2017-05-29 02:18:06'),
+	(2056, 642, '', '10019', 'Diane Joy', 'Yu', 'Mapano', 'Permanent', '1010277291', '140251731043', '121007858757', '452117419', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Accounting Technician', '', 'S', 'Regular', 12, '2017-05-25 05:38:02'),
+	(2057, 652, '', '10014', 'Cresar John', 'Reyes', 'Arce', 'Permanent', '0922273135', '162003641023', '190000056276', '947987046', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'Level 1', 'M2', 'Regular', 12500, '2017-05-25 13:31:17'),
+	(2058, 662, '', '10013', 'Lorman', 'S.', 'Saladaga', 'Permanent', '1009497752', '140251248725', '914301364780', '816667', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 12, '2017-05-25 06:54:45'),
+	(2059, 672, '', '', 'Geneth', 'S.', 'Jadulan', 'Permanent', '0935125869', '160505344984', '121070911178', '429361074', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 15, '2017-05-25 13:31:17'),
+	(2060, 682, '', '', 'Nancy', 'Montebon', 'Wong', 'Permanent', '0919148684', '160501640325', '101000063572', '940042814', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', '', 'S1', 'Regular', 24, '2017-05-25 13:31:17'),
+	(2061, 692, '', '', 'Jeffrey', 'Moneba', 'Antoque', 'Permanent', '0937380136', '160255309649', '121111591247', '409174979', 'Norminring Development Corporation', 'CDO', 'Senior Service Mechanic', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2062, 702, '', '', 'Salome', 'M.', 'Bodiongan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Inventory Controller', '', 'S', 'Regular', 14, '2017-05-25 13:31:17'),
+	(2063, 712, '', '', 'Ryan Evan', 'P.', 'Almacin', 'Part-Time', '09-2732070-8', '', '', '432-197-977', 'Norminring Development Corporation', 'DVO', 'GSP', '', 'M', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2064, 722, '', '', 'Raquel', 'A.', 'Baldecantos', 'Permanent', '3458063803', '140502131016', '121167253093', '', 'Norminring Development Corporation', 'DPL', 'Branch Cashier', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2065, 732, '', '', 'Gwyne', 'G.', 'Delos Reyes', 'Permanent', '0922110900', '160501436590', '121029344671', '931745676', 'Norminring Development Corporation', 'DVO', 'Bookkeeper', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2066, 742, '', '', 'Miejor', 'T.', 'Dela Cruz', 'Permanent', '', '150502394209', '', '', 'Norminring Development Corporation', 'DVO', 'Service & After Sales Manager', '', 'M2', 'Regular', 14, '2017-05-25 13:31:17'),
+	(2067, 752, '', '', 'Rudini', 'G.', 'Galdo', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Branch Cashier', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2068, 762, '', '', 'Allyn', 'C.', 'Angustia', 'Part-Time', '0939076231', '162509528500', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
+	(2069, 772, '', '', 'Reil Hazzin', 'Batilona', 'Bicoy', 'Permanent', '1011114502', '120513230309', '121142125817', '', 'Norminring Development Corporation', 'DPL', 'MRP - Sales', '', 'M1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2070, 782, '', '', 'Marlon', 'R.', 'Gal', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'General Service Maintenance', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2071, 792, '', '', 'Rudini', 'G.', 'Galdo', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Branch Cashier', '', 'S', '', 0, '2017-05-25 13:31:17'),
+	(2072, 802, '', '', 'Arturo', 'G.', 'Lopez Jr.', 'Part-Time', '0929775063', '160252612308', '121180477483', '425186753', 'Norminring Development Corporation', 'DVO', 'Driver/Mechanic', '', 'M', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2073, 812, '', '', 'Jose Miguel', 'P.', 'Jonelas', 'Part-Time', '0941836113', '162506888417', '917004406258', '', 'Norminring Development Corporation', 'DVO', 'Assistant Bookkeeper', '', 'S', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2074, 822, '', '', 'Jessa', 'Datulayta', 'Bayking', 'Permanent', '09-35775620', '160256016613', '121177270191', '492-048-158', 'Mindanao Precast Structures Inc.', 'CDO', 'Secretary/Admin', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2075, 832, '', '', 'Ralph Nicko', 'Alcober', 'Olam', 'Permanent', '08-1977086-4', '150503440239', '916215856747', '492-049-415', 'Mindanao Precast Structures Inc.', 'CDO', 'Company Driver', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2076, 842, '', '', 'Armando', 'L.', 'Bagac', 'Permanent', '08-23845222', '150503550425', '121138563124', '492-048-869', 'Mindanao Precast Structures Inc.', 'CDO', 'General Maintenance', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2077, 852, '', '', 'Harold', 'Domo', 'Aparicio', 'Part-Time', '', '150252810651', '', '', 'Mindanao Precast Structures Inc.', 'CDO', 'Production Supervisor', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2078, 862, '', '', 'John Gleen', 'Diaz', 'Panebio', 'Permanent', '08-1461106-7', '030501829486', '121004908041', '288-518-234', 'Mindanao Precast Structures Inc.', 'CDO', 'Production Head', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2079, 872, '', '', 'Arnulfo', 'V.', 'Layco', 'Permanent', '33-5724371', '020500083639', '1040-0040-57', '213-811-070', 'Norminring Development Corporation', 'DVO', 'General Manager', '', 'M2', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2080, 882, '', '', 'Stephanie', 'A.', 'Somoza', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2081, 892, '', '', 'Jaymar', 'R.', 'Coresis', 'Permanent', '09-2984886-4', '060503261070', '', '', 'Norminring Development Corporation', 'DVO', 'Partsman', '', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
+	(2082, 902, '', '', 'Mark Anthony', 'M.', 'Montera', 'Permanent', '0920192988', '162003621529', '', '924469729', 'Norminring Development Corporation', 'DVO', 'Utility/Liaison', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2083, 912, '', '', 'Rizza Mae', 'C.', 'Lapinid', 'Part-Time', '0942047011', '170253314020', '4866783', '485272573', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S1', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2084, 922, '', '', 'Pamela Ivy', 'A.', 'Improgo', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'CDO', 'Branch Manager', '', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2085, 932, '', '', 'Jenner Nino', 'B.', 'Moneba', 'Permanent', '0924271258', '160501354306', '', '928767649', 'Norminring Development Corporation', 'DVO', 'Service and After Sales Manager', '', '', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2086, 942, '', '', 'Joesus', 'L.', 'Rabadan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'CDO', 'GSP', '', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2087, 952, '', '', 'Michael Angelou', 'H.', 'Ponte', 'Permanent', '', '160504101026', '', '', 'Norminring Development Corporation', 'CDO', 'MRP - Sales', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2088, 962, '', '', 'Leo Alfie', 'A.', 'Quipanes', 'Permanent', '06-2515281-2', '120508612104', '913030000320', '289493450000', 'Norminring Development Corporation', 'ZBO', 'Senior Service Mechanic', '', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2089, 972, '', '', 'Norben Jay', 'Leron', 'Ruiz', 'Permanent', '11-0370996-4', '160504245400', '121135281185', '297110378000', 'Norminring Development Corporation', 'DVO', 'Lead Service Mechanic', '', 'M3', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2090, 992, '', '', 'Danilo', 'T.', 'Palo Jr.', 'Permanent', '0923935935', '160501224674', '188000522089', '929085069', 'Norminring Development Corporation', 'KID', 'Senior Service Mechanic', '', '', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2091, 1002, '', '', 'Nelson', 'S.', 'Tacoloy', 'Permanent', '0927359096', '', '188001482849', '412120768', 'Norminring Development Corporation', 'DVO', 'Junior Service Mechanic', '', 'M1', 'Regular', 12, '2017-05-25 13:31:17'),
+	(2092, 1012, '', '', 'Roland', 'C.', 'Sarce', 'Permanent', '0922452639', '', '', '', 'Norminring Development Corporation', 'DVO', 'Junior Service Mechanic', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2093, 1022, '', '', 'Jasper', 'B.', 'Saludes', 'Part-Time', '09-3982708-2', '', '1211-5491-23', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', 'S', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2094, 1032, '', '', 'Ivan', 'Orbeta', 'Paredes', 'Permanent', '09-2319395-5', '160501550229', '915043561517', '922203402', 'Norminring Development Corporation', 'DPL', 'Branch Manager', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2095, 1042, '', '', 'Girlie', 'G.', 'Tolosa', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'ZBO', 'Branch Cashier', '', '', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2096, 1052, '', '', 'Kirbay Jay', 'A.', 'Ragol', 'Permanent', '09-4205318-6', '162010570662', '', '', 'Norminring Development Corporation', 'DVO', 'Service Mechanic', '', '', 'Regular', 11, '2017-05-25 13:31:17'),
+	(2097, 1062, '', '', 'Lovely Judy May', 'P.', 'Villar', 'Permanent', '0941445135', '160507400628', '121192880142', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Regular', 10, '2017-05-25 13:31:17'),
+	(2098, 1072, '', '', 'Anthony Greg', 'L.', 'Naduma', 'Permanent', '06-2877441-7', '180252527352', '121143095233', '460-398-585', 'Norminring Development Corporation', 'CDO', 'Sales and Marketing', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2099, 1082, '', '', 'Joer', 'S.', 'Delas Penas', 'Permanent', '', '170501971165', '', '280184534', 'Norminring Development Corporation', 'DVO', 'MRP - Sales', '', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
+	(98, 1092, '', '', 'Ivy', 'R.', 'Florentino', 'Permanent', '0941791452', '162511202515', '916236620041', '‎498-109-584', 'Bellarmine Magister Enrichment Corporation', '', 'Front Desk Officer', '', 'S', '', 0, '2017-05-30 05:39:23'),
+	(99, 1102, '', '', 'April Dan', 'S.', 'Borromeo', 'Permanent', '940335961', '162500434732', '916273954122', '‎498-110-152', 'Bellarmine Magister Enrichment Corporation', '', 'Maintenance/Marketing Assistant', '', 'S', '', 0, '2017-05-30 06:19:19'),
+	(2100, 1112, '', '', 'Junalona', 'R.', 'Basalo', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', '', 'Trainer-Full Time', '', 'S', '', 0, '2017-05-25 13:31:17'),
+	(2101, 1122, '', '', 'Margilen', 'Edrozo', 'Abuhan', 'Project Based', '', '150254168765', '', '461537289', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
+	(2102, 1132, '', '', 'Alejando', 'Tilos', 'Paloma', 'Permanent', '09-2341709-7', '162005511844', '', '291789935', 'My Only Way, Inc.', '', 'Farm Caretaker', '', 'M1', '', 0, '2017-05-25 13:31:17'),
+	(2103, 1142, '', '', 'Alex', 'Alejandro', 'Paloma', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
+	(2104, 1152, '', '', 'Danilo', 'Delgado', 'Vedida Jr.', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
+	(2105, 1162, '', '', 'Ronald', 'Eduave', 'Tawacal', 'Project Based', '', '230027168227', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
+	(2106, 1172, '', '', 'Anthony', 'Sanchez', 'Potot', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
+	(2107, 1182, '', '112', 'Janine', 'Llanos', 'Jasmin', 'Permanent', '08-2399113-4', '150503497044', '121098502267', '440560910', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2108, 1192, '', '', 'Christian', 'Morden', 'Rebuyas', 'Part-Time', '09-4212214-3', '162519095378', '917059132863', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', '', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2109, 1202, '', '', 'Joseph', 'R.', 'Giron II', 'Permanent', '339-6120-303', '150502868960', '914343835204', '290055877000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2110, 1212, '', '10022', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'Level 1', 'S', 'Regular', 11, '2017-05-25 07:35:25'),
+	(2111, 1222, '', '', 'Franco', 'Puzon', 'Amesola', 'Part-Time', '011101706862', '030205910474', '107012316640', '', 'Norminring Development Corporation', 'CDO', 'Sales Associate/Operations', '', 'S', 'Probationary', 12, '2017-05-25 13:31:17'),
+	(2112, 1232, '', '', 'Mary Grace', 'A.', 'Escalona', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Admin Head/Bookkeeper/HR Point Person', '', 'M2', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2113, 1242, '', '', 'Noel', 'P.', 'Sobejana', 'Part-Time', '0813387680', '190895509276', '1900958641', '215413654', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Administrator', '', 'S1', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2114, 1252, '', '', 'Kareen', 'J.', 'De Guzman', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Trainer-Part time', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2115, 1262, '', '', 'Franco', 'Custodio', 'Pimentel', 'Permanent', '', '', '', '', 'Mindanao Precast Structures Inc.', 'CDO', 'General Maintenance', '', '', 'Probationary', 0, '2017-05-29 01:11:59'),
+	(2116, 1272, '', '', 'Arlyn', 'Cainglet', 'Benito', 'Part-Time', '0814214095', '150501615953', '121060054763', '935614238', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'Level 2', 'S3', 'Probationary', 0, '2017-05-31 01:44:28');
+/*!40000 ALTER TABLE `tbl_employee` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_incentives
+CREATE TABLE IF NOT EXISTS `tbl_incentives` (
+  `incentives_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payslip_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  PRIMARY KEY (`incentives_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_incentives: 0 rows
+/*!40000 ALTER TABLE `tbl_incentives` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_incentives` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_leaves
+CREATE TABLE IF NOT EXISTS `tbl_leaves` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `leave_type` varchar(50) DEFAULT NULL,
+  `durFrom` date DEFAULT NULL,
+  `durTo` date DEFAULT NULL,
+  `dateFiled` date DEFAULT NULL,
+  `mode` varchar(50) DEFAULT NULL,
+  `days_applied` varchar(50) DEFAULT NULL,
+  `reason` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_leaves: 1 rows
+/*!40000 ALTER TABLE `tbl_leaves` DISABLE KEYS */;
+INSERT INTO `tbl_leaves` (`id`, `employee_id`, `leave_type`, `durFrom`, `durTo`, `dateFiled`, `mode`, `days_applied`, `reason`, `status`) VALUES
+	(2, 12, 'Vacation Leave', '2017-05-16', '2017-05-16', '2017-05-23', '1', 'with pay', 'Birthday of my mother', 'Approved by HR');
+/*!40000 ALTER TABLE `tbl_leaves` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_loans
+CREATE TABLE IF NOT EXISTS `tbl_loans` (
+  `loan_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `loan_type` varchar(50) DEFAULT NULL,
+  `lendingCompany` varchar(50) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `term` varchar(50) DEFAULT NULL,
+  `monthlyAmortization` int(11) DEFAULT NULL,
+  `startDate` date DEFAULT NULL,
+  `endDate` date DEFAULT NULL,
+  `remarks` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`loan_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_loans: 10 rows
+/*!40000 ALTER TABLE `tbl_loans` DISABLE KEYS */;
+INSERT INTO `tbl_loans` (`loan_id`, `employee_id`, `loan_type`, `lendingCompany`, `amount`, `term`, `monthlyAmortization`, `startDate`, `endDate`, `remarks`) VALUES
+	(22, 502, 'ACE Loan', 'AFC', 80000, '24', 1892, '2017-05-15', '2019-05-15', 'Reloan'),
+	(52, 642, 'ACE Loan', 'AFC', 35000, '18', 1118, '2016-03-31', '2017-09-30', 'New Loan'),
+	(62, 662, 'ACE Loan', 'AFC', 120000, '24', 2875, '2015-05-31', '2017-05-31', 'Reloan'),
+	(72, 542, 'ACE Loan', 'AFC', 100000, '24', 2396, '2016-08-30', '2018-08-30', 'Reloan'),
+	(82, 562, 'ACE Loan', 'AFC', 50000, '12', 2365, '2016-10-15', '2017-10-30', 'New Loan'),
+	(92, 512, 'ACE Loan', 'AFC', 30000, '12', 1419, '2016-06-15', '2017-06-15', 'New Loan'),
+	(102, 472, 'ACE Loan', 'AFC', 100000, '24', 2396, '2015-12-30', '2018-01-30', 'Reloan'),
+	(112, 412, 'Salary Loan', 'AFC', 50000, '18 mos.', 4792, '2016-03-30', '2017-03-15', 'Fully Paid'),
+	(122, 1182, 'ACE Loan', 'AFC', 50000, '24 mos', 2396, '2015-05-15', '2017-04-30', ''),
+	(132, 352, 'ACE Loan', 'AFC', 150000, '24mos', 7188, '2015-03-15', '2016-02-28', '');
+/*!40000 ALTER TABLE `tbl_loans` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_overtime
+CREATE TABLE IF NOT EXISTS `tbl_overtime` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `dateFiled` date DEFAULT NULL,
+  `dateRequested` date DEFAULT NULL,
+  `timeStart` varchar(50) DEFAULT NULL,
+  `timeEnd` varchar(50) DEFAULT NULL,
+  `totalHours` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_overtime: 6 rows
+/*!40000 ALTER TABLE `tbl_overtime` DISABLE KEYS */;
+INSERT INTO `tbl_overtime` (`id`, `employee_id`, `reason`, `dateFiled`, `dateRequested`, `timeStart`, `timeEnd`, `totalHours`, `status`) VALUES
+	(2, 832, 'Site visit Kalilangan Project and AMAARA fencing', '2017-05-24', '2017-01-11', '8:00', '12:00', '04:00', 'Approved by HR'),
+	(12, 212, '', '2017-05-24', '2017-01-20', '6:00', '9:04', '03:04', 'Approved by HR'),
+	(22, 212, '', '2017-05-24', '2017-01-21', '6:00', '9:00', '03:00', 'Approved by HR'),
+	(32, 832, 'Site visit Opol', '2017-05-24', '2017-02-06', '5:00 am', '10:40 pm', '08:40', 'Approved by HR'),
+	(42, 832, 'Meeting Archem @ Malberry Suitesw/ Engr. Padayhag', '2017-05-24', '2017-02-07', '5:00', '9:00', '07:00', 'Approved by HR'),
+	(52, 832, 'Bili ng drum at hatid sa opol', '2017-05-24', '2017-02-07', '4:00 am', '8:00 pm', '04:00', 'Approved by HR');
+/*!40000 ALTER TABLE `tbl_overtime` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_payrollbatch
+CREATE TABLE IF NOT EXISTS `tbl_payrollbatch` (
+  `payrollbatch_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cutoff_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `isFinished` text NOT NULL,
+  PRIMARY KEY (`payrollbatch_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_payrollbatch: 0 rows
+/*!40000 ALTER TABLE `tbl_payrollbatch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_payrollbatch` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_payslip
+CREATE TABLE IF NOT EXISTS `tbl_payslip` (
+  `payslip_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cutoff_id` int(11) DEFAULT NULL,
+  `totalWorkHours` double DEFAULT NULL,
+  `income` double DEFAULT NULL,
+  `regot_pay` double DEFAULT NULL,
+  `holot_pay` double DEFAULT NULL,
+  `ot_pay` double DEFAULT NULL,
+  `allowances` double DEFAULT NULL,
+  `incentives` double DEFAULT NULL,
+  `lateabsent_deduct` double DEFAULT NULL,
+  `undertime_deduct` double DEFAULT NULL,
+  `tax` double DEFAULT NULL,
+  `sss` double DEFAULT NULL,
+  `phic` double DEFAULT NULL,
+  `hdmf` double DEFAULT NULL,
+  `gross_income` double DEFAULT NULL,
+  `net_income` double DEFAULT NULL,
+  PRIMARY KEY (`payslip_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table hris_payroll.tbl_payslip: 0 rows
+/*!40000 ALTER TABLE `tbl_payslip` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_payslip` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_shifts
+CREATE TABLE IF NOT EXISTS `tbl_shifts` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `day` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `timein` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `timeout` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `shiftgroup` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table hris_payroll.tbl_shifts: 7 rows
+/*!40000 ALTER TABLE `tbl_shifts` DISABLE KEYS */;
+INSERT INTO `tbl_shifts` (`id`, `day`, `timein`, `timeout`, `shiftgroup`) VALUES
+	(1, 'Monday', '9:00 AM', '5:00 PM', 'Permanent'),
+	(2, 'Tuesday', '9:00 AM', '5:00 PM', 'Permanent'),
+	(3, 'Wednesday', '9:00 AM', '5:00 PM', 'Permanent'),
+	(4, 'Thursday', '9:00 AM', '5:00 PM', 'Permanent'),
+	(5, 'Friday', '9:00 AM', '5:00 PM', 'Permanent'),
+	(6, 'Monday', '09:00', '06:00', 'Flexible'),
+	(7, 'Saturday', '9:00 AM', '3:00 PM', 'Permanent');
+/*!40000 ALTER TABLE `tbl_shifts` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_user
+CREATE TABLE IF NOT EXISTS `tbl_user` (
+  `user_id` int(10) NOT NULL AUTO_INCREMENT,
+  `employee_id` varchar(50) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table hris_payroll.tbl_user: 1 rows
+/*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
+INSERT INTO `tbl_user` (`user_id`, `employee_id`, `username`, `password`, `role`, `status`) VALUES
+	(1, 'SMSI-0001', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin', 'Active');
+/*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

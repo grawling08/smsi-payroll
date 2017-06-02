@@ -78,6 +78,7 @@ Partial Class frmMain
         Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.CrystalReportSampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -178,7 +179,7 @@ Partial Class frmMain
         '
         'ReportsToolStripMenuItem
         '
-        Me.ReportsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PayrollJournalToolStripMenuItem})
+        Me.ReportsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PayrollJournalToolStripMenuItem, Me.CrystalReportSampleToolStripMenuItem})
         Me.ReportsToolStripMenuItem.Name = "ReportsToolStripMenuItem"
         Me.ReportsToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
         Me.ReportsToolStripMenuItem.Text = "Reports"
@@ -187,7 +188,7 @@ Partial Class frmMain
         '
         Me.PayrollJournalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EmployeePayToolStripMenuItem, Me.LeavesToolStripMenuItem, Me.ToolStripMenuItem2, Me.PaidOvertimesToolStripMenuItem, Me.LoansToolStripMenuItem})
         Me.PayrollJournalToolStripMenuItem.Name = "PayrollJournalToolStripMenuItem"
-        Me.PayrollJournalToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
+        Me.PayrollJournalToolStripMenuItem.Size = New System.Drawing.Size(190, 22)
         Me.PayrollJournalToolStripMenuItem.Text = "Generate Reports..."
         '
         'EmployeePayToolStripMenuItem
@@ -527,6 +528,12 @@ Partial Class frmMain
         Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
         Me.label_loggedinas.Text = "ToolStripStatusLabel3"
         '
+        'CrystalReportSampleToolStripMenuItem
+        '
+        Me.CrystalReportSampleToolStripMenuItem.Name = "CrystalReportSampleToolStripMenuItem"
+        Me.CrystalReportSampleToolStripMenuItem.Size = New System.Drawing.Size(190, 22)
+        Me.CrystalReportSampleToolStripMenuItem.Text = "Crystal Report Sample"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -612,5 +619,6 @@ Partial Class frmMain
     Friend WithEvents LoansToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShiftsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ChangeCutoffCompanyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CrystalReportSampleToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

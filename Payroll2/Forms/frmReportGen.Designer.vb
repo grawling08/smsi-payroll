@@ -31,7 +31,7 @@ Partial Class frmReportGen
         Me.cb_selemployee = New System.Windows.Forms.ComboBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.reportview = New Microsoft.Reporting.WinForms.ReportViewer()
+        Me.ReportViewer1 = New Microsoft.Reporting.WinForms.ReportViewer()
         Me.Label1 = New System.Windows.Forms.Label()
         FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         FlowLayoutPanel1.SuspendLayout()
@@ -121,20 +121,19 @@ Partial Class frmReportGen
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.reportview)
+        Me.Panel1.Controls.Add(Me.ReportViewer1)
         Me.Panel1.Location = New System.Drawing.Point(-1, 56)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1056, 520)
         Me.Panel1.TabIndex = 0
         '
-        'reportview
+        'ReportViewer1
         '
-        Me.reportview.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.reportview.Location = New System.Drawing.Point(0, 0)
-        Me.reportview.Name = "reportview"
-        Me.reportview.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote
-        Me.reportview.Size = New System.Drawing.Size(1056, 520)
-        Me.reportview.TabIndex = 3
+        Me.ReportViewer1.Location = New System.Drawing.Point(0, 0)
+        Me.ReportViewer1.Name = "ReportViewer1"
+        Me.ReportViewer1.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Remote
+        Me.ReportViewer1.Size = New System.Drawing.Size(1056, 520)
+        Me.ReportViewer1.TabIndex = 3
         '
         'Label1
         '
@@ -165,7 +164,7 @@ Partial Class frmReportGen
 
     End Sub
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents reportview As Microsoft.Reporting.WinForms.ReportViewer
+    Friend WithEvents ReportViewer1 As Microsoft.Reporting.WinForms.ReportViewer
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label3 As System.Windows.Forms.Label

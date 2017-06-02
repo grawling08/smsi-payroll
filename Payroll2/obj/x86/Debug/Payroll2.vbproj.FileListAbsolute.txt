@@ -66,3 +66,4 @@ C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debu
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmLoans.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmCheckAll.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmTray.resources
+C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmReports.resources

@@ -6,6 +6,9 @@ Public Class frmLogin
         Dim result = Login(tb_username.Text, tb_password.Text)
         If result(0) = "success" Then
             'MessageBox.Show(result(2))
+            logged_user = result(2)
+            logged_id = result(1)
+            'MessageBox.Show(logged_user)
             If result(2).ToString = "Payroll Officer" Or result(2).ToString = "Admin" Then
                 'check for current cutoff and company from tblref_settings
                 If app_mode = "integrate" Then
@@ -14,8 +17,7 @@ Public Class frmLogin
                 If checkCurrents() = False Then
                     frm1.ShowDialog()
                 End If
-                frmMain.logged_user = result(2).ToString
-                frmMain.emp_id = result(1).ToString
+
             Else
                 MessageBox.Show("You don't have the necessary credentials to access this program.")
             End If

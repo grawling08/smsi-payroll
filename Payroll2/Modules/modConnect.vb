@@ -21,7 +21,7 @@ Module modConnect
     Public num_occurence, payslip_id As Integer
     Public md5Hash As MD5 = MD5.Create()
     Public isfrmLogin_expanded As Boolean
-
+    Public logged_user, logged_id As String
     Sub SaveSystemSettings(ByVal Payroll_Connect() As String, ByVal HR_Connect() As String)
         'hris connection setting
         SaveSetting("Payroll System", "Startup", "serverHR", HR_Connect(0))

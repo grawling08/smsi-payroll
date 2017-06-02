@@ -5,8 +5,7 @@ Imports DocumentFormat.OpenXml.Packaging
 Imports DocumentFormat.OpenXml.Spreadsheet
 
 Public Class frmMain
-    Public logged_user As String
-    Public emp_id As String
+    
     'exit the application
     Private Sub LogoutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LogoutToolStripMenuItem.Click
         Close_Connect()
@@ -222,4 +221,8 @@ Public Class frmMain
         shifts.ShowDialog()
     End Sub
 
+    Private Sub CrystalReportSampleToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CrystalReportSampleToolStripMenuItem.Click
+        Dim reports As New frmReports
+        reports.Show()
+    End Sub
 End Class

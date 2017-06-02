@@ -13,7 +13,7 @@ Public Class frmReportGen
     '3 - paid leaves
     '4 - paid overtime
     Private Sub frmReportGen_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        reportview.RefreshReport()
+        ReportViewer1.RefreshReport()
         'get list of company, employees, cutoff
         LoadCompanyList()
         LoadEmpID()
@@ -38,6 +38,7 @@ Public Class frmReportGen
                 Label1.Text = "Paid Overtime"
                 Me.Text = "Generate Reports - Paid Overtime"
         End Select
+        Me.ReportViewer1.RefreshReport()
     End Sub
 
     Sub LoadCompanyList()
@@ -90,12 +91,12 @@ Public Class frmReportGen
             Case 1
                 'payroll register
                 GetPayrollBatch(cb_selcutoff.Text, cb_selcompany.Text)
-                reportview.ProcessingMode = ProcessingMode.Local
-                reportview.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptPayrollReg.rdlc"
-                reportview.LocalReport.DataSources.Clear()
-                reportview.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("pay")))
-                reportview.DocumentMapCollapsed = True
-                reportview.RefreshReport()
+                ReportViewer1.ProcessingMode = ProcessingMode.Local
+                ReportViewer1.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptPayrollReg.rdlc"
+                ReportViewer1.LocalReport.DataSources.Clear()
+                ReportViewer1.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("pay")))
+                ReportViewer1.DocumentMapCollapsed = True
+                ReportViewer1.RefreshReport()
             Case 2
                 'employeee pay inquiry
                 If cb_selemployee.Text <> "" Then
@@ -110,23 +111,23 @@ Public Class frmReportGen
             Case 3
                 'paid leaves
                 GetPaidLeave(cb_selcompany.Text)
-                reportview.ProcessingMode = ProcessingMode.Local
-                reportview.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptLeavePay.rdlc"
-                reportview.LocalReport.DataSources.Clear()
-                reportview.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("paid_leave")))
-                reportview.DocumentMapCollapsed = True
-                reportview.RefreshReport()
+                ReportViewer1.ProcessingMode = ProcessingMode.Local
+                ReportViewer1.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptLeavePay.rdlc"
+                ReportViewer1.LocalReport.DataSources.Clear()
+                ReportViewer1.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("paid_leave")))
+                ReportViewer1.DocumentMapCollapsed = True
+                ReportViewer1.RefreshReport()
             Case 4
                 'paid overtime
                 GetPaidOvertime(cb_selcompany.Text)
-                reportview.ProcessingMode = ProcessingMode.Local
-                reportview.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptPaidOvertime.rdlc"
-                reportview.LocalReport.DataSources.Clear()
-                reportview.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("paid_overtime")))
-                reportview.DocumentMapCollapsed = True
-                reportview.RefreshReport()
+                ReportViewer1.ProcessingMode = ProcessingMode.Local
+                ReportViewer1.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptPaidOvertime.rdlc"
+                ReportViewer1.LocalReport.DataSources.Clear()
+                ReportViewer1.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("paid_overtime")))
+                ReportViewer1.DocumentMapCollapsed = True
+                ReportViewer1.RefreshReport()
         End Select
-        
+
     End Sub
 
     Private Sub cb_selcompany_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles cb_selcompany.SelectedValueChanged
