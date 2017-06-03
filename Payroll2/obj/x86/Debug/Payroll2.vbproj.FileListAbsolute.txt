@@ -47,7 +47,6 @@ C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debu
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmAbout.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.Resources.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmEditTimesheet.resources
-C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.vbprojResolveAssemblyReference.cache
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.vbproj.GenerateResource.Cache
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.SplashScreen1.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmSettings.resources
@@ -67,3 +66,5 @@ C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debu
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmCheckAll.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmTray.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmReports.resources
+C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\bin\Debug\Reports\CrystalReport1.rpt
+C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\bin\Debug\Reports\CrystalReport1.vb
