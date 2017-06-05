@@ -15,16 +15,16 @@ Public Class frmMain
 
     'on start up 
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        loadEmployee()
+        'loadEmployee()
         label_loggedinas.Text = logged_user
-        ReloadCutoff()
-        'load payslip for the current cutoff
-        getPayslip(current_cutoff)
-        lbl_currentcompany.Text = current_company.ToString
+        getCompanyList()
+        If dt.Rows.Count > 0 Then
+            cb_companylist.DataSource = dt
+            cb_companylist.DisplayMember = "name"
+        End If
         If app_mode = "integrate" Then
             EmployeeToolStripMenuItem.Enabled = False
         End If
-        'frmTray.Show()
     End Sub
     '
     Sub loadEmployee()
@@ -54,13 +54,17 @@ Public Class frmMain
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
         Dim frmEmpDetails As New frmEmpDetails(a)
-        frmEmpDetails.ShowDialog()
+        If current_cutoff <> Nothing Then
+            frmEmpDetails.ShowDialog()
+        Else
+            MessageBox.Show("Set Cutoff First!")
+        End If
     End Sub
 
     Friend Sub ReloadCutoff()
-        'get active cutoff
-        GetCutoff()
-        Dim res = dt.Select("status = 'Processing'")
+        'res = dt.Select("status = 'Processing'")
+        Dim res = dt.Select("cutoff_range = '" & current_cutoff & "'")
+        cb_cutoff.SelectedIndex = cb_cutoff.FindString(res(0).Item(1).ToString)
         occurence = res(0).Item(8).ToString
         Select Case occurence
             Case "Monthly"
@@ -71,14 +75,10 @@ Public Class frmMain
                 num_occurence = 4
         End Select
         If dt.Rows.Count > 0 Then
-            cb_cutoffsearch.ComboBox.DataSource = dt
-            cb_cutoffsearch.ComboBox.DisplayMember = "cutoff_range"
+            cb_cutoff.DataSource = dt
+            cb_cutoff.DisplayMember = "cutoff_range"
         End If
-        res = dt.Select("status = 'Processing'")
-        cb_cutoffsearch.SelectedIndex = cb_cutoffsearch.FindString(res(0).Item(1).ToString)
-        
-        'load payslip for the current cutoff
-        getPayslip(current_cutoff)
+
     End Sub
 
     'search employee
@@ -118,7 +118,7 @@ Public Class frmMain
 
     Private Sub btn_loadpayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_loadpayroll.Click
         'load payslip for the current cutoff
-        getPayslip(cb_cutoffsearch.Text)
+        getPayslip(cb_cutoff.Text)
     End Sub
     'upload timesheet
     Private Sub UploadTimsheetToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles UploadTimsheetToolStripMenuItem.Click
@@ -211,11 +211,6 @@ Public Class frmMain
         frmLeaveConversion.ShowDialog()
     End Sub
 
-    Private Sub ChangeCutoffCompanyToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeCutoffCompanyToolStripMenuItem.Click
-        frm1.Show()
-        Me.Close()
-    End Sub
-
     Private Sub ShiftsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ShiftsToolStripMenuItem.Click
         Dim shifts As New frmShifts()
         shifts.ShowDialog()
@@ -224,5 +219,46 @@ Public Class frmMain
     Private Sub CrystalReportSampleToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CrystalReportSampleToolStripMenuItem.Click
         Dim reports As New frmReports
         reports.Show()
+    End Sub
+
+    Private Sub lnk_addcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_addcutoff.LinkClicked
+        frmAddCutoff.ShowDialog()
+    End Sub
+
+    Private Sub lnk_setcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_setcutoff.LinkClicked
+        current_cutoff = cb_cutoff.Text
+        tsbtn_cutoff.Text = current_cutoff
+        StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
+        QryReadP()
+        Dim cutoffreader As MySqlDataReader = cmd.ExecuteReader
+        If cutoffreader.HasRows Then
+            StrSql = "UPDATE tblref_settings SET value = '" & current_cutoff & "' WHERE setting_name = 'current_cutoff'"
+        Else
+            StrSql = "INSERT INTO tblref_settings VALUES ('current_cutoff','" & current_cutoff & "')"
+        End If
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        GetCutoffOccurences()
+    End Sub
+
+    Private Sub cb_companylist_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cb_companylist.SelectedIndexChanged
+        lbl_currentcompany.Text = cb_companylist.Text
+        current_company = cb_companylist.Text
+        StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_company'"
+        QryReadP()
+        Dim compreader As MySqlDataReader = cmd.ExecuteReader
+        If compreader.HasRows Then
+            StrSql = "UPDATE tblref_settings SET value = '" & current_company & "' WHERE setting_name = 'current_company'"
+        Else
+            StrSql = "INSERT INTO tblref_settings VALUES ('current_company','" & current_company & "')"
+        End If
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        GetCompanyCutoff(cb_companylist.Text)
+        If dt.Rows.Count > 0 Then
+            cb_cutoff.DataSource = dt
+            cb_cutoff.DisplayMember = "cutoff_range"
+        End If
+        loadEmployee()
     End Sub
 End Class

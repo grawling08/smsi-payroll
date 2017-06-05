@@ -447,7 +447,7 @@ Public Class frmEmpDetails
             save_incentives(payslip_id)
         Else
             'saved new payslip
-            StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & employee_id & "'," & cutoff_id & "," _
+            StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
                     & tb_totalworkhours.Text & "," & CDbl(tb_income.Text) & "," & CDbl(tb_regularot.Text) & "," _
                     & CDbl(tb_holidayot.Text) & "," & CDbl(tb_totalot.Text) & "," & CDbl(tb_allowance.Text) & "," _
                     & totalBenefits & "," & CDbl(tb_late.Text) & "," & CDbl(tb_undertime.Text) & "," _

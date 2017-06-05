@@ -50,16 +50,22 @@ Partial Class frmMain
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.PaidOvertimesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoansToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CrystalReportSampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsb_savepayroll = New System.Windows.Forms.Panel()
+        Me.TabControl3 = New System.Windows.Forms.TabControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.lnk_setcutoff = New System.Windows.Forms.LinkLabel()
+        Me.cb_cutoff = New System.Windows.Forms.ComboBox()
+        Me.lnk_addcutoff = New System.Windows.Forms.LinkLabel()
         Me.lbl_currentcompany = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.bindingnavigator = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
-        Me.cb_cutoffsearch = New System.Windows.Forms.ToolStripComboBox()
+        Me.tsbtn_cutoff = New System.Windows.Forms.ToolStripTextBox()
         Me.btn_loadpayroll = New System.Windows.Forms.ToolStripButton()
         Me.btn_resetpayroll = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
@@ -78,9 +84,13 @@ Partial Class frmMain
         Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.CrystalReportSampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.cb_companylist = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
+        Me.TabControl3.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.bindingnavigator, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.bindingnavigator.SuspendLayout()
@@ -221,6 +231,12 @@ Partial Class frmMain
         Me.LoansToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.LoansToolStripMenuItem.Text = "Loans"
         '
+        'CrystalReportSampleToolStripMenuItem
+        '
+        Me.CrystalReportSampleToolStripMenuItem.Name = "CrystalReportSampleToolStripMenuItem"
+        Me.CrystalReportSampleToolStripMenuItem.Size = New System.Drawing.Size(190, 22)
+        Me.CrystalReportSampleToolStripMenuItem.Text = "Crystal Report Sample"
+        '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HelpToolStripMenuItem1, Me.ToolStripSeparator4, Me.AboutToolStripMenuItem})
@@ -248,6 +264,7 @@ Partial Class frmMain
         'tsb_savepayroll
         '
         Me.tsb_savepayroll.AutoScroll = True
+        Me.tsb_savepayroll.Controls.Add(Me.TabControl3)
         Me.tsb_savepayroll.Controls.Add(Me.lbl_currentcompany)
         Me.tsb_savepayroll.Controls.Add(Me.Panel2)
         Me.tsb_savepayroll.Controls.Add(Me.TabControl1)
@@ -256,6 +273,59 @@ Partial Class frmMain
         Me.tsb_savepayroll.Name = "tsb_savepayroll"
         Me.tsb_savepayroll.Size = New System.Drawing.Size(1274, 668)
         Me.tsb_savepayroll.TabIndex = 1
+        '
+        'TabControl3
+        '
+        Me.TabControl3.Controls.Add(Me.TabPage3)
+        Me.TabControl3.Location = New System.Drawing.Point(3, 6)
+        Me.TabControl3.Name = "TabControl3"
+        Me.TabControl3.SelectedIndex = 0
+        Me.TabControl3.Size = New System.Drawing.Size(295, 128)
+        Me.TabControl3.TabIndex = 11
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.cb_companylist)
+        Me.TabPage3.Controls.Add(Me.Label2)
+        Me.TabPage3.Controls.Add(Me.Label1)
+        Me.TabPage3.Controls.Add(Me.lnk_setcutoff)
+        Me.TabPage3.Controls.Add(Me.cb_cutoff)
+        Me.TabPage3.Controls.Add(Me.lnk_addcutoff)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(287, 102)
+        Me.TabPage3.TabIndex = 0
+        Me.TabPage3.Text = "Company Cutoff"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'lnk_setcutoff
+        '
+        Me.lnk_setcutoff.AutoSize = True
+        Me.lnk_setcutoff.Location = New System.Drawing.Point(227, 84)
+        Me.lnk_setcutoff.Name = "lnk_setcutoff"
+        Me.lnk_setcutoff.Size = New System.Drawing.Size(54, 13)
+        Me.lnk_setcutoff.TabIndex = 2
+        Me.lnk_setcutoff.TabStop = True
+        Me.lnk_setcutoff.Text = "Set Cutoff"
+        '
+        'cb_cutoff
+        '
+        Me.cb_cutoff.FormattingEnabled = True
+        Me.cb_cutoff.Location = New System.Drawing.Point(3, 60)
+        Me.cb_cutoff.Name = "cb_cutoff"
+        Me.cb_cutoff.Size = New System.Drawing.Size(278, 21)
+        Me.cb_cutoff.TabIndex = 3
+        '
+        'lnk_addcutoff
+        '
+        Me.lnk_addcutoff.AutoSize = True
+        Me.lnk_addcutoff.Location = New System.Drawing.Point(3, 84)
+        Me.lnk_addcutoff.Name = "lnk_addcutoff"
+        Me.lnk_addcutoff.Size = New System.Drawing.Size(57, 13)
+        Me.lnk_addcutoff.TabIndex = 1
+        Me.lnk_addcutoff.TabStop = True
+        Me.lnk_addcutoff.Text = "Add Cutoff"
         '
         'lbl_currentcompany
         '
@@ -285,7 +355,7 @@ Partial Class frmMain
         Me.bindingnavigator.CountItem = Nothing
         Me.bindingnavigator.DeleteItem = Nothing
         Me.bindingnavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.bindingnavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.cb_cutoffsearch, Me.btn_loadpayroll, Me.btn_resetpayroll, Me.ToolStripButton1})
+        Me.bindingnavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.tsbtn_cutoff, Me.btn_loadpayroll, Me.btn_resetpayroll, Me.ToolStripButton1})
         Me.bindingnavigator.Location = New System.Drawing.Point(0, 0)
         Me.bindingnavigator.MoveFirstItem = Nothing
         Me.bindingnavigator.MoveLastItem = Nothing
@@ -304,13 +374,10 @@ Partial Class frmMain
         Me.ToolStripLabel2.Size = New System.Drawing.Size(46, 22)
         Me.ToolStripLabel2.Text = "Cut-off"
         '
-        'cb_cutoffsearch
+        'tsbtn_cutoff
         '
-        Me.cb_cutoffsearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.cb_cutoffsearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_cutoffsearch.DropDownWidth = 200
-        Me.cb_cutoffsearch.Name = "cb_cutoffsearch"
-        Me.cb_cutoffsearch.Size = New System.Drawing.Size(200, 25)
+        Me.tsbtn_cutoff.Name = "tsbtn_cutoff"
+        Me.tsbtn_cutoff.Size = New System.Drawing.Size(200, 25)
         '
         'btn_loadpayroll
         '
@@ -343,6 +410,9 @@ Partial Class frmMain
         Me.dgv_payroll.AllowUserToAddRows = False
         Me.dgv_payroll.AllowUserToDeleteRows = False
         Me.dgv_payroll.AllowUserToResizeRows = False
+        Me.dgv_payroll.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -382,10 +452,10 @@ Partial Class frmMain
         Me.TabControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Location = New System.Drawing.Point(3, 3)
+        Me.TabControl1.Location = New System.Drawing.Point(3, 136)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(299, 640)
+        Me.TabControl1.Size = New System.Drawing.Size(299, 507)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -395,7 +465,7 @@ Partial Class frmMain
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(291, 614)
+        Me.TabPage1.Size = New System.Drawing.Size(291, 481)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Employees"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -484,7 +554,7 @@ Partial Class frmMain
         Me.dgv_emplist.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.dgv_emplist.RowHeadersVisible = False
         Me.dgv_emplist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emplist.Size = New System.Drawing.Size(285, 580)
+        Me.dgv_emplist.Size = New System.Drawing.Size(285, 447)
         Me.dgv_emplist.TabIndex = 0
         '
         'ToolStripSeparator2
@@ -528,11 +598,31 @@ Partial Class frmMain
         Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
         Me.label_loggedinas.Text = "ToolStripStatusLabel3"
         '
-        'CrystalReportSampleToolStripMenuItem
+        'Label1
         '
-        Me.CrystalReportSampleToolStripMenuItem.Name = "CrystalReportSampleToolStripMenuItem"
-        Me.CrystalReportSampleToolStripMenuItem.Size = New System.Drawing.Size(190, 22)
-        Me.CrystalReportSampleToolStripMenuItem.Text = "Crystal Report Sample"
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 3)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(51, 13)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "Company"
+        '
+        'cb_companylist
+        '
+        Me.cb_companylist.FormattingEnabled = True
+        Me.cb_companylist.Location = New System.Drawing.Point(6, 20)
+        Me.cb_companylist.Name = "cb_companylist"
+        Me.cb_companylist.Size = New System.Drawing.Size(275, 21)
+        Me.cb_companylist.TabIndex = 5
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 44)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(35, 13)
+        Me.Label2.TabIndex = 4
+        Me.Label2.Text = "Cutoff"
         '
         'frmMain
         '
@@ -552,6 +642,9 @@ Partial Class frmMain
         Me.MainMenu.PerformLayout()
         Me.tsb_savepayroll.ResumeLayout(False)
         Me.tsb_savepayroll.PerformLayout()
+        Me.TabControl3.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.bindingnavigator, System.ComponentModel.ISupportInitialize).EndInit()
@@ -606,7 +699,6 @@ Partial Class frmMain
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents bindingnavigator As System.Windows.Forms.BindingNavigator
     Friend WithEvents ToolStripLabel2 As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents cb_cutoffsearch As System.Windows.Forms.ToolStripComboBox
     Friend WithEvents btn_loadpayroll As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_resetpayroll As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
@@ -620,5 +712,14 @@ Partial Class frmMain
     Friend WithEvents ShiftsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ChangeCutoffCompanyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CrystalReportSampleToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents lnk_setcutoff As System.Windows.Forms.LinkLabel
+    Friend WithEvents lnk_addcutoff As System.Windows.Forms.LinkLabel
+    Friend WithEvents cb_cutoff As System.Windows.Forms.ComboBox
+    Friend WithEvents tsbtn_cutoff As System.Windows.Forms.ToolStripTextBox
+    Friend WithEvents TabControl3 As System.Windows.Forms.TabControl
+    Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
+    Friend WithEvents cb_companylist As System.Windows.Forms.ComboBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 
 End Class

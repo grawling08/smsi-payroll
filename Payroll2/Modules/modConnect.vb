@@ -168,6 +168,24 @@ Module modConnect
     End Function
 
 #Region "cutoff"
+    Sub GetCutoffOccurences()
+        StrSql = "SELECT tblref_occurences.name FROM tblref_occurences LEFT JOIN tbl_cutoff ON tbl_cutoff.occurence_id = tblref_occurences.occurence_id " _
+                    & "WHERE(tbl_cutoff.cutoff_range = '" & current_cutoff & "')"
+        QryReadP()
+        Dim occreader As MySqlDataReader = cmd.ExecuteReader
+        If occreader.HasRows Then
+            occreader.Read()
+            Select Case occreader("name").ToString
+                Case "Monthly"
+                    num_occurence = 1
+                Case "Semi-Monthly"
+                    num_occurence = 2
+                Case "Weekly"
+                    num_occurence = 4
+            End Select
+        End If
+        Close_Connect()
+    End Sub
     Sub GetOccurences()
         StrSql = "SELECT * FROM tblref_occurences"
         QryReadP()
@@ -200,7 +218,7 @@ Module modConnect
 
     'get cutoff range
     Sub getCutoffRange()
-        StrSql = "SELECT * FROM tbl_cutoff WHERE cutoff_range = '" & current_cutoff & "'"
+        StrSql = "SELECT * FROM tbl_cutoff WHERE cutoff_range = '" & current_cutoff & "' AND company_id = '" & current_company & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         If dtareader.HasRows Then
@@ -214,28 +232,29 @@ Module modConnect
     End Sub
 
     'set to active cutoff
-    Sub SetActiveCutoff(ByVal range As String)
-        'clear
-        StrSql = "UPDATE tbl_cutoff SET ifActive = 'N' WHERE cutoff_range != '" & range & "'"
-        QryReadP()
-        cmd.ExecuteNonQuery()
-        Close_Connect()
+    'Sub SetActiveCutoff(ByVal range As String)
+    '    'clear
+    '    StrSql = "UPDATE tbl_cutoff SET status = 'N' WHERE cutoff_range != '" & range & "'"
+    '    QryReadP()
+    '    cmd.ExecuteNonQuery()
+    '    Close_Connect()
 
-        'set
-        StrSql = "UPDATE tbl_cutoff SET ifActive = 'Y' WHERE cutoff_range = '" & range & "'"
-        QryReadP()
-        cmd.ExecuteNonQuery()
-        current_cutoff = range
-        Close_Connect()
-    End Sub
+    '    'set
+    '    StrSql = "UPDATE tbl_cutoff SET ifActive = 'Y' WHERE cutoff_range = '" & range & "'"
+    '    QryReadP()
+    '    cmd.ExecuteNonQuery()
+    '    current_cutoff = range
+    '    Close_Connect()
+    'End Sub
 
     'add new cutoff
     Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
         If CheckCutoff(fromDate, toDate, occurence) = False Then
-            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,occurence_id,from_date,to_date,status) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
+            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',@current_company,(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
             QryReadP()
             Try
                 With cmd
+                    .Parameters.AddWithValue("@current_company", current_company)
                     .Parameters.AddWithValue("@from", fromDate)
                     .Parameters.AddWithValue("@to", toDate)
                     .Parameters.AddWithValue("@occurence", occurence)
@@ -254,7 +273,7 @@ Module modConnect
     End Sub
 
     Function CheckCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String) As Boolean
-        StrSql = "SELECT * FROM tbl_cutoff WHERE occurence_id = (SELECT occurence_id FROM tblref_occurences WHERE name='" & occurence & "') AND from_date = '" & fromDate & "' AND to_date ='" & toDate & "'"
+        StrSql = "SELECT * FROM tbl_cutoff WHERE occurence_id = (SELECT occurence_id FROM tblref_occurences WHERE name='" & occurence & "') AND company_id = '" & current_company & "' AND from_date = '" & fromDate & "' AND to_date ='" & toDate & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         If dtareader.HasRows Then
@@ -263,6 +282,15 @@ Module modConnect
         Return False
     End Function
 #End Region
+
+    Sub GetCompanyCutoff(ByVal company As String)
+        StrSql = "SELECT tbl_cutoff.* FROM tbl_company JOIN tbl_cutoff ON tbl_company.name = tbl_cutoff.company_id WHERE tbl_cutoff.company_id = '" & company & "'"
+        QryReadP()
+        dt = New DataTable
+        ds = New DataSet
+        adpt.Fill(dt)
+        Close_Connect()
+    End Sub
 
     Sub getCompanyList()
         StrSql = "SELECT * FROM tbl_company"
@@ -384,7 +412,7 @@ Module modConnect
                     & "tbl_payslip.gross_income as 'Gross Income', " _
                     & "tbl_payslip.net_income as 'Net Income' " _
                     & "FROM tbl_employee " _
-                    & "INNER JOIN tbl_payslip ON tbl_employee.emp_id = tbl_payslip.employee_id " _
+                    & "INNER JOIN tbl_payslip ON tbl_employee.id_employee = tbl_payslip.employee_id " _
                     & "INNER JOIN tbl_cutoff ON tbl_cutoff.cutoff_id = tbl_payslip.cutoff_id " _
                     & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
                     & "AND company = '" & current_company & "' ORDER BY Employee"
