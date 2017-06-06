@@ -394,7 +394,7 @@ Module modConnect
         adpt.Dispose()
         'use this query string if app is integrated with HRIS
         StrSql = "SELECT tbl_cutoff.cutoff_range as 'Cutoff', " _
-                    & "company as 'Company'," _
+                    & "code as 'Company'," _
                     & "CONCAT_WS(' ',lName,fName,mName) as Employee, " _
                     & "tbl_payslip.totalWorkHours as 'Total Work Hours', " _
                     & "tbl_payslip.income as 'Quincena', " _
@@ -414,12 +414,26 @@ Module modConnect
                     & "FROM tbl_employee " _
                     & "INNER JOIN tbl_payslip ON tbl_employee.id_employee = tbl_payslip.employee_id " _
                     & "INNER JOIN tbl_cutoff ON tbl_cutoff.cutoff_id = tbl_payslip.cutoff_id " _
+                    & "INNER JOIN tbl_company ON tbl_employee.company = tbl_company.name " _
                     & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
                     & "AND company = '" & current_company & "' ORDER BY Employee"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
         frmMain.dgv_payroll.DataSource = ds.Tables(0)
+        Dim col = frmMain.dgv_payroll.Columns.Count
+        Dim i = 0
+        While i <= col - 1
+            frmMain.dgv_payroll.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            frmMain.dgv_payroll.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Format = "N2"
+            If i > 2 Then
+                frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            End If
+            i = i + 1
+        End While
+        frmMain.dgv_payroll.Columns(0).Visible = False
+        frmMain.dgv_payroll.Columns(1).Visible = False
         Close_Connect()
     End Sub
 

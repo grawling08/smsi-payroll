@@ -320,12 +320,15 @@ Public Class frmEmpDetails
         dgv_emptimesheet.DataSource = Nothing
         dgv_emptimesheet.DataSource = ds.Tables(0)
         Dim col = dgv_emptimesheet.Columns.Count
-        For i As Integer = 0 To col
+        Dim i As Integer = 0
+        While i <= col - 1
             dgv_emptimesheet.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             dgv_emptimesheet.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-            i = i + i
-        Next
+            i = i + 1
+        End While
         dgv_emptimesheet.Columns(0).Visible = False
+        dgv_emptimesheet.Columns(1).Visible = False
+        dgv_emptimesheet.Columns(2).Visible = False
     End Sub
 
     'load employee shift schedule
