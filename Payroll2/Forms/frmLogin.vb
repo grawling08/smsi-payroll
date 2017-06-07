@@ -17,6 +17,7 @@ Public Class frmLogin
                 'If checkCurrents() = False Then
                 '    frm1.ShowDialog()
                 'End If
+                checkCurrents()
                 frmMain.Show()
             Else
                 MessageBox.Show("You don't have the necessary credentials to access this program.")
@@ -52,7 +53,7 @@ Public Class frmLogin
         End If
     End Sub
 
-    Private Function checkCurrents() As Boolean
+    Private Sub checkCurrents()
         StrSql = "SELECT * FROM tblref_settings"
         QryReadP()
         Dim dtaread As MySqlDataReader = cmd.ExecuteReader
@@ -61,33 +62,14 @@ Public Class frmLogin
             While dtaread.Read()
                 Select Case dtaread("setting_name").ToString
                     Case "app_mode"
-                        If dtaread("value").ToString = "" Or String.IsNullOrEmpty(dtaread("value").ToString) Then
-                            Return False
-                        Else
-                            app_mode = dtaread("value").ToString
-                        End If
+                        app_mode = dtaread("value").ToString
                     Case "current_cutoff"
-                        If dtaread("value").ToString = "" Or String.IsNullOrEmpty(dtaread("value").ToString) Then
-                            Return False
-                        Else
-                            current_cutoff = dtaread("value").ToString
-                        End If
+                        current_cutoff = dtaread("value").ToString
                     Case "current_company"
-                        If dtaread("value").ToString = "" Or String.IsNullOrEmpty(dtaread("value").ToString) Then
-                            Return False
-                        Else
-                            current_company = dtaread("value").ToString
-                        End If
-                    Case Else
-                        Return False
+                        current_company = dtaread("value").ToString
                 End Select
-                count += count
             End While
-            If count > 3 Then
-                Return True
-            End If
         End If
-        Return False
-    End Function
+    End Sub
 
 End Class

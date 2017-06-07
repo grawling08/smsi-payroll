@@ -86,7 +86,7 @@ Public Class frmUploadedTimesheet
                                     undertimediff = 0
                                     overtimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timeout").ToString), CDate(log_date & " " & time_out))
                                     If overtimediff > 3600 Then
-                                        row.Cells(8).Value = "Overtime"
+                                        row.Cells(8).Value = "Regular"
                                     Else
                                         overtimediff = 0
                                     End If
@@ -124,22 +124,22 @@ Public Class frmUploadedTimesheet
                     Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                     If dtareader.HasRows Then
                         'check for duplicate entries
-                        StrSql2 = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "' AND date = '" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'"
-                        Connect_Sub("payroll")
+                        StrSql2 = "SELECT * FROM timesheettemp WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "' AND dateLog = '" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'"
+                        Connect_Sub("hris")
                         cmd2 = New MySqlCommand(StrSql2, conn2)
                         Dim dtareader2 As MySqlDataReader = cmd2.ExecuteReader()
                         If Not dtareader2.HasRows Then
                             'if no duplicate entries
                             'save to db
                             'Try
-                            StrSql = "INSERT INTO tbl_attendance(emp_bio_id, date, time_in, time_out, totalHours, late, undertime, overtime, remarks) " _
+                            StrSql = "INSERT INTO timesheettemp(emp_bio_id, dateLog, timein, timeout, totalHours, late, undertime, overtime, remarks) " _
                                     & "VALUES('" & row.Cells(0).Value.ToString & "'," _
                                     & "'" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'," _
                                     & "'" & row.Cells(2).Value.ToString & "','" & row.Cells(3).Value.ToString & "'," _
                                     & "'" & row.Cells(4).Value.ToString & "','" & row.Cells(5).Value.ToString & "'," _
                                     & "'" & row.Cells(6).Value.ToString & "','" & row.Cells(7).Value.ToString & "'," _
                                     & "'" & row.Cells(8).Value.ToString & "')"
-                            QryReadP()
+                            QryReadH()
                             cmd.ExecuteNonQuery()
                             'Catch ex As Exception
                             'MessageBox.Show(ex.InnerException.ToString)

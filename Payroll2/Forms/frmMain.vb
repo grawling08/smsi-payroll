@@ -141,55 +141,56 @@ Public Class frmMain
                 Dim FileName As String = openFileDialog1.FileName
                 Dim FilePath As String = Path.GetFullPath(FileName)
                 Dim extension = Path.GetExtension(FileName)
-                ''check file extension
-                'If extension = ".xls" Or extension = ".xlsx" Then
-                '    Try
-                '        If MyConnection.State = ConnectionState.Open Then
-                '            MyConnection.Close()
-                '        End If
-                '        MyConnection = New System.Data.OleDb.OleDbConnection("provider=Microsoft.ACE.OLEDB.12.0;Data Source='" & FileName & "';Extended Properties=Excel 12.0;")
-                '        MyCommand = New System.Data.OleDb.OleDbDataAdapter("select * from [Source$]", MyConnection)
-                '        MyCommand.TableMappings.Add("Table", "timesheet")
-                '        MyCommand.Fill(DtSet)
-                '        dta = DtSet.Tables(0)
-                '    Catch ex As Exception
-                '        MessageBox.Show(ex.InnerException.ToString)
-                '    End Try
-                '    MyConnection.Close()
-                'End If
-                Using doc As SpreadsheetDocument = SpreadsheetDocument.Open(FilePath, False)
-                    'Read the first Sheet from Excel file.
-                    Dim sheet As Sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild(Of Sheet)()
-                    'Get the Worksheet instance.
-                    Dim worksheet As Worksheet = TryCast(doc.WorkbookPart.GetPartById(sheet.Id.Value), WorksheetPart).Worksheet
-                    'Fetch all the rows present in the Worksheet.
-                    Dim rows As IEnumerable(Of Row) = worksheet.GetFirstChild(Of SheetData)().Descendants(Of Row)()
-                    'Loop through the Worksheet rows.
-                    For Each row As Row In rows
-                        'Use the first row to add columns to DataTable.
-                        If row.RowIndex.Value = 1 Then
-                            For Each cell As Cell In row.Descendants(Of Cell)()
-                                dta.Columns.Add(GetValue(doc, cell))
-                            Next
-                        Else
-                            'Add rows to DataTable.
-                            dta.Rows.Add()
-                            Dim i As Integer = 0
-                            For Each cell As Cell In row.Descendants(Of Cell)()
-                                dta.Rows(dta.Rows.Count - 1)(i) = GetValue(doc, cell)
-                                i += 1
-                            Next
+                'check file extension
+                If extension = ".xls" Then
+                    Try
+                        If MyConnection.State = ConnectionState.Open Then
+                            MyConnection.Close()
                         End If
-                    Next
-                End Using
+                        MyConnection = New System.Data.OleDb.OleDbConnection("provider=Microsoft.ACE.OLEDB.12.0;Data Source='" & FileName & "';Extended Properties=Excel 12.0;")
+                        MyCommand = New System.Data.OleDb.OleDbDataAdapter("select * from [Source$]", MyConnection)
+                        MyCommand.TableMappings.Add("Table", "timesheet")
+                        MyCommand.Fill(DtSet)
+                        dta = DtSet.Tables(0)
+                    Catch ex As Exception
+                        MessageBox.Show(ex.InnerException.ToString)
+                    End Try
+                    MyConnection.Close()
+                ElseIf extension = ".xlsx" Then
+                    Using doc As SpreadsheetDocument = SpreadsheetDocument.Open(FilePath, False)
+                        'Read the first Sheet from Excel file.
+                        Dim sheet As Sheet = doc.WorkbookPart.Workbook.Sheets.GetFirstChild(Of Sheet)()
+                        'Get the Worksheet instance.
+                        Dim worksheet As Worksheet = TryCast(doc.WorkbookPart.GetPartById(sheet.Id.Value), WorksheetPart).Worksheet
+                        'Fetch all the rows present in the Worksheet.
+                        Dim rows As IEnumerable(Of Row) = worksheet.GetFirstChild(Of SheetData)().Descendants(Of Row)()
+                        'Loop through the Worksheet rows.
+                        For Each row As Row In rows
+                            'Use the first row to add columns to DataTable.
+                            If row.RowIndex.Value = 1 Then
+                                For Each cell As Cell In row.Descendants(Of Cell)()
+                                    dta.Columns.Add(GetValue(doc, cell))
+                                Next
+                            Else
+                                'Add rows to DataTable.
+                                dta.Rows.Add()
+                                Dim i As Integer = 0
+                                For Each cell As Cell In row.Descendants(Of Cell)()
+                                    dta.Rows(dta.Rows.Count - 1)(i) = GetValue(doc, cell)
+                                    i += 1
+                                Next
+                            End If
+                        Next
+                    End Using
+                End If
             End If
-            'Catch Exc As Exception
-            'Console.Write(Exc.InnerException.ToString)
-            'End Try
-            myStream.Close()
-            SaveRawAttendance(dta)
-            frmUploadedTimesheet.ShowDialog()
-        End If
+                'Catch Exc As Exception
+                'Console.Write(Exc.InnerException.ToString)
+                'End Try
+                myStream.Close()
+                SaveRawAttendance(dta)
+                frmUploadedTimesheet.ShowDialog()
+            End If
     End Sub
 
     Private Function GetValue(doc As SpreadsheetDocument, cell As Cell) As String
@@ -238,7 +239,13 @@ Public Class frmMain
         End If
         QryReadP()
         cmd.ExecuteNonQuery()
+
+        'StrSql = "UPDATE tbl_cutoff SET status = 'Current' WHERE cutoff_range = '" & current_cutoff & "' AND company_id = '" & current_company & "'"
+        'QryReadP()
+        'cmd.ExecuteNonQuery()
+
         GetCutoffOccurences()
+        MessageBox.Show("Cutoff changed!")
     End Sub
 
     Private Sub cb_companylist_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cb_companylist.SelectedIndexChanged

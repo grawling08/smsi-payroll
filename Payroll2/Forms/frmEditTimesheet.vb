@@ -142,7 +142,7 @@ Public Class frmEditTimesheet
                         undertimediff = 0
                         overtimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timeout").ToString), CDate(log_date & " " & Time_out.ToString("hh:mm tt")))
                         If overtimediff > 3600 Then
-                            remarks = "Overtime"
+                            remarks = "Regular"
                         Else
                             overtimediff = 0
                         End If

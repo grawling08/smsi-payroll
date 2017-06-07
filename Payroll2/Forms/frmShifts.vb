@@ -27,12 +27,14 @@
         adpt.Fill(ds, "shifts")
         dgv_shifts.DataSource = ds.Tables(0)
         Dim col = dgv_shifts.Columns.Count
-        For i As Integer = 0 To col
+        Dim i = 0
+        While i <= col
             dgv_shifts.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             dgv_shifts.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + i
-        Next
+        End While
         dgv_shifts.Columns(0).Visible = False
+        dgv_shifts.Columns(4).Visible = False
     End Sub
 
     Private Sub dgv_shifts_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_shifts.CellClick

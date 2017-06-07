@@ -122,8 +122,8 @@ Public Class frmEmpDetails
         Dim CurrD As DateTime = frmdate_cutoff
         While (CurrD <= todate_cutoff)
             'query attendance per cutoff date
-            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
-            QryReadP()
+            StrSql = "SELECT * FROM timesheet WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND dateLog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            QryReadH()
             Dim dtareader As MySqlDataReader = cmd.ExecuteReader
             If dtareader.HasRows Then
                 dtareader.Read()
@@ -188,9 +188,9 @@ Public Class frmEmpDetails
         Dim CurrD As DateTime = frmdate_cutoff
         While (CurrD <= todate_cutoff)
             countattendance += 1
-            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            StrSql = "SELECT * FROM timesheet WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and dateLog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
             'Console.Write(StrSql)
-            QryReadP()
+            QryReadH()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then
                 'check if current day in loop is not within the shift schedule
@@ -221,8 +221,8 @@ Public Class frmEmpDetails
         End While
         Label34.Text = countattendance
         'get total lates
-        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
-        QryReadP()
+        StrSql = "SELECT * FROM timesheet WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND dateLog BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        QryReadH()
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then
             While latereader.Read()
@@ -309,10 +309,11 @@ Public Class frmEmpDetails
 
     'load timesheet
     Private Sub btn_loadtimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtimesheet.Click
-        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
-                        & "AND Month(date) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
-                        & "AND Year(date) = Year('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') ORDER BY date"
-        QryReadP()
+        StrSql = "SELECT emp_bio_id, dateLog, DATE_FORMAT(STR_TO_DATE(timein, '%T'),'%h:%s %p') as timein, DATE_FORMAT(STR_TO_DATE(timeout, '%T'),'%h:%s %p') as timeout, totalHours, late, undertime, overtime, remarks " _
+                    & "FROM timesheet WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
+                    & "AND Month(dateLog) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
+                    & "AND Year(dateLog) = Year('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') ORDER BY dateLog"
+        QryReadH()
         ds = New DataSet
         adpt.Fill(ds, "TimesheetRaw")
         'reset dgv
@@ -327,8 +328,7 @@ Public Class frmEmpDetails
             i = i + 1
         End While
         dgv_emptimesheet.Columns(0).Visible = False
-        dgv_emptimesheet.Columns(1).Visible = False
-        dgv_emptimesheet.Columns(2).Visible = False
+        ' dgv_emptimesheet.Columns(2).Visible = False
     End Sub
 
     'load employee shift schedule
@@ -338,11 +338,13 @@ Public Class frmEmpDetails
             ds = New DataSet
             adpt.Fill(ds, "Shifts")
             dgv_shift.DataSource = ds.Tables(0)
-            Dim col = dgv_shift.Columns.Count - 1
-            For i As Integer = 0 To col
-                dgv_shift.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-                i = i + i
-            Next
+        Dim col = dgv_shift.Columns.Count - 1
+        Dim i = 0
+        While i <= col
+            dgv_shift.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            dgv_shift.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            i = i + 1
+        End While
     End Sub
 
     'employee loans

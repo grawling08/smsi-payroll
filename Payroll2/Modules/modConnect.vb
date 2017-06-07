@@ -384,7 +384,7 @@ Module modConnect
         If counter = rows Then
             MessageBox.Show("Timesheet Saved! " & numNotMatched & " Rows Saved and " & numMatched & " Duplicate Rows")
         Else
-            MessageBox.Show("Please check your timesheet file if it is for " & current_company & ".")
+            MessageBox.Show("Please check your timesheet file for " & current_company & ".")
         End If
         Close_Connect()
     End Sub
@@ -397,7 +397,7 @@ Module modConnect
                     & "code as 'Company'," _
                     & "CONCAT_WS(' ',lName,fName,mName) as Employee, " _
                     & "tbl_payslip.totalWorkHours as 'Total Work Hours', " _
-                    & "tbl_payslip.income as 'Quincena', " _
+                    & "tbl_payslip.income as 'Basic Pay', " _
                     & "tbl_payslip.regot_pay as 'Regular OT', " _
                     & "tbl_payslip.holot_pay as 'Holiday OT', " _
                     & "tbl_payslip.ot_pay as 'Total OT', " _
