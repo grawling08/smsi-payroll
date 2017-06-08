@@ -227,6 +227,7 @@ Public Class frmMain
     End Sub
 
     Private Sub lnk_setcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_setcutoff.LinkClicked
+
         current_cutoff = cb_cutoff.Text
         tsbtn_cutoff.Text = current_cutoff
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
@@ -239,12 +240,11 @@ Public Class frmMain
         End If
         QryReadP()
         cmd.ExecuteNonQuery()
-
-        'StrSql = "UPDATE tbl_cutoff SET status = 'Current' WHERE cutoff_range = '" & current_cutoff & "' AND company_id = '" & current_company & "'"
-        'QryReadP()
-        'cmd.ExecuteNonQuery()
-
+        loading.ShowDialog()
+        SyncTimesheet()
+        loading.Close()
         GetCutoffOccurences()
+
         MessageBox.Show("Cutoff changed!")
     End Sub
 

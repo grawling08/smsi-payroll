@@ -15,6 +15,10 @@ Payroll2
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
 </summary>
+</member><member name="P:Payroll2.My.Resources.Resources._88ff494857722be38d7e01411a429c91">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
 </member><member name="T:Payroll2.My.Resources.Resources">
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.

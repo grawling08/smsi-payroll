@@ -352,5 +352,34 @@ Module modSync
         Return True
     End Function
 
+    Sub SyncTimesheet()
+        getCutoffRange()
+        StrSql = "SELECT * FROM timesheet WHERE dateLog BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        QryReadH()
+        Dim dt = New DataTable
+        adpt.Fill(dt)
+        For i = 0 To dt.Rows.Count - 1
+            StrSql = "SELECT * FROM tbl_attendance WHERE " _
+                        & "emp_bio_id = '" & dt.Rows(i)(1).ToString & "' AND " _
+                        & "date = '" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "' AND " _
+                        & "time_in = '" & dt.Rows(i)(3).ToString & "' AND " _
+                        & "time_out = '" & dt.Rows(i)(4).ToString & "'"
+            QryReadP()
+            Dim paytimerdr As MySqlDataReader = cmd.ExecuteReader
+            If Not paytimerdr.HasRows Then
+                StrSql = "INSERT INTO tbl_attendance(emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
+                            & "VALUES('" & dt.Rows(i)(1).ToString & "','" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" _
+                            & dt.Rows(i)(3).ToString & "','" & dt.Rows(i)(4).ToString & "','" _
+                            & dt.Rows(i)(5).ToString & "','" & dt.Rows(i)(6).ToString & "','" _
+                            & dt.Rows(i)(7).ToString & "','" & dt.Rows(i)(8).ToString & "','" _
+                            & dt.Rows(i)(9).ToString & "')"
+                'Connect_Sub("payroll")
+                'cmd2 = New MySqlCommand(StrSql2, conn2)
+                'cmd2.ExecuteNonQuery()
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            End If
+        Next
+    End Sub
 
 End Module

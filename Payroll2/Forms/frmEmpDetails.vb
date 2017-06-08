@@ -122,8 +122,8 @@ Public Class frmEmpDetails
         Dim CurrD As DateTime = frmdate_cutoff
         While (CurrD <= todate_cutoff)
             'query attendance per cutoff date
-            StrSql = "SELECT * FROM timesheet WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND dateLog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
-            QryReadH()
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            QryReadP()
             Dim dtareader As MySqlDataReader = cmd.ExecuteReader
             If dtareader.HasRows Then
                 dtareader.Read()
@@ -188,9 +188,9 @@ Public Class frmEmpDetails
         Dim CurrD As DateTime = frmdate_cutoff
         While (CurrD <= todate_cutoff)
             countattendance += 1
-            StrSql = "SELECT * FROM timesheet WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and dateLog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
             'Console.Write(StrSql)
-            QryReadH()
+            QryReadP()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then
                 'check if current day in loop is not within the shift schedule
@@ -221,8 +221,8 @@ Public Class frmEmpDetails
         End While
         Label34.Text = countattendance
         'get total lates
-        StrSql = "SELECT * FROM timesheet WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND dateLog BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
-        QryReadH()
+        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        QryReadP()
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then
             While latereader.Read()
