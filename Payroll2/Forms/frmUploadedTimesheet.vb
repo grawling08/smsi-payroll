@@ -13,6 +13,9 @@ Public Class frmUploadedTimesheet
     End Sub
 
     Private Sub btn_loadtemptimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtemptimesheet.Click
+        loadtemptimesheet()
+    End Sub
+    Sub loadtemptimesheet()
         StrSql = "SELECT No, LogDate, " _
                       & "MIN(CASE Status WHEN 'C/In' THEN DATE_FORMAT(STR_TO_DATE(Date_Time, '%c/%e/%Y %r'),'%h:%i %p') END) AS Time_in, " _
                       & "MIN(CASE Status WHEN 'C/Out' THEN DATE_FORMAT(STR_TO_DATE(Date_Time, '%c/%e/%Y %r'),'%h:%i %p') END) AS Time_Out " _
@@ -55,19 +58,19 @@ Public Class frmUploadedTimesheet
                                 '2.1 determine if half day time in
                                 'Console.Write(log_date & " " & dtareader("timein").ToString & "\n " & log_date & " " & time_in.ToString("h:mm:ss tt"))
                                 Dim halfdayam As Date = log_date & " " & #12:00:00 PM#
-                                If CDate(log_date & " " & time_in) < halfdayam Then
-                                    If CDate(log_date & " " & time_in) > CDate(log_date & " " & dtareader("timein").ToString) Then
-                                        latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timein").ToString), CDate(log_date & " " & time_in))
+                                If CDate(log_date & " " & time_in.ToString("hh:mm tt")) < halfdayam.ToString("hh:mm tt") Then
+                                    If CDate(log_date & " " & time_in.ToString("hh:mm tt")) > CDate(log_date & " " & dtareader("timein").ToString) Then
+                                        latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timein").ToString), CDate(log_date & " " & time_in.ToString("hh:mm tt")))
                                     Else
                                         'time_in = dtareader("timein").ToString
                                         latediff = 0
                                     End If
-                                    row.Cells(5).Value = If(Math.Round(latediff / 60, 2) > 10, Math.Round(latediff / 60, 2), 0)
+                                    row.Cells(5).Value = If(Math.Round(latediff / 60, 2) < 10, Math.Round(latediff / 60, 2), 0)
                                     overtimediff = 0
                                     row.Cells(8).Value = "Regular"
                                 Else
-                                    If CDate(log_date & " " & time_in) > CDate(log_date & " 1:00 PM") Then
-                                        latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & time_in), CDate(log_date & " 1:00 PM"))
+                                    If CDate(log_date & " " & time_in.ToString("hh:mm tt")) > CDate(log_date & " 1:00 PM") Then
+                                        latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & time_in.ToString("hh:mm tt")), CDate(log_date & " 1:00 PM"))
                                     Else
                                         latediff = 0
                                     End If
@@ -75,16 +78,16 @@ Public Class frmUploadedTimesheet
                                     row.Cells(8).Value = "Half day"
                                 End If
                                 '3. employee's time out is less than the shift time out, compute for undertime
-                                If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & time_out) Then
-                                    undertimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & time_out), CDate(log_date & " " & dtareader("timeout").ToString))
+                                If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & time_out.ToString("hh:mm tt")) Then
+                                    undertimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & time_out.ToString("hh:mm tt")), CDate(log_date & " " & dtareader("timeout").ToString))
                                     If undertimediff > 3600 Then
                                         row.Cells(8).Value = "Undertime"
                                     End If
                                     overtimediff = 0
                                 End If
-                                If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & time_out) Then '4. employee's time out exceeds the shift time out, check for overtime approval, compute overtime
+                                If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & time_out.ToString("hh:mm tt")) Then '4. employee's time out exceeds the shift time out, check for overtime approval, compute overtime
                                     undertimediff = 0
-                                    overtimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timeout").ToString), CDate(log_date & " " & time_out))
+                                    overtimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timeout").ToString), CDate(log_date & " " & time_out.ToString("hh:mm tt")))
                                     If overtimediff > 3600 Then
                                         row.Cells(8).Value = "Regular"
                                     Else
@@ -114,6 +117,18 @@ Public Class frmUploadedTimesheet
     End Sub
 
     Private Sub btn_savetimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_savetimesheet.Click
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf savetemptohris)
+        thread.Start()
+        loading.Show()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        loading.Close()
+        loadtemptimesheet()
+    End Sub
+
+    Sub savetemptohris()
         If dgv_temptimesheet.RowCount > 0 Then
             Dim row As New DataGridViewRow
             For Each row In dgv_temptimesheet.Rows
@@ -154,6 +169,7 @@ Public Class frmUploadedTimesheet
                 End If
             Next
             MessageBox.Show("Timesheet saved!")
+            'loadtemptimesheet()
         Else
             MessageBox.Show("No data to be saved!")
         End If

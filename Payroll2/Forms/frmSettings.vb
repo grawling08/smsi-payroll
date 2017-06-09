@@ -396,6 +396,17 @@ Public Class frmSettings
         End While
         MessageBox.Show("Synced Allowances")
     End Sub
+    Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncShifts)
+        thread.Start()
+        loading.Show()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
+        loading.Close()
+        MessageBox.Show("Synced Shifts")
+    End Sub
 #End Region
     'users CRUD
     Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles BindingNavigatorAddNewItem.Click
@@ -416,5 +427,6 @@ Public Class frmSettings
         dgv_users.Rows.Remove(dgv_users.SelectedRows(0))
         MessageBox.Show("Deleted!")
     End Sub
+
 
 End Class

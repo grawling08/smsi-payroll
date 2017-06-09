@@ -393,30 +393,18 @@ Module modConnect
     Sub getPayslip(ByVal current_cutoff As String)
         adpt.Dispose()
         'use this query string if app is integrated with HRIS
-        StrSql = "SELECT tbl_cutoff.cutoff_range as 'Cutoff', " _
-                    & "code as 'Company'," _
-                    & "CONCAT_WS(' ',lName,fName,mName) as Employee, " _
-                    & "tbl_payslip.totalWorkHours as 'Total Work Hours', " _
-                    & "tbl_payslip.income as 'Basic Pay', " _
-                    & "tbl_payslip.regot_pay as 'Regular OT', " _
-                    & "tbl_payslip.holot_pay as 'Holiday OT', " _
-                    & "tbl_payslip.ot_pay as 'Total OT', " _
-                    & "tbl_payslip.allowances as 'Additionals', " _
-                    & "tbl_payslip.incentives as 'Incentives', " _
-                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
-                    & "tbl_payslip.undertime_deduct as 'Undertime', " _
-                    & "tbl_payslip.tax as 'Tax', " _
-                    & "tbl_payslip.sss as 'SSS', " _
-                    & "tbl_payslip.phic as 'PHIC', " _
-                    & "tbl_payslip.hdmf as 'HDMF', " _
-                    & "tbl_payslip.gross_income as 'Gross Income', " _
-                    & "tbl_payslip.net_income as 'Net Income' " _
-                    & "FROM tbl_employee " _
-                    & "INNER JOIN tbl_payslip ON tbl_employee.id_employee = tbl_payslip.employee_id " _
-                    & "INNER JOIN tbl_cutoff ON tbl_cutoff.cutoff_id = tbl_payslip.cutoff_id " _
-                    & "INNER JOIN tbl_company ON tbl_employee.company = tbl_company.name " _
-                    & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
-                    & "AND company = '" & current_company & "' ORDER BY Employee"
+        StrSql = "SELECT tbl_cutoff.cutoff_range as 'Cutoff', code as 'Company', CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, " _
+                    & "tbl_payslip.totalWorkHours as 'Total Work Hours', tbl_payslip.income as 'Basic Pay',  " _
+                    & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT',  tbl_payslip.ot_pay as 'Total OT',  " _
+                    & "tbl_payslip.allowances as 'Additionals', tbl_payslip.incentives as 'Incentives',  " _
+                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', tbl_payslip.undertime_deduct as 'Undertime',  " _
+                    & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF',  " _
+                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay'" _
+                    & "FROM(tbl_employee) " _
+                    & "LEFT JOIN (tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id ) " _
+                    & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
+                    & "LEft JOIN tbl_company ON tbl_employee.company = tbl_company.name  " _
+                    & "WHERE tbl_company.name = '" & current_company & "' ORDER BY Employee"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")

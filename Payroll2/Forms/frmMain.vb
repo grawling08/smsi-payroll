@@ -118,7 +118,9 @@ Public Class frmMain
 
     Private Sub btn_loadpayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_loadpayroll.Click
         'load payslip for the current cutoff
-        getPayslip(cb_cutoff.Text)
+        If current_cutoff <> Nothing Or String.IsNullOrEmpty(current_cutoff) Then
+            getPayslip(current_cutoff)
+        End If
     End Sub
     'upload timesheet
     Private Sub UploadTimsheetToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles UploadTimsheetToolStripMenuItem.Click
@@ -240,11 +242,16 @@ Public Class frmMain
         End If
         QryReadP()
         cmd.ExecuteNonQuery()
-        loading.ShowDialog()
-        SyncTimesheet()
+        Dim thread As Threading.Thread
+        thread = New System.Threading.Thread(AddressOf SyncTimesheet)
+        thread.Start()
+        loading.Show()
+        While thread.IsAlive
+            Application.DoEvents()
+        End While
         loading.Close()
         GetCutoffOccurences()
-
+        getPayslip(current_cutoff)
         MessageBox.Show("Cutoff changed!")
     End Sub
 
