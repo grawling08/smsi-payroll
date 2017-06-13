@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `tblref_settings` (
 /*!40000 ALTER TABLE `tblref_settings` DISABLE KEYS */;
 INSERT INTO `tblref_settings` (`setting_name`, `value`) VALUES
 	('current_cutoff', '1 May 2017 to 15 May 2017'),
-	('current_company', 'Mindanao Precast Structures Inc.'),
+	('current_company', 'Solutions Management Systems Inc.'),
 	('app_mode', 'integrate'),
 	('process', 'regular');
 /*!40000 ALTER TABLE `tblref_settings` ENABLE KEYS */;
@@ -1626,7 +1626,7 @@ CREATE TABLE IF NOT EXISTS `tbl_leaves` (
   `dateFiled` date DEFAULT NULL,
   `mode` varchar(50) DEFAULT NULL,
   `days_applied` varchar(50) DEFAULT NULL,
-  `reason` varchar(50) DEFAULT NULL,
+  `reason` text,
   `status` varchar(50) DEFAULT NULL,
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -1675,26 +1675,17 @@ DROP TABLE IF EXISTS `tbl_overtime`;
 CREATE TABLE IF NOT EXISTS `tbl_overtime` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
-  `reason` varchar(255) DEFAULT NULL,
-  `dateFiled` date DEFAULT NULL,
-  `dateRequested` date DEFAULT NULL,
-  `timeStart` varchar(50) DEFAULT NULL,
-  `timeEnd` varchar(50) DEFAULT NULL,
-  `totalHours` varchar(50) DEFAULT NULL,
+  `overtimedate` int(11) DEFAULT NULL,
+  `reason` text,
   `status` varchar(50) DEFAULT NULL,
+  `totalTime` varchar(50) DEFAULT NULL,
+  `cutoffDate` varchar(50) DEFAULT NULL,
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_overtime: 6 rows
+-- Dumping data for table hris_payroll.tbl_overtime: 0 rows
 /*!40000 ALTER TABLE `tbl_overtime` DISABLE KEYS */;
-INSERT INTO `tbl_overtime` (`id`, `employee_id`, `reason`, `dateFiled`, `dateRequested`, `timeStart`, `timeEnd`, `totalHours`, `status`, `lastUpdated`) VALUES
-	(2, 832, 'Site visit Kalilangan Project and AMAARA fencing', '2017-05-24', '2017-01-11', '8:00', '12:00', '04:00', 'Approved by HR', '2017-06-06 17:05:50'),
-	(12, 212, '', '2017-05-24', '2017-01-20', '6:00', '9:04', '03:04', 'Approved by HR', '2017-06-06 17:05:50'),
-	(22, 212, '', '2017-05-24', '2017-01-21', '6:00', '9:00', '03:00', 'Approved by HR', '2017-06-06 17:05:50'),
-	(32, 832, 'Site visit Opol', '2017-05-24', '2017-02-06', '5:00 am', '10:40 pm', '08:40', 'Approved by HR', '2017-06-06 17:05:50'),
-	(42, 832, 'Meeting Archem @ Malberry Suitesw/ Engr. Padayhag', '2017-05-24', '2017-02-07', '5:00', '9:00', '07:00', 'Approved by HR', '2017-06-06 17:05:50'),
-	(52, 832, 'Bili ng drum at hatid sa opol', '2017-05-24', '2017-02-07', '4:00 am', '8:00 pm', '04:00', 'Approved by HR', '2017-06-06 17:05:50');
 /*!40000 ALTER TABLE `tbl_overtime` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_payrollbatch
@@ -1733,9 +1724,9 @@ CREATE TABLE IF NOT EXISTS `tbl_payslip` (
   `gross_income` double DEFAULT NULL,
   `net_income` double DEFAULT NULL,
   PRIMARY KEY (`payslip_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table hris_payroll.tbl_payslip: 3 rows
+-- Dumping data for table hris_payroll.tbl_payslip: 4 rows
 /*!40000 ALTER TABLE `tbl_payslip` DISABLE KEYS */;
 INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `totalWorkHours`, `income`, `regot_pay`, `holot_pay`, `ot_pay`, `allowances`, `incentives`, `lateabsent_deduct`, `undertime_deduct`, `tax`, `sss`, `phic`, `hdmf`, `gross_income`, `net_income`) VALUES
 	(1, '372', 2, 86.18, 5500, 0, 0, 0, 0, 0, 36.15, 0, 471.78, 199.8, 68.75, 50, 4411.97, 3940.19),

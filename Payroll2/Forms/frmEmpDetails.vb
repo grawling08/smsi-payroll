@@ -133,7 +133,7 @@ Public Class frmEmpDetails
                 totalWorkHours += dtareader("totalHours")
                 'check for approved OT
                 StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
-                            & "dateRequested = '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR'"
+                            & "status = 'Approved by HR' AND cutoffDate = '" & frmdate_cutoff & " to " & todate_cutoff & "'"
                 QryReadP()
                 Dim otreader As MySqlDataReader = cmd.ExecuteReader
                 If otreader.HasRows Then
@@ -382,7 +382,7 @@ Public Class frmEmpDetails
 
     'employee overtime
     Private Sub GetEmployeeOvertime(EmpID As String)
-        StrSql = "SELECT reason AS 'Reason', dateFiled AS 'Date Filed', dateRequested AS 'Date Requested', timeStart AS 'From', timeEnd AS 'To', status AS 'Status'" _
+        StrSql = "SELECT overtimedate AS 'Date', reason AS 'Reason', status AS 'Status', totaltime AS 'Total OT', cutoffdate AS 'For Cutoff' " _
                             & "FROM tbl_overtime WHERE employee_id = '" & EmpID & "' AND status = 'Approved by HR' "
         QryReadP()
         ds = New DataSet()

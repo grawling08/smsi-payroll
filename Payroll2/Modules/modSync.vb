@@ -248,11 +248,12 @@ Module modSync
 
     Function SyncOvertime() As Boolean
         Try
-            StrSql = "SELECT overtime.id, overtime.employee_id, " _
-                        & "overtime.reason AS 'Reason', overtime.dateFiled AS 'Date Filed', " _
-                        & "overtime.dateRequested AS 'Date Requested', overtime.timeStart AS 'From', " _
-                        & "overtime.timeEnd AS 'To', overtime.totalHours AS 'Total Hours', overtime.status AS 'Status' " _
-                        & "FROM overtime WHERE overtime.status = 'Approved by HR'"
+            StrSql = "SELECT overtimedates.id, overtime.employee_id, " _
+                        & "overtimedates.overtimedate AS 'Date', overtime.reason AS 'Reason', " _
+                        & "overtime.status AS 'Status', overtimedates.totaltime AS 'Total OT', " _
+                        & "overtime.cutoffdate AS 'For Cutoff', overtime.lastUpdated " _
+                        & "FROM overtime JOIN overtimedates ON overtime.id = overtimedates.overtime_id " _
+                        & "WHERE overtime.status = 'Approved by HR' "
             'SHGetKnownFolderPath(FolderDownloads, 0, IntPtr.Zero, sb)
             'StrSql = "CREATE TEMPORARY TABLE temporary_table LIKE tbl_overtime; " _
             '            & "LOAD DATA LOCAL INFILE '" & sb.ToString.Replace("\", "\\") & "\\overtime-list.csv' INTO TABLE temporary_table " _
@@ -270,12 +271,11 @@ Module modSync
                 'dt.Rows({row number})({field/column}).ToString
                 'dt.Rows(i)(0).ToString
                 Try
-                    StrSql = "REPLACE INTO tbl_overtime(id,employee_id,reason,dateFiled,dateRequested,timeStart,timeEnd,totalHours,status)" _
+                    StrSql = "REPLACE INTO tbl_overtime(id,employee_id,overtimedate,reason,status,totaltime,cutoffdate)" _
                                 & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
-                                & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
-                                & CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(5).ToString & "','" _
-                                & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
-                                & dt.Rows(i)(8).ToString & "')"
+                                & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(3).ToString & "','" _
+                                & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
+                                & dt.Rows(i)(6).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
                     cmd.ExecuteNonQuery()
