@@ -40,6 +40,7 @@ Public Class frmEmpDetails
             tb_phicID.Text = dtareader("phic_id").ToString
             lbl_shift.Text = dtareader("shiftgroup").ToString
         End If
+        loadtimesheetsp()
         'get employee loans
         GetEmployeeLoans(id)
         'get employee leave
@@ -118,67 +119,51 @@ Public Class frmEmpDetails
         Dim isRegHolidayOT As Boolean = False
         Dim isSpecHolidayOT As Boolean = False
         Dim isRegOt As Boolean = False
-        'loop throug active cutoff range
-        Dim CurrD As DateTime = frmdate_cutoff
-        While (CurrD <= todate_cutoff)
-            'query attendance per cutoff date
-            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+        StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
+                            & "status = 'Approved by HR' AND cutoffDate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        QryReadP()
+        Dim otreader As MySqlDataReader = cmd.ExecuteReader
+        If otreader.HasRows Then
+            Dim totalhours = otreader("totaltime")
+            StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & otreader("overtimedate").ToString("dddd") & "'"
             QryReadP()
-            Dim dtareader As MySqlDataReader = cmd.ExecuteReader
-            If dtareader.HasRows Then
-                dtareader.Read()
-                Dim tempOT = dtareader("overtime")
-                Dim tempTotalHours = dtareader("totalHours")
-                daysPresent += 1
-                totalWorkHours += dtareader("totalHours")
-                'check for approved OT
-                StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
-                            & "status = 'Approved by HR' AND cutoffDate = '" & frmdate_cutoff & " to " & todate_cutoff & "'"
-                QryReadP()
-                Dim otreader As MySqlDataReader = cmd.ExecuteReader
-                If otreader.HasRows Then
-                    'check if rest day
-                    StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day='" & CurrD.ToString("dddd") & "'"
-                    QryReadP()
-                    Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
-                    If Not shiftreader.HasRows Then
-                        isRestdayOT = True
-                    End If
-                    'check if holiday
-                    StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & CurrD.ToString("yyyy-MM-dd") & "'"
-                    QryReadP()
-                    Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
-                    If holidayreader.HasRows Then
-                        holidayreader.Read()
-                        If holidayreader("type") = "Special (Non-Working) Days" Then
-                            isRegHolidayOT = True
-                        ElseIf holidayreader("type") = "Regular Holidays" Then
-                            isSpecHolidayOT = True
-                        End If
-                    End If
-                    'if restday, regholiday and specialholiday are all false then regOT is true
-                    If isRestdayOT = True Then
-                        'Hourly rate * 130% * 130% * number of hours
-                        tb_regularot.Text += Math.Round(empHourlyWage * 1.3 * 1.3 * tempTotalHours, 2)
-                    ElseIf isSpecHolidayOT = True Then
-                        tb_holidayot.Text += Math.Round(empHourlyWage * 1.3 * 1.3 * tempTotalHours, 2)
-                    ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
-                        'Hourly rate * 150% * 130% * number of hours
-                        tb_holidayot.Text += Math.Round(empHourlyWage * 1.5 * 1.3 * tempTotalHours, 2)
-                    ElseIf isRegHolidayOT = True Then
-                        'Hourly rate * 200% * 130% * number of hours
-                        tb_holidayot.Text += Math.Round(empHourlyWage * 2 * 1.3 * tempTotalHours, 2)
-                    ElseIf isRegHolidayOT = True And isRestdayOT = True Then
-                        'hourly rate * 260% * 130% * number of hours
-                        tb_holidayot.Text += Math.Round(empHourlyWage * 2.6 * 1.3 * tempTotalHours, 2)
-                    ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
-                        'Hourly rate * 125% * number of hours
-                        tb_regularot.Text += Math.Round(empHourlyWage * 1.25 * tempOT, 2)
-                    End If
+            Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
+            If Not shiftreader.HasRows Then
+                isRestdayOT = True
+            End If
+            'check if holiday
+            StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & otreader("overtimedate").ToString("yyyy-MM-dd") & "'"
+            QryReadP()
+            Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
+            If holidayreader.HasRows Then
+                holidayreader.Read()
+                If holidayreader("type") = "Regular Holidays" Then
+                    isRegHolidayOT = True
+                ElseIf holidayreader("type") = "Special (Non-Working) Days" Then
+                    isSpecHolidayOT = True
                 End If
             End If
-            CurrD = CurrD.AddDays(1)
-        End While
+            'if restday, regholiday and specialholiday are all false then regOT is true
+            If isRestdayOT = True Then
+                'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
+                tb_regularot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+            ElseIf isSpecHolidayOT = True Then
+                'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
+                tb_holidayot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+            ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
+                'Overtime rate/hour = (hourly rate on rest day and special holiday X 195%)
+                tb_holidayot.Text += Math.Round(empHourlyWage * 1.95 * totalhours, 2)
+            ElseIf isRegHolidayOT = True Then
+                'Overtime rate/hour = (hourly rate on rest day and special holiday X 260%)
+                tb_holidayot.Text += Math.Round(empHourlyWage * 2.6 * totalhours, 2)
+            ElseIf isRegHolidayOT = True And isRestdayOT = True Then
+                'Overtime rate/hour = (hourly rate on rest day and special holiday X 338%)
+                tb_holidayot.Text += Math.Round(empHourlyWage * 3.38 * totalhours, 2)
+            ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
+                'Hourly rate * 125% * number of hours
+                tb_regularot.Text += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
+            End If
+        End If
     End Sub
 
     Sub totalTimesheetDeduct()
@@ -307,6 +292,21 @@ Public Class frmEmpDetails
     End Sub
 #End Region
 
+    Sub loadtimesheetsp()
+        StrSql = "CALL sp_timesheet('" & frmdate_cutoff.ToString("yyyy-MM-dd") & "','" & todate_cutoff.ToString("yyyy-MM-dd") & "','" & tb_biometricid.Text & "')"
+        QryReadH()
+        ds = New DataSet()
+        adpt.Fill(ds, "timesheet")
+        dgv_emptimesheet.DataSource = ds.Tables(0)
+        Dim col = dgv_emptimesheet.Columns.Count
+        For i As Integer = 0 To col
+            dgv_emptimesheet.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            i = i + i
+        Next
+        dgv_emptimesheet.Columns(0).Visible = False
+        Close_Connect()
+    End Sub
+
     'load timesheet
     Private Sub btn_loadtimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtimesheet.Click
         StrSql = "SELECT emp_bio_id, dateLog, DATE_FORMAT(STR_TO_DATE(timein, '%T'),'%h:%s %p') as timein, DATE_FORMAT(STR_TO_DATE(timeout, '%T'),'%h:%s %p') as timeout, totalHours, late, undertime, overtime, remarks " _
@@ -335,9 +335,9 @@ Public Class frmEmpDetails
     Sub GetEmpShift(ByVal EmpID As String)
         StrSql = "Select day as 'Day', timein as 'From', timeout as 'To' FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "')"
         QryReadP()
-            ds = New DataSet
-            adpt.Fill(ds, "Shifts")
-            dgv_shift.DataSource = ds.Tables(0)
+        ds = New DataSet
+        adpt.Fill(ds, "Shifts")
+        dgv_shift.DataSource = ds.Tables(0)
         Dim col = dgv_shift.Columns.Count - 1
         Dim i = 0
         While i <= col

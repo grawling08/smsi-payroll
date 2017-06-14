@@ -360,19 +360,19 @@ Module modSync
         adpt.Fill(dt)
         For i = 0 To dt.Rows.Count - 1
             StrSql = "SELECT * FROM tbl_attendance WHERE " _
-                        & "emp_bio_id = '" & dt.Rows(i)(1).ToString & "' AND " _
-                        & "date = '" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "' AND " _
-                        & "time_in = '" & dt.Rows(i)(3).ToString & "' AND " _
-                        & "time_out = '" & dt.Rows(i)(4).ToString & "'"
+                        & "emp_bio_id = '" & dt.Rows(i)(2).ToString & "' AND " _
+                        & "date = '" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "' AND " _
+                        & "time_in = '" & dt.Rows(i)(4).ToString & "' AND " _
+                        & "time_out = '" & dt.Rows(i)(5).ToString & "'"
             QryReadP()
             Dim paytimerdr As MySqlDataReader = cmd.ExecuteReader
             If Not paytimerdr.HasRows Then
                 StrSql = "INSERT INTO tbl_attendance(emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
-                            & "VALUES('" & dt.Rows(i)(1).ToString & "','" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" _
-                            & dt.Rows(i)(3).ToString & "','" & dt.Rows(i)(4).ToString & "','" _
-                            & dt.Rows(i)(5).ToString & "','" & dt.Rows(i)(6).ToString & "','" _
-                            & dt.Rows(i)(7).ToString & "','" & dt.Rows(i)(8).ToString & "','" _
-                            & dt.Rows(i)(9).ToString & "')"
+                            & "VALUES('" & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
+                            & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
+                            & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
+                            & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "','" _
+                            & dt.Rows(i)(10).ToString & "')"
                 'Connect_Sub("payroll")
                 'cmd2 = New MySqlCommand(StrSql2, conn2)
                 'cmd2.ExecuteNonQuery()
