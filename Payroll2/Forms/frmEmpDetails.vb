@@ -40,7 +40,7 @@ Public Class frmEmpDetails
             tb_phicID.Text = dtareader("phic_id").ToString
             lbl_shift.Text = dtareader("shiftgroup").ToString
         End If
-        loadtimesheetsp()
+
         'get employee loans
         GetEmployeeLoans(id)
         'get employee leave
@@ -72,6 +72,9 @@ Public Class frmEmpDetails
         End If
         'get the date range of the cutoff
         getCutoffRange()
+        'get timesheet from hris
+        loadtimesheetsp()
+        'payroll computations
         computeWage()
         tb_regularot.Text = 0
         tb_holidayot.Text = 0
@@ -309,26 +312,27 @@ Public Class frmEmpDetails
 
     'load timesheet
     Private Sub btn_loadtimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtimesheet.Click
-        StrSql = "SELECT emp_bio_id, dateLog, DATE_FORMAT(STR_TO_DATE(timein, '%T'),'%h:%s %p') as timein, DATE_FORMAT(STR_TO_DATE(timeout, '%T'),'%h:%s %p') as timeout, totalHours, late, undertime, overtime, remarks " _
-                    & "FROM timesheet WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
-                    & "AND Month(dateLog) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
-                    & "AND Year(dateLog) = Year('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') ORDER BY dateLog"
-        QryReadH()
-        ds = New DataSet
-        adpt.Fill(ds, "TimesheetRaw")
-        'reset dgv
-        dgv_emptimesheet.Columns.Clear()
-        dgv_emptimesheet.DataSource = Nothing
-        dgv_emptimesheet.DataSource = ds.Tables(0)
-        Dim col = dgv_emptimesheet.Columns.Count
-        Dim i As Integer = 0
-        While i <= col - 1
-            dgv_emptimesheet.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-            dgv_emptimesheet.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-            i = i + 1
-        End While
-        dgv_emptimesheet.Columns(0).Visible = False
-        ' dgv_emptimesheet.Columns(2).Visible = False
+        loadtimesheetsp()
+        'StrSql = "SELECT emp_bio_id, dateLog, DATE_FORMAT(STR_TO_DATE(timein, '%T'),'%h:%s %p') as timein, DATE_FORMAT(STR_TO_DATE(timeout, '%T'),'%h:%s %p') as timeout, totalHours, late, undertime, overtime, remarks " _
+        '            & "FROM timesheet WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
+        '            & "AND Month(dateLog) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
+        '            & "AND Year(dateLog) = Year('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') ORDER BY dateLog"
+        'QryReadH()
+        'ds = New DataSet
+        'adpt.Fill(ds, "TimesheetRaw")
+        ''reset dgv
+        'dgv_emptimesheet.Columns.Clear()
+        'dgv_emptimesheet.DataSource = Nothing
+        'dgv_emptimesheet.DataSource = ds.Tables(0)
+        'Dim col = dgv_emptimesheet.Columns.Count
+        'Dim i As Integer = 0
+        'While i <= col - 1
+        '    dgv_emptimesheet.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+        '    dgv_emptimesheet.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+        '    i = i + 1
+        'End While
+        'dgv_emptimesheet.Columns(0).Visible = False
+        '' dgv_emptimesheet.Columns(2).Visible = False
     End Sub
 
     'load employee shift schedule

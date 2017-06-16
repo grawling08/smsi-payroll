@@ -170,7 +170,7 @@ Module modSync
             '            & "DROP TEMPORARY TABLE temporary_table;"
             StrSql = "SELECT leaveapp.id, leaveapp.employee_id, " _
                         & "leaves.name AS 'Leave Type', leaveapp.durFrom AS 'From Date', leaveapp.durTo AS 'To Date', leaveapp.dateFiled AS 'Date Filed', " _
-                        & "leaveapp.days_applied AS 'Days Applied', leaveapp.mode, leaveapp.reason AS 'Reason', leaveapp.status AS 'Status' FROM leaveapp, leaves, employees " _
+                        & "leaveapp.days_applied AS 'Days Applied', leaveapp.mode, leaveapp.reason AS 'Reason', leaveapp.status AS 'Status', leaveapp.lastUpdated FROM leaveapp, leaves, employees " _
                         & "WHERE leaveapp.leave_id = leaves.id AND leaveapp.employee_id = employees.id AND leaveapp.status = 'Approved by HR'"
             QryReadH()
             Dim dt = New DataTable

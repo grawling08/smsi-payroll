@@ -249,9 +249,9 @@ Public Class frmMain
         While thread.IsAlive
             Application.DoEvents()
         End While
-        loading.Close()
         GetCutoffOccurences()
         getPayslip(current_cutoff)
+        loading.Close()
         MessageBox.Show("Cutoff changed!")
     End Sub
 
