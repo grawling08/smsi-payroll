@@ -179,12 +179,16 @@ Module modSync
                 'dt.Rows({row number})({field/column}).ToString
                 'dt.Rows(i)(0).ToString
                 Try
-                    StrSql = "REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,mode,days_applied,reason,status) " _
-                                & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
-                                & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
-                                & CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd") & "','" _
-                                & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
-                                & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "')"
+                    StrSql = String.Format("REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,mode,days_applied,reason,status) VALUES({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')", _
+                                            dt.Rows(i)(0).ToString, dt.Rows(i)(1).ToString, dt.Rows(i)(2).ToString, CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd"), _
+                                            CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd"), CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd"), _
+                                            dt.Rows(i)(6).ToString, dt.Rows(i)(7).ToString, dt.Rows(i)(8).ToString, dt.Rows(i)(9).ToString)
+                    'StrSql = "REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,mode,days_applied,reason,status) " _
+                    '            & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
+                    '            & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
+                    '            & CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd") & "','" _
+                    '            & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
+                    '            & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
                     cmd.ExecuteNonQuery()

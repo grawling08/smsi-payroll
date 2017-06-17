@@ -296,8 +296,8 @@ Public Class frmEmpDetails
 #End Region
 
     Sub loadtimesheetsp()
-        StrSql = "CALL sp_timesheet('" & frmdate_cutoff.ToString("yyyy-MM-dd") & "','" & todate_cutoff.ToString("yyyy-MM-dd") & "','" & tb_biometricid.Text & "')"
-        QryReadH()
+        StrSql = "CALL sp_timesheetPR('" & frmdate_cutoff.ToString("yyyy-MM-dd") & "','" & todate_cutoff.ToString("yyyy-MM-dd") & "','" & tb_biometricid.Text & "')"
+        QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "timesheet")
         dgv_emptimesheet.DataSource = ds.Tables(0)

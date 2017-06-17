@@ -27,11 +27,6 @@ Partial Class frmEmpDetails
         Me.dgv_emploans = New System.Windows.Forms.DataGridView()
         Me.dgv_empleave = New System.Windows.Forms.DataGridView()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.btn_addtimesheet = New System.Windows.Forms.Button()
-        Me.btn_loadtimesheet = New System.Windows.Forms.Button()
-        Me.dtp_timesheetmonth = New System.Windows.Forms.DateTimePicker()
-        Me.dgv_emptimesheet = New System.Windows.Forms.DataGridView()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
@@ -93,6 +88,11 @@ Partial Class frmEmpDetails
         Me.tb_netincome = New System.Windows.Forms.TextBox()
         Me.tb_monthlysalary = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.btn_addtimesheet = New System.Windows.Forms.Button()
+        Me.btn_loadtimesheet = New System.Windows.Forms.Button()
+        Me.dtp_timesheetmonth = New System.Windows.Forms.DateTimePicker()
+        Me.dgv_emptimesheet = New System.Windows.Forms.DataGridView()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
@@ -132,14 +132,14 @@ Partial Class frmEmpDetails
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
-        CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         CType(Me.dgv_incentives, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage7.SuspendLayout()
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.BindingNavigator1.SuspendLayout()
@@ -162,7 +162,7 @@ Partial Class frmEmpDetails
         Me.dgv_emploans.ReadOnly = True
         Me.dgv_emploans.RowHeadersVisible = False
         Me.dgv_emploans.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emploans.Size = New System.Drawing.Size(545, 438)
+        Me.dgv_emploans.Size = New System.Drawing.Size(545, 463)
         Me.dgv_emploans.TabIndex = 0
         '
         'dgv_empleave
@@ -193,61 +193,6 @@ Partial Class frmEmpDetails
         Me.TabControl2.SelectedIndex = 0
         Me.TabControl2.Size = New System.Drawing.Size(559, 523)
         Me.TabControl2.TabIndex = 0
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Controls.Add(Me.btn_addtimesheet)
-        Me.TabPage3.Controls.Add(Me.btn_loadtimesheet)
-        Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth)
-        Me.TabPage3.Controls.Add(Me.dgv_emptimesheet)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(551, 497)
-        Me.TabPage3.TabIndex = 1
-        Me.TabPage3.Text = "Timesheet"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'btn_addtimesheet
-        '
-        Me.btn_addtimesheet.Location = New System.Drawing.Point(290, 4)
-        Me.btn_addtimesheet.Name = "btn_addtimesheet"
-        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
-        Me.btn_addtimesheet.TabIndex = 3
-        Me.btn_addtimesheet.Text = "Add New"
-        Me.btn_addtimesheet.UseVisualStyleBackColor = True
-        '
-        'btn_loadtimesheet
-        '
-        Me.btn_loadtimesheet.Location = New System.Drawing.Point(209, 4)
-        Me.btn_loadtimesheet.Name = "btn_loadtimesheet"
-        Me.btn_loadtimesheet.Size = New System.Drawing.Size(75, 23)
-        Me.btn_loadtimesheet.TabIndex = 1
-        Me.btn_loadtimesheet.Text = "Load"
-        Me.btn_loadtimesheet.UseVisualStyleBackColor = True
-        '
-        'dtp_timesheetmonth
-        '
-        Me.dtp_timesheetmonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp_timesheetmonth.Location = New System.Drawing.Point(3, 7)
-        Me.dtp_timesheetmonth.Name = "dtp_timesheetmonth"
-        Me.dtp_timesheetmonth.Size = New System.Drawing.Size(200, 20)
-        Me.dtp_timesheetmonth.TabIndex = 0
-        '
-        'dgv_emptimesheet
-        '
-        Me.dgv_emptimesheet.AllowUserToAddRows = False
-        Me.dgv_emptimesheet.AllowUserToDeleteRows = False
-        Me.dgv_emptimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.dgv_emptimesheet.Location = New System.Drawing.Point(3, 33)
-        Me.dgv_emptimesheet.MultiSelect = False
-        Me.dgv_emptimesheet.Name = "dgv_emptimesheet"
-        Me.dgv_emptimesheet.ReadOnly = True
-        Me.dgv_emptimesheet.RowHeadersVisible = False
-        Me.dgv_emptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        Me.dgv_emptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 461)
-        Me.dgv_emptimesheet.TabIndex = 2
         '
         'TabPage1
         '
@@ -850,6 +795,61 @@ Partial Class frmEmpDetails
         Me.Label13.TabIndex = 0
         Me.Label13.Text = "Monthly Salary"
         '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.btn_addtimesheet)
+        Me.TabPage3.Controls.Add(Me.btn_loadtimesheet)
+        Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth)
+        Me.TabPage3.Controls.Add(Me.dgv_emptimesheet)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage3.TabIndex = 1
+        Me.TabPage3.Text = "Timesheet"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'btn_addtimesheet
+        '
+        Me.btn_addtimesheet.Location = New System.Drawing.Point(290, 4)
+        Me.btn_addtimesheet.Name = "btn_addtimesheet"
+        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
+        Me.btn_addtimesheet.TabIndex = 3
+        Me.btn_addtimesheet.Text = "Add New"
+        Me.btn_addtimesheet.UseVisualStyleBackColor = True
+        '
+        'btn_loadtimesheet
+        '
+        Me.btn_loadtimesheet.Location = New System.Drawing.Point(209, 4)
+        Me.btn_loadtimesheet.Name = "btn_loadtimesheet"
+        Me.btn_loadtimesheet.Size = New System.Drawing.Size(75, 23)
+        Me.btn_loadtimesheet.TabIndex = 1
+        Me.btn_loadtimesheet.Text = "Load"
+        Me.btn_loadtimesheet.UseVisualStyleBackColor = True
+        '
+        'dtp_timesheetmonth
+        '
+        Me.dtp_timesheetmonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtp_timesheetmonth.Location = New System.Drawing.Point(3, 7)
+        Me.dtp_timesheetmonth.Name = "dtp_timesheetmonth"
+        Me.dtp_timesheetmonth.Size = New System.Drawing.Size(200, 20)
+        Me.dtp_timesheetmonth.TabIndex = 0
+        '
+        'dgv_emptimesheet
+        '
+        Me.dgv_emptimesheet.AllowUserToAddRows = False
+        Me.dgv_emptimesheet.AllowUserToDeleteRows = False
+        Me.dgv_emptimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        Me.dgv_emptimesheet.Location = New System.Drawing.Point(3, 33)
+        Me.dgv_emptimesheet.MultiSelect = False
+        Me.dgv_emptimesheet.Name = "dgv_emptimesheet"
+        Me.dgv_emptimesheet.ReadOnly = True
+        Me.dgv_emptimesheet.RowHeadersVisible = False
+        Me.dgv_emptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.dgv_emptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 461)
+        Me.dgv_emptimesheet.TabIndex = 2
+        '
         'TabPage7
         '
         Me.TabPage7.Controls.Add(Me.BindingNavigator1)
@@ -1249,8 +1249,6 @@ Partial Class frmEmpDetails
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl2.ResumeLayout(False)
-        Me.TabPage3.ResumeLayout(False)
-        CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
@@ -1261,6 +1259,8 @@ Partial Class frmEmpDetails
         CType(Me.dgv_incentives, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).EndInit()

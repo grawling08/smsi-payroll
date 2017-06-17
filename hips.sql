@@ -13,12 +13,89 @@
 
 
 -- Dumping database structure for hris_payroll
-DROP DATABASE IF EXISTS `hris_payroll`;
 CREATE DATABASE IF NOT EXISTS `hris_payroll` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `hris_payroll`;
 
+-- Dumping structure for procedure hris_payroll.sp_timesheetPR
+DELIMITER //
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_timesheetPR`(
+	IN `p_start` DATE,
+	IN `p_end` DATE,
+	IN `p_id` INT
+
+
+
+
+)
+BEGIN
+
+DROP TEMPORARY TABLE IF EXISTS TEMP;
+CREATE TEMPORARY TABLE TEMP (
+	bio_id varchar(50),
+	datelog date,
+	day varchar(15),
+	timein varchar(10),
+	timeout varchar(10),
+	totalHrs double(3,2),
+	late double(3,2),
+	overtime double(3,2),
+	undertime double(3,2),
+	remarks text
+);
+set @start = p_start;
+WHILE @start <= p_end DO
+      INSERT INTO TEMP(bio_id,datelog,day,timein,timeout,totalHrs,late,overtime) VALUES (p_id,@start, DATE_FORMAT(@start,'%W'),'-','-',0,0,0);
+      SET @start = DATE_ADD(@start, INTERVAL 1 DAY);
+END WHILE;
+
+UPDATE TEMP a
+INNER JOIN (SELECT * FROM tbl_attendance where tbl_attendance.emp_bio_id=p_id and (tbl_attendance.date between p_start and p_end)) b on b.date = a.datelog
+SET a.datelog = b.date, a.timein=IF(b.time_in='-','-',DATE_FORMAT(concat(b.date,' ',b.time_in),'%h:%i %p')), a.timeout=IF(b.time_out='-','-',DATE_FORMAT(concat(b.date,' ',b.time_out),'%h:%i %p')),
+a.totalHrs=b.totalHours, a.late=b.late, a.remarks=b.remarks,a.undertime=b.undertime;
+
+UPDATE TEMP a
+INNER JOIN tblref_holiday b on b.date1 = a.datelog
+SET a.remarks = b.holiday;
+
+UPDATE TEMP t
+INNER JOIN (
+		SELECT b.overtimedate, concat('Overtime ',b.status) as otstatus 
+		FROM tbl_employee a
+		LEFT JOIN tbl_overtime b on b.employee_id = a.id_employee
+		where a.emp_bio_id=p_id) l on l.overtimedate = t.datelog
+SET t.remarks=l.otstatus;
+
+UPDATE TEMP t
+INNER JOIN (
+		SELECT c.leavedate, c.daystatus FROM tbl_employee a
+		LEFT JOIN tbl_leaves b on b.employee_id = a.id
+		LEFT JOIN tbl_leavedates c on c.leaveapp_id = b.id
+		where a.emp_bio_id=p_id and c.daystatus <> 'Rest Day') l on l.leavedate = t.datelog
+SET t.remarks=(CONCAT(IFNULL(CONCAT(t.remarks,' '),''),CONCAT(l.daystatus,' Leave')));
+
+UPDATE TEMP t
+INNER JOIN (
+		SELECT c.businessdate, c.daystatus FROM tbl_employee a
+		LEFT JOIN tbl_business b on b.employee_id = a.id_employee
+		LEFT JOIN tbl_businessdates c on c.business_id = b.id
+		where a.emp_bio_id=p_id and c.daystatus <> 'Rest Day') l on l.businessdate = t.datelog
+SET t.remarks='Official Travel';
+
+UPDATE TEMP
+SET remarks = CONCAT(IFNULL(CONCAT(remarks,' '),''),'RestDay')
+WHERE day not in (select a.day from tbl_shifts a
+left join tbl_employee c on c.shiftgroup = a.shiftgroup
+where c.emp_bio_id = p_id);
+
+UPDATE TEMP
+SET remarks='Absent'
+where remarks is null;
+
+SELECT * FROM TEMP;
+END//
+DELIMITER ;
+
 -- Dumping structure for table hris_payroll.tblref_holiday
-DROP TABLE IF EXISTS `tblref_holiday`;
 CREATE TABLE IF NOT EXISTS `tblref_holiday` (
   `idHoliday` int(3) NOT NULL AUTO_INCREMENT,
   `date1` date NOT NULL,
@@ -51,7 +128,6 @@ INSERT INTO `tblref_holiday` (`idHoliday`, `date1`, `holiday`, `type`) VALUES
 /*!40000 ALTER TABLE `tblref_holiday` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_occurences
-DROP TABLE IF EXISTS `tblref_occurences`;
 CREATE TABLE IF NOT EXISTS `tblref_occurences` (
   `occurence_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -67,7 +143,6 @@ INSERT INTO `tblref_occurences` (`occurence_id`, `name`) VALUES
 /*!40000 ALTER TABLE `tblref_occurences` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_philhealth
-DROP TABLE IF EXISTS `tblref_philhealth`;
 CREATE TABLE IF NOT EXISTS `tblref_philhealth` (
   `phil_id` int(10) NOT NULL AUTO_INCREMENT,
   `salary` double(10,2) DEFAULT NULL,
@@ -111,7 +186,6 @@ INSERT INTO `tblref_philhealth` (`phil_id`, `salary`, `employer`, `employee`, `t
 /*!40000 ALTER TABLE `tblref_philhealth` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_settings
-DROP TABLE IF EXISTS `tblref_settings`;
 CREATE TABLE IF NOT EXISTS `tblref_settings` (
   `setting_name` varchar(50) DEFAULT NULL,
   `value` varchar(100) DEFAULT NULL
@@ -127,7 +201,6 @@ INSERT INTO `tblref_settings` (`setting_name`, `value`) VALUES
 /*!40000 ALTER TABLE `tblref_settings` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_sss
-DROP TABLE IF EXISTS `tblref_sss`;
 CREATE TABLE IF NOT EXISTS `tblref_sss` (
   `idSSS` int(10) NOT NULL AUTO_INCREMENT,
   `salary` double(18,2) DEFAULT NULL,
@@ -174,7 +247,6 @@ INSERT INTO `tblref_sss` (`idSSS`, `salary`, `employer`, `employee`, `total`) VA
 /*!40000 ALTER TABLE `tblref_sss` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_tax
-DROP TABLE IF EXISTS `tblref_tax`;
 CREATE TABLE IF NOT EXISTS `tblref_tax` (
   `idTax` int(10) NOT NULL AUTO_INCREMENT,
   `status` varchar(10) NOT NULL,
@@ -335,7 +407,6 @@ INSERT INTO `tblref_tax` (`idTax`, `status`, `salary`, `percentage`, `excemption
 /*!40000 ALTER TABLE `tblref_tax` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_allowances
-DROP TABLE IF EXISTS `tbl_allowances`;
 CREATE TABLE IF NOT EXISTS `tbl_allowances` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
@@ -353,7 +424,6 @@ INSERT INTO `tbl_allowances` (`id`, `employee_id`, `name`, `amount`) VALUES
 /*!40000 ALTER TABLE `tbl_allowances` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_attendance
-DROP TABLE IF EXISTS `tbl_attendance`;
 CREATE TABLE IF NOT EXISTS `tbl_attendance` (
   `att_id` int(10) NOT NULL AUTO_INCREMENT,
   `id_employee` int(10) NOT NULL DEFAULT '0',
@@ -367,154 +437,189 @@ CREATE TABLE IF NOT EXISTS `tbl_attendance` (
   `overtime` varchar(50) DEFAULT NULL,
   `remarks` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`att_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=140 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=176 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_attendance: 139 rows
+-- Dumping data for table hris_payroll.tbl_attendance: 175 rows
 /*!40000 ALTER TABLE `tbl_attendance` DISABLE KEYS */;
 INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `time_in`, `time_out`, `totalHours`, `late`, `undertime`, `overtime`, `remarks`) VALUES
-	(1, 0, '10002', '2017-05-03', '07:59:29', '17:49:41', '8.83', '0', '0', '0', 'Regular'),
-	(2, 0, '10002', '2017-05-04', '08:08:20', '17:17:35', '8.29', '0', '0', '0', 'Regular'),
-	(3, 0, '10002', '2017-05-05', '07:56:28', '17:20:42', '8.35', '0', '0', '0', 'Regular'),
-	(4, 0, '10002', '2017-05-08', '07:57:35', '17:36:39', '8.61', '0', '0', '0', 'Regular'),
-	(5, 0, '10002', '2017-05-09', '07:46:26', '18:18:53', '9.31', '0', '0', '1.31', 'Overtime'),
-	(6, 0, '10002', '2017-05-10', '08:04:23', '17:33:26', '8.56', '0', '0', '0', 'Regular'),
-	(7, 0, '10002', '2017-05-11', '07:57:31', '17:34:23', '8.57', '0', '0', '0', 'Regular'),
-	(8, 0, '10002', '2017-05-12', '08:02:48', '17:12:20', '8.21', '0', '0', '0', 'Regular'),
-	(9, 0, '10002', '2017-05-15', '07:59:03', '17:31:48', '8.53', '0', '0', '0', 'Regular'),
-	(10, 0, '10013', '2017-05-02', '08:53:54', '17:22:49', '8.38', '0', '0', '0', 'Regular'),
-	(11, 0, '10013', '2017-05-03', '08:34:58', '21:44:45', '12.75', '0', '0', '4.75', 'Overtime'),
-	(12, 0, '10013', '2017-05-05', '08:48:32', '17:25:32', '8.43', '0', '0', '0', 'Regular'),
-	(13, 0, '10013', '2017-05-06', '08:51:13', '15:32:34', '6.54', '0', '0', '0', 'Regular'),
-	(14, 0, '10013', '2017-05-08', '08:52:54', '17:34:20', '8.57', '0', '0', '0', 'Regular'),
-	(15, 0, '10013', '2017-05-09', '08:51:50', '17:37:56', '8.63', '0', '0', '0', 'Regular'),
-	(16, 0, '10013', '2017-05-10', '09:02:15', '17:37:33', '8.59', '2.25', '0', '0', 'Regular'),
-	(17, 0, '10013', '2017-05-11', '08:56:23', '17:27:37', '8.46', '0', '0', '0', 'Regular'),
-	(18, 0, '10013', '2017-05-12', '08:54:42', '19:33:36', '10.56', '0', '0', '2.56', 'Overtime'),
-	(19, 0, '10013', '2017-05-13', '08:41:23', '20:52:08', '11.87', '0', '0', '5.87', 'Overtime'),
-	(20, 0, '10013', '2017-05-15', '08:48:37', '17:43:55', '8.73', '0', '0', '0', 'Regular'),
-	(21, 0, '10014', '2017-05-02', '08:56:01', '17:21:14', '8.35', '0', '0', '0', 'Regular'),
-	(22, 0, '10014', '2017-05-03', '08:54:04', '18:23:37', '9.39', '0', '0', '1.39', 'Overtime'),
-	(23, 0, '10014', '2017-05-04', '08:14:44', '21:28:31', '12.48', '0', '0', '4.48', 'Overtime'),
-	(24, 0, '10014', '2017-05-05', '09:00:41', '19:32:34', '10.53', '0.68', '0', '2.54', 'Overtime'),
-	(25, 0, '10014', '2017-05-06', '08:57:10', '22:53:27', '13.89', '0', '0', '7.89', 'Overtime'),
-	(26, 0, '10014', '2017-05-08', '09:10:24', '17:13:53', '8.06', '10.4', '0', '0', 'Regular'),
-	(27, 0, '10014', '2017-05-09', '08:58:28', '18:20:12', '9.34', '0', '0', '1.34', 'Overtime'),
-	(28, 0, '10014', '2017-05-10', '09:04:16', '17:11:10', '8.12', '4.27', '0', '0', 'Regular'),
-	(29, 0, '10014', '2017-05-11', '09:07:41', '17:37:17', '8.49', '7.68', '0', '0', 'Regular'),
-	(30, 0, '10014', '2017-05-12', '09:09:04', '17:18:37', '8.16', '9.07', '0', '0', 'Regular'),
-	(31, 0, '10014', '2017-05-13', '08:52:02', '16:11:13', '7.19', '0', '0', '1.19', 'Overtime'),
-	(32, 0, '10014', '2017-05-15', '08:47:59', '19:19:37', '10.33', '0', '0', '2.33', 'Overtime'),
-	(33, 0, '10017', '2017-05-02', '08:32:46', '17:02:03', '8.03', '0', '0', '0', 'Regular'),
-	(34, 0, '10017', '2017-05-03', '08:42:11', '17:21:21', '8.36', '0', '0', '0', 'Regular'),
-	(35, 0, '10017', '2017-05-04', '08:31:54', '17:25:48', '8.43', '0', '0', '0', 'Regular'),
-	(36, 0, '10017', '2017-05-05', '08:40:43', '17:36:33', '8.61', '0', '0', '0', 'Regular'),
-	(37, 0, '10017', '2017-05-06', '08:31:17', '15:16:23', '6.27', '0', '0', '0', 'Regular'),
-	(38, 0, '10017', '2017-05-08', '08:13:37', '17:12:05', '8.2', '0', '0', '0', 'Regular'),
-	(39, 0, '10017', '2017-05-09', '08:25:49', '17:10:48', '8.18', '0', '0', '0', 'Regular'),
-	(40, 0, '10017', '2017-05-10', '09:00:29', '17:08:55', '8.14', '0.48', '0', '0', 'Regular'),
-	(41, 0, '10017', '2017-05-11', '08:52:32', '17:17:14', '8.29', '0', '0', '0', 'Regular'),
-	(42, 0, '10017', '2017-05-12', '08:19:45', '17:16:33', '8.28', '0', '0', '0', 'Regular'),
-	(43, 0, '10017', '2017-05-13', '08:36:36', '15:13:14', '6.22', '0', '0', '0', 'Regular'),
-	(44, 0, '10017', '2017-05-15', '08:30:28', '17:14:25', '8.24', '0', '0', '0', 'Regular'),
-	(45, 0, '10019', '2017-05-02', '08:37:11', '17:23:06', '8.38', '0', '0', '0', 'Regular'),
-	(46, 0, '10019', '2017-05-03', '08:38:50', '19:24:28', '10.41', '0', '0', '2.41', 'Overtime'),
-	(47, 0, '10019', '2017-05-04', '08:48:55', '17:26:42', '8.44', '0', '0', '0', 'Regular'),
-	(48, 0, '10019', '2017-05-06', '08:56:53', '20:11:59', '11.2', '0', '0', '5.2', 'Overtime'),
-	(49, 0, '10019', '2017-05-08', '08:54:20', '17:34:02', '8.57', '0', '0', '0', 'Regular'),
-	(50, 0, '10019', '2017-05-09', '08:59:44', '17:53:38', '8.89', '0', '0', '0', 'Regular'),
-	(51, 0, '10019', '2017-05-11', '08:28:16', '17:27:34', '8.46', '0', '0', '0', 'Regular'),
-	(52, 0, '10021', '2017-05-02', '08:30:57', '17:19:56', '8.33', '0', '0', '0', 'Regular'),
-	(53, 0, '10021', '2017-05-03', '08:34:23', '17:06:25', '8.11', '0', '0', '0', 'Regular'),
-	(54, 0, '10021', '2017-05-04', '08:33:48', '17:11:02', '8.18', '0', '0', '0', 'Regular'),
-	(55, 0, '10021', '2017-05-05', '09:07:14', '17:15:10', '8.13', '7.23', '0', '0', 'Regular'),
-	(56, 0, '10021', '2017-05-06', '08:21:22', '15:24:01', '6.4', '0', '0', '0', 'Regular'),
-	(57, 0, '10021', '2017-05-09', '08:48:39', '17:13:48', '8.23', '0', '0', '0', 'Regular'),
-	(58, 0, '10021', '2017-05-10', '08:53:39', '17:24:03', '8.4', '0', '0', '0', 'Regular'),
-	(59, 0, '10021', '2017-05-11', '08:32:11', '17:07:41', '8.13', '0', '0', '0', 'Regular'),
-	(60, 0, '10021', '2017-05-12', '08:34:34', '17:08:17', '8.14', '0', '0', '0', 'Regular'),
-	(61, 0, '10021', '2017-05-13', '08:35:33', '15:00:10', '6', '0', '0', '0', 'Regular'),
-	(62, 0, '10021', '2017-05-15', '08:20:42', '17:07:37', '8.13', '0', '0', '0', 'Regular'),
-	(63, 0, '10022', '2017-05-02', '08:53:00', '17:26:22', '8.44', '0', '0', '0', 'Regular'),
-	(64, 0, '10022', '2017-05-03', '08:55:06', '17:50:17', '8.84', '0', '0', '0', 'Regular'),
-	(65, 0, '10022', '2017-05-05', '09:03:59', '17:38:32', '8.58', '3.98', '0', '0', 'Regular'),
-	(66, 0, '10022', '2017-05-06', '08:56:08', '16:07:27', '7.12', '0', '0', '1.12', 'Overtime'),
-	(67, 0, '10022', '2017-05-08', '08:55:54', '17:56:30', '8.94', '0', '0', '0', 'Regular'),
-	(68, 0, '10022', '2017-05-10', '08:57:47', '17:25:08', '8.42', '0', '0', '0', 'Regular'),
-	(69, 0, '10022', '2017-05-11', '08:53:30', '17:43:20', '8.72', '0', '0', '0', 'Regular'),
-	(70, 0, '10022', '2017-05-12', '08:53:54', '17:42:51', '8.71', '0', '0', '0', 'Regular'),
-	(71, 0, '10022', '2017-05-13', '08:58:22', '15:30:26', '6.51', '0', '0', '0', 'Regular'),
-	(72, 0, '10022', '2017-05-15', '08:55:34', '17:37:24', '8.62', '0', '0', '0', 'Regular'),
-	(73, 0, '1003', '2017-05-02', '08:39:09', '20:49:21', '11.82', '0', '0', '3.82', 'Overtime'),
-	(74, 0, '1003', '2017-05-03', '08:45:10', '17:29:41', '8.49', '0', '0', '0', 'Regular'),
-	(75, 0, '1003', '2017-05-04', '08:53:02', '19:18:14', '10.3', '0', '0', '2.3', 'Overtime'),
-	(76, 0, '1003', '2017-05-05', '08:59:06', '17:19:06', '8.32', '0', '0', '0', 'Regular'),
-	(77, 0, '1003', '2017-05-06', '08:59:19', '15:13:39', '6.23', '0', '0', '0', 'Regular'),
-	(78, 0, '1003', '2017-05-08', '08:31:46', '17:13:09', '8.22', '0', '0', '0', 'Regular'),
-	(79, 0, '1003', '2017-05-09', '09:00:14', '18:20:16', '9.33', '0.23', '0', '1.34', 'Overtime'),
-	(80, 0, '1003', '2017-05-11', '08:58:08', '18:00:23', '9.01', '0', '0', '1.01', 'Overtime'),
-	(81, 0, '1003', '2017-05-12', '08:49:32', '17:19:14', '8.32', '0', '0', '0', 'Regular'),
-	(82, 0, '1003', '2017-05-15', '08:52:43', '17:24:27', '8.41', '0', '0', '0', 'Regular'),
-	(83, 0, '1004', '2017-05-02', '08:01:11', '17:18:41', '8.31', '0', '0', '0', 'Regular'),
-	(84, 0, '1004', '2017-05-03', '08:40:06', '17:07:48', '8.13', '0', '0', '0', 'Regular'),
-	(85, 0, '1004', '2017-05-04', '08:42:51', '17:10:53', '8.18', '0', '0', '0', 'Regular'),
-	(86, 0, '1004', '2017-05-05', '08:47:10', '17:16:28', '8.27', '0', '0', '0', 'Regular'),
-	(87, 0, '1004', '2017-05-08', '08:49:52', '17:12:15', '8.2', '0', '0', '0', 'Regular'),
-	(88, 0, '1004', '2017-05-09', '08:45:23', '17:13:01', '8.22', '0', '0', '0', 'Regular'),
-	(89, 0, '1004', '2017-05-11', '08:40:01', '17:09:03', '8.15', '0', '0', '0', 'Regular'),
-	(90, 0, '1004', '2017-05-12', '08:40:13', '17:19:10', '8.32', '0', '0', '0', 'Regular'),
-	(91, 0, '1004', '2017-05-13', '08:39:50', '15:21:11', '6.35', '0', '0', '0', 'Regular'),
-	(92, 0, '1006', '2017-05-02', '08:56:50', '17:32:04', '8.53', '0', '0', '0', 'Regular'),
-	(93, 0, '1006', '2017-05-03', '08:53:59', '17:13:24', '8.22', '0', '0', '0', 'Regular'),
-	(94, 0, '1006', '2017-05-04', '09:09:19', '17:08:47', '7.99', '9.32', '0', '0', 'Regular'),
-	(95, 0, '1006', '2017-05-05', '08:53:03', '17:12:09', '8.2', '0', '0', '0', 'Regular'),
-	(96, 0, '1006', '2017-05-06', '08:57:38', '17:20:32', '8.34', '0', '0', '2.34', 'Overtime'),
-	(97, 0, '1006', '2017-05-09', '08:57:21', '17:16:53', '8.28', '0', '0', '0', 'Regular'),
-	(98, 0, '1006', '2017-05-11', '08:50:40', '17:08:29', '8.14', '0', '0', '0', 'Regular'),
-	(99, 0, '1006', '2017-05-12', '08:59:01', '17:38:42', '8.64', '0', '0', '0', 'Regular'),
-	(100, 0, '1006', '2017-05-13', '08:59:03', '15:07:10', '6.12', '0', '0', '0', 'Regular'),
-	(101, 0, '1006', '2017-05-15', '09:01:59', '17:19:09', '8.29', '1.98', '0', '0', 'Regular'),
-	(102, 0, '104', '2017-05-03', '09:01:24', '17:36:45', '8.59', '1.4', '0', '0', 'Regular'),
-	(103, 0, '104', '2017-05-04', '08:59:57', '17:26:12', '8.44', '0', '0', '0', 'Regular'),
-	(104, 0, '104', '2017-05-05', '09:03:29', '17:24:11', '8.35', '3.48', '0', '0', 'Regular'),
-	(105, 0, '104', '2017-05-06', '08:06:18', '18:23:20', '9.39', '0', '0', '3.39', 'Overtime'),
-	(106, 0, '104', '2017-05-10', '08:52:25', '17:37:20', '8.62', '0', '0', '0', 'Regular'),
-	(107, 0, '104', '2017-05-11', '08:59:45', '17:44:35', '8.74', '0', '0', '0', 'Regular'),
-	(108, 0, '104', '2017-05-12', '08:50:00', '17:20:03', '8.33', '0', '0', '0', 'Regular'),
-	(109, 0, '110', '2017-05-02', '08:54:33', '17:06:13', '8.1', '0', '0', '0', 'Regular'),
-	(110, 0, '110', '2017-05-03', '08:59:10', '17:13:30', '8.22', '0', '0', '0', 'Regular'),
-	(111, 0, '110', '2017-05-04', '08:53:23', '17:06:32', '8.11', '0', '0', '0', 'Regular'),
-	(112, 0, '110', '2017-05-05', '08:53:22', '17:17:17', '8.29', '0', '0', '0', 'Regular'),
-	(113, 0, '110', '2017-05-06', '08:54:39', '15:16:08', '6.27', '0', '0', '0', 'Regular'),
-	(114, 0, '110', '2017-05-08', '08:49:58', '17:04:34', '8.08', '0', '0', '0', 'Regular'),
-	(115, 0, '110', '2017-05-09', '08:52:19', '17:15:22', '8.26', '0', '0', '0', 'Regular'),
-	(116, 0, '110', '2017-05-10', '09:01:52', '17:14:58', '8.22', '1.87', '0', '0', 'Regular'),
-	(117, 0, '110', '2017-05-11', '08:41:48', '17:09:14', '8.15', '0', '0', '0', 'Regular'),
-	(118, 0, '110', '2017-05-12', '08:46:48', '17:13:34', '8.23', '0', '0', '0', 'Regular'),
-	(119, 0, '110', '2017-05-13', '08:48:51', '15:01:25', '6.02', '0', '0', '0', 'Regular'),
-	(120, 0, '110', '2017-05-15', '08:54:16', '17:23:18', '8.39', '0', '0', '0', 'Regular'),
-	(121, 0, '112', '2017-05-02', '08:52:45', '17:21:05', '8.35', '0', '0', '0', 'Regular'),
-	(122, 0, '112', '2017-05-03', '09:02:25', '17:28:00', '8.43', '2.42', '0', '0', 'Regular'),
-	(123, 0, '112', '2017-05-04', '08:58:35', '17:13:53', '8.23', '0', '0', '0', 'Regular'),
-	(124, 0, '112', '2017-05-06', '08:58:00', '15:22:34', '6.38', '0', '0', '0', 'Regular'),
-	(125, 0, '112', '2017-05-08', '08:55:39', '17:27:17', '8.45', '0', '0', '0', 'Regular'),
-	(126, 0, '112', '2017-05-10', '08:55:21', '17:13:51', '8.23', '0', '0', '0', 'Regular'),
-	(127, 0, '112', '2017-05-11', '09:03:10', '17:17:06', '8.23', '3.17', '0', '0', 'Regular'),
-	(128, 0, '112', '2017-05-12', '09:01:55', '17:36:32', '8.58', '1.92', '0', '0', 'Regular'),
-	(129, 0, '112', '2017-05-15', '08:11:11', '17:25:43', '8.43', '0', '0', '0', 'Regular'),
-	(130, 0, '116', '2017-05-02', '08:59:11', '17:29:29', '8.49', '0', '0', '0', 'Regular'),
-	(131, 0, '116', '2017-05-04', '08:52:26', '17:10:25', '8.17', '0', '0', '0', 'Regular'),
-	(132, 0, '116', '2017-05-05', '08:53:12', '17:16:02', '8.27', '0', '0', '0', 'Regular'),
-	(133, 0, '116', '2017-05-09', '09:02:16', '17:19:45', '8.29', '2.27', '0', '0', 'Regular'),
-	(134, 0, '116', '2017-05-10', '08:59:36', '17:15:03', '8.25', '0', '0', '0', 'Regular'),
-	(135, 0, '116', '2017-05-11', '08:57:52', '17:20:28', '8.34', '0', '0', '0', 'Regular'),
-	(136, 0, '116', '2017-05-12', '08:58:06', '17:13:01', '8.22', '0', '0', '0', 'Regular'),
-	(137, 0, '116', '2017-05-13', '08:54:14', '15:07:07', '6.12', '0', '0', '0', 'Regular'),
-	(138, 0, '117', '2017-05-10', '08:49:00', '17:33:08', '8.55', '0', '0', '0', 'Regular'),
-	(139, 0, '117', '2017-05-11', '09:14:47', '17:22:52', '8.13', '14.78', '0', '0', 'Regular');
+	(1, 0, '10002', '2017-05-03', '07:59', '17:49', '9.83', '0', '0', '0', 'Regular'),
+	(2, 0, '10002', '2017-05-04', '08:08', '17:17', '9.15', '0', '0', '0', 'Regular'),
+	(3, 0, '10002', '2017-05-05', '07:56', '17:20', '9.4', '0', '0', '0', 'Regular'),
+	(4, 0, '10002', '2017-05-08', '07:57', '17:36', '9.65', '0', '0', '0', 'Regular'),
+	(5, 0, '10002', '2017-05-09', '07:46', '18:18', '9.99', '0', '0', '0', 'Regular'),
+	(6, 0, '10002', '2017-05-10', '08:04', '17:33', '9.48', '0', '0', '0', 'Regular'),
+	(7, 0, '10002', '2017-05-11', '07:57', '17:34', '9.62', '0', '0', '0', 'Regular'),
+	(8, 0, '10002', '2017-05-12', '08:02', '17:12', '9.17', '0', '0', '0', 'Regular'),
+	(9, 0, '10002', '2017-05-15', '07:59', '17:31', '9.53', '0', '0', '0', 'Regular'),
+	(10, 0, '10013', '2017-05-02', '08:53', '17:22', '8.48', '0', '0', '0', 'Regular'),
+	(11, 0, '10013', '2017-05-03', '08:34', '21:44', '9.99', '0', '0', '0', 'Regular'),
+	(12, 0, '10013', '2017-05-04', '08:56', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(13, 0, '10013', '2017-05-05', '08:48', '17:25', '8.62', '0', '0', '0', 'Regular'),
+	(14, 0, '10013', '2017-05-06', '08:51', '15:32', '6.68', '0', '0', '0', 'Regular'),
+	(15, 0, '10013', '2017-05-08', '08:52', '17:34', '8.7', '0', '0', '0', 'Regular'),
+	(16, 0, '10013', '2017-05-09', '08:51', '17:37', '8.77', '0', '0', '0', 'Regular'),
+	(17, 0, '10013', '2017-05-10', '09:02', '17:37', '8.58', '2', '0', '0', 'Regular'),
+	(18, 0, '10013', '2017-05-11', '08:56', '17:27', '8.52', '0', '0', '0', 'Regular'),
+	(19, 0, '10013', '2017-05-12', '08:54', '19:33', '9.99', '0', '0', '0', 'Regular'),
+	(20, 0, '10013', '2017-05-13', '08:41', '20:52', '9.99', '0', '0', '0', 'Regular'),
+	(21, 0, '10013', '2017-05-15', '08:48', '17:43', '8.92', '0', '0', '0', 'Regular'),
+	(22, 0, '10014', '2017-05-02', '08:56', '17:21', '8.42', '0', '0', '0', 'Regular'),
+	(23, 0, '10014', '2017-05-03', '08:54', '18:23', '9.48', '0', '0', '0', 'Regular'),
+	(24, 0, '10014', '2017-05-04', '08:14', '21:28', '9.99', '0', '0', '0', 'Regular'),
+	(25, 0, '10014', '2017-05-05', '09:00', '19:32', '9.99', '0', '0', '0', 'Regular'),
+	(26, 0, '10014', '2017-05-06', '08:57', '22:53', '9.99', '0', '0', '0', 'Regular'),
+	(27, 0, '10014', '2017-05-08', '09:10', '17:13', '8.05', '10', '0', '0', 'Regular'),
+	(28, 0, '10014', '2017-05-09', '08:58', '18:20', '9.37', '0', '0', '0', 'Regular'),
+	(29, 0, '10014', '2017-05-10', '09:04', '17:11', '8.12', '4', '0', '0', 'Regular'),
+	(30, 0, '10014', '2017-05-11', '09:07', '17:37', '8.5', '7', '0', '0', 'Regular'),
+	(31, 0, '10014', '2017-05-12', '09:09', '17:18', '8.15', '9', '0', '0', 'Regular'),
+	(32, 0, '10014', '2017-05-13', '08:52', '16:11', '7.32', '0', '0', '0', 'Regular'),
+	(33, 0, '10014', '2017-05-15', '08:47', '19:19', '9.99', '0', '0', '0', 'Regular'),
+	(34, 0, '10017', '2017-05-02', '08:32', '17:02', '8.5', '0', '0', '0', 'Regular'),
+	(35, 0, '10017', '2017-05-03', '08:42', '17:21', '8.65', '0', '0', '0', 'Regular'),
+	(36, 0, '10017', '2017-05-04', '08:31', '17:25', '8.9', '0', '0', '0', 'Regular'),
+	(37, 0, '10017', '2017-05-05', '08:40', '17:36', '8.93', '0', '0', '0', 'Regular'),
+	(38, 0, '10017', '2017-05-06', '08:31', '15:16', '6.75', '0', '0', '0', 'Regular'),
+	(39, 0, '10017', '2017-05-08', '08:13', '17:12', '8.98', '0', '0', '0', 'Regular'),
+	(40, 0, '10017', '2017-05-09', '08:25', '17:10', '8.75', '0', '0', '0', 'Regular'),
+	(41, 0, '10017', '2017-05-10', '09:00', '17:08', '8.13', '0', '0', '0', 'Regular'),
+	(42, 0, '10017', '2017-05-11', '08:52', '17:17', '8.42', '0', '0', '0', 'Regular'),
+	(43, 0, '10017', '2017-05-12', '08:19', '17:16', '8.95', '0', '0', '0', 'Regular'),
+	(44, 0, '10017', '2017-05-13', '08:36', '15:13', '6.62', '0', '0', '0', 'Regular'),
+	(45, 0, '10017', '2017-05-15', '08:30', '17:14', '8.73', '0', '0', '0', 'Regular'),
+	(46, 0, '10019', '2017-05-02', '08:37', '17:23', '8.77', '0', '0', '0', 'Regular'),
+	(47, 0, '10019', '2017-05-03', '08:38', '19:24', '9.99', '0', '0', '0', 'Regular'),
+	(48, 0, '10019', '2017-05-04', '08:48', '17:26', '8.63', '0', '0', '0', 'Regular'),
+	(49, 0, '10019', '2017-05-05', '08:54', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(50, 0, '10019', '2017-05-06', '08:56', '20:11', '9.99', '0', '0', '0', 'Regular'),
+	(51, 0, '10019', '2017-05-08', '08:54', '17:34', '8.67', '0', '0', '0', 'Regular'),
+	(52, 0, '10019', '2017-05-09', '08:59', '17:53', '8.9', '0', '0', '0', 'Regular'),
+	(53, 0, '10019', '2017-05-10', '08:55', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(54, 0, '10019', '2017-05-11', '08:28', '17:27', '8.98', '0', '0', '0', 'Regular'),
+	(55, 0, '10019', '2017-05-12', '08:50', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(56, 0, '10021', '2017-05-02', '08:30', '17:19', '8.82', '0', '0', '0', 'Regular'),
+	(57, 0, '10021', '2017-05-03', '08:34', '17:06', '8.53', '0', '0', '0', 'Regular'),
+	(58, 0, '10021', '2017-05-04', '08:33', '17:11', '8.63', '0', '0', '0', 'Regular'),
+	(59, 0, '10021', '2017-05-05', '09:07', '17:15', '8.13', '7', '0', '0', 'Regular'),
+	(60, 0, '10021', '2017-05-06', '08:21', '15:24', '7.05', '0', '0', '0', 'Regular'),
+	(61, 0, '10021', '2017-05-09', '08:48', '17:13', '8.42', '0', '0', '0', 'Regular'),
+	(62, 0, '10021', '2017-05-10', '08:53', '17:24', '8.52', '0', '0', '0', 'Regular'),
+	(63, 0, '10021', '2017-05-11', '08:32', '17:07', '8.58', '0', '0', '0', 'Regular'),
+	(64, 0, '10021', '2017-05-12', '08:34', '17:08', '8.57', '0', '0', '0', 'Regular'),
+	(65, 0, '10021', '2017-05-13', '08:35', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(66, 0, '10021', '2017-05-15', '08:20', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(67, 0, '10022', '2017-05-02', '08:53', '17:26', '8.55', '0', '0', '0', 'Regular'),
+	(68, 0, '10022', '2017-05-03', '08:55', '17:50', '8.92', '0', '0', '0', 'Regular'),
+	(69, 0, '10022', '2017-05-04', '08:54', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(70, 0, '10022', '2017-05-05', '09:03', '17:38', '8.58', '3', '0', '0', 'Regular'),
+	(71, 0, '10022', '2017-05-06', '08:56', '16:07', '7.18', '0', '0', '0', 'Regular'),
+	(72, 0, '10022', '2017-05-08', '08:55', '17:56', '9.02', '0', '0', '0', 'Regular'),
+	(73, 0, '10022', '2017-05-09', '08:56', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(74, 0, '10022', '2017-05-10', '08:57', '17:25', '8.47', '0', '0', '0', 'Regular'),
+	(75, 0, '10022', '2017-05-11', '08:53', '17:43', '8.83', '0', '0', '0', 'Regular'),
+	(76, 0, '10022', '2017-05-12', '08:53', '17:42', '8.82', '0', '0', '0', 'Regular'),
+	(77, 0, '10022', '2017-05-13', '08:58', '15:30', '6.53', '0', '0', '0', 'Regular'),
+	(78, 0, '10022', '2017-05-15', '08:55', '17:37', '8.7', '0', '0', '0', 'Regular'),
+	(79, 0, '10023', '2017-05-08', '08:52', '17:33', '8.68', '0', '0', '0', 'Regular'),
+	(80, 0, '10023', '2017-05-09', '08:54', '17:53', '8.98', '0', '0', '0', 'Regular'),
+	(81, 0, '10023', '2017-05-10', '08:47', '18:10', '9.38', '0', '0', '0', 'Regular'),
+	(82, 0, '10023', '2017-05-11', '08:28', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(83, 0, '10023', '2017-05-12', '08:28', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(84, 0, '10023', '2017-05-13', '08:57', '15:26', '6.48', '0', '0', '0', 'Regular'),
+	(85, 0, '10023', '2017-05-15', '08:33', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(86, 0, '1003', '2017-05-02', '08:39', '20:49', '9.99', '0', '0', '0', 'Regular'),
+	(87, 0, '1003', '2017-05-03', '08:45', '17:29', '8.73', '0', '0', '0', 'Regular'),
+	(88, 0, '1003', '2017-05-04', '08:53', '19:18', '9.99', '0', '0', '0', 'Regular'),
+	(89, 0, '1003', '2017-05-05', '08:59', '17:19', '8.33', '0', '0', '0', 'Regular'),
+	(90, 0, '1003', '2017-05-06', '08:59', '15:13', '6.23', '0', '0', '0', 'Regular'),
+	(91, 0, '1003', '2017-05-08', '08:31', '17:13', '8.7', '0', '0', '0', 'Regular'),
+	(92, 0, '1003', '2017-05-09', '09:00', '18:20', '9.33', '0', '0', '0', 'Regular'),
+	(93, 0, '1003', '2017-05-10', '09:01', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(94, 0, '1003', '2017-05-11', '08:58', '18:00', '9.03', '0', '0', '0', 'Regular'),
+	(95, 0, '1003', '2017-05-12', '08:49', '17:19', '8.5', '0', '0', '0', 'Regular'),
+	(96, 0, '1003', '2017-05-13', '08:50', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(97, 0, '1003', '2017-05-15', '08:52', '17:24', '8.53', '0', '0', '0', 'Regular'),
+	(98, 0, '1004', '2017-05-02', '08:01', '17:18', '9.28', '0', '0', '0', 'Regular'),
+	(99, 0, '1004', '2017-05-03', '08:40', '17:07', '8.45', '0', '0', '0', 'Regular'),
+	(100, 0, '1004', '2017-05-04', '08:42', '17:10', '8.47', '0', '0', '0', 'Regular'),
+	(101, 0, '1004', '2017-05-05', '08:47', '17:16', '8.48', '0', '0', '0', 'Regular'),
+	(102, 0, '1004', '2017-05-06', '08:21', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(103, 0, '1004', '2017-05-08', '08:49', '17:12', '8.38', '0', '0', '0', 'Regular'),
+	(104, 0, '1004', '2017-05-09', '08:45', '17:13', '8.47', '0', '0', '0', 'Regular'),
+	(105, 0, '1004', '2017-05-10', '08:37', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(106, 0, '1004', '2017-05-11', '08:40', '17:09', '8.48', '0', '0', '0', 'Regular'),
+	(107, 0, '1004', '2017-05-12', '08:40', '17:19', '8.65', '0', '0', '0', 'Regular'),
+	(108, 0, '1004', '2017-05-13', '08:39', '15:21', '6.7', '0', '0', '0', 'Regular'),
+	(109, 0, '1004', '2017-05-15', '17:14', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(110, 0, '1005', '2017-05-04', '09:02', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(111, 0, '1005', '2017-05-05', '08:35', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(112, 0, '1005', '2017-05-15', '08:50', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(113, 0, '1006', '2017-05-02', '08:56', '17:32', '8.6', '0', '0', '0', 'Regular'),
+	(114, 0, '1006', '2017-05-03', '08:53', '17:13', '8.33', '0', '0', '0', 'Regular'),
+	(115, 0, '1006', '2017-05-04', '09:09', '17:08', '7.98', '9', '0', '0', 'Regular'),
+	(116, 0, '1006', '2017-05-05', '08:53', '17:12', '8.32', '0', '0', '0', 'Regular'),
+	(117, 0, '1006', '2017-05-06', '08:57', '17:20', '8.38', '0', '0', '0', 'Regular'),
+	(118, 0, '1006', '2017-05-09', '08:57', '17:16', '8.32', '0', '0', '0', 'Regular'),
+	(119, 0, '1006', '2017-05-11', '08:50', '17:08', '8.3', '0', '0', '0', 'Regular'),
+	(120, 0, '1006', '2017-05-12', '08:59', '17:38', '8.65', '0', '0', '0', 'Regular'),
+	(121, 0, '1006', '2017-05-13', '08:59', '15:07', '6.13', '0', '0', '0', 'Regular'),
+	(122, 0, '1006', '2017-05-15', '09:01', '17:19', '8.3', '1', '0', '0', 'Regular'),
+	(123, 0, '104', '2017-05-03', '09:01', '17:36', '8.58', '1', '0', '0', 'Regular'),
+	(124, 0, '104', '2017-05-04', '08:59', '17:26', '8.45', '0', '0', '0', 'Regular'),
+	(125, 0, '104', '2017-05-05', '09:03', '17:24', '8.35', '3', '0', '0', 'Regular'),
+	(126, 0, '104', '2017-05-06', '08:06', '18:23', '9.99', '0', '0', '0', 'Regular'),
+	(127, 0, '104', '2017-05-10', '08:52', '17:37', '8.75', '0', '0', '0', 'Regular'),
+	(128, 0, '104', '2017-05-11', '08:59', '17:44', '8.75', '0', '0', '0', 'Regular'),
+	(129, 0, '104', '2017-05-12', '08:50', '17:20', '8.5', '0', '0', '0', 'Regular'),
+	(130, 0, '104', '2017-05-13', '08:08', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(131, 0, '110', '2017-05-02', '08:54', '17:06', '8.2', '0', '0', '0', 'Regular'),
+	(132, 0, '110', '2017-05-03', '08:59', '17:13', '8.23', '0', '0', '0', 'Regular'),
+	(133, 0, '110', '2017-05-04', '08:53', '17:06', '8.22', '0', '0', '0', 'Regular'),
+	(134, 0, '110', '2017-05-05', '08:53', '17:17', '8.4', '0', '0', '0', 'Regular'),
+	(135, 0, '110', '2017-05-06', '08:54', '15:16', '6.37', '0', '0', '0', 'Regular'),
+	(136, 0, '110', '2017-05-08', '08:49', '17:04', '8.25', '0', '0', '0', 'Regular'),
+	(137, 0, '110', '2017-05-09', '08:52', '17:15', '8.38', '0', '0', '0', 'Regular'),
+	(138, 0, '110', '2017-05-10', '09:01', '17:14', '8.22', '1', '0', '0', 'Regular'),
+	(139, 0, '110', '2017-05-11', '08:41', '17:09', '8.47', '0', '0', '0', 'Regular'),
+	(140, 0, '110', '2017-05-12', '08:46', '17:13', '8.45', '0', '0', '0', 'Regular'),
+	(141, 0, '110', '2017-05-13', '08:48', '15:01', '6.22', '0', '0', '0', 'Regular'),
+	(142, 0, '110', '2017-05-15', '08:54', '17:23', '8.48', '0', '0', '0', 'Regular'),
+	(143, 0, '111', '2017-05-02', '-', '17:20', '0', '0', '0', '0', 'Unable to Time In'),
+	(144, 0, '111', '2017-05-03', '-', '17:46', '0', '0', '0', '0', 'Unable to Time In'),
+	(145, 0, '111', '2017-05-04', '-', '17:39', '0', '0', '0', '0', 'Unable to Time In'),
+	(146, 0, '111', '2017-05-08', '-', '17:09', '0', '0', '0', '0', 'Unable to Time In'),
+	(147, 0, '111', '2017-05-12', '-', '17:42', '0', '0', '0', '0', 'Unable to Time In'),
+	(148, 0, '111', '2017-05-13', '14:59', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(149, 0, '112', '2017-05-02', '08:52', '17:21', '8.48', '0', '0', '0', 'Regular'),
+	(150, 0, '112', '2017-05-03', '09:02', '17:28', '8.43', '2', '0', '0', 'Regular'),
+	(151, 0, '112', '2017-05-04', '08:58', '17:13', '8.25', '0', '0', '0', 'Regular'),
+	(152, 0, '112', '2017-05-05', '08:59', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(153, 0, '112', '2017-05-06', '08:58', '15:22', '6.4', '0', '0', '0', 'Regular'),
+	(154, 0, '112', '2017-05-08', '08:55', '17:27', '8.53', '0', '0', '0', 'Regular'),
+	(155, 0, '112', '2017-05-09', '08:43', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(156, 0, '112', '2017-05-10', '08:55', '17:13', '8.3', '0', '0', '0', 'Regular'),
+	(157, 0, '112', '2017-05-11', '09:03', '17:17', '8.23', '3', '0', '0', 'Regular'),
+	(158, 0, '112', '2017-05-12', '09:01', '17:36', '8.58', '1', '0', '0', 'Regular'),
+	(159, 0, '112', '2017-05-15', '08:11', '17:25', '9.23', '0', '0', '0', 'Regular'),
+	(160, 0, '116', '2017-05-02', '08:59', '17:29', '8.5', '0', '0', '0', 'Regular'),
+	(161, 0, '116', '2017-05-04', '08:52', '17:10', '8.3', '0', '0', '0', 'Regular'),
+	(162, 0, '116', '2017-05-05', '08:53', '17:16', '8.38', '0', '0', '0', 'Regular'),
+	(163, 0, '116', '2017-05-06', '08:59', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(164, 0, '116', '2017-05-09', '09:02', '17:19', '8.28', '2', '0', '0', 'Regular'),
+	(165, 0, '116', '2017-05-10', '08:59', '17:15', '8.27', '0', '0', '0', 'Regular'),
+	(166, 0, '116', '2017-05-11', '08:57', '17:20', '8.38', '0', '0', '0', 'Regular'),
+	(167, 0, '116', '2017-05-12', '08:58', '17:13', '8.25', '0', '0', '0', 'Regular'),
+	(168, 0, '116', '2017-05-13', '08:54', '15:07', '6.22', '0', '0', '0', 'Regular'),
+	(169, 0, '116', '2017-05-15', '09:00', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(170, 0, '117', '2017-05-09', '08:59', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(171, 0, '117', '2017-05-10', '08:49', '17:33', '8.73', '0', '0', '0', 'Regular'),
+	(172, 0, '117', '2017-05-11', '09:14', '17:22', '8.13', '14', '0', '0', 'Regular'),
+	(173, 0, '117', '2017-05-12', '08:52', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(174, 0, '117', '2017-05-13', '-', '15:02', '0', '0', '0', '0', 'Unable to Time In'),
+	(175, 0, '117', '2017-05-15', '08:42', '-', '0', '0', '0', '0', 'Unable to Time Out');
 /*!40000 ALTER TABLE `tbl_attendance` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_attendancefinal
-DROP TABLE IF EXISTS `tbl_attendancefinal`;
 CREATE TABLE IF NOT EXISTS `tbl_attendancefinal` (
   `att_id` int(10) NOT NULL AUTO_INCREMENT,
   `id_employee` int(10) NOT NULL DEFAULT '0',
@@ -535,7 +640,6 @@ CREATE TABLE IF NOT EXISTS `tbl_attendancefinal` (
 /*!40000 ALTER TABLE `tbl_attendancefinal` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_attendanceraw
-DROP TABLE IF EXISTS `tbl_attendanceraw`;
 CREATE TABLE IF NOT EXISTS `tbl_attendanceraw` (
   `rawatt_id` int(11) NOT NULL AUTO_INCREMENT,
   `Department` varchar(50) DEFAULT NULL,
@@ -547,7 +651,7 @@ CREATE TABLE IF NOT EXISTS `tbl_attendanceraw` (
   `LogDate` varchar(50) DEFAULT NULL,
   `ifMapped` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`rawatt_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=852 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=852 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_attendanceraw: 851 rows
 /*!40000 ALTER TABLE `tbl_attendanceraw` DISABLE KEYS */;
@@ -1405,14 +1509,47 @@ INSERT INTO `tbl_attendanceraw` (`rawatt_id`, `Department`, `Name`, `No`, `Date_
 	(851, 'SMSI', 'BATTAD, DARRYLLE B.', '117', '6/5/2017 8:32:10 AM', 'C/In', '08:32 AM', '06/05/2017', 0);
 /*!40000 ALTER TABLE `tbl_attendanceraw` ENABLE KEYS */;
 
+-- Dumping structure for table hris_payroll.tbl_business
+CREATE TABLE IF NOT EXISTS `tbl_business` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(10) DEFAULT NULL,
+  `destination` varchar(50) DEFAULT NULL,
+  `dateFiled` date DEFAULT NULL,
+  `durFrom` date DEFAULT NULL,
+  `durTo` date DEFAULT NULL,
+  `days_applied` double(3,1) DEFAULT NULL,
+  `purpose` varchar(50) DEFAULT NULL,
+  `status` text,
+  `reasonToDissaproved` text,
+  `dateVerified` date DEFAULT NULL,
+  `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_business: 0 rows
+/*!40000 ALTER TABLE `tbl_business` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_business` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_businessdates
+CREATE TABLE IF NOT EXISTS `tbl_businessdates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_id` int(11) NOT NULL DEFAULT '0',
+  `businessdate` date NOT NULL,
+  `daystatus` varchar(50) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_businessdates: 0 rows
+/*!40000 ALTER TABLE `tbl_businessdates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_businessdates` ENABLE KEYS */;
+
 -- Dumping structure for table hris_payroll.tbl_company
-DROP TABLE IF EXISTS `tbl_company`;
 CREATE TABLE IF NOT EXISTS `tbl_company` (
   `company_id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`company_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_company: 12 rows
 /*!40000 ALTER TABLE `tbl_company` DISABLE KEYS */;
@@ -1432,7 +1569,6 @@ INSERT INTO `tbl_company` (`company_id`, `name`, `code`) VALUES
 /*!40000 ALTER TABLE `tbl_company` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_cutoff
-DROP TABLE IF EXISTS `tbl_cutoff`;
 CREATE TABLE IF NOT EXISTS `tbl_cutoff` (
   `cutoff_id` int(10) NOT NULL AUTO_INCREMENT,
   `cutoff_range` varchar(50) DEFAULT NULL,
@@ -1443,7 +1579,7 @@ CREATE TABLE IF NOT EXISTS `tbl_cutoff` (
   `status` varchar(50) DEFAULT NULL,
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cutoff_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_cutoff: 2 rows
 /*!40000 ALTER TABLE `tbl_cutoff` DISABLE KEYS */;
@@ -1453,7 +1589,6 @@ INSERT INTO `tbl_cutoff` (`cutoff_id`, `cutoff_range`, `company_id`, `occurence_
 /*!40000 ALTER TABLE `tbl_cutoff` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_employee
-DROP TABLE IF EXISTS `tbl_employee`;
 CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_employee` int(11) DEFAULT NULL,
@@ -1466,7 +1601,7 @@ CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `sss_id` varchar(50) DEFAULT NULL,
   `phic_id` varchar(50) DEFAULT NULL,
   `hdmf_id` varchar(50) DEFAULT NULL,
-  `tin` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tin` varchar(50) DEFAULT NULL,
   `company` varchar(50) DEFAULT NULL,
   `branch` varchar(50) DEFAULT NULL,
   `position` varchar(50) DEFAULT NULL,
@@ -1477,7 +1612,7 @@ CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_employee` (`id_employee`)
-) ENGINE=MyISAM AUTO_INCREMENT=2118 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2118 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_employee: 117 rows
 /*!40000 ALTER TABLE `tbl_employee` DISABLE KEYS */;
@@ -1602,7 +1737,6 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 /*!40000 ALTER TABLE `tbl_employee` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_incentives
-DROP TABLE IF EXISTS `tbl_incentives`;
 CREATE TABLE IF NOT EXISTS `tbl_incentives` (
   `incentives_id` int(11) NOT NULL AUTO_INCREMENT,
   `payslip_id` int(11) DEFAULT NULL,
@@ -1615,8 +1749,20 @@ CREATE TABLE IF NOT EXISTS `tbl_incentives` (
 /*!40000 ALTER TABLE `tbl_incentives` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_incentives` ENABLE KEYS */;
 
+-- Dumping structure for table hris_payroll.tbl_leavedates
+CREATE TABLE IF NOT EXISTS `tbl_leavedates` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `leaveapp_id` int(10) DEFAULT NULL,
+  `leavedate` date DEFAULT NULL,
+  `daystatus` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_leavedates: 0 rows
+/*!40000 ALTER TABLE `tbl_leavedates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_leavedates` ENABLE KEYS */;
+
 -- Dumping structure for table hris_payroll.tbl_leaves
-DROP TABLE IF EXISTS `tbl_leaves`;
 CREATE TABLE IF NOT EXISTS `tbl_leaves` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
@@ -1624,22 +1770,48 @@ CREATE TABLE IF NOT EXISTS `tbl_leaves` (
   `durFrom` date DEFAULT NULL,
   `durTo` date DEFAULT NULL,
   `dateFiled` date DEFAULT NULL,
-  `mode` varchar(50) DEFAULT NULL,
   `days_applied` varchar(50) DEFAULT NULL,
+  `mode` varchar(50) DEFAULT NULL,
   `reason` text,
   `status` varchar(50) DEFAULT NULL,
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=273 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_leaves: 1 rows
+-- Dumping data for table hris_payroll.tbl_leaves: 28 rows
 /*!40000 ALTER TABLE `tbl_leaves` DISABLE KEYS */;
-INSERT INTO `tbl_leaves` (`id`, `employee_id`, `leave_type`, `durFrom`, `durTo`, `dateFiled`, `mode`, `days_applied`, `reason`, `status`, `lastUpdated`) VALUES
-	(2, 12, 'Vacation Leave', '2017-05-16', '2017-05-16', '2017-05-23', '1', 'with pay', 'Birthday of my mother', 'Approved by HR', '2017-06-06 17:05:40');
+INSERT INTO `tbl_leaves` (`id`, `employee_id`, `leave_type`, `durFrom`, `durTo`, `dateFiled`, `days_applied`, `mode`, `reason`, `status`, `lastUpdated`) VALUES
+	(2, 502, 'Vacation Leave', '2017-01-13', '2017-01-14', '2017-06-09', 'with pay', '1.5', 'Death of my father in law', 'Approved by HR', '2017-06-16 15:17:49'),
+	(12, 502, 'EL (Bereavement)', '2017-01-16', '2017-01-20', '2017-06-09', 'with pay', '5', 'Death of my Father in law', 'Approved by HR', '2017-06-16 15:17:49'),
+	(22, 462, 'Vacation Leave', '2017-01-19', '2017-01-21', '2017-06-09', 'with pay', '2.5', 'For clearance from previous company', 'Approved by HR', '2017-06-16 15:17:49'),
+	(32, 1182, 'Vacation Leave', '2017-01-11', '2017-01-11', '2017-06-09', 'with pay', '0.5', 'Check up appointment', 'Approved by HR', '2017-06-16 15:17:49'),
+	(42, 12, 'Vacation Leave', '2017-01-14', '2017-01-14', '2017-06-09', 'with pay', '0.5', 'Attending an event', 'Approved by HR', '2017-06-16 15:17:49'),
+	(52, 352, 'Vacation Leave', '2017-01-21', '2017-01-21', '2017-06-09', 'with pay', '0.5', 'To attend my kids activity', 'Approved by HR', '2017-06-16 15:17:49'),
+	(62, 412, 'Vacation Leave', '2017-01-07', '2017-01-07', '2017-06-09', 'with pay', '0.5', 'To attend important matter/Birthday of my wife.', 'Approved by HR', '2017-06-16 15:17:49'),
+	(72, 502, 'Vacation Leave', '2017-01-06', '2017-01-06', '2017-06-09', 'with pay', '1', 'Accompany my mother in law to the hospital,father in law admitted', 'Approved by HR', '2017-06-16 15:17:49'),
+	(82, 352, 'Sick Leave', '2017-01-14', '2017-01-14', '2017-06-09', 'with pay', '0.5', 'severe headache', 'Approved by HR', '2017-06-16 15:17:49'),
+	(92, 462, 'Vacation Leave', '2017-01-17', '2017-01-17', '2017-06-09', 'with pay', '0.5', 'Flood', 'Approved by HR', '2017-06-16 15:17:49'),
+	(102, 472, 'Vacation Leave', '2017-01-17', '2017-01-17', '2017-06-09', 'with pay', '1', 'Flooded', 'Approved by HR', '2017-06-16 15:17:49'),
+	(112, 542, 'Vacation Leave', '2017-01-17', '2017-01-17', '2017-06-09', 'with pay', '1', 'Flashflood', 'Approved by HR', '2017-06-16 15:17:49'),
+	(122, 1182, 'Vacation Leave', '2017-01-27', '2017-01-27', '2017-06-09', 'with pay', '0.5', 'My Fathers death anniversary', 'Approved by HR', '2017-06-16 15:17:49'),
+	(132, 1182, 'Vacation Leave', '2017-02-06', '2017-02-06', '2017-06-09', 'with pay', '1', 'Check up appointment', 'Approved by HR', '2017-06-16 15:17:49'),
+	(142, 12, 'Vacation Leave', '2017-01-17', '2017-01-17', '2017-06-09', 'with pay', '1', 'our House got flooded', 'Approved by HR', '2017-06-16 15:17:49'),
+	(152, 662, 'Vacation Leave', '2017-01-30', '2017-01-30', '2017-06-09', 'with pay', '1', 'Go home and attend my nephew christening', 'Approved by HR', '2017-06-16 15:17:49'),
+	(162, 642, 'Vacation Leave', '2017-01-27', '2017-01-27', '2017-06-09', 'with pay', '1', 'To attend family gathering', 'Approved by HR', '2017-06-16 15:17:49'),
+	(172, 552, 'Vacation Leave', '2017-01-17', '2017-01-17', '2017-06-09', 'with pay', '1', 'Affected by flood', 'Approved by HR', '2017-06-16 15:17:49'),
+	(182, 552, 'Vacation Leave', '2017-02-04', '2017-02-04', '2017-06-09', 'with pay', '0.5', 'Going to Cebu to attend reunion', 'Approved by HR', '2017-06-16 15:17:49'),
+	(192, 352, 'Vacation Leave', '2017-03-14', '2017-03-17', '2017-06-10', 'with pay', '1.5', 'To attend thanksgiving mass and  moving up ceremony of my children', 'Approved by HR', '2017-06-16 15:17:49'),
+	(202, 352, 'Vacation Leave', '2017-02-08', '2017-02-08', '2017-06-10', 'with pay', '1', 'To attend activities of my children', 'Approved by HR', '2017-06-16 15:17:49'),
+	(212, 352, 'Vacation Leave', '2017-02-14', '2017-02-14', '2017-06-10', 'with pay', '1', 'To attend school activities of my children', 'Approved by HR', '2017-06-16 15:17:49'),
+	(222, 472, 'Vacation Leave', '2017-03-17', '2017-03-20', '2017-06-10', 'with pay', '2.5', 'Family Trip', 'Approved by HR', '2017-06-16 15:17:49'),
+	(232, 412, 'Vacation Leave', '2017-02-20', '2017-02-20', '2017-06-10', 'with pay', '0.5', 'Stranded in Opol Mis. Or. due to heavy traffic', 'Approved by HR', '2017-06-16 15:17:49'),
+	(242, 662, 'Vacation Leave', '2017-03-06', '2017-03-07', '2017-06-10', 'with pay', '2', 'For my fathers birthday', 'Approved by HR', '2017-06-16 15:17:49'),
+	(252, 1182, 'Vacation Leave', '2017-03-08', '2017-03-08', '2017-06-10', 'with pay', '0.5', 'Check up appointment to my cardiologist', 'Approved by HR', '2017-06-16 15:17:49'),
+	(262, 512, 'Vacation Leave', '2017-02-18', '2017-02-20', '2017-06-10', 'with pay', '1.5', 'Baptismal of my nephew and 1st birthday/family gatherings', 'Approved by HR', '2017-06-16 15:17:49'),
+	(272, 672, 'Vacation Leave', '2017-02-22', '2017-02-24', '2017-06-10', 'with pay', '3', 'To process requirements for marriage and attend seminar', 'Approved by HR', '2017-06-16 15:17:49');
 /*!40000 ALTER TABLE `tbl_leaves` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_loans
-DROP TABLE IF EXISTS `tbl_loans`;
 CREATE TABLE IF NOT EXISTS `tbl_loans` (
   `loan_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
@@ -1671,11 +1843,10 @@ INSERT INTO `tbl_loans` (`loan_id`, `employee_id`, `loan_type`, `lendingCompany`
 /*!40000 ALTER TABLE `tbl_loans` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_overtime
-DROP TABLE IF EXISTS `tbl_overtime`;
 CREATE TABLE IF NOT EXISTS `tbl_overtime` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) DEFAULT NULL,
-  `overtimedate` int(11) DEFAULT NULL,
+  `overtimedate` date DEFAULT NULL,
   `reason` text,
   `status` varchar(50) DEFAULT NULL,
   `totalTime` varchar(50) DEFAULT NULL,
@@ -1689,7 +1860,6 @@ CREATE TABLE IF NOT EXISTS `tbl_overtime` (
 /*!40000 ALTER TABLE `tbl_overtime` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_payrollbatch
-DROP TABLE IF EXISTS `tbl_payrollbatch`;
 CREATE TABLE IF NOT EXISTS `tbl_payrollbatch` (
   `payrollbatch_id` int(11) NOT NULL AUTO_INCREMENT,
   `cutoff_id` int(11) NOT NULL,
@@ -1703,10 +1873,9 @@ CREATE TABLE IF NOT EXISTS `tbl_payrollbatch` (
 /*!40000 ALTER TABLE `tbl_payrollbatch` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_payslip
-DROP TABLE IF EXISTS `tbl_payslip`;
 CREATE TABLE IF NOT EXISTS `tbl_payslip` (
   `payslip_id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `employee_id` varchar(50) DEFAULT NULL,
   `cutoff_id` int(11) DEFAULT NULL,
   `totalWorkHours` double DEFAULT NULL,
   `income` double DEFAULT NULL,
@@ -1724,7 +1893,7 @@ CREATE TABLE IF NOT EXISTS `tbl_payslip` (
   `gross_income` double DEFAULT NULL,
   `net_income` double DEFAULT NULL,
   PRIMARY KEY (`payslip_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_payslip: 4 rows
 /*!40000 ALTER TABLE `tbl_payslip` DISABLE KEYS */;
@@ -1736,16 +1905,15 @@ INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `totalWorkH
 /*!40000 ALTER TABLE `tbl_payslip` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_shifts
-DROP TABLE IF EXISTS `tbl_shifts`;
 CREATE TABLE IF NOT EXISTS `tbl_shifts` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `day` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timein` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timeout` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `shiftgroup` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `day` varchar(15) DEFAULT NULL,
+  `timein` varchar(8) DEFAULT NULL,
+  `timeout` varchar(8) DEFAULT NULL,
+  `shiftgroup` varchar(50) DEFAULT NULL,
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_shifts: 11 rows
 /*!40000 ALTER TABLE `tbl_shifts` DISABLE KEYS */;
@@ -1764,7 +1932,6 @@ INSERT INTO `tbl_shifts` (`id`, `day`, `timein`, `timeout`, `shiftgroup`, `lastU
 /*!40000 ALTER TABLE `tbl_shifts` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_user
-DROP TABLE IF EXISTS `tbl_user`;
 CREATE TABLE IF NOT EXISTS `tbl_user` (
   `user_id` int(10) NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(50) DEFAULT NULL,
