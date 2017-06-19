@@ -49,6 +49,8 @@ Public Class frmEmpDetails
         GetEmployeeOvertime(id)
         'get employee shifts
         GetEmpShift(id)
+        'get employee travel orders
+        GetEmpTO(id)
 
         'reset dgv_emptimesheet & other dgv's
         dgv_emptimesheet.Refresh()
@@ -58,8 +60,9 @@ Public Class frmEmpDetails
 
         ' Set the CustomFormat string.
         dtp_timesheetmonth.Format = DateTimePickerFormat.Custom
-        dtp_timesheetmonth.CustomFormat = "MMMM yyyy"
-        'dtp_timesheetmonth.ShowUpDown = True
+        dtp_timesheetmonth.CustomFormat = "MMMM dd, yyyy"
+        dtp_timesheetmonth2.Format = DateTimePickerFormat.Custom
+        dtp_timesheetmonth2.CustomFormat = "MMMM dd, yyyy"
 
         'display current cutoff
         lbl_cutoff.Text = current_cutoff
@@ -73,7 +76,7 @@ Public Class frmEmpDetails
         'get the date range of the cutoff
         getCutoffRange()
         'get timesheet from hris
-        loadtimesheetsp()
+        loadtimesheetsp(frmdate_cutoff.ToString("yyyy-MM-dd"), todate_cutoff.ToString("yyyy-MM-dd"))
         'payroll computations
         computeWage()
         tb_regularot.Text = 0
@@ -295,8 +298,8 @@ Public Class frmEmpDetails
     End Sub
 #End Region
 
-    Sub loadtimesheetsp()
-        StrSql = "CALL sp_timesheetPR('" & frmdate_cutoff.ToString("yyyy-MM-dd") & "','" & todate_cutoff.ToString("yyyy-MM-dd") & "','" & tb_biometricid.Text & "')"
+    Sub loadtimesheetsp(ByVal startdate As String, ByVal enddate As String)
+        StrSql = "CALL sp_timesheetPR('" & startdate & "','" & enddate & "','" & tb_biometricid.Text & "')"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "timesheet")
@@ -312,7 +315,7 @@ Public Class frmEmpDetails
 
     'load timesheet
     Private Sub btn_loadtimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtimesheet.Click
-        loadtimesheetsp()
+        loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
         'StrSql = "SELECT emp_bio_id, dateLog, DATE_FORMAT(STR_TO_DATE(timein, '%T'),'%h:%s %p') as timein, DATE_FORMAT(STR_TO_DATE(timeout, '%T'),'%h:%s %p') as timeout, totalHours, late, undertime, overtime, remarks " _
         '            & "FROM timesheet WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
         '            & "AND Month(dateLog) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
@@ -333,6 +336,22 @@ Public Class frmEmpDetails
         'End While
         'dgv_emptimesheet.Columns(0).Visible = False
         '' dgv_emptimesheet.Columns(2).Visible = False
+    End Sub
+
+    'load employee travel orders
+    Private Sub GetEmpTO(id As String)
+        StrSql = "Select destination AS 'Destination', durFrom AS 'From', durTo AS 'To', days_applied AS 'Days', purpose AS 'Purpose'  FROM tbl_business WHERE employee_id = '" & id & "'"
+        QryReadP()
+        ds = New DataSet
+        adpt.Fill(ds, "travel")
+        dgv_travelorders.DataSource = ds.Tables(0)
+        Dim col = dgv_travelorders.Columns.Count - 1
+        Dim i = 0
+        While i <= col
+            dgv_travelorders.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            dgv_travelorders.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            i = i + 1
+        End While
     End Sub
 
     'load employee shift schedule
@@ -542,4 +561,5 @@ Public Class frmEmpDetails
     Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
         computeTotal()
     End Sub
+
 End Class

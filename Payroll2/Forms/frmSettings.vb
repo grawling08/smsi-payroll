@@ -352,9 +352,11 @@ Public Class frmSettings
         Dim thread As Threading.Thread
         thread = New System.Threading.Thread(AddressOf SyncEmployee)
         thread.Start()
+        loading.Show()
         While thread.IsAlive
             Application.DoEvents()
         End While
+        loading.Close()
         MessageBox.Show("Synced Employees")
     End Sub
 
@@ -362,9 +364,11 @@ Public Class frmSettings
         Dim thread As Threading.Thread
         thread = New System.Threading.Thread(AddressOf SyncLoans)
         thread.Start()
+        loading.Show()
         While thread.IsAlive
             Application.DoEvents()
         End While
+        loading.Close()
         MessageBox.Show("Synced Loans")
     End Sub
 
@@ -372,9 +376,11 @@ Public Class frmSettings
         Dim thread As Threading.Thread
         thread = New System.Threading.Thread(AddressOf SyncOvertime)
         thread.Start()
+        loading.Show()
         While thread.IsAlive
             Application.DoEvents()
         End While
+        loading.Close()
         MessageBox.Show("Synced Overtime")
     End Sub
 
@@ -382,18 +388,22 @@ Public Class frmSettings
         Dim thread As Threading.Thread
         thread = New System.Threading.Thread(AddressOf SyncLeaves)
         thread.Start()
+        loading.Show()
         While thread.IsAlive
             Application.DoEvents()
         End While
+        loading.Close()
         MessageBox.Show("Synced Leaves")
     End Sub
     Private Sub Button1_Click_1(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         Dim thread As Threading.Thread
         thread = New System.Threading.Thread(AddressOf SyncAllowances)
         thread.Start()
+        loading.Show()
         While thread.IsAlive
             Application.DoEvents()
         End While
+        loading.Close()
         MessageBox.Show("Synced Allowances")
     End Sub
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click

@@ -129,6 +129,10 @@ Partial Class frmEmpDetails
         Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.dgv_travelorders = New System.Windows.Forms.DataGridView()
+        Me.dtp_timesheetmonth2 = New System.Windows.Forms.DateTimePicker()
+        Me.Label39 = New System.Windows.Forms.Label()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -148,6 +152,8 @@ Partial Class frmEmpDetails
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.dgv_travelorders, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -155,6 +161,7 @@ Partial Class frmEmpDetails
         Me.dgv_emploans.AllowUserToAddRows = False
         Me.dgv_emploans.AllowUserToDeleteRows = False
         Me.dgv_emploans.AllowUserToResizeRows = False
+        Me.dgv_emploans.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_emploans.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_emploans.Location = New System.Drawing.Point(3, 31)
         Me.dgv_emploans.MultiSelect = False
@@ -170,6 +177,7 @@ Partial Class frmEmpDetails
         Me.dgv_empleave.AllowUserToAddRows = False
         Me.dgv_empleave.AllowUserToDeleteRows = False
         Me.dgv_empleave.AllowUserToResizeRows = False
+        Me.dgv_empleave.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_empleave.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_empleave.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgv_empleave.Location = New System.Drawing.Point(3, 3)
@@ -188,6 +196,7 @@ Partial Class frmEmpDetails
         Me.TabControl2.Controls.Add(Me.TabPage7)
         Me.TabControl2.Controls.Add(Me.TabPage8)
         Me.TabControl2.Controls.Add(Me.TabPage2)
+        Me.TabControl2.Controls.Add(Me.TabPage4)
         Me.TabControl2.Location = New System.Drawing.Point(302, 1)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
@@ -248,11 +257,13 @@ Partial Class frmEmpDetails
         '
         'btn_savepayslip
         '
-        Me.btn_savepayslip.Location = New System.Drawing.Point(418, 466)
+        Me.btn_savepayslip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_savepayslip.ForeColor = System.Drawing.Color.Red
+        Me.btn_savepayslip.Location = New System.Drawing.Point(288, 466)
         Me.btn_savepayslip.Name = "btn_savepayslip"
-        Me.btn_savepayslip.Size = New System.Drawing.Size(124, 23)
+        Me.btn_savepayslip.Size = New System.Drawing.Size(254, 23)
         Me.btn_savepayslip.TabIndex = 13
-        Me.btn_savepayslip.Text = "Save Payslip"
+        Me.btn_savepayslip.Text = "S A V E  P A Y S L I P"
         Me.btn_savepayslip.UseVisualStyleBackColor = True
         '
         'Label32
@@ -260,16 +271,17 @@ Partial Class frmEmpDetails
         Me.Label32.AutoSize = True
         Me.Label32.Location = New System.Drawing.Point(285, 7)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(72, 13)
+        Me.Label32.Size = New System.Drawing.Size(75, 13)
         Me.Label32.TabIndex = 3
-        Me.Label32.Text = "Current Cutoff"
+        Me.Label32.Text = "Current Cutoff:"
         '
         'lbl_cutoff
         '
         Me.lbl_cutoff.AutoSize = True
-        Me.lbl_cutoff.Location = New System.Drawing.Point(363, 7)
+        Me.lbl_cutoff.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_cutoff.Location = New System.Drawing.Point(357, 7)
         Me.lbl_cutoff.Name = "lbl_cutoff"
-        Me.lbl_cutoff.Size = New System.Drawing.Size(45, 13)
+        Me.lbl_cutoff.Size = New System.Drawing.Size(52, 13)
         Me.lbl_cutoff.TabIndex = 3
         Me.lbl_cutoff.Text = "Label31"
         '
@@ -797,8 +809,10 @@ Partial Class frmEmpDetails
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.Label39)
         Me.TabPage3.Controls.Add(Me.btn_addtimesheet)
         Me.TabPage3.Controls.Add(Me.btn_loadtimesheet)
+        Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth2)
         Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth)
         Me.TabPage3.Controls.Add(Me.dgv_emptimesheet)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
@@ -811,7 +825,7 @@ Partial Class frmEmpDetails
         '
         'btn_addtimesheet
         '
-        Me.btn_addtimesheet.Location = New System.Drawing.Point(290, 4)
+        Me.btn_addtimesheet.Location = New System.Drawing.Point(470, 4)
         Me.btn_addtimesheet.Name = "btn_addtimesheet"
         Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
         Me.btn_addtimesheet.TabIndex = 3
@@ -820,7 +834,7 @@ Partial Class frmEmpDetails
         '
         'btn_loadtimesheet
         '
-        Me.btn_loadtimesheet.Location = New System.Drawing.Point(209, 4)
+        Me.btn_loadtimesheet.Location = New System.Drawing.Point(389, 4)
         Me.btn_loadtimesheet.Name = "btn_loadtimesheet"
         Me.btn_loadtimesheet.Size = New System.Drawing.Size(75, 23)
         Me.btn_loadtimesheet.TabIndex = 1
@@ -832,13 +846,14 @@ Partial Class frmEmpDetails
         Me.dtp_timesheetmonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtp_timesheetmonth.Location = New System.Drawing.Point(3, 7)
         Me.dtp_timesheetmonth.Name = "dtp_timesheetmonth"
-        Me.dtp_timesheetmonth.Size = New System.Drawing.Size(200, 20)
+        Me.dtp_timesheetmonth.Size = New System.Drawing.Size(150, 20)
         Me.dtp_timesheetmonth.TabIndex = 0
         '
         'dgv_emptimesheet
         '
         Me.dgv_emptimesheet.AllowUserToAddRows = False
         Me.dgv_emptimesheet.AllowUserToDeleteRows = False
+        Me.dgv_emptimesheet.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_emptimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_emptimesheet.Location = New System.Drawing.Point(3, 33)
         Me.dgv_emptimesheet.MultiSelect = False
@@ -932,6 +947,7 @@ Partial Class frmEmpDetails
         Me.dgv_overtime.AllowUserToAddRows = False
         Me.dgv_overtime.AllowUserToDeleteRows = False
         Me.dgv_overtime.AllowUserToResizeRows = False
+        Me.dgv_overtime.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_overtime.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_overtime.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgv_overtime.Location = New System.Drawing.Point(3, 3)
@@ -1232,6 +1248,52 @@ Partial Class frmEmpDetails
         Me.dgv_shift.Size = New System.Drawing.Size(283, 195)
         Me.dgv_shift.TabIndex = 24
         '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.dgv_travelorders)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage4.TabIndex = 7
+        Me.TabPage4.Text = "Travel Orders"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'dgv_travelorders
+        '
+        Me.dgv_travelorders.AllowUserToAddRows = False
+        Me.dgv_travelorders.AllowUserToDeleteRows = False
+        Me.dgv_travelorders.AllowUserToResizeColumns = False
+        Me.dgv_travelorders.AllowUserToResizeRows = False
+        Me.dgv_travelorders.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.dgv_travelorders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_travelorders.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgv_travelorders.Location = New System.Drawing.Point(3, 3)
+        Me.dgv_travelorders.Name = "dgv_travelorders"
+        Me.dgv_travelorders.ReadOnly = True
+        Me.dgv_travelorders.RowHeadersVisible = False
+        Me.dgv_travelorders.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Me.dgv_travelorders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_travelorders.Size = New System.Drawing.Size(545, 491)
+        Me.dgv_travelorders.TabIndex = 0
+        '
+        'dtp_timesheetmonth2
+        '
+        Me.dtp_timesheetmonth2.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtp_timesheetmonth2.Location = New System.Drawing.Point(185, 7)
+        Me.dtp_timesheetmonth2.Name = "dtp_timesheetmonth2"
+        Me.dtp_timesheetmonth2.Size = New System.Drawing.Size(150, 20)
+        Me.dtp_timesheetmonth2.TabIndex = 0
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Location = New System.Drawing.Point(159, 9)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(20, 13)
+        Me.Label39.TabIndex = 4
+        Me.Label39.Text = "To"
+        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1260,6 +1322,7 @@ Partial Class frmEmpDetails
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
@@ -1272,6 +1335,8 @@ Partial Class frmEmpDetails
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage4.ResumeLayout(False)
+        CType(Me.dgv_travelorders, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1380,4 +1445,8 @@ Partial Class frmEmpDetails
     Friend WithEvents dgv_otherdeduct As System.Windows.Forms.DataGridView
     Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents dgv_travelorders As System.Windows.Forms.DataGridView
+    Friend WithEvents Label39 As System.Windows.Forms.Label
+    Friend WithEvents dtp_timesheetmonth2 As System.Windows.Forms.DateTimePicker
 End Class

@@ -246,7 +246,7 @@ Public Class frmMain
         thread = New System.Threading.Thread(AddressOf SyncTimesheet)
         thread.Start()
         loading.Show()
-        While thread.IsAlive
+        While(thread.IsAlive)
             Application.DoEvents()
         End While
         GetCutoffOccurences()

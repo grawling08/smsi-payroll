@@ -168,9 +168,8 @@ Module modSync
             '            & "dateFiled = VALUES(dateFiled),days_applied = VALUES(days_applied), " _
             '            & "reason = VALUES(reason),status = VALUES(status); " _
             '            & "DROP TEMPORARY TABLE temporary_table;"
-            StrSql = "SELECT leaveapp.id, leaveapp.employee_id, " _
-                        & "leaves.name AS 'Leave Type', leaveapp.durFrom AS 'From Date', leaveapp.durTo AS 'To Date', leaveapp.dateFiled AS 'Date Filed', " _
-                        & "leaveapp.days_applied AS 'Days Applied', leaveapp.mode, leaveapp.reason AS 'Reason', leaveapp.status AS 'Status', leaveapp.lastUpdated FROM leaveapp, leaves, employees " _
+            StrSql = "SELECT leaveapp.id, leaveapp.employee_id, leaves.name, leaveapp.durFrom, leaveapp.durTo, leaveapp.dateFiled, " _
+                        & "leaveapp.days_applied, leaveapp.mode, leaveapp.reason, leaveapp.status, leaveapp.lastUpdated FROM leaveapp, leaves, employees " _
                         & "WHERE leaveapp.leave_id = leaves.id AND leaveapp.employee_id = employees.id AND leaveapp.status = 'Approved by HR'"
             QryReadH()
             Dim dt = New DataTable
@@ -179,19 +178,24 @@ Module modSync
                 'dt.Rows({row number})({field/column}).ToString
                 'dt.Rows(i)(0).ToString
                 Try
-                    StrSql = String.Format("REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,mode,days_applied,reason,status) VALUES({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')", _
+                    StrSql = String.Format("REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,days_applied,mode,reason,status) VALUES({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')", _
                                             dt.Rows(i)(0).ToString, dt.Rows(i)(1).ToString, dt.Rows(i)(2).ToString, CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd"), _
                                             CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd"), CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd"), _
-                                            dt.Rows(i)(6).ToString, dt.Rows(i)(7).ToString, dt.Rows(i)(8).ToString, dt.Rows(i)(9).ToString)
-                    'StrSql = "REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,mode,days_applied,reason,status) " _
-                    '            & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
-                    '            & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
-                    '            & CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd") & "','" _
-                    '            & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
-                    '            & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "')"
-                    'Console.Write(StrSql)
+                                            dt.Rows(i)(6).ToString, dt.Rows(i)(7).ToString, dt.Rows(i)(8).ToString.Replace("'", "\'"), dt.Rows(i)(9).ToString)
                     QryReadP()
                     cmd.ExecuteNonQuery()
+
+                    StrSql = "SELECT * FROM leavedates WHERE leaveapp_id = " & dt.Rows(i)(0).ToString
+                    QryReadH()
+                    Dim lvdaterdr As MySqlDataReader = cmd.ExecuteReader
+                    If lvdaterdr.HasRows Then
+                        While lvdaterdr.Read
+                            StrSql2 = "REPLACE INTO tbl_leavedates VALUES(" & lvdaterdr("id").ToString & "," & lvdaterdr("leaveapp_id").ToString & ",'" & CDate(lvdaterdr("leavedate").ToString).ToString("yyyy-MM-dd") & "','" & lvdaterdr("daystatus").ToString & "')"
+                            Connect_Sub("payroll")
+                            cmd2 = New MySqlCommand(StrSql2, conn2)
+                            cmd2.ExecuteNonQuery()
+                        End While
+                    End If
                 Catch e As MySqlException
                     MessageBox.Show(e.ToString)
                     Return False
