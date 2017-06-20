@@ -22,6 +22,8 @@ Module modConnect
     Public md5Hash As MD5 = MD5.Create()
     Public isfrmLogin_expanded As Boolean
     Public logged_user, logged_id As String
+    Public prevcutoff_fromdate, prevcutoff_todate As DateTime
+    Public prevcutoff_company As String
     Sub SaveSystemSettings(ByVal Payroll_Connect() As String, ByVal HR_Connect() As String)
         'hris connection setting
         SaveSetting("Payroll System", "Startup", "serverHR", HR_Connect(0))
@@ -170,22 +172,26 @@ Module modConnect
 #Region "cutoff"
     Sub GetCutoffOccurences()
         StrSql = "SELECT tblref_occurences.name FROM tblref_occurences LEFT JOIN tbl_cutoff ON tbl_cutoff.occurence_id = tblref_occurences.occurence_id " _
-                    & "WHERE(tbl_cutoff.cutoff_range = '" & current_cutoff & "')"
+                    & "WHERE tbl_cutoff.cutoff_range = '" & current_cutoff & "'"
         QryReadP()
         Dim occreader As MySqlDataReader = cmd.ExecuteReader
         If occreader.HasRows Then
             occreader.Read()
             Select Case occreader("name").ToString
                 Case "Monthly"
+                    occurence = "Monthly"
                     num_occurence = 1
                 Case "Semi-Monthly"
+                    occurence = "Semi-Monthly"
                     num_occurence = 2
                 Case "Weekly"
+                    occurence = "Weekly"
                     num_occurence = 4
             End Select
         End If
         Close_Connect()
     End Sub
+
     Sub GetOccurences()
         StrSql = "SELECT * FROM tblref_occurences"
         QryReadP()
@@ -248,6 +254,7 @@ Module modConnect
     'End Sub
 
     'add new cutoff
+
     Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
         If CheckCutoff(fromDate, toDate, occurence) = False Then
             StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',@current_company,(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
@@ -281,6 +288,18 @@ Module modConnect
         End If
         Return False
     End Function
+
+    Sub GetPrevCutoff()
+        StrSql = "SELECT * from tbl_cutoff WHERE to_date = DATE_SUB('" & frmdate_cutoff.ToString("yyyy-MM-dd") & "', INTERVAL 1 DAY ) AND occurence_id = (SELECT occurence_id FROM tblref_occurences WHERE name='" & occurence & "') AND company_id = 'Solutions Management Systems Inc.'"
+        QryReadP()
+        Dim prevcutoffreader As MySqlDataReader = cmd.ExecuteReader
+        If prevcutoffreader.HasRows Then
+            prevcutoffreader.Read()
+            prevcutoff_fromdate = prevcutoffreader("from_date").ToString
+            prevcutoff_todate = prevcutoffreader("to_date").ToString
+            prevcutoff_company = prevcutoffreader("company_id").ToString
+        End If
+    End Sub
 #End Region
 
     Sub GetCompanyCutoff(ByVal company As String)
@@ -486,13 +505,13 @@ Module modConnect
         Else
             status = "Z"
         End If
-        StrSql = "SELECT MIN(salary) as salary, MIN(percentage) as percentage, MIN(excemption) as excempt FROM tblref_tax " _
-                    & "WHERE status = '" & status & "' And salary >= " & gross_income & " AND occurence = 'Semi-Monthly'"
+        StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
+                    & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = '" & occurence & "'"
         QryReadP()
         Dim taxReader As MySqlDataReader = cmd.ExecuteReader
         If taxReader.HasRows Then
             taxReader.Read()
-            tax = taxReader("excempt") + ((taxReader("salary") - gross_income) * taxReader("percentage"))
+            tax = taxReader("excempt") + ((gross_income - taxReader("salary")) * taxReader("percentage"))
         Else
             tax = 0
         End If

@@ -175,9 +175,10 @@ Public Class frmEmpDetails
     Sub totalTimesheetDeduct()
         'loop cutoff range dates
         'check for absenses and leaves
+        GetPrevCutoff()
         Dim countattendance = 0
-        Dim CurrD As DateTime = frmdate_cutoff
-        While (CurrD <= todate_cutoff)
+        Dim CurrD As DateTime = prevcutoff_fromdate
+        While (CurrD <= prevcutoff_todate)
             countattendance += 1
             StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
             'Console.Write(StrSql)
@@ -212,7 +213,7 @@ Public Class frmEmpDetails
         End While
         Label34.Text = countattendance
         'get total lates
-        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then

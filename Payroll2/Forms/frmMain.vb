@@ -62,23 +62,11 @@ Public Class frmMain
     End Sub
 
     Friend Sub ReloadCutoff()
-        'res = dt.Select("status = 'Processing'")
-        Dim res = dt.Select("cutoff_range = '" & current_cutoff & "'")
-        cb_cutoff.SelectedIndex = cb_cutoff.FindString(res(0).Item(1).ToString)
-        occurence = res(0).Item(8).ToString
-        Select Case occurence
-            Case "Monthly"
-                num_occurence = 1
-            Case "Semi-Monthly"
-                num_occurence = 2
-            Case "Weekly"
-                num_occurence = 4
-        End Select
+        GetCompanyCutoff(cb_companylist.Text)
         If dt.Rows.Count > 0 Then
             cb_cutoff.DataSource = dt
             cb_cutoff.DisplayMember = "cutoff_range"
         End If
-
     End Sub
 
     'search employee
@@ -229,7 +217,6 @@ Public Class frmMain
     End Sub
 
     Private Sub lnk_setcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_setcutoff.LinkClicked
-
         current_cutoff = cb_cutoff.Text
         tsbtn_cutoff.Text = current_cutoff
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
