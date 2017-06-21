@@ -446,7 +446,7 @@ Module modConnect
 
     Function computeSSS(ByVal basic_pay As Double) As String()
         Dim sssContrib(4) As String
-        StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & (basic_pay / 2)
+        StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & (basic_pay / num_occurence)
         QryReadP()
         Dim sssreader As MySqlDataReader = cmd.ExecuteReader
         If sssreader.HasRows Then

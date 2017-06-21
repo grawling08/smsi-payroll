@@ -195,7 +195,7 @@ Public Class frmEmpDetails
                     'query leave where leave is approved by the hr
                     'if leave is with pay -1 to absent
                     'leave is without pay, treated as absent
-                    StrSql = "SELECT tbl_leaves.* FROM tbl_leaves, tbl_employee WHERE tbl_employee.id_employee = '" & id & "' AND tbl_employee.id = tbl_leaves.employee_id AND durFrom <= '" & CurrD.ToString("yyyy-MM-dd") & "' AND durTo >= '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
+                    StrSql = "SELECT tbl_leaves.* FROM tbl_leaves, tbl_employee WHERE tbl_employee.id_employee = '" & id & "' AND tbl_employee.id_employee = tbl_leaves.employee_id AND durFrom = '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
                     QryReadP()
                     Dim dtareader5 As MySqlDataReader = cmd.ExecuteReader
                     If dtareader5.HasRows Then
