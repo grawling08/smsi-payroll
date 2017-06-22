@@ -91,13 +91,12 @@ Public Class frmEditTimesheet
     Private Sub savefinaltime()
         Dim log_date = CDate(dtp_logdate.Text)
         Dim Time_in = CDate(dtp_timein.Text)
-        Dim Time_out = CDate(dtp_timeout.Text)
+        Dim Time_out = CDate(LogDate & " " & CDate(dtp_timeout.Text).ToString("hh:ss tt"))
         Dim totalHours As Integer
         Dim totalLate, totalUndertime, totalOvertime As Double
         Dim latediff, undertimediff, overtimediff As Long
         Dim remarks As String = ""
         'retrieve shift details
-        'StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE emp_bio_id = '" & tb_no.Text & "' OR id_employee = '" & id_employee & "')"
         StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE " & If(String.IsNullOrEmpty(tb_no.Text), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & tb_no.Text & "'") & ")"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
@@ -150,14 +149,23 @@ Public Class frmEditTimesheet
                     totalUndertime = If(Math.Round(undertimediff / 60 / 60, 2) >= 1, Math.Round(undertimediff / 60 / 60, 2), 0)
                     totalOvertime = If(Math.Round(overtimediff / 60 / 60, 2) >= 1, Math.Round(overtimediff / 60 / 60, 2), 0)
                     'total work hours
-                    totalHours = Math.Round(DateDiff(DateInterval.Second, dtp_timein.Value, dtp_timeout.Value) / 3600, 2)
+                    totalHours = Math.Round(DateDiff(DateInterval.Second, dtp_timein.Value, Time_out) / 60 / 60, 2)
                 End If
             End While
         End If
-        StrSql = "INSERT INTO tbl_attendance(id_employee,emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
-                    & "VALUES('" & id_employee & "','" & No & "','" & log_date.ToString("yyyy-MM-dd") & "','" & Time_in.ToString("hh:mm tt") & "','" _
-                    & Time_out.ToString("hh:mm tt") & "','" & totalHours & "','" & totalLate & "','" & totalUndertime & "','" & totalOvertime & "','" & remarks & "')"
-        'Console.Write(StrSql)
+        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & No & "' AND date = '" & log_date.ToString("yyyy-MM-dd") & "'"
+        QryReadP()
+        Dim checktimereader As MySqlDataReader = cmd.ExecuteReader
+        If checktimereader.HasRows Then
+            StrSql = "UPDATE tbl_attendance SET time_in = '" & Time_in.ToString("HH:mm") & "', time_out = '" & Time_out.ToString("HH:mm") & "'," _
+                        & "totalHours ='" & totalHours & "', late = '" & totalLate & "', undertime = '" & totalUndertime & "'," _
+                        & "overtime = '" & totalOvertime & "', remarks = '" & remarks & "' WHERE emp_bio_id = '" & No & "' AND date = '" & log_date.ToString("yyyy-MM-dd") & "'"
+        Else
+            StrSql = "INSERT INTO tbl_attendance(id_employee,emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
+                    & "VALUES('" & id_employee & "','" & No & "','" & log_date.ToString("yyyy-MM-dd") & "','" & Time_in.ToString("hh:mm") & "','" _
+                    & Time_out.ToString("HH:mm") & "','" & totalHours & "','" & totalLate & "','" & totalUndertime & "','" & totalOvertime & "','" & remarks & "')"
+        End If
+        Console.Write(StrSql)
         QryReadP()
         cmd.ExecuteNonQuery()
         MessageBox.Show("Saved!")

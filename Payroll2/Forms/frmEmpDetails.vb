@@ -180,7 +180,7 @@ Public Class frmEmpDetails
         Dim CurrD As DateTime = prevcutoff_fromdate
         While (CurrD <= prevcutoff_todate)
             countattendance += 1
-            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " and date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
             'Console.Write(StrSql)
             QryReadP()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
@@ -537,10 +537,6 @@ Public Class frmEmpDetails
         frmLoans.ShowDialog()
     End Sub
 
-    Private Sub btn_addtimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_addtimesheet.Click
-        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
-        timesheet.ShowDialog()
-    End Sub
     'other deductions
     Private Sub btn_adddeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_adddeduct.Click
         Dim row As String() = New String() {"Edit", "0"}
@@ -563,4 +559,18 @@ Public Class frmEmpDetails
         computeTotal()
     End Sub
 
+    'add timesheet
+    Private Sub btn_addtimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_addtimesheet.Click
+        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
+        timesheet.ShowDialog()
+    End Sub
+    'edit timesheet
+    Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
+        Dim LogDate = CDate(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
+        Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", CDate(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
+        Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", CDate(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
+        'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
+        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
+        timesheet.ShowDialog()
+    End Sub
 End Class
