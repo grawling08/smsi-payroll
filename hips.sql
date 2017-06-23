@@ -28,6 +28,7 @@ CREATE DEFINER=`root`@`%` PROCEDURE `sp_timesheetPR`(
 
 
 
+
 )
 BEGIN
 
@@ -70,7 +71,7 @@ SET t.remarks=l.otstatus;
 UPDATE TEMP t
 INNER JOIN (
 		SELECT c.leavedate, c.daystatus FROM tbl_employee a
-		LEFT JOIN tbl_leaves b on b.employee_id = a.id
+		LEFT JOIN tbl_leaves b on b.employee_id = a.id_employee
 		LEFT JOIN tbl_leavedates c on c.leaveapp_id = b.id
 		where a.emp_bio_id=p_id and c.daystatus <> 'Rest Day') l on l.leavedate = t.datelog
 SET t.remarks=(CONCAT(IFNULL(CONCAT(t.remarks,' '),''),CONCAT(l.daystatus,' Leave')));
@@ -200,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `tblref_settings` (
 -- Dumping data for table hris_payroll.tblref_settings: 4 rows
 /*!40000 ALTER TABLE `tblref_settings` DISABLE KEYS */;
 INSERT INTO `tblref_settings` (`setting_name`, `value`) VALUES
-	('current_cutoff', '1 June 2017 to 15 June 2017'),
+	('current_cutoff', '15 May 2017 to 30 May 2017'),
 	('current_company', 'Solutions Management Systems Inc.'),
 	('app_mode', 'integrate'),
 	('process', 'regular');
@@ -447,9 +448,9 @@ CREATE TABLE IF NOT EXISTS `tbl_attendance` (
   `overtime` varchar(50) DEFAULT NULL,
   `remarks` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`att_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=511 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=513 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_attendance: 362 rows
+-- Dumping data for table hris_payroll.tbl_attendance: 512 rows
 /*!40000 ALTER TABLE `tbl_attendance` DISABLE KEYS */;
 INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `time_in`, `time_out`, `totalHours`, `late`, `undertime`, `overtime`, `remarks`) VALUES
 	(1, 0, '10002', '2017-05-03', '07:59', '17:49', '9.83', '0', '0', '0', 'Regular'),
@@ -516,8 +517,8 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(62, 0, '10021', '2017-05-10', '08:53', '17:24', '8.52', '0', '0', '0', 'Regular'),
 	(63, 0, '10021', '2017-05-11', '08:32', '17:07', '8.58', '0', '0', '0', 'Regular'),
 	(64, 0, '10021', '2017-05-12', '08:34', '17:08', '8.57', '0', '0', '0', 'Regular'),
-	(65, 0, '10021', '2017-05-13', '08:35', '-', '0', '0', '0', '0', 'Unable to Time Out'),
-	(66, 0, '10021', '2017-05-15', '08:20', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(65, 0, '10021', '2017-05-13', '08:35', '17:34', '9', '0', '0', '2.57', 'Regular'),
+	(66, 0, '10021', '2017-05-15', '08:20', '17:14', '921', '0', '0', '0', 'Regular'),
 	(67, 0, '10022', '2017-05-02', '08:53', '17:26', '8.55', '0', '0', '0', 'Regular'),
 	(68, 0, '10022', '2017-05-03', '08:55', '17:50', '8.92', '0', '0', '0', 'Regular'),
 	(69, 0, '10022', '2017-05-04', '08:54', '-', '0', '0', '0', '0', 'Unable to Time Out'),
@@ -666,12 +667,12 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(212, 0, '10019', '2017-05-23', '08:58', '17:17', '8.32', '0', '0', '0', 'Regular'),
 	(213, 0, '10019', '2017-05-24', '08:57', '17:32', '8.58', '0', '0', '0', 'Regular'),
 	(214, 0, '10019', '2017-05-30', '08:51', '17:46', '8.92', '0', '0', '0', 'Regular'),
-	(215, 0, '10021', '2017-05-16', '08:42', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(215, 0, '10021', '2017-05-16', '08:42', '17:40', '9', '0', '0', '0', 'Regular'),
 	(216, 0, '10021', '2017-05-17', '08:49', '17:36', '8.78', '0', '0', '0', 'Regular'),
 	(217, 0, '10021', '2017-05-18', '08:51', '17:07', '8.27', '0', '0', '0', 'Regular'),
 	(218, 0, '10021', '2017-05-19', '08:22', '17:21', '8.98', '0', '0', '0', 'Regular'),
 	(219, 0, '10021', '2017-05-20', '08:24', '15:22', '6.97', '0', '0', '0', 'Regular'),
-	(220, 0, '10021', '2017-05-22', '08:47', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(220, 0, '10021', '2017-05-22', '08:47', '16:38', '8', '0', '0', '0', 'Regular'),
 	(221, 0, '10021', '2017-05-23', '08:28', '17:13', '8.75', '0', '0', '0', 'Regular'),
 	(222, 0, '10021', '2017-05-24', '08:28', '17:08', '8.67', '0', '0', '0', 'Regular'),
 	(223, 0, '10021', '2017-05-25', '08:34', '17:13', '8.65', '0', '0', '0', 'Regular'),
@@ -961,7 +962,9 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(507, 0, '117', '2017-06-02', '-', '17:20', '0', '0', '0', '0', 'Unable to Time In'),
 	(508, 0, '117', '2017-06-03', '-', '15:05', '0', '0', '0', '0', 'Unable to Time In'),
 	(509, 0, '117', '2017-06-05', '08:32', '-', '0', '0', '0', '0', 'Unable to Time Out'),
-	(510, 0, '117', '2017-06-10', '08:34', '-', '0', '0', '0', '0', 'Unable to Time Out');
+	(510, 0, '117', '2017-06-10', '08:34', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(511, 0, '10021', '2017-05-22', '08:47', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(512, 0, '10021', '2017-05-16', '08:42', '-', '0', '0', '0', '0', 'Unable to Time Out');
 /*!40000 ALTER TABLE `tbl_attendance` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_attendancefinal
@@ -2754,6 +2757,20 @@ INSERT INTO `tbl_loans` (`loan_id`, `employee_id`, `loan_type`, `lendingCompany`
 	(122, 1182, 'ACE Loan', 'AFC', 50000, '24 mos', 2396, '2015-05-15', '2017-04-30', '', '2017-06-06 17:05:39'),
 	(132, 352, 'ACE Loan', 'AFC', 150000, '24mos', 7188, '2015-03-15', '2016-02-28', '', '2017-06-06 17:05:39');
 /*!40000 ALTER TABLE `tbl_loans` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tbl_otherdeductions
+DROP TABLE IF EXISTS `tbl_otherdeductions`;
+CREATE TABLE IF NOT EXISTS `tbl_otherdeductions` (
+  `deduct_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payslip_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`deduct_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_otherdeductions: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tbl_otherdeductions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_otherdeductions` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_overtime
 DROP TABLE IF EXISTS `tbl_overtime`;

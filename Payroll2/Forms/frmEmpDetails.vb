@@ -83,6 +83,7 @@ Public Class frmEmpDetails
         tb_holidayot.Text = 0
         totalOT()
         totalTimesheetDeduct()
+        ComputeLates()
         computeloans()
         computeTotalContributions()
         computeAllowance()
@@ -130,45 +131,49 @@ Public Class frmEmpDetails
         QryReadP()
         Dim otreader As MySqlDataReader = cmd.ExecuteReader
         If otreader.HasRows Then
-            Dim totalhours = otreader("totaltime")
-            StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & otreader("overtimedate").ToString("dddd") & "'"
-            QryReadP()
-            Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
-            If Not shiftreader.HasRows Then
-                isRestdayOT = True
-            End If
-            'check if holiday
-            StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & otreader("overtimedate").ToString("yyyy-MM-dd") & "'"
-            QryReadP()
-            Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
-            If holidayreader.HasRows Then
-                holidayreader.Read()
-                If holidayreader("type") = "Regular Holidays" Then
-                    isRegHolidayOT = True
-                ElseIf holidayreader("type") = "Special (Non-Working) Days" Then
-                    isSpecHolidayOT = True
+            While otreader.Read
+                Dim totalhours = otreader("totaltime")
+                StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & otreader("overtimedate").ToString("dddd") & "'"
+                QryReadP()
+                Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
+                If Not shiftreader.HasRows Then
+                    isRestdayOT = True
+                Else
+                    isRegOt = True
                 End If
-            End If
-            'if restday, regholiday and specialholiday are all false then regOT is true
-            If isRestdayOT = True Then
-                'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
-                tb_regularot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
-            ElseIf isSpecHolidayOT = True Then
-                'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
-                tb_holidayot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
-            ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
-                'Overtime rate/hour = (hourly rate on rest day and special holiday X 195%)
-                tb_holidayot.Text += Math.Round(empHourlyWage * 1.95 * totalhours, 2)
-            ElseIf isRegHolidayOT = True Then
-                'Overtime rate/hour = (hourly rate on rest day and special holiday X 260%)
-                tb_holidayot.Text += Math.Round(empHourlyWage * 2.6 * totalhours, 2)
-            ElseIf isRegHolidayOT = True And isRestdayOT = True Then
-                'Overtime rate/hour = (hourly rate on rest day and special holiday X 338%)
-                tb_holidayot.Text += Math.Round(empHourlyWage * 3.38 * totalhours, 2)
-            ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
-                'Hourly rate * 125% * number of hours
-                tb_regularot.Text += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
-            End If
+                'check if holiday
+                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & otreader("overtimedate").ToString("yyyy-MM-dd") & "'"
+                QryReadP()
+                Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
+                If holidayreader.HasRows Then
+                    holidayreader.Read()
+                    If holidayreader("type") = "Regular Holidays" Then
+                        isRegHolidayOT = True
+                    ElseIf holidayreader("type") = "Special (Non-Working) Days" Then
+                        isSpecHolidayOT = True
+                    End If
+                End If
+                'if restday, regholiday and specialholiday are all false then regOT is true
+                If isRestdayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
+                    tb_regularot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                ElseIf isSpecHolidayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
+                    tb_holidayot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 195%)
+                    tb_holidayot.Text += Math.Round(empHourlyWage * 1.95 * totalhours, 2)
+                ElseIf isRegHolidayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 260%)
+                    tb_holidayot.Text += Math.Round(empHourlyWage * 2.6 * totalhours, 2)
+                ElseIf isRegHolidayOT = True And isRestdayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 338%)
+                    tb_holidayot.Text += Math.Round(empHourlyWage * 3.38 * totalhours, 2)
+                ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
+                    'Hourly rate * 125% * number of hours
+                    tb_regularot.Text += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
+                End If
+            End While
         End If
     End Sub
 
@@ -208,10 +213,24 @@ Public Class frmEmpDetails
                         daysPresent += 1
                     End If
                 End If
+                'check if holiday
+                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+                QryReadP()
+                Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
+                If holidayreader.HasRows Then
+                    daysAbsent -= 1
+                End If
             End If
             CurrD = CurrD.AddDays(1)
         End While
         Label34.Text = countattendance
+        tb_absents.Text = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
+        tb_undertime.Text = Math.Round(totalUndertime * empHourlyWage, 2)
+        tb_totalworkhours.Text = totalWorkHours
+        tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2) ' Math.Round(daysPresent * empDailyWage, 2)
+    End Sub
+
+    Sub ComputeLates()
         'get total lates
         StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
         QryReadP()
@@ -222,10 +241,6 @@ Public Class frmEmpDetails
             End While
         End If
         tb_late.Text = Math.Round(totalLate * 5, 2)
-        tb_absents.Text = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-        tb_undertime.Text = Math.Round(totalUndertime * empHourlyWage, 2)
-        tb_totalworkhours.Text = totalWorkHours
-        tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2) ' Math.Round(daysPresent * empDailyWage, 2)
     End Sub
 
     Sub loadpayslip()
@@ -472,8 +487,9 @@ Public Class frmEmpDetails
                     & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
             QryReadP()
             cmd.ExecuteNonQuery()
-            'save incentives
+            'save incentives & other dedctions
             save_incentives(payslip_id)
+            save_otherdeduct(payslip_id)
         Else
             'saved new payslip
             StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
@@ -485,8 +501,9 @@ Public Class frmEmpDetails
             QryReadP()
             cmd.ExecuteNonQuery()
             payslip_id = cmd.LastInsertedId.ToString()
-            'save incentives
+            'save incentives & other deductions
             save_incentives(payslip_id)
+            save_otherdeduct(payslip_id)
         End If
 
         MessageBox.Show("Payslip Saved!")
@@ -502,6 +519,19 @@ Public Class frmEmpDetails
         cmd.ExecuteNonQuery()
         If dgv_incentives.Rows.Count > 0 Then
             For Each row In dgv_incentives.Rows
+                StrSql = "INSERT INTO tbl_incentives(payslip_id,name,amount) VALUES(" & payslip_id & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Next
+        End If
+    End Sub
+    'save other deductions
+    Sub save_otherdeduct(ByVal payslip_id As String)
+        StrSql = "DELETE FROM tbl_otherdeduct WHERE payslip_id = " & payslip_id
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            For Each row In dgv_otherdeduct.Rows
                 StrSql = "INSERT INTO tbl_incentives(payslip_id,name,amount) VALUES(" & payslip_id & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
                 QryReadP()
                 cmd.ExecuteNonQuery()

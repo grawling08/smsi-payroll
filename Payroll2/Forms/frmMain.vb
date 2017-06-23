@@ -54,7 +54,7 @@ Public Class frmMain
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
         Dim frmEmpDetails As New frmEmpDetails(a)
-        If current_cutoff <> Nothing Then
+        If Not String.IsNullOrWhiteSpace(tsbtn_cutoff.Text) Then
             frmEmpDetails.ShowDialog()
         Else
             MessageBox.Show("Set Cutoff First!")
