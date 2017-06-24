@@ -504,6 +504,7 @@ Public Class frmEmpDetails
             'save incentives & other deductions
             save_incentives(payslip_id)
             save_otherdeduct(payslip_id)
+            'save/check loan payments
         End If
 
         MessageBox.Show("Payslip Saved!")

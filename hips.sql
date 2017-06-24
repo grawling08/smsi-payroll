@@ -2726,6 +2726,20 @@ INSERT INTO `tbl_leaves` (`id`, `employee_id`, `leave_type`, `durFrom`, `durTo`,
 	(1232, 602, 'Vacation Leave', '2017-01-17', '2017-01-28', '2017-06-16', '5.5', 'with pay', 'School matters', 'Approved by HR', '2017-06-19 11:39:03');
 /*!40000 ALTER TABLE `tbl_leaves` ENABLE KEYS */;
 
+-- Dumping structure for table hris_payroll.tbl_loanpayments
+DROP TABLE IF EXISTS `tbl_loanpayments`;
+CREATE TABLE IF NOT EXISTS `tbl_loanpayments` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `loan_id` int(11) DEFAULT NULL,
+  `date_paid` date DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hris_payroll.tbl_loanpayments: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tbl_loanpayments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_loanpayments` ENABLE KEYS */;
+
 -- Dumping structure for table hris_payroll.tbl_loans
 DROP TABLE IF EXISTS `tbl_loans`;
 CREATE TABLE IF NOT EXISTS `tbl_loans` (
