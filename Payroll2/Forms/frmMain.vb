@@ -53,12 +53,13 @@ Public Class frmMain
     'open employee details
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
-        Dim frmEmpDetails As New frmEmpDetails(a)
-        If Not String.IsNullOrWhiteSpace(tsbtn_cutoff.Text) Then
-            frmEmpDetails.ShowDialog()
-        Else
-            MessageBox.Show("Set Cutoff First!")
-        End If
+        Using frmEmpDetails As New frmEmpDetails(a)
+            If Not String.IsNullOrWhiteSpace(tsbtn_cutoff.Text) Then
+                frmEmpDetails.ShowDialog()
+            Else
+                MessageBox.Show("Set Cutoff First!")
+            End If
+        End Using
     End Sub
 
     Friend Sub ReloadCutoff()
@@ -85,23 +86,27 @@ Public Class frmMain
     End Sub
 
     Private Sub EmployeePayToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EmployeePayToolStripMenuItem.Click
-        Dim reportgen As New frmReportGen(1)
-        reportgen.ShowDialog()
+        Using reportgen As New frmReportGen(1)
+            reportgen.ShowDialog()
+        End Using
     End Sub
 
     Private Sub LeavesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LeavesToolStripMenuItem.Click
-        Dim reportgen As New frmReportGen(2)
-        reportgen.ShowDialog()
+        Using reportgen As New frmReportGen(2)
+            reportgen.ShowDialog()
+        End Using
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem2.Click
-        Dim reportgen As New frmReportGen(3)
-        reportgen.ShowDialog()
+        Using reportgen As New frmReportGen(3)
+            reportgen.ShowDialog()
+        End Using
     End Sub
 
     Private Sub PaidOvertimesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PaidOvertimesToolStripMenuItem.Click
-        Dim reportgen As New frmReportGen(4)
-        reportgen.ShowDialog()
+        Using reportgen As New frmReportGen(4)
+            reportgen.ShowDialog()
+        End Using
     End Sub
 
     Private Sub btn_loadpayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_loadpayroll.Click
@@ -115,9 +120,9 @@ Public Class frmMain
         Dim myStream As System.IO.Stream = Nothing
         Dim openFileDialog1 As New OpenFileDialog()
         Dim dta As New DataTable
-        Dim MyConnection As New System.Data.OleDb.OleDbConnection
-        Dim DtSet As New System.Data.DataSet
-        Dim MyCommand As New System.Data.OleDb.OleDbDataAdapter
+        Dim MyConnection As New OleDbConnection
+        Dim DtSet As New DataSet
+        Dim MyCommand As New OleDbDataAdapter
         openFileDialog1.InitialDirectory = "c:\"
         openFileDialog1.Filter = "Excel files |*.xls;*.xlsx"
         openFileDialog1.Title = "Select file for import"
@@ -145,6 +150,7 @@ Public Class frmMain
                     Catch ex As Exception
                         MessageBox.Show(ex.InnerException.ToString)
                     End Try
+                    MyCommand.Dispose()
                     MyConnection.Close()
                 ElseIf extension = ".xlsx" Then
                     Using doc As SpreadsheetDocument = SpreadsheetDocument.Open(FilePath, False)
@@ -182,7 +188,6 @@ Public Class frmMain
                 frmUploadedTimesheet.ShowDialog()
             End If
     End Sub
-
     Private Function GetValue(doc As SpreadsheetDocument, cell As Cell) As String
         Dim value As String = If(cell.CellValue.InnerText = Nothing, "", cell.CellValue.InnerText)
         If cell.DataType IsNot Nothing AndAlso cell.DataType.Value = CellValues.SharedString Then
@@ -190,26 +195,29 @@ Public Class frmMain
         End If
         Return value
     End Function
-
     'review uploaded timesheet
     Private Sub ViewRawTimesheetToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ViewRawTimesheetToolStripMenuItem.Click
-        Dim frmUploadedTimesheet As New frmUploadedTimesheet()
-        frmUploadedTimesheet.ShowDialog()
+        Using frmUploadedTimesheet As New frmUploadedTimesheet()
+            frmUploadedTimesheet.ShowDialog()
+        End Using
     End Sub
 
     Private Sub LeaveConvertToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LeaveConvertToolStripMenuItem.Click
-        Dim frmLeaveConversion As New frmLeaveConversion()
-        frmLeaveConversion.ShowDialog()
+        Using frmLeaveConversion As New frmLeaveConversion()
+            frmLeaveConversion.ShowDialog()
+        End Using
     End Sub
 
     Private Sub ShiftsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ShiftsToolStripMenuItem.Click
-        Dim shifts As New frmShifts()
-        shifts.ShowDialog()
+        Using shifts As New frmShifts()
+            shifts.ShowDialog()
+        End Using
     End Sub
 
     Private Sub CrystalReportSampleToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CrystalReportSampleToolStripMenuItem.Click
-        Dim reports As New frmReports
-        reports.Show()
+        Using reports As New frmReports
+            reports.Show()
+        End Using
     End Sub
 
     Private Sub lnk_addcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_addcutoff.LinkClicked
@@ -255,11 +263,14 @@ Public Class frmMain
         End If
         QryReadP()
         cmd.ExecuteNonQuery()
+        loadcutoff()
+        loadEmployee()
+    End Sub
+    Sub loadcutoff()
         GetCompanyCutoff(cb_companylist.Text)
         If dt.Rows.Count > 0 Then
             cb_cutoff.DataSource = dt
             cb_cutoff.DisplayMember = "cutoff_range"
         End If
-        loadEmployee()
     End Sub
 End Class

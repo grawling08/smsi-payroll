@@ -6,8 +6,8 @@ Public Class frmEmpDetails
     Private id, emp_fullname, employee_id, employmentStatus, taxcode As String
     Private totalLate, totalUndertime, totalOvertime, totalWorkHours, totalAllowance, totalBenefits, totalLoans As Double
     Private empHourlyWage, empDailyWage As Double
-    Private daysAbsent As Integer = 0
-    Private daysPresent As Integer = 0
+    Private daysAbsent As Double = 0
+    Private daysPresent As Double = 0
 
     Sub New(ByVal emp_id As String)
         MyBase.New()
@@ -195,7 +195,7 @@ Public Class frmEmpDetails
                 QryReadP()
                 Dim dtareader4 As MySqlDataReader = cmd.ExecuteReader()
                 If dtareader4.HasRows Then
-                    'absent 
+                    'whole day absent 
                     daysAbsent += 1
                     'query leave where leave is approved by the hr
                     'if leave is with pay -1 to absent
@@ -219,6 +219,17 @@ Public Class frmEmpDetails
                 Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
                 If holidayreader.HasRows Then
                     daysAbsent -= 1
+                End If
+            Else
+                dtareader2.Read()
+                Dim checktimein = CDate(dtareader2("time_in")).ToString("hh:mm tt")
+                Dim checktimeout = CDate(dtareader2("time_out")).ToString("hh:mm tt")
+                If CDate(checktimein) >= #12:00:00 PM# And CDate(checktimein) <= #1:00:00 PM# Then
+                    'halfday absent am
+                    daysAbsent += 0.5
+                ElseIf CDate(checktimeout) >= #12:00:00 PM# And CDate(checktimeout) <= #1:00:00 PM# Then
+                    'halfday absent pm
+                    daysAbsent += 0.5
                 End If
             End If
             CurrD = CurrD.AddDays(1)
@@ -304,9 +315,18 @@ Public Class frmEmpDetails
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         Dim loans As Double = 0
+        totalLoans = 0
         If dtareader.HasRows Then
             While dtareader.Read
-                loans = dtareader("monthlyAmortization") / num_occurence
+                'StrSql2 = "SELECT SUM(amount), Max(date_paid) FROM tbl_loanpayments WHERE loan_id = '" & dtareader("loan_id").ToString & "'"
+                'Connect_Sub("payroll")
+                'cmd2 = New MySqlCommand(StrSql2, conn2)
+                'Dim loanpayreader As MySqlDataReader = cmd2.ExecuteReader
+                'If loanpayreader.HasRows Then
+                '    loanpayreader.Read()
+
+                'End If
+                loans = dtareader("monthlyAmortization")
                 totalLoans += loans
             End While
         End If
@@ -328,7 +348,6 @@ Public Class frmEmpDetails
         dgv_emptimesheet.Columns(0).Visible = False
         Close_Connect()
     End Sub
-
     'load timesheet
     Private Sub btn_loadtimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtimesheet.Click
         loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
@@ -353,7 +372,6 @@ Public Class frmEmpDetails
         'dgv_emptimesheet.Columns(0).Visible = False
         '' dgv_emptimesheet.Columns(2).Visible = False
     End Sub
-
     'load employee travel orders
     Private Sub GetEmpTO(id As String)
         StrSql = "Select destination AS 'Destination', durFrom AS 'From', durTo AS 'To', days_applied AS 'Days', purpose AS 'Purpose'  FROM tbl_business WHERE employee_id = '" & id & "'"
@@ -369,7 +387,6 @@ Public Class frmEmpDetails
             i = i + 1
         End While
     End Sub
-
     'load employee shift schedule
     Sub GetEmpShift(ByVal EmpID As String)
         StrSql = "Select day as 'Day', timein as 'From', timeout as 'To' FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "')"
@@ -385,7 +402,6 @@ Public Class frmEmpDetails
             i = i + 1
         End While
     End Sub
-
     'employee loans
     Public Sub GetEmployeeLoans(ByVal EmpID As String)
         StrSql = "SELECT loan_id, loan_type AS 'Loan', lendingCompany AS 'Lending Company', amount AS 'Amount', term AS 'Term', monthlyAmortization AS 'Monthly Amortization', startDate AS 'From', endDate AS 'To', remarks AS 'Remarks' " _
@@ -402,10 +418,9 @@ Public Class frmEmpDetails
         dgv_emploans.Columns(0).Visible = False
         Close_Connect()
     End Sub
-
     'employee leave applications
     Sub GetEmployeeLeave(ByVal EmpID As String)
-        StrSql = "SELECT leave_type AS 'Leave Type', durFrom AS 'From Date', durTo AS 'To Date', dateFiled AS 'Date Filed', days_applied AS 'Days Applied', reason AS 'Reason', status AS 'Status' " _
+        StrSql = "SELECT leave_type AS 'Leave Type', durFrom AS 'From Date', durTo AS 'To Date', dateFiled AS 'Date Filed', days_applied AS 'Days Applied', reason AS 'Reason', mode AS 'With or W/o Pay', status AS 'Status' " _
                             & "FROM tbl_leaves WHERE employee_id = '" & EmpID & "' AND status = 'Approved by HR' "
         QryReadP()
         ds = New DataSet()
@@ -418,7 +433,6 @@ Public Class frmEmpDetails
         Next
         Close_Connect()
     End Sub
-
     'employee overtime
     Private Sub GetEmployeeOvertime(EmpID As String)
         StrSql = "SELECT overtimedate AS 'Date', reason AS 'Reason', status AS 'Status', totaltime AS 'Total OT', cutoffdate AS 'For Cutoff' " _
@@ -447,12 +461,10 @@ Public Class frmEmpDetails
             End While
         End If
     End Sub
-
     Private Sub btn_addincentive_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_addincentive.Click
         Dim row As String() = New String() {"Edit", "0"}
         dgv_incentives.Rows.Add(row)
     End Sub
-
     Private Sub btn_delincentive_Click(sender As System.Object, e As System.EventArgs) Handles btn_delincentive.Click
         If dgv_incentives.Rows.Count > 0 Then
             'StrSql = "DELETE FROM tbl_incentives WHERE payslip_id = " & payslip_id
@@ -557,15 +569,18 @@ Public Class frmEmpDetails
             e.Handled = True
         End If
     End Sub
+
     'LOANS
     Private Sub BindingNavigatorAddNewItem_Click(sender As System.Object, e As System.EventArgs) Handles tsb_loanadd.Click
-        Dim frmLoans As New frmLoans(id, "")
-        frmLoans.ShowDialog()
+        Using frmLoans As New frmLoans(id, "")
+            frmLoans.ShowDialog()
+        End Using
     End Sub
     Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles tsb_loanedit.Click
         Dim a = dgv_emploans.CurrentRow.Cells(0).Value.ToString()
-        Dim frmLoans As New frmLoans(id, a)
-        frmLoans.ShowDialog()
+        Using frmLoans As New frmLoans(id, a)
+            frmLoans.ShowDialog()
+        End Using
     End Sub
 
     'other deductions
@@ -592,8 +607,9 @@ Public Class frmEmpDetails
 
     'add timesheet
     Private Sub btn_addtimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_addtimesheet.Click
-        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
-        timesheet.ShowDialog()
+        Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
+            timesheet.ShowDialog()
+        End Using
     End Sub
     'edit timesheet
     Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
@@ -601,7 +617,8 @@ Public Class frmEmpDetails
         Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", CDate(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
         Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", CDate(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
         'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
-        Dim timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
-        timesheet.ShowDialog()
+        Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
+            timesheet.ShowDialog()
+        End Using
     End Sub
 End Class

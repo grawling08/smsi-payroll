@@ -38,10 +38,8 @@
             End If
         End If
 
-        If Application.OpenForms().OfType(Of frm1).Any Then
-            'frm1.loadCutoff()
-        ElseIf Application.OpenForms().OfType(Of frmMain).Any Then
-            'frmMain.ReloadCutoff()
+        If Application.OpenForms().OfType(Of frmMain).Any Then
+            frmMain.loadcutoff()
         End If
     End Sub
 

@@ -18,10 +18,15 @@ Public Class frmEditTimesheet
         tb_no.Text = No
         dtp_timein.Value = If(String.IsNullOrEmpty(Time_in), Date.Now, CDate(LogDate & " " & Time_in))
         dtp_timeout.Value = If(String.IsNullOrEmpty(Time_out), Date.Now, CDate(LogDate & " " & Time_out))
-        dtp_timeout.Format = DateTimePickerFormat.Time
+
+        dtp_timeout.Format = DateTimePickerFormat.Custom
+        dtp_timeout.CustomFormat = "hh:mm tt"
         dtp_timeout.ShowUpDown = True
-        dtp_timein.Format = DateTimePickerFormat.Time
+        dtp_timein.Format = DateTimePickerFormat.Custom
+        dtp_timeout.CustomFormat = "hh:mm tt"
         dtp_timein.ShowUpDown = True
+        dtp_logdate.Format = DateTimePickerFormat.Custom
+        dtp_logdate.CustomFormat = "yyyy-MM-dd"
     End Sub
 
     Private Sub btn_cancel_Click(sender As System.Object, e As System.EventArgs) Handles btn_cancel.Click
@@ -33,14 +38,18 @@ Public Class frmEditTimesheet
             savetemptime()
         ElseIf mode = "final" Then
             savefinaltime()
+            If Application.OpenForms().OfType(Of frmEmpDetails).Any Then
+                'frmEmpDetails.totalTimesheetDeduct()
+            End If
+            Me.Close()
         End If
     End Sub
     Private Sub savetemptime()
         'Console.Write(CDate(dtp_logdate.Value.ToString) & " " & CDate(dtp_timein.Value.ToString("t")))
-        Dim dt As New DataTable
         StrSql = "SELECT * FROM tbl_attendanceraw WHERE No = '" & tb_no.Text & "' AND LogDate = '" & dtp_logdate.Value.ToString("MM/dd/yyyy") & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        Dim dt As New DataTable
         dt.Load(dtareader)
         If dt.Rows.Count = 1 Then
             'insert either time in or out
@@ -97,6 +106,7 @@ Public Class frmEditTimesheet
         Dim latediff, undertimediff, overtimediff As Long
         Dim remarks As String = ""
         'retrieve shift details
+        Console.Write(Time_in & " - " & Time_out)
         StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE " & If(String.IsNullOrEmpty(tb_no.Text), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & tb_no.Text & "'") & ")"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
@@ -169,7 +179,7 @@ Public Class frmEditTimesheet
         QryReadP()
         cmd.ExecuteNonQuery()
         MessageBox.Show("Saved!")
-        Me.Close()
+
     End Sub
 
 End Class

@@ -146,7 +146,6 @@ Public Class frmUploadedTimesheet
                         If Not dtareader2.HasRows Then
                             'if no duplicate entries
                             'save to db
-                            'Try
                             StrSql = "INSERT INTO timesheettemp(emp_bio_id, dateLog, timein, timeout, totalHours, late, undertime, overtime, remarks) " _
                                     & "VALUES('" & row.Cells(0).Value.ToString & "'," _
                                     & "'" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'," _
@@ -156,10 +155,6 @@ Public Class frmUploadedTimesheet
                                     & "'" & row.Cells(8).Value.ToString & "')"
                             QryReadH()
                             cmd.ExecuteNonQuery()
-                            'Catch ex As Exception
-                            'MessageBox.Show(ex.InnerException.ToString)
-                            'Console.Write(ex.InnerException.ToString)
-                            'End Try
                             'update saved data from tbl_attendanceraw as 'mapped'
                             StrSql = "UPDATE tbl_attendanceraw SET ifMapped='1' WHERE LogDate = '" & row.Cells(1).Value.ToString & "' AND No = '" & row.Cells(0).Value.ToString & "'"
                             QryReadP()
