@@ -58,9 +58,9 @@ Public Class frmUploadedTimesheet
                                 '2.1 determine if half day time in
                                 'Console.Write(log_date & " " & dtareader("timein").ToString & "\n " & log_date & " " & time_in.ToString("h:mm:ss tt"))
                                 Dim halfdayam As Date = log_date & " " & #12:00:00 PM#
-                                If CDate(log_date & " " & time_in.ToString("hh:mm tt")) < halfdayam.ToString("hh:mm tt") Then
-                                    If CDate(log_date & " " & time_in.ToString("hh:mm tt")) > CDate(log_date & " " & dtareader("timein").ToString) Then
-                                        latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timein").ToString), CDate(log_date & " " & time_in.ToString("hh:mm tt")))
+                                If DateTime.Parse(log_date & " " & time_in.ToString("hh:mm tt")) < halfdayam.ToString("hh:mm tt") Then
+                                    If DateTime.Parse(log_date & " " & time_in.ToString("hh:mm tt")) > DateTime.Parse(log_date & " " & dtareader("timein").ToString) Then
+                                        latediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & dtareader("timein").ToString), DateTime.Parse(log_date & " " & time_in.ToString("hh:mm tt")))
                                     Else
                                         'time_in = dtareader("timein").ToString
                                         latediff = 0
@@ -69,8 +69,8 @@ Public Class frmUploadedTimesheet
                                     overtimediff = 0
                                     row.Cells(8).Value = "Regular"
                                 Else
-                                    If CDate(log_date & " " & time_in.ToString("hh:mm tt")) > CDate(log_date & " 1:00 PM") Then
-                                        latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & time_in.ToString("hh:mm tt")), CDate(log_date & " 1:00 PM"))
+                                    If DateTime.Parse(log_date & " " & time_in.ToString("hh:mm tt")) > DateTime.Parse(log_date & " 1:00 PM") Then
+                                        latediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & time_in.ToString("hh:mm tt")), DateTime.Parse(log_date & " 1:00 PM"))
                                     Else
                                         latediff = 0
                                     End If
@@ -78,16 +78,16 @@ Public Class frmUploadedTimesheet
                                     row.Cells(8).Value = "Half day"
                                 End If
                                 '3. employee's time out is less than the shift time out, compute for undertime
-                                If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & time_out.ToString("hh:mm tt")) Then
-                                    undertimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & time_out.ToString("hh:mm tt")), CDate(log_date & " " & dtareader("timeout").ToString))
+                                If DateTime.Parse(log_date & " " & dtareader("timeout").ToString) < DateTime.Parse(log_date & " " & time_out.ToString("hh:mm tt")) Then
+                                    undertimediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & time_out.ToString("hh:mm tt")), DateTime.Parse(log_date & " " & dtareader("timeout").ToString))
                                     If undertimediff > 3600 Then
                                         row.Cells(8).Value = "Undertime"
                                     End If
                                     overtimediff = 0
                                 End If
-                                If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & time_out.ToString("hh:mm tt")) Then '4. employee's time out exceeds the shift time out, check for overtime approval, compute overtime
+                                If DateTime.Parse(log_date & " " & dtareader("timeout").ToString) < DateTime.Parse(log_date & " " & time_out.ToString("hh:mm tt")) Then '4. employee's time out exceeds the shift time out, check for overtime approval, compute overtime
                                     undertimediff = 0
-                                    overtimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timeout").ToString), CDate(log_date & " " & time_out.ToString("hh:mm tt")))
+                                    overtimediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & dtareader("timeout").ToString), DateTime.Parse(log_date & " " & time_out.ToString("hh:mm tt")))
                                     If overtimediff > 3600 Then
                                         row.Cells(8).Value = "Regular"
                                     Else
@@ -139,7 +139,7 @@ Public Class frmUploadedTimesheet
                     Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                     If dtareader.HasRows Then
                         'check for duplicate entries
-                        StrSql2 = "SELECT * FROM timesheettemp WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "' AND dateLog = '" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'"
+                        StrSql2 = "SELECT * FROM timesheettemp WHERE emp_bio_id = '" & row.Cells(0).Value.ToString & "' AND dateLog = '" & DateTime.Parse(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'"
                         Connect_Sub("hris")
                         cmd2 = New MySqlCommand(StrSql2, conn2)
                         Dim dtareader2 As MySqlDataReader = cmd2.ExecuteReader()
@@ -148,7 +148,7 @@ Public Class frmUploadedTimesheet
                             'save to db
                             StrSql = "INSERT INTO timesheettemp(emp_bio_id, dateLog, timein, timeout, totalHours, late, undertime, overtime, remarks) " _
                                     & "VALUES('" & row.Cells(0).Value.ToString & "'," _
-                                    & "'" & CDate(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'," _
+                                    & "'" & DateTime.Parse(row.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "'," _
                                     & "'" & row.Cells(2).Value.ToString & "','" & row.Cells(3).Value.ToString & "'," _
                                     & "'" & row.Cells(4).Value.ToString & "','" & row.Cells(5).Value.ToString & "'," _
                                     & "'" & row.Cells(6).Value.ToString & "','" & row.Cells(7).Value.ToString & "'," _

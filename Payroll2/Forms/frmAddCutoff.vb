@@ -22,10 +22,10 @@
     Private Sub btn_addcutoff_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_addcutoff.Click
         Dim fromDate = dtp_fromcutoff.Text
         Dim toDate = dtp_tocutoff.Text
-        If CDate(fromDate) > CDate(toDate) Or CDate(fromDate) = CDate(toDate) Then
+        If DateTime.Parse(fromDate) > DateTime.Parse(toDate) Or DateTime.Parse(fromDate) = DateTime.Parse(toDate) Then
             MessageBox.Show("From date should not be greater than or equal to To Date")
         Else
-            Dim date_diff = DateDiff(DateInterval.Day, CDate(fromDate), CDate(toDate))
+            Dim date_diff = DateDiff(DateInterval.Day, DateTime.Parse(fromDate), DateTime.Parse(toDate))
             'MessageBox.Show(date_diff)
             If cb_occurence.Text = "Monthly" And (date_diff >= 28 And date_diff <= 31) Then
                 AddNewCutoff(fromDate, toDate, cb_occurence.Text)

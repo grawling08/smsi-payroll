@@ -531,7 +531,6 @@ Partial Class frmEmpDetails
         '
         Me.tb_absents.Location = New System.Drawing.Point(140, 42)
         Me.tb_absents.Name = "tb_absents"
-        Me.tb_absents.ReadOnly = True
         Me.tb_absents.Size = New System.Drawing.Size(124, 20)
         Me.tb_absents.TabIndex = 1
         Me.tb_absents.TextAlign = System.Windows.Forms.HorizontalAlignment.Right

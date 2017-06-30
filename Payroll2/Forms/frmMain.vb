@@ -214,12 +214,6 @@ Public Class frmMain
         End Using
     End Sub
 
-    Private Sub CrystalReportSampleToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CrystalReportSampleToolStripMenuItem.Click
-        Using reports As New frmReports
-            reports.Show()
-        End Using
-    End Sub
-
     Private Sub lnk_addcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_addcutoff.LinkClicked
         frmAddCutoff.ShowDialog()
     End Sub

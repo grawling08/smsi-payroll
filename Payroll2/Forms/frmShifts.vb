@@ -40,7 +40,7 @@
     Private Sub dgv_shifts_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_shifts.CellClick
         Dim s = dgv_shifts.CurrentRow.Cells(0).Value.ToString
         cb_shiftday.SelectedIndex = cb_shiftday.FindString(dgv_shifts.CurrentRow.Cells(1).Value.ToString)
-        dtp_shifttimein.Value = DateTime.Today.ToString("d") & " " & CDate(dgv_shifts.CurrentRow.Cells(2).Value.ToString)
-        dtp_shifttimeout.Value = DateTime.Today.ToString("d") & " " & CDate(dgv_shifts.CurrentRow.Cells(3).Value.ToString)
+        dtp_shifttimein.Value = DateTime.Today.ToString("d") & " " & DateTime.Parse(dgv_shifts.CurrentRow.Cells(2).Value.ToString)
+        dtp_shifttimeout.Value = DateTime.Today.ToString("d") & " " & DateTime.Parse(dgv_shifts.CurrentRow.Cells(3).Value.ToString)
     End Sub
 End Class

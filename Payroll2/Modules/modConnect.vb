@@ -257,7 +257,7 @@ Module modConnect
 
     Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
         If CheckCutoff(fromDate, toDate, occurence) = False Then
-            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) VALUES('" & CDate(fromDate).ToString("d MMM yyyy") & " to " & CDate(toDate).ToString("d MMM yyyy") & "',@current_company,(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
+            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) VALUES('" & DateTime.Parse(fromDate).ToString("d MMM yyyy") & " to " & DateTime.Parse(toDate).ToString("d MMM yyyy") & "',@current_company,(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
             QryReadP()
             Try
                 With cmd
@@ -363,7 +363,7 @@ Module modConnect
                 compreader.Read()
                 If compreader("code") = buff0 Then
                     'don't insert timesheet if not within the cutoff
-                    StrSql = "SELECT * FROM tbl_cutoff WHERE DATE('" & CDate(buff6) & "') BETWEEN from_date AND to_date"
+                    StrSql = "SELECT * FROM tbl_cutoff WHERE DATE('" & DateTime.Parse(buff6) & "') BETWEEN from_date AND to_date"
                     QryReadP()
                     Dim ctreader As MySqlDataReader = cmd.ExecuteReader()
                     If Not ctreader.HasRows Then
@@ -376,8 +376,8 @@ Module modConnect
                                     & "Status = '" & buff4 & "' AND " _
                                     & "LogTime = '" & buff5 & "' AND " _
                                     & "LogDate = '" & buff6 & "' "
-                        '& "LogTime = '" & CDate(buff3).ToString("t") & "' AND " _
-                        '& "LogDate = '" & CDate(buff3).ToString("d") & "' "
+                        '& "LogTime = '" & DateTime.Parse(buff3).ToString("t") & "' AND " _
+                        '& "LogDate = '" & DateTime.Parse(buff3).ToString("d") & "' "
                         QryReadP()
                         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
                         If Not dtareader.HasRows Then

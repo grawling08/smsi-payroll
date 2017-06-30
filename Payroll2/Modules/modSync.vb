@@ -46,8 +46,8 @@ Module modSync
             'dt.Rows(i)(0).ToString
             Try
                 StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) " _
-                            & "VALUES('" & CDate(dt.Rows(i)(1).ToString).ToString("d MMM yyyy") & " to " & CDate(dt.Rows(i)(2).ToString).ToString("d MMM yyyy") & "', " _
-                            & "'" & dt.Rows(i)(0).ToString & "',(SELECT occurence_id FROM tblref_occurences WHERE name='" & dt.Rows(i)(3).ToString & "'),'" & CDate(dt.Rows(i)(1).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(4).ToString & "')"
+                            & "VALUES('" & DateTime.Parse(dt.Rows(i)(1).ToString).ToString("d MMM yyyy") & " to " & DateTime.Parse(dt.Rows(i)(2).ToString).ToString("d MMM yyyy") & "', " _
+                            & "'" & dt.Rows(i)(0).ToString & "',(SELECT occurence_id FROM tblref_occurences WHERE name='" & dt.Rows(i)(3).ToString & "'),'" & DateTime.Parse(dt.Rows(i)(1).ToString).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(4).ToString & "')"
                 'Console.Write(StrSql)
                 QryReadP()
                 cmd.ExecuteNonQuery()
@@ -102,7 +102,7 @@ Module modSync
                 If reader1.HasRows Then
                     'read, compare lastupdated and update or not
                     While reader1.Read()
-                        If CDate(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") > CDate(reader1(19).ToString).ToString("yyyy-MM-dd HH:mm:ss") Then
+                        If DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") > DateTime.Parse(reader1(19).ToString).ToString("yyyy-MM-dd HH:mm:ss") Then
                             'update
                             Try
                                 StrSql = "UPDATE tbl_employee SET emp_id = '" & dt.Rows(i)(1).ToString & "'," _
@@ -114,7 +114,7 @@ Module modSync
                                             & "branch = '" & dt.Rows(i)(12).ToString & "', position = '" & dt.Rows(i)(13).ToString & "'," _
                                             & "rank = '" & dt.Rows(i)(14).ToString & "', tax_status = '" & dt.Rows(i)(15).ToString & "'," _
                                             & "employment_status = '" & dt.Rows(i)(16).ToString & "', basic_salary = " & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & "," _
-                                            & "lastUpdated = '" & CDate(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "' WHERE id_employee =" & dt.Rows(i)(0).ToString
+                                            & "lastUpdated = '" & DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "' WHERE id_employee =" & dt.Rows(i)(0).ToString
                                 'Console.Write(StrSql)
                                 QryReadP()
                                 cmd.ExecuteNonQuery()
@@ -136,7 +136,7 @@ Module modSync
                                     & "'" & dt.Rows(i)(10).ToString & "','" & dt.Rows(i)(11).ToString & "'," _
                                     & "'" & dt.Rows(i)(12).ToString & "','" & dt.Rows(i)(13).ToString & "'," _
                                     & "'" & dt.Rows(i)(14).ToString & "','" & dt.Rows(i)(15).ToString & "'," _
-                                    & "'" & dt.Rows(i)(16).ToString & "'," & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & ",'" & CDate(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "')"
+                                    & "'" & dt.Rows(i)(16).ToString & "'," & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & ",'" & DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "')"
                         'Console.Write(StrSql)
                         QryReadP()
                         cmd.ExecuteNonQuery()
@@ -179,8 +179,8 @@ Module modSync
                 'dt.Rows(i)(0).ToString
                 Try
                     StrSql = String.Format("REPLACE INTO tbl_leaves(id, employee_id,leave_type,durFrom,durTo,dateFiled,days_applied,mode,reason,status) VALUES({0},{1},'{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')", _
-                                            dt.Rows(i)(0).ToString, dt.Rows(i)(1).ToString, dt.Rows(i)(2).ToString, CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd"), _
-                                            CDate(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd"), CDate(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd"), _
+                                            dt.Rows(i)(0).ToString, dt.Rows(i)(1).ToString, dt.Rows(i)(2).ToString, DateTime.Parse(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd"), _
+                                            DateTime.Parse(dt.Rows(i)(4).ToString).ToString("yyyy-MM-dd"), DateTime.Parse(dt.Rows(i)(5).ToString).ToString("yyyy-MM-dd"), _
                                             dt.Rows(i)(6).ToString, dt.Rows(i)(7).ToString, dt.Rows(i)(8).ToString.Replace("'", "\'"), dt.Rows(i)(9).ToString)
                     QryReadP()
                     cmd.ExecuteNonQuery()
@@ -190,7 +190,7 @@ Module modSync
                     Dim lvdaterdr As MySqlDataReader = cmd.ExecuteReader
                     If lvdaterdr.HasRows Then
                         While lvdaterdr.Read
-                            StrSql2 = "REPLACE INTO tbl_leavedates VALUES(" & lvdaterdr("id").ToString & "," & lvdaterdr("leaveapp_id").ToString & ",'" & CDate(lvdaterdr("leavedate").ToString).ToString("yyyy-MM-dd") & "','" & lvdaterdr("daystatus").ToString & "')"
+                            StrSql2 = "REPLACE INTO tbl_leavedates VALUES(" & lvdaterdr("id").ToString & "," & lvdaterdr("leaveapp_id").ToString & ",'" & DateTime.Parse(lvdaterdr("leavedate").ToString).ToString("yyyy-MM-dd") & "','" & lvdaterdr("daystatus").ToString & "')"
                             Connect_Sub("payroll")
                             cmd2 = New MySqlCommand(StrSql2, conn2)
                             cmd2.ExecuteNonQuery()
@@ -237,7 +237,7 @@ Module modSync
                                 & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" & dt.Rows(i)(2).ToString & "','" _
                                 & dt.Rows(i)(3).ToString & "'," & dt.Rows(i)(4).ToString & ",'" _
                                 & dt.Rows(i)(5).ToString & "'," & dt.Rows(i)(6).ToString & ",'" _
-                                & CDate(dt.Rows(i)(7).ToString).ToString("yyyy-MM-dd") & "','" & CDate(dt.Rows(i)(8).ToString).ToString("yyyy-MM-dd") & "','" _
+                                & DateTime.Parse(dt.Rows(i)(7).ToString).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(dt.Rows(i)(8).ToString).ToString("yyyy-MM-dd") & "','" _
                                 & dt.Rows(i)(9).ToString & "')"
                     'Console.Write(StrSql)
                     QryReadP()
@@ -281,7 +281,7 @@ Module modSync
                 Try
                     StrSql = "REPLACE INTO tbl_overtime(id,employee_id,overtimedate,reason,status,totaltime,cutoffdate)" _
                                 & "VALUES(" & dt.Rows(i)(0).ToString & "," & dt.Rows(i)(1).ToString & ",'" _
-                                & CDate(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(3).ToString & "','" _
+                                & DateTime.Parse(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(3).ToString & "','" _
                                 & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
                                 & dt.Rows(i)(6).ToString & "')"
                     'Console.Write(StrSql)
@@ -369,14 +369,14 @@ Module modSync
         For i = 0 To dt.Rows.Count - 1
             StrSql = "SELECT * FROM tbl_attendance WHERE " _
                         & "emp_bio_id = '" & dt.Rows(i)(2).ToString & "' AND " _
-                        & "date = '" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "' AND " _
+                        & "date = '" & DateTime.Parse(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "' AND " _
                         & "time_in = '" & dt.Rows(i)(4).ToString & "' AND " _
                         & "time_out = '" & dt.Rows(i)(5).ToString & "'"
             QryReadP()
             Dim paytimerdr As MySqlDataReader = cmd.ExecuteReader
             If Not paytimerdr.HasRows Then
                 StrSql = "INSERT INTO tbl_attendance(emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
-                            & "VALUES('" & dt.Rows(i)(2).ToString & "','" & CDate(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
+                            & "VALUES('" & dt.Rows(i)(2).ToString & "','" & DateTime.Parse(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
                             & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
                             & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
                             & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "','" _

@@ -31,12 +31,12 @@ Public Class frmLoans
             StrSql = "INSERT INTO tbl_loans(employee_id,loantype,lendingCompany,amount,term,monthlyAmortization,startDate,endDate,remarks) " _
                         & "VALUES('" & employee_id & "','" & tb_loanname.Text & "','" & tb_loancomp.Text & "','" & tb_loanamount.Text & "','" _
                         & "','" & tb_loanterm.Text & "','" & tb_loanamort.Text & "','" _
-                        & CDate(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & CDate(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & tb_loanremark.Text & "')"
+                        & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & tb_loanremark.Text & "')"
         Else
             StrSql = "UPDATE tbl_loans SET loantype = '" & tb_loanname.Text & "', lendingCompany = '" & tb_loancomp.Text & "', " _
                         & " amount = '" & tb_loanamount.Text & "', term = '" & tb_loanterm.Text & "', monthlyAmortization = '" & tb_loanamort.Text & "' " _
-                        & " startDate = '" & CDate(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "', " _
-                        & " endDate = '" & CDate(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "', remarks = '" & tb_loanremark.Text & "' WHERE loan_id =" & loan_id
+                        & " startDate = '" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "', " _
+                        & " endDate = '" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "', remarks = '" & tb_loanremark.Text & "' WHERE loan_id =" & loan_id
         End If
         Console.Write(StrSql)
         QryReadP()

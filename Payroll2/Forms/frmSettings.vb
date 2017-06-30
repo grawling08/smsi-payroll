@@ -121,13 +121,13 @@ Public Class frmSettings
         'MessageBox.Show(dgv_holiday.CurrentRow.Cells(0).Value.ToString)
         If dgv_holiday.CurrentRow.Cells(0).Value.ToString <> "" Then
             StrSql = "UPDATE tblref_holiday SET " _
-                        & "date1 = '" & CDate(dgv_holiday.CurrentRow.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "', " _
+                        & "date1 = '" & DateTime.Parse(dgv_holiday.CurrentRow.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "', " _
                         & "holiday = '" & dgv_holiday.CurrentRow.Cells(2).Value.ToString & "', " _
                         & "type = '" & dgv_holiday.CurrentRow.Cells(3).Value.ToString & "' " _
                         & "WHERE idHoliday = " & dgv_holiday.CurrentRow.Cells(0).Value.ToString
         Else
             StrSql = "INSERT INTO tblref_holiday(date1, holiday, type) " _
-                        & "VALUES('" & CDate(dgv_holiday.CurrentRow.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "','" & dgv_holiday.CurrentRow.Cells(2).Value.ToString & "','" & dgv_holiday.CurrentRow.Cells(3).Value.ToString & "')"
+                        & "VALUES('" & DateTime.Parse(dgv_holiday.CurrentRow.Cells(1).Value.ToString).ToString("yyyy-MM-dd") & "','" & dgv_holiday.CurrentRow.Cells(2).Value.ToString & "','" & dgv_holiday.CurrentRow.Cells(3).Value.ToString & "')"
         End If
         QryReadP()
         cmd.ExecuteNonQuery()

@@ -222,12 +222,12 @@ Public Class frmEmpDetails
                 End If
             Else
                 dtareader2.Read()
-                Dim checktimein = CDate(dtareader2("time_in")).ToString("hh:mm tt")
-                Dim checktimeout = CDate(dtareader2("time_out")).ToString("hh:mm tt")
-                If CDate(checktimein) >= #12:00:00 PM# And CDate(checktimein) <= #1:00:00 PM# Then
+                Dim checktimein = DateTime.Parse(dtareader2("time_in")).ToString("hh:mm tt")
+                Dim checktimeout = DateTime.Parse(dtareader2("time_out")).ToString("hh:mm tt")
+                If DateTime.Parse(checktimein) >= #12:00:00 PM# And DateTime.Parse(checktimein) <= #1:00:00 PM# Then
                     'halfday absent am
                     daysAbsent += 0.5
-                ElseIf CDate(checktimeout) >= #12:00:00 PM# And CDate(checktimeout) <= #1:00:00 PM# Then
+                ElseIf DateTime.Parse(checktimeout) >= #12:00:00 PM# And DateTime.Parse(checktimeout) <= #1:00:00 PM# Then
                     'halfday absent pm
                     daysAbsent += 0.5
                 End If
@@ -613,12 +613,13 @@ Public Class frmEmpDetails
     End Sub
     'edit timesheet
     Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
-        Dim LogDate = CDate(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
-        Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", CDate(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
-        Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", CDate(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
+        Dim LogDate = DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
+        Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
+        Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
         'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
         Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
             timesheet.ShowDialog()
+            loadtimesheetsp(frmdate_cutoff.ToString("yyyy-MM-dd"), todate_cutoff.ToString("yyyy-MM-dd"))
         End Using
     End Sub
 End Class

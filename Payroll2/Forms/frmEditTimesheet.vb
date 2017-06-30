@@ -14,17 +14,19 @@ Public Class frmEditTimesheet
     End Sub
 
     Private Sub frmEditTimesheet_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        dtp_logdate.Value = If(String.IsNullOrEmpty(LogDate), Date.Now, CDate(LogDate))
+        dtp_logdate.Value = If(String.IsNullOrEmpty(LogDate), Date.Now, DateTime.Parse(LogDate))
         tb_no.Text = No
-        dtp_timein.Value = If(String.IsNullOrEmpty(Time_in), Date.Now, CDate(LogDate & " " & Time_in))
-        dtp_timeout.Value = If(String.IsNullOrEmpty(Time_out), Date.Now, CDate(LogDate & " " & Time_out))
+        dtp_timein.Value = If(String.IsNullOrEmpty(Time_in), Date.Now, DateTime.Parse(LogDate & " " & Time_in))
+        dtp_timeout.Value = If(String.IsNullOrEmpty(Time_out), Date.Now, DateTime.Parse(LogDate & " " & Time_out))
 
         dtp_timeout.Format = DateTimePickerFormat.Custom
         dtp_timeout.CustomFormat = "hh:mm tt"
         dtp_timeout.ShowUpDown = True
+
         dtp_timein.Format = DateTimePickerFormat.Custom
-        dtp_timeout.CustomFormat = "hh:mm tt"
+        dtp_timein.CustomFormat = "hh:mm tt"
         dtp_timein.ShowUpDown = True
+
         dtp_logdate.Format = DateTimePickerFormat.Custom
         dtp_logdate.CustomFormat = "yyyy-MM-dd"
     End Sub
@@ -45,7 +47,7 @@ Public Class frmEditTimesheet
         End If
     End Sub
     Private Sub savetemptime()
-        'Console.Write(CDate(dtp_logdate.Value.ToString) & " " & CDate(dtp_timein.Value.ToString("t")))
+        'Console.Write(DateTime.Parse(dtp_logdate.Value.ToString) & " " & DateTime.Parse(dtp_timein.Value.ToString("t")))
         StrSql = "SELECT * FROM tbl_attendanceraw WHERE No = '" & tb_no.Text & "' AND LogDate = '" & dtp_logdate.Value.ToString("MM/dd/yyyy") & "'"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
@@ -65,12 +67,12 @@ Public Class frmEditTimesheet
                 'insert time out
                 cmd.Parameters.Add("status", MySqlDbType.String).Value = "C/Out"
                 cmd.Parameters.Add("logtime", MySqlDbType.String).Value = dtp_timeout.Value.ToString("hh:mm tt")
-                cmd.Parameters.Add("Date_Time", MySqlDbType.String).Value = CDate(dtp_logdate.Value.ToString) & " " & CDate(dtp_timeout.Value.ToString("t"))
+                cmd.Parameters.Add("Date_Time", MySqlDbType.String).Value = DateTime.Parse(dtp_logdate.Value.ToString) & " " & DateTime.Parse(dtp_timeout.Value.ToString("t"))
             ElseIf dt.Rows(0).Item(5) = "C/Out" Then
                 'insert time in
                 cmd.Parameters.Add("status", MySqlDbType.String).Value = "C/In"
                 cmd.Parameters.Add("logtime", MySqlDbType.String).Value = dtp_timein.Value.ToString("hh:mm tt")
-                cmd.Parameters.Add("Date_Time", MySqlDbType.String).Value = CDate(dtp_logdate.Value.ToString) & " " & CDate(dtp_timein.Value.ToString("t"))
+                cmd.Parameters.Add("Date_Time", MySqlDbType.String).Value = DateTime.Parse(dtp_logdate.Value.ToString) & " " & DateTime.Parse(dtp_timein.Value.ToString("t"))
             End If
             cmd.ExecuteNonQuery()
             Close_Connect()
@@ -85,7 +87,7 @@ Public Class frmEditTimesheet
             Dim i As Integer = 0
             While i < 2
                 cmd.Parameters.Clear()
-                cmd.Parameters.Add("Date_Time", MySqlDbType.String).Value = If(i < 1, CDate(dtp_logdate.Value.ToString) & " " & CDate(dtp_timein.Value.ToString("t")), CDate(dtp_logdate.Value.ToString) & " " & CDate(dtp_timeout.Value.ToString("t")))
+                cmd.Parameters.Add("Date_Time", MySqlDbType.String).Value = If(i < 1, DateTime.Parse(dtp_logdate.Value.ToString) & " " & DateTime.Parse(dtp_timein.Value.ToString("t")), DateTime.Parse(dtp_logdate.Value.ToString) & " " & DateTime.Parse(dtp_timeout.Value.ToString("t")))
                 cmd.Parameters.Add("LogTime", MySqlDbType.String).Value = If(i < 1, dtp_timein.Value.ToString("hh:mm tt"), dtp_timeout.Value.ToString("hh:mm tt"))
                 cmd.Parameters.Add("LogDate", MySqlDbType.String).Value = dtp_logdate.Value.ToString("MM/dd/yyyy")
                 cmd.Parameters.Add("Status", MySqlDbType.String).Value = If(i < 1, "C/In", "C/Out")
@@ -98,31 +100,30 @@ Public Class frmEditTimesheet
     End Sub
 
     Private Sub savefinaltime()
-        Dim log_date = CDate(dtp_logdate.Text)
-        Dim Time_in = CDate(dtp_timein.Text)
-        Dim Time_out = CDate(LogDate & " " & CDate(dtp_timeout.Text).ToString("hh:ss tt"))
+        Dim log_date = dtp_logdate.Text
+        Dim Time_in = dtp_timein.Text
+        Dim Time_out = dtp_timeout.Text
         Dim totalHours As Integer
         Dim totalLate, totalUndertime, totalOvertime As Double
         Dim latediff, undertimediff, overtimediff As Long
         Dim remarks As String = ""
         'retrieve shift details
-        Console.Write(Time_in & " - " & Time_out)
         StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE " & If(String.IsNullOrEmpty(tb_no.Text), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & tb_no.Text & "'") & ")"
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader()
         If dtareader.HasRows Then
             While dtareader.Read()
                 'match every shift to every logdate
-                If dtareader("day").ToString = log_date.ToString("dddd") Then
+                If dtareader("day").ToString = DateTime.Parse(log_date).ToString("dddd") Then
                     'once matched, check if:
                     '1. compute total hours
                     '2. employee's time in exceeds the shift time in, compute for late
                     '2.1 determine if half day time in
                     'Console.Write(log_date & " " & dtareader("timein").ToString & "\n " & log_date & " " & Time_in.ToString("h:mm:ss tt"))
                     Dim halfdayam As Date = log_date & " " & #12:00:00 PM#
-                    If CDate(log_date & " " & Time_in.ToString("hh:mm tt")) < halfdayam Then
-                        If CDate(log_date & " " & Time_in.ToString("hh:mm tt")) > CDate(log_date & " " & dtareader("timein").ToString) Then
-                            latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timein").ToString), CDate(log_date & " " & Time_in.ToString("hh:mm tt")))
+                    If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) < halfdayam.ToString("hh:mm tt") Then
+                        If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) > DateTime.Parse(log_date & " " & dtareader("timein").ToString) Then
+                            latediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & dtareader("timein").ToString), DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")))
                         Else
                             'Time_in = log_date & " " & dtareader("timein").ToString
                             latediff = 0
@@ -131,8 +132,8 @@ Public Class frmEditTimesheet
                         overtimediff = 0
                         remarks = "Regular"
                     Else
-                        If CDate(log_date & " " & Time_in.ToString("hh:mm tt")) > CDate(log_date & " 1:00 PM") Then
-                            latediff = DateDiff(DateInterval.Second, CDate(log_date & " " & Time_in.ToString("hh:mm tt")), CDate(log_date & " 1:00 PM"))
+                        If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) > DateTime.Parse(log_date & " 01:00 PM") Then
+                            latediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")), DateTime.Parse(log_date & " 01:00 PM"))
                         Else
                             latediff = 0
                         End If
@@ -140,16 +141,16 @@ Public Class frmEditTimesheet
                         remarks = "Half day"
                     End If
                     '3. employee's time out is less than the shift time out, compute for undertime
-                    If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & Time_out.ToString("hh:mm tt")) Then
-                        undertimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & Time_out.ToString("hh:mm tt")), CDate(log_date & " " & dtareader("timeout").ToString))
+                    If DateTime.Parse(log_date & " " & dtareader("timeout").ToString) < DateTime.Parse(log_date & " " & DateTime.Parse(Time_out).ToString("hh:mm tt")) Then
+                        undertimediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & DateTime.Parse(Time_out).ToString("hh:mm tt")), DateTime.Parse(log_date & " " & dtareader("timeout").ToString))
                         If undertimediff > 3600 Then
                             remarks = "Undertime"
                         End If
                         overtimediff = 0
                     End If
-                    If CDate(log_date & " " & dtareader("timeout").ToString) < CDate(log_date & " " & Time_out.ToString("hh:mm tt")) Then '4. employee's time out exceeds the shift time out, check for overtime approval, compute overtime
+                    If DateTime.Parse(log_date & " " & dtareader("timeout").ToString) < DateTime.Parse(log_date & " " & DateTime.Parse(Time_out).ToString("hh:mm tt")) Then '4. employee's time out exceeds the shift time out, check for overtime approval, compute overtime
                         undertimediff = 0
-                        overtimediff = DateDiff(DateInterval.Second, CDate(log_date & " " & dtareader("timeout").ToString), CDate(log_date & " " & Time_out.ToString("hh:mm tt")))
+                        overtimediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & dtareader("timeout").ToString), DateTime.Parse(log_date & " " & DateTime.Parse(Time_out).ToString("hh:mm tt")))
                         If overtimediff > 3600 Then
                             remarks = "Regular"
                         Else
@@ -159,21 +160,22 @@ Public Class frmEditTimesheet
                     totalUndertime = If(Math.Round(undertimediff / 60 / 60, 2) >= 1, Math.Round(undertimediff / 60 / 60, 2), 0)
                     totalOvertime = If(Math.Round(overtimediff / 60 / 60, 2) >= 1, Math.Round(overtimediff / 60 / 60, 2), 0)
                     'total work hours
-                    totalHours = Math.Round(DateDiff(DateInterval.Second, dtp_timein.Value, Time_out) / 60 / 60, 2)
+                    totalHours = Math.Round(DateDiff(DateInterval.Second, DateTime.Parse(Time_in), DateTime.Parse(Time_out)) / 60 / 60, 2)
                 End If
             End While
         End If
-        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & No & "' AND date = '" & log_date.ToString("yyyy-MM-dd") & "'"
+        Console.Write(Time_in & " - " & Time_out)
+        StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & No & "' AND date = '" & DateTime.Parse(log_date).ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim checktimereader As MySqlDataReader = cmd.ExecuteReader
         If checktimereader.HasRows Then
-            StrSql = "UPDATE tbl_attendance SET time_in = '" & Time_in.ToString("HH:mm") & "', time_out = '" & Time_out.ToString("HH:mm") & "'," _
+            StrSql = "UPDATE tbl_attendance SET time_in = '" & DateTime.Parse(Time_in).ToString("HH:mm") & "', time_out = '" & DateTime.Parse(Time_out).ToString("HH:mm") & "'," _
                         & "totalHours ='" & totalHours & "', late = '" & totalLate & "', undertime = '" & totalUndertime & "'," _
-                        & "overtime = '" & totalOvertime & "', remarks = '" & remarks & "' WHERE emp_bio_id = '" & No & "' AND date = '" & log_date.ToString("yyyy-MM-dd") & "'"
+                        & "overtime = '" & totalOvertime & "', remarks = '" & remarks & "' WHERE emp_bio_id = '" & No & "' AND date = '" & DateTime.Parse(log_date).ToString("yyyy-MM-dd") & "'"
         Else
             StrSql = "INSERT INTO tbl_attendance(id_employee,emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
-                    & "VALUES('" & id_employee & "','" & No & "','" & log_date.ToString("yyyy-MM-dd") & "','" & Time_in.ToString("hh:mm") & "','" _
-                    & Time_out.ToString("HH:mm") & "','" & totalHours & "','" & totalLate & "','" & totalUndertime & "','" & totalOvertime & "','" & remarks & "')"
+                    & "VALUES('" & id_employee & "','" & No & "','" & DateTime.Parse(log_date).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(Time_in).ToString("HH:mm") & "','" _
+                    & DateTime.Parse(Time_out).ToString("HH:mm") & "','" & totalHours & "','" & totalLate & "','" & totalUndertime & "','" & totalOvertime & "','" & remarks & "')"
         End If
         Console.Write(StrSql)
         QryReadP()
