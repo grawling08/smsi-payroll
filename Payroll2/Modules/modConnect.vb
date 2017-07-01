@@ -419,11 +419,11 @@ Module modConnect
                     & "tbl_payslip.lateabsent_deduct as 'Late/Absent', tbl_payslip.undertime_deduct as 'Undertime',  " _
                     & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF',  " _
                     & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay'" _
-                    & "FROM(tbl_employee) " _
-                    & "LEFT JOIN (tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id ) " _
+                    & "FROM tbl_employee " _
+                    & "LEFT JOIN tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id " _
                     & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
                     & "LEft JOIN tbl_company ON tbl_employee.company = tbl_company.name  " _
-                    & "WHERE tbl_company.name = '" & current_company & "' ORDER BY Employee"
+                    & "WHERE tbl_company.name = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') ORDER BY Employee"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")

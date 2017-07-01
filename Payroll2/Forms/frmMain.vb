@@ -219,6 +219,11 @@ Public Class frmMain
     End Sub
 
     Private Sub lnk_setcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_setcutoff.LinkClicked
+        If String.IsNullOrWhiteSpace(cb_cutoff.Text) Then
+            MessageBox.Show("Add new Cutoff!")
+            lnk_addcutoff.Focus()
+            Exit Sub
+        End If
         current_cutoff = cb_cutoff.Text
         tsbtn_cutoff.Text = current_cutoff
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
@@ -235,11 +240,12 @@ Public Class frmMain
         thread = New System.Threading.Thread(AddressOf SyncTimesheet)
         thread.Start()
         loading.Show()
-        While(thread.IsAlive)
+        While (thread.IsAlive)
             Application.DoEvents()
         End While
         GetCutoffOccurences()
         getPayslip(current_cutoff)
+        loadEmployee()
         loading.Close()
         MessageBox.Show("Cutoff changed!")
     End Sub
@@ -258,9 +264,10 @@ Public Class frmMain
         QryReadP()
         cmd.ExecuteNonQuery()
         loadcutoff()
-        loadEmployee()
     End Sub
     Sub loadcutoff()
+        cb_cutoff.DataSource = Nothing
+        cb_cutoff.Items.Clear()
         GetCompanyCutoff(cb_companylist.Text)
         If dt.Rows.Count > 0 Then
             cb_cutoff.DataSource = dt

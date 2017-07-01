@@ -59,8 +59,10 @@ Public Class frmEmpDetails
         dgv_emptimesheet.DataSource = Nothing
 
         ' Set the CustomFormat string.
+        dtp_timesheetmonth.Value = frmdate_cutoff
         dtp_timesheetmonth.Format = DateTimePickerFormat.Custom
         dtp_timesheetmonth.CustomFormat = "MMMM dd, yyyy"
+        dtp_timesheetmonth2.Value = todate_cutoff
         dtp_timesheetmonth2.Format = DateTimePickerFormat.Custom
         dtp_timesheetmonth2.CustomFormat = "MMMM dd, yyyy"
 
@@ -248,7 +250,9 @@ Public Class frmEmpDetails
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then
             While latereader.Read()
-                totalLate += CDbl(latereader("late"))
+                If CDbl(latereader("late")) >= 10 Then
+                    totalLate += CDbl(latereader("late"))
+                End If
             End While
         End If
         tb_late.Text = Math.Round(totalLate * 5, 2)
