@@ -24,6 +24,7 @@ Module modConnect
     Public logged_user, logged_id As String
     Public prevcutoff_fromdate, prevcutoff_todate As DateTime
     Public prevcutoff_company As String
+
     Sub SaveSystemSettings(ByVal Payroll_Connect() As String, ByVal HR_Connect() As String)
         'hris connection setting
         SaveSetting("Payroll System", "Startup", "serverHR", HR_Connect(0))

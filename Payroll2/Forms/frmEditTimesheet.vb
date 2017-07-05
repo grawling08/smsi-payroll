@@ -121,7 +121,7 @@ Public Class frmEditTimesheet
                     '2.1 determine if half day time in
                     'Console.Write(log_date & " " & dtareader("timein").ToString & "\n " & log_date & " " & Time_in.ToString("h:mm:ss tt"))
                     Dim halfdayam As Date = log_date & " " & #12:00:00 PM#
-                    If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) < halfdayam.ToString("hh:mm tt") Then
+                    If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) > halfdayam.ToString("hh:mm tt") Then
                         If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) > DateTime.Parse(log_date & " " & dtareader("timein").ToString) Then
                             latediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & dtareader("timein").ToString), DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")))
                         Else
@@ -132,7 +132,7 @@ Public Class frmEditTimesheet
                         overtimediff = 0
                         remarks = "Regular"
                     Else
-                        If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) > DateTime.Parse(log_date & " 01:00 PM") Then
+                        If DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")) < DateTime.Parse(log_date & " 01:00 PM") Then
                             latediff = DateDiff(DateInterval.Second, DateTime.Parse(log_date & " " & DateTime.Parse(Time_in).ToString("hh:mm tt")), DateTime.Parse(log_date & " 01:00 PM"))
                         Else
                             latediff = 0

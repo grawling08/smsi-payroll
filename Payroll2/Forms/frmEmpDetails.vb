@@ -202,13 +202,19 @@ Public Class frmEmpDetails
                     'query leave where leave is approved by the hr
                     'if leave is with pay -1 to absent
                     'leave is without pay, treated as absent
-                    StrSql = "SELECT tbl_leaves.* FROM tbl_leaves, tbl_employee WHERE tbl_employee.id_employee = '" & id & "' AND tbl_employee.id_employee = tbl_leaves.employee_id AND durFrom = '" & CurrD.ToString("yyyy-MM-dd") & "' AND status = 'Approved by HR' AND mode = 'with pay'"
+                    StrSql = "SELECT tbl_leaves.*, tbl_leavedates.* FROM tbl_leaves JOIN tbl_leavedates ON tbl_leavedates.leaveapp_id = tbl_leaves.id WHERE tbl_leaves.employee_id = '" & id & "' AND tbl_leavedates.leavedate = '" & CurrD.ToString("yyyy-MM-dd") & "' AND tbl_leaves.status = 'Approved by HR' AND tbl_leaves.mode = 'with pay'"
                     QryReadP()
                     Dim dtareader5 As MySqlDataReader = cmd.ExecuteReader
                     If dtareader5.HasRows Then
                         'merong leave
-                        daysAbsent -= 1
-                        totalWorkHours += 8.0
+                        dtareader5.Read()
+                        If dtareader5("daystatus").ToString = "Whole Day" Then
+                            daysAbsent -= 1.0
+                            totalWorkHours += 8.0
+                        ElseIf dtareader5("daystatus").ToString = "AM" Or dtareader5("daystatus").ToString = "PM" Then
+                            daysAbsent -= 0.5
+                            totalWorkHours += 4.0
+                        End If
                     End If
                 Else
                     If CurrD.ToString("dddd") = "Sunday" Then
@@ -544,12 +550,12 @@ Public Class frmEmpDetails
     End Sub
     'save other deductions
     Sub save_otherdeduct(ByVal payslip_id As String)
-        StrSql = "DELETE FROM tbl_otherdeduct WHERE payslip_id = " & payslip_id
+        StrSql = "DELETE FROM tbl_otherdeductions WHERE payslip_id = " & payslip_id
         QryReadP()
         cmd.ExecuteNonQuery()
         If dgv_otherdeduct.Rows.Count > 0 Then
             For Each row In dgv_otherdeduct.Rows
-                StrSql = "INSERT INTO tbl_incentives(payslip_id,name,amount) VALUES(" & payslip_id & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
+                StrSql = "INSERT INTO tbl_otherdeductions(payslip_id,name,amount) VALUES(" & payslip_id & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
                 QryReadP()
                 cmd.ExecuteNonQuery()
             Next
@@ -623,7 +629,14 @@ Public Class frmEmpDetails
         'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
         Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
             timesheet.ShowDialog()
-            loadtimesheetsp(frmdate_cutoff.ToString("yyyy-MM-dd"), todate_cutoff.ToString("yyyy-MM-dd"))
+            loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
         End Using
+        totalOT()
+        totalTimesheetDeduct()
+        ComputeLates()
+        computeloans()
+        computeTotalContributions()
+        computeAllowance()
+        computeTotal()
     End Sub
 End Class

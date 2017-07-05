@@ -23,24 +23,24 @@
     Sub loadshifts()
         StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = '" & cb_shifttype.Text & "'"
         QryReadP()
-        ds = New DataSet()
-        adpt.Fill(ds, "shifts")
-        dgv_shifts.DataSource = ds.Tables(0)
+        Dim dsshift = New DataSet
+        adpt.Fill(dsshift, "shifts")
+        dgv_shifts.DataSource = dsshift.Tables(0)
         Dim col = dgv_shifts.Columns.Count
-        Dim i = 0
-        While i <= col
+        For i As Integer = 0 To col
             dgv_shifts.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             dgv_shifts.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + i
-        End While
+        Next
         dgv_shifts.Columns(0).Visible = False
         dgv_shifts.Columns(4).Visible = False
+        dgv_shifts.Columns(5).Visible = False
     End Sub
 
     Private Sub dgv_shifts_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_shifts.CellClick
         Dim s = dgv_shifts.CurrentRow.Cells(0).Value.ToString
         cb_shiftday.SelectedIndex = cb_shiftday.FindString(dgv_shifts.CurrentRow.Cells(1).Value.ToString)
-        dtp_shifttimein.Value = DateTime.Today.ToString("d") & " " & DateTime.Parse(dgv_shifts.CurrentRow.Cells(2).Value.ToString)
-        dtp_shifttimeout.Value = DateTime.Today.ToString("d") & " " & DateTime.Parse(dgv_shifts.CurrentRow.Cells(3).Value.ToString)
+        dtp_shifttimein.Value = DateTime.Parse(dgv_shifts.CurrentRow.Cells(2).Value.ToString) 'DateTime.Today.ToString("d") & " " & 
+        dtp_shifttimeout.Value = DateTime.Parse(dgv_shifts.CurrentRow.Cells(3).Value.ToString) 'DateTime.Today.ToString("d") & " " & 
     End Sub
 End Class
