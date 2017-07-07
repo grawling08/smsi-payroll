@@ -413,8 +413,8 @@ Module modConnect
     Sub getPayslip(ByVal current_cutoff As String)
         adpt.Dispose()
         'use this query string if app is integrated with HRIS
-        StrSql = "SELECT tbl_cutoff.cutoff_range as 'Cutoff', code as 'Company', CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, " _
-                    & "tbl_payslip.totalWorkHours as 'Total Work Hours', tbl_payslip.income as 'Basic Pay',  " _
+        StrSql = "SELECT tbl_employee.id_employee, tbl_cutoff.cutoff_range as 'Cutoff', code as 'Company', " _
+                    & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, tbl_payslip.income as 'Basic Pay',  " _
                     & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT',  tbl_payslip.ot_pay as 'Total OT',  " _
                     & "tbl_payslip.allowances as 'Additionals', tbl_payslip.incentives as 'Incentives',  " _
                     & "tbl_payslip.lateabsent_deduct as 'Late/Absent', tbl_payslip.undertime_deduct as 'Undertime',  " _
@@ -442,6 +442,7 @@ Module modConnect
         End While
         frmMain.dgv_payroll.Columns(0).Visible = False
         frmMain.dgv_payroll.Columns(1).Visible = False
+        frmMain.dgv_payroll.Columns(2).Visible = False
         Close_Connect()
     End Sub
 

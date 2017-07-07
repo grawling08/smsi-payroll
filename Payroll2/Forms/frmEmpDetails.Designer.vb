@@ -739,9 +739,9 @@ Partial Class frmEmpDetails
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(8, 59)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(66, 13)
+        Me.Label15.Size = New System.Drawing.Size(65, 13)
         Me.Label15.TabIndex = 4
-        Me.Label15.Text = "TOTAL PAY"
+        Me.Label15.Text = "Basic Salary"
         '
         'tb_totalworkhours
         '

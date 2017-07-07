@@ -4,8 +4,6 @@ Imports Microsoft.Office.Interop
 
 Public Class frmEmpDetails
     Private id, emp_fullname, employee_id, employmentStatus, taxcode As String
-    Private totalLate, totalUndertime, totalOvertime, totalWorkHours, totalAllowance, totalBenefits, totalLoans As Double
-    Private empHourlyWage, empDailyWage As Double
     Private daysAbsent As Double = 0
     Private daysPresent As Double = 0
 
@@ -77,18 +75,23 @@ Public Class frmEmpDetails
         End If
         'get the date range of the cutoff
         getCutoffRange()
+        'get previous cutoff days for deductions
+        GetPrevCutoff()
         'get timesheet from hris
         loadtimesheetsp(frmdate_cutoff.ToString("yyyy-MM-dd"), todate_cutoff.ToString("yyyy-MM-dd"))
         'payroll computations
-        computeWage()
+        computeWage(employmentStatus, tb_monthlysalary.Text)
         tb_regularot.Text = 0
         tb_holidayot.Text = 0
         totalOT()
         totalTimesheetDeduct()
-        ComputeLates()
-        computeloans()
-        computeTotalContributions()
-        computeAllowance()
+        tb_late.Text = ComputeLates(tb_biometricid.Text, id)
+        tb_loans.Text = computeloans(id)
+        tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
+        tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
+        tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+        'computeTotalContributions()
+        tb_allowance.Text = computeAllowance(id)
         'check for saved payslip
         StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
         QryReadP()
@@ -110,18 +113,6 @@ Public Class frmEmpDetails
     End Sub
 
 #Region "computations"
-    'compute daily and ourly wage
-    Sub computeWage()
-        'daily rate
-        'Probi daily rate = basic salary / (26 * 12)
-        'regular = basic salary / (30 * 12)
-        If employmentStatus = "Regular" Then
-            empDailyWage = Double.Parse(tb_monthlysalary.Text) / 30
-        Else
-            empDailyWage = Double.Parse(tb_monthlysalary.Text) / 26
-        End If
-        empHourlyWage = empDailyWage / 8
-    End Sub
 
     Sub totalOT()
         Dim isRestdayOT As Boolean = False
@@ -182,7 +173,6 @@ Public Class frmEmpDetails
     Sub totalTimesheetDeduct()
         'loop cutoff range dates
         'check for absenses and leaves
-        GetPrevCutoff()
         Dim countattendance = 0
         Dim CurrD As DateTime = prevcutoff_fromdate
         While (CurrD <= prevcutoff_todate)
@@ -249,21 +239,6 @@ Public Class frmEmpDetails
         tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2) ' Math.Round(daysPresent * empDailyWage, 2)
     End Sub
 
-    Sub ComputeLates()
-        'get total lates
-        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
-        QryReadP()
-        Dim latereader As MySqlDataReader = cmd.ExecuteReader
-        If latereader.HasRows Then
-            While latereader.Read()
-                If CDbl(latereader("late")) >= 10 Then
-                    totalLate += CDbl(latereader("late"))
-                End If
-            End While
-        End If
-        tb_late.Text = Math.Round(totalLate * 5, 2)
-    End Sub
-
     Sub loadpayslip()
         StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
         QryReadP()
@@ -302,46 +277,6 @@ Public Class frmEmpDetails
         tb_netincome.Text = Math.Round((taxated_income + CDbl(tb_totalbenefits.Text) - CDbl(tb_loans.Text)), 2)
     End Sub
 
-    Sub computeTotalContributions()
-        tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
-        tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
-        tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
-    End Sub
-
-    Sub computeAllowance()
-        StrSql = "SELECT * FROM tbl_allowances WHERE employee_id = " & id
-        QryReadP()
-        Dim dtareader3 As MySqlDataReader = cmd.ExecuteReader
-        If dtareader3.HasRows Then
-            While dtareader3.Read()
-                totalAllowance += Double.Parse(dtareader3("amount"))
-            End While
-        End If
-        tb_allowance.Text = totalAllowance
-    End Sub
-
-    Sub computeloans()
-        StrSql = "SELECT tbl_loans.* FROM tbl_loans WHERE tbl_loans.employee_id='" & id & "' AND endDate >= '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
-        QryReadP()
-        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
-        Dim loans As Double = 0
-        totalLoans = 0
-        If dtareader.HasRows Then
-            While dtareader.Read
-                'StrSql2 = "SELECT SUM(amount), Max(date_paid) FROM tbl_loanpayments WHERE loan_id = '" & dtareader("loan_id").ToString & "'"
-                'Connect_Sub("payroll")
-                'cmd2 = New MySqlCommand(StrSql2, conn2)
-                'Dim loanpayreader As MySqlDataReader = cmd2.ExecuteReader
-                'If loanpayreader.HasRows Then
-                '    loanpayreader.Read()
-
-                'End If
-                loans = dtareader("monthlyAmortization")
-                totalLoans += loans
-            End While
-        End If
-        tb_loans.Text = Math.Round(totalLoans, 2)
-    End Sub
 #End Region
 
     Sub loadtimesheetsp(ByVal startdate As String, ByVal enddate As String)
@@ -633,10 +568,12 @@ Public Class frmEmpDetails
         End Using
         totalOT()
         totalTimesheetDeduct()
-        ComputeLates()
-        computeloans()
-        computeTotalContributions()
-        computeAllowance()
+        tb_late.Text = ComputeLates(tb_biometricid.Text, id)
+        tb_loans.Text = computeloans(id)
+        tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
+        tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
+        tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+        tb_allowance.Text = computeAllowance(id)
         computeTotal()
     End Sub
 End Class
