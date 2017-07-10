@@ -244,12 +244,13 @@ Public Class frmMain
             Application.DoEvents()
         End While
         GetCutoffOccurences()
+        'get the date range of the cutoff
+        getCutoffRange()
         getPayslip(current_cutoff)
         loadEmployee()
         loading.Close()
         MessageBox.Show("Cutoff changed!")
     End Sub
-
     Private Sub cb_companylist_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cb_companylist.SelectedIndexChanged
         lbl_currentcompany.Text = cb_companylist.Text
         current_company = cb_companylist.Text

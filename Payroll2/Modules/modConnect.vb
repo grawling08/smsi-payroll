@@ -414,12 +414,12 @@ Module modConnect
         adpt.Dispose()
         'use this query string if app is integrated with HRIS
         StrSql = "SELECT tbl_employee.id_employee, tbl_cutoff.cutoff_range as 'Cutoff', code as 'Company', " _
-                    & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, tbl_payslip.income as 'Basic Pay',  " _
+                    & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, tbl_employee.employment_status, tbl_employee.basic_salary, tbl_payslip.income as 'Basic Pay',  " _
                     & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT',  tbl_payslip.ot_pay as 'Total OT',  " _
-                    & "tbl_payslip.allowances as 'Additionals', tbl_payslip.incentives as 'Incentives',  " _
+                    & "tbl_payslip.allowances as 'Allowances', tbl_payslip.incentives as 'Incentives',  " _
                     & "tbl_payslip.lateabsent_deduct as 'Late/Absent', tbl_payslip.undertime_deduct as 'Undertime',  " _
-                    & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF',  " _
-                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay'" _
+                    & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', tbl_payslip.otherdeduct as 'Other Deductions', " _
+                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status " _
                     & "FROM tbl_employee " _
                     & "LEFT JOIN tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id " _
                     & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
@@ -435,7 +435,7 @@ Module modConnect
             frmMain.dgv_payroll.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             frmMain.dgv_payroll.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Format = "N2"
-            If i > 2 Then
+            If i > 3 Then
                 frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             End If
             i = i + 1
@@ -443,6 +443,34 @@ Module modConnect
         frmMain.dgv_payroll.Columns(0).Visible = False
         frmMain.dgv_payroll.Columns(1).Visible = False
         frmMain.dgv_payroll.Columns(2).Visible = False
+        frmMain.dgv_payroll.Columns(4).Visible = False
+        frmMain.dgv_payroll.Columns(5).Visible = False
+        frmMain.dgv_payroll.Columns(21).Visible = False
+
+        'additional payslip info
+        Dim rows = frmMain.dgv_payroll.Rows.Count
+        Dim j = 0
+        While j <= rows - 1
+            frmMain.dgv_payroll.Rows(j).Cells(6).Value = Math.Round((Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(5).Value) / 2), 2) ' Basic pay
+            frmMain.dgv_payroll.Rows(j).Cells(7).Value = 0 ' Regular OT
+            frmMain.dgv_payroll.Rows(j).Cells(8).Value = 0 ' Holiday OT
+            frmMain.dgv_payroll.Rows(j).Cells(9).Value = frmMain.dgv_payroll.Rows(j).Cells(7).Value + frmMain.dgv_payroll.Rows(j).Cells(8).Value ' Total OT
+            frmMain.dgv_payroll.Rows(j).Cells(10).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'allowances
+            frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'incentives
+            frmMain.dgv_payroll.Rows(j).Cells(12).Value = ComputeLates("", frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'lates + absent
+            frmMain.dgv_payroll.Rows(j).Cells(13).Value = 0 'undertime
+            frmMain.dgv_payroll.Rows(j).Cells(14).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(5).Value)(2) 'sss
+            frmMain.dgv_payroll.Rows(j).Cells(15).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(5).Value)(2) 'phic
+            frmMain.dgv_payroll.Rows(j).Cells(16).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(5).Value) 'hdmf/pag-ibig
+            frmMain.dgv_payroll.Rows(j).Cells(17).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'other deductions
+            Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value)
+            Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(12).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value)
+            frmMain.dgv_payroll.Rows(j).Cells(18).Value = a - b
+            frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(21).Value)
+            frmMain.dgv_payroll.Rows(j).Cells(20).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value
+            j = j + 1
+        End While
+
         Close_Connect()
     End Sub
 
@@ -492,7 +520,7 @@ Module modConnect
     End Function
 
     Function computeTax(ByVal gross_income As Double, ByVal code As String) As Double
-        Dim tax As Double
+        Dim tax As Double = 0
         Dim status As String = ""
         If code.Equals("S") Or code.Equals("M") Then
             status = "S/ME"
@@ -507,15 +535,15 @@ Module modConnect
         Else
             status = "Z"
         End If
-        StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
-                    & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = '" & occurence & "'"
-        QryReadP()
-        Dim taxReader As MySqlDataReader = cmd.ExecuteReader
-        If taxReader.HasRows Then
-            taxReader.Read()
-            tax = taxReader("excempt") + ((gross_income - taxReader("salary")) * taxReader("percentage"))
-        Else
-            tax = 0
+        If gross_income > 0 Then
+            StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
+                        & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = '" & occurence & "'"
+            QryReadP()
+            Dim taxReader As MySqlDataReader = cmd.ExecuteReader
+            If taxReader.HasRows Then
+                taxReader.Read()
+                tax = taxReader("excempt") + ((Double.Parse(gross_income) - taxReader("salary")) * taxReader("percentage"))
+            End If
         End If
         Return tax
     End Function

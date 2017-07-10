@@ -73,14 +73,13 @@ Public Class frmEmpDetails
                 ctrl.Enabled = False
             Next
         End If
-        'get the date range of the cutoff
-        getCutoffRange()
         'get previous cutoff days for deductions
         GetPrevCutoff()
         'get timesheet from hris
         loadtimesheetsp(frmdate_cutoff.ToString("yyyy-MM-dd"), todate_cutoff.ToString("yyyy-MM-dd"))
         'payroll computations
         computeWage(employmentStatus, tb_monthlysalary.Text)
+        tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2)
         tb_regularot.Text = 0
         tb_holidayot.Text = 0
         totalOT()
@@ -90,8 +89,11 @@ Public Class frmEmpDetails
         tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
         tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
         tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+        loadincentives(cutoff_id, id)
+        loadotherdeduct(cutoff_id, id)
         'computeTotalContributions()
-        tb_allowance.Text = computeAllowance(id)
+        totalAllowance = computeAllowance(id)
+        tb_allowance.Text = totalAllowance
         'check for saved payslip
         StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
         QryReadP()
@@ -236,7 +238,7 @@ Public Class frmEmpDetails
         tb_absents.Text = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
         tb_undertime.Text = Math.Round(totalUndertime * empHourlyWage, 2)
         tb_totalworkhours.Text = totalWorkHours
-        tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2) ' Math.Round(daysPresent * empDailyWage, 2)
+        ' Math.Round(daysPresent * empDailyWage, 2)
     End Sub
 
     Sub loadpayslip()
@@ -250,7 +252,6 @@ Public Class frmEmpDetails
             tb_sss.Text = dtareader("sss").ToString
             tb_phic.Text = dtareader("phic").ToString
             tb_hdmf.Text = dtareader("hdmf").ToString
-            loadincentives(dtareader("payslip_id").ToString)
         End If
     End Sub
 
@@ -395,8 +396,8 @@ Public Class frmEmpDetails
     End Sub
 
     'load incentives
-    Private Sub loadincentives(ByVal payslip_id As String)
-        StrSql = "SELECT name as Name, amount as Amount FROM tbl_incentives WHERE payslip_id = '" & payslip_id & "'"
+    Private Sub loadincentives(ByVal cutoff_id As String, ByVal id_employee As String)
+        StrSql = "SELECT name as Name, amount as Amount FROM tbl_incentives WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         If dtareader.HasRows Then
@@ -406,19 +407,45 @@ Public Class frmEmpDetails
             End While
         End If
     End Sub
+    'add new incentives
     Private Sub btn_addincentive_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_addincentive.Click
         Dim row As String() = New String() {"Edit", "0"}
         dgv_incentives.Rows.Add(row)
     End Sub
+    'after cell edit compute net pay
+    Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_incentives.CellEndEdit
+        computeTotal()
+        'save to db
+        save_incentives(cutoff_id, id)
+        'refresh dgv
+        getPayslip(current_cutoff)
+    End Sub
+    'delete incentives
     Private Sub btn_delincentive_Click(sender As System.Object, e As System.EventArgs) Handles btn_delincentive.Click
         If dgv_incentives.Rows.Count > 0 Then
-            'StrSql = "DELETE FROM tbl_incentives WHERE payslip_id = " & payslip_id
-            'QryReadP()
-            'cmd.ExecuteNonQuery()
+            Dim name = dgv_incentives.CurrentRow.Cells(0).Value.ToString
+            Dim amount = dgv_incentives.CurrentRow.Cells(1).Value.ToString
+            StrSql = "DELETE FROM tbl_incentives WHERE name = '" & name & "' AND amount = " & amount & " AND cutoff_id = " & cutoff_id & " AND employee_id = " & id
+            QryReadP()
+            cmd.ExecuteNonQuery()
             dgv_incentives.Rows.Remove(dgv_incentives.SelectedRows(0))
             computeTotal()
+            getPayslip(current_cutoff)
         Else
             MessageBox.Show("No data to delete.")
+        End If
+    End Sub
+    'save incentives
+    Sub save_incentives(ByVal cutoff_id As String, ByVal id_employee As String)
+        StrSql = "DELETE FROM tbl_incentives WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        If dgv_incentives.Rows.Count > 0 Then
+            For Each row In dgv_incentives.Rows
+                StrSql = "INSERT INTO tbl_incentives(cutoff_id,employee_id,name,amount) VALUES(" & cutoff_id & "," & id_employee & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Next
         End If
     End Sub
 
@@ -426,7 +453,7 @@ Public Class frmEmpDetails
     Private Sub btn_savepayslip_Click(sender As System.Object, e As System.EventArgs) Handles btn_savepayslip.Click
         'Dim payslip_id
         'check if saved payslip
-        StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
+        StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = " & id & " AND cutoff_id = " & cutoff_id
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         If dtareader.HasRows Then
@@ -445,8 +472,8 @@ Public Class frmEmpDetails
             QryReadP()
             cmd.ExecuteNonQuery()
             'save incentives & other dedctions
-            save_incentives(payslip_id)
-            save_otherdeduct(payslip_id)
+            save_incentives(cutoff_id, id)
+            save_otherdeduct(cutoff_id, id)
         Else
             'saved new payslip
             StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
@@ -459,8 +486,8 @@ Public Class frmEmpDetails
             cmd.ExecuteNonQuery()
             payslip_id = cmd.LastInsertedId.ToString()
             'save incentives & other deductions
-            save_incentives(payslip_id)
-            save_otherdeduct(payslip_id)
+            save_incentives(cutoff_id, id)
+            save_otherdeduct(cutoff_id, id)
             'save/check loan payments
         End If
 
@@ -470,32 +497,6 @@ Public Class frmEmpDetails
         getPayslip(current_cutoff)
         Close_Connect()
     End Sub
-    'save incentives
-    Sub save_incentives(ByVal payslip_id As String)
-        StrSql = "DELETE FROM tbl_incentives WHERE payslip_id = " & payslip_id
-        QryReadP()
-        cmd.ExecuteNonQuery()
-        If dgv_incentives.Rows.Count > 0 Then
-            For Each row In dgv_incentives.Rows
-                StrSql = "INSERT INTO tbl_incentives(payslip_id,name,amount) VALUES(" & payslip_id & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
-                QryReadP()
-                cmd.ExecuteNonQuery()
-            Next
-        End If
-    End Sub
-    'save other deductions
-    Sub save_otherdeduct(ByVal payslip_id As String)
-        StrSql = "DELETE FROM tbl_otherdeductions WHERE payslip_id = " & payslip_id
-        QryReadP()
-        cmd.ExecuteNonQuery()
-        If dgv_otherdeduct.Rows.Count > 0 Then
-            For Each row In dgv_otherdeduct.Rows
-                StrSql = "INSERT INTO tbl_otherdeductions(payslip_id,name,amount) VALUES(" & payslip_id & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
-                QryReadP()
-                cmd.ExecuteNonQuery()
-            Next
-        End If
-    End Sub
 
     'automatic compute net pay on enter
     Private Sub tb_allowance_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_allowance.KeyUp, tb_tax.KeyUp, tb_sss.KeyUp, tb_phic.KeyUp, tb_hdmf.KeyUp, tb_loans.KeyUp, tb_netpaywithtax.KeyUp
@@ -503,10 +504,6 @@ Public Class frmEmpDetails
             'MsgBox("enter key pressd ")
             computeTotal()
         End If
-    End Sub
-    'after cell edit compute net pay
-    Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_incentives.CellEndEdit
-        computeTotal()
     End Sub
     'nnumbers only input 
     Private Sub tb_allowance_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles tb_tax.KeyPress, tb_sss.KeyPress, tb_phic.KeyPress, tb_hdmf.KeyPress, tb_allowance.KeyPress, tb_netpaywithtax.KeyPress
@@ -528,19 +525,34 @@ Public Class frmEmpDetails
         End Using
     End Sub
 
-    'other deductions
+    'load other deductions
+    Private Sub loadotherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
+        StrSql = "SELECT name as Name, amount as Amount FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        If dtareader.HasRows Then
+            While dtareader.Read()
+                Dim row As String() = New String() {dtareader("Name").ToString, dtareader("Amount").ToString}
+                dgv_otherdeduct.Rows.Add(row)
+            End While
+        End If
+    End Sub
+    'add new other deductions
     Private Sub btn_adddeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_adddeduct.Click
         Dim row As String() = New String() {"Edit", "0"}
         dgv_otherdeduct.Rows.Add(row)
     End Sub
-    'other deductions
+    'save other deductions
     Private Sub btn_deldeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_deldeduct.Click
         If dgv_otherdeduct.Rows.Count > 0 Then
-            'StrSql = "DELETE FROM tbl_incentives WHERE payslip_id = " & payslip_id
-            'QryReadP()
-            'cmd.ExecuteNonQuery()
+            Dim name = dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString
+            Dim amount = dgv_otherdeduct.CurrentRow.Cells(1).Value.ToString
+            StrSql = "DELETE FROM tbl_otherdeductions WHERE name = '" & name & "' AND amount = " & amount & " AND cutoff_id = " & cutoff_id & " AND employee_id = " & id
+            QryReadP()
+            cmd.ExecuteNonQuery()
             dgv_otherdeduct.Rows.Remove(dgv_otherdeduct.SelectedRows(0))
             computeTotal()
+            getPayslip(current_cutoff)
         Else
             MessageBox.Show("No data to delete.")
         End If
@@ -548,6 +560,23 @@ Public Class frmEmpDetails
     'autocompute after cell edit
     Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
         computeTotal()
+        'save to db
+        save_otherdeduct(cutoff_id, id)
+        'refresh dgv
+        getPayslip(current_cutoff)
+    End Sub
+    'save other deductions
+    Sub save_otherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
+        StrSql = "DELETE FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            For Each row In dgv_otherdeduct.Rows
+                StrSql = "INSERT INTO tbl_otherdeductions(cutoff_id,employee_id,name,amount) VALUES(" & cutoff_id & "," & id_employee & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Next
+        End If
     End Sub
 
     'add timesheet

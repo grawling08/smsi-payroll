@@ -58,6 +58,9 @@ Partial Class frmMain
         Me.tsb_savepayroll = New System.Windows.Forms.Panel()
         Me.TabControl3 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.cb_companylist = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.lnk_setcutoff = New System.Windows.Forms.LinkLabel()
         Me.cb_cutoff = New System.Windows.Forms.ComboBox()
         Me.lnk_addcutoff = New System.Windows.Forms.LinkLabel()
@@ -84,9 +87,6 @@ Partial Class frmMain
         Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.cb_companylist = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
         Me.TabControl3.SuspendLayout()
@@ -299,6 +299,32 @@ Partial Class frmMain
         Me.TabPage3.Text = "Company Cutoff"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'cb_companylist
+        '
+        Me.cb_companylist.FormattingEnabled = True
+        Me.cb_companylist.Location = New System.Drawing.Point(6, 20)
+        Me.cb_companylist.Name = "cb_companylist"
+        Me.cb_companylist.Size = New System.Drawing.Size(275, 21)
+        Me.cb_companylist.TabIndex = 5
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 44)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(35, 13)
+        Me.Label2.TabIndex = 4
+        Me.Label2.Text = "Cutoff"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 3)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(51, 13)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "Company"
+        '
         'lnk_setcutoff
         '
         Me.lnk_setcutoff.AutoSize = True
@@ -455,7 +481,7 @@ Partial Class frmMain
         Me.TabControl1.Location = New System.Drawing.Point(3, 136)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(299, 507)
+        Me.TabControl1.Size = New System.Drawing.Size(295, 507)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -465,7 +491,7 @@ Partial Class frmMain
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(291, 481)
+        Me.TabPage1.Size = New System.Drawing.Size(287, 481)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Employees"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -554,7 +580,7 @@ Partial Class frmMain
         Me.dgv_emplist.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.dgv_emplist.RowHeadersVisible = False
         Me.dgv_emplist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emplist.Size = New System.Drawing.Size(285, 447)
+        Me.dgv_emplist.Size = New System.Drawing.Size(284, 447)
         Me.dgv_emplist.TabIndex = 0
         '
         'ToolStripSeparator2
@@ -597,32 +623,6 @@ Partial Class frmMain
         Me.label_loggedinas.Name = "label_loggedinas"
         Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
         Me.label_loggedinas.Text = "ToolStripStatusLabel3"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 3)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(51, 13)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Company"
-        '
-        'cb_companylist
-        '
-        Me.cb_companylist.FormattingEnabled = True
-        Me.cb_companylist.Location = New System.Drawing.Point(6, 20)
-        Me.cb_companylist.Name = "cb_companylist"
-        Me.cb_companylist.Size = New System.Drawing.Size(275, 21)
-        Me.cb_companylist.TabIndex = 5
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(3, 44)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(35, 13)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Cutoff"
         '
         'frmMain
         '

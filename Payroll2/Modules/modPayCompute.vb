@@ -56,14 +56,50 @@ Module modPayCompute
     End Function
 
     Function computeAllowance(ByVal id_employee As String) As Double
+        Dim a As Double = 0
         StrSql = "SELECT * FROM tbl_allowances WHERE employee_id = " & id_employee
         QryReadP()
         Dim dtareader3 As MySqlDataReader = cmd.ExecuteReader
         If dtareader3.HasRows Then
             While dtareader3.Read()
-                totalAllowance += Double.Parse(dtareader3("amount"))
+                a += Double.Parse(dtareader3("amount"))
             End While
         End If
-        Return totalAllowance
+        Return a
+    End Function
+
+    Function computeNetIncome() As Double
+
+        Return True
+    End Function
+
+    Function computeIncentives(ByVal cutoff_id As String, ByVal id_employee As String) As Double
+        Dim incentives As Double = 0
+        StrSql = "SELECT SUM(amount) as Amount FROM tbl_incentives WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        If dtareader.HasRows Then
+            While dtareader.Read()
+                If Not IsDBNull(dtareader("Amount")) Then
+                    incentives = Math.Round(Double.Parse(dtareader("Amount")), 2)
+                End If
+            End While
+        End If
+        Return incentives
+    End Function
+
+    Function computeOtherDeduct(ByVal cutoff_id As String, ByVal id_employee As String) As Double
+        Dim otherdeduct As Double = 0
+        StrSql = "SELECT SUM(amount) as Amount FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        If dtareader.HasRows Then
+            While dtareader.Read()
+                If Not IsDBNull(dtareader("Amount")) Then
+                    otherdeduct = Math.Round(Double.Parse(dtareader("Amount")), 2)
+                End If
+            End While
+        End If
+        Return otherdeduct
     End Function
 End Module
