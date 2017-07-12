@@ -102,4 +102,64 @@ Module modPayCompute
         End If
         Return otherdeduct
     End Function
+
+    Function totalOT(ByVal id As String) As Double()
+        Dim ot() As Double = {0, 0} 'index: 0=regular ot; 1=holiday ot
+        Dim isRestdayOT As Boolean = False
+        Dim isRegHolidayOT As Boolean = False
+        Dim isSpecHolidayOT As Boolean = False
+        Dim isRegOt As Boolean = False
+        StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
+                            & "status = 'Approved by HR' AND cutoffDate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        QryReadP()
+        Dim otreader As MySqlDataReader = cmd.ExecuteReader
+        If otreader.HasRows Then
+            While otreader.Read
+                Dim totalhours = otreader("totaltime")
+                StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & otreader("overtimedate").ToString("dddd") & "'"
+                QryReadP()
+                Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
+                If Not shiftreader.HasRows Then
+                    isRestdayOT = True
+                Else
+                    isRegOt = True
+                End If
+                'check if holiday
+                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & otreader("overtimedate").ToString("yyyy-MM-dd") & "'"
+                QryReadP()
+                Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
+                If holidayreader.HasRows Then
+                    holidayreader.Read()
+                    If holidayreader("type") = "Regular Holidays" Then
+                        isRegHolidayOT = True
+                    ElseIf holidayreader("type") = "Special (Non-Working) Days" Then
+                        isSpecHolidayOT = True
+                    End If
+                End If
+                'if restday, regholiday and specialholiday are all false then regOT is true
+                If isRestdayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
+                    'tb_regularot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                    ot(0) += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                ElseIf isSpecHolidayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
+                    'tb_holidayot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                    ot(1) += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 195%)
+                    ot(1) += Math.Round(empHourlyWage * 1.95 * totalhours, 2)
+                ElseIf isRegHolidayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 260%)
+                    ot(1) += Math.Round(empHourlyWage * 2.6 * totalhours, 2)
+                ElseIf isRegHolidayOT = True And isRestdayOT = True Then
+                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 338%)
+                    ot(1) += Math.Round(empHourlyWage * 3.38 * totalhours, 2)
+                ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
+                    'Hourly rate * 125% * number of hours
+                    ot(0) += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
+                End If
+            End While
+        End If
+        Return ot
+    End Function
 End Module

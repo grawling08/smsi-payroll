@@ -23,13 +23,9 @@ DELIMITER //
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_timesheetPR`(
 	IN `p_start` DATE,
 	IN `p_end` DATE,
-	IN `p_id` INT
-
-
-
-
-
+	IN `p_id` VARCHAR(50)
 )
+    DETERMINISTIC
 BEGIN
 
 DROP TEMPORARY TABLE IF EXISTS TEMP;
@@ -45,9 +41,10 @@ CREATE TEMPORARY TABLE TEMP (
 	undertime double(3,2),
 	remarks text
 );
+
 set @start = p_start;
 WHILE @start <= p_end DO
-      INSERT INTO TEMP(bio_id,datelog,day,timein,timeout,totalHrs,late,overtime) VALUES (p_id,@start, DATE_FORMAT(@start,'%W'),'-','-',0,0,0);
+      INSERT INTO TEMP(bio_id,datelog,day,timein,timeout,totalHrs,late,overtime,undertime) VALUES (p_id,@start, DATE_FORMAT(@start,'%W'),'-','-',0,0,0,0);
       SET @start = DATE_ADD(@start, INTERVAL 1 DAY);
 END WHILE;
 
@@ -64,9 +61,9 @@ UPDATE TEMP t
 INNER JOIN (
 		SELECT b.overtimedate, concat('Overtime ',b.status) as otstatus 
 		FROM tbl_employee a
-		LEFT JOIN tbl_overtime b on b.employee_id = a.id_employee
+		JOIN tbl_overtime b on b.employee_id = a.id_employee
 		where a.emp_bio_id=p_id) l on l.overtimedate = t.datelog
-SET t.remarks=l.otstatus;
+SET t.remarks=IFNULL(CONCAT(l.otstatus,' '),'');
 
 UPDATE TEMP t
 INNER JOIN (
@@ -84,10 +81,10 @@ INNER JOIN (
 		where a.emp_bio_id=p_id and c.daystatus <> 'Rest Day') l on l.businessdate = t.datelog
 SET t.remarks='Official Travel';
 
-UPDATE TEMP
-SET remarks = CONCAT(IFNULL(CONCAT(remarks,' '),''),'RestDay')
-WHERE day not in (select a.day from tbl_shifts a
-left join tbl_employee c on c.shiftgroup = a.shiftgroup
+UPDATE TEMP b
+SET b.remarks = CONCAT(IFNULL(CONCAT(b.remarks,' '),''),'RestDay')
+WHERE b.day NOT IN (select a.day from tbl_shifts a
+join tbl_employee c on c.shiftgroup = a.shiftgroup
 where c.emp_bio_id = p_id);
 
 UPDATE TEMP
@@ -518,7 +515,7 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(63, 0, '10021', '2017-05-11', '08:32', '17:07', '8.58', '0', '0', '0', 'Regular'),
 	(64, 0, '10021', '2017-05-12', '08:34', '17:08', '8.57', '0', '0', '0', 'Regular'),
 	(65, 0, '10021', '2017-05-13', '08:35', '17:34', '9', '0', '0', '2.57', 'Regular'),
-	(66, 0, '10021', '2017-05-15', '08:20', '17:14', '9', '0', '0', '0', 'Half day'),
+	(66, 0, '10021', '2017-05-15', '08:20', '17:14', '9', '0', '0', '0', 'Regular'),
 	(67, 0, '10022', '2017-05-02', '08:53', '17:26', '8.55', '0', '0', '0', 'Regular'),
 	(68, 0, '10022', '2017-05-03', '08:55', '17:50', '8.92', '0', '0', '0', 'Regular'),
 	(69, 0, '10022', '2017-05-04', '08:54', '-', '0', '0', '0', '0', 'Unable to Time Out'),
@@ -1098,7 +1095,7 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(645, 502, '111', '2017-05-30', '08:18', '17:18', '9', '0', '0', '0', 'Half day'),
 	(646, 502, '111', '2017-05-31', '08:26', '17:26', '9', '0', '0', '0', 'Half day'),
 	(647, 0, '10021', '2017-05-13', '08:35', '-', '0', '0', '0', '0', 'Unable to Time Out'),
-	(648, 0, '10021', '2017-05-15', '08:20', '17:14', '9', '0', '0', '0', 'Half day'),
+	(648, 0, '10021', '2017-05-15', '08:20', '17:14', '9', '0', '0', '0', 'Regular'),
 	(649, 0, '111', '2017-05-08', '-', '17:09', '0', '0', '0', '0', 'Unable to Time In'),
 	(650, 0, '1004', '2017-05-29', '08:13', '07:35', '-0.63', '0', '-565', '0', 'Regular'),
 	(651, 0, '10002', '2017-06-28', '07:55', '17:29', '9.57', '0', '0', '0', ''),
@@ -2342,9 +2339,9 @@ CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `lastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_employee` (`id_employee`)
-) ENGINE=MyISAM AUTO_INCREMENT=2118 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2121 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_employee: 117 rows
+-- Dumping data for table hris_payroll.tbl_employee: 120 rows
 /*!40000 ALTER TABLE `tbl_employee` DISABLE KEYS */;
 INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`, `mName`, `lName`, `shiftgroup`, `sss_id`, `phic_id`, `hdmf_id`, `tin`, `company`, `branch`, `position`, `rank`, `tax_status`, `employment_status`, `basic_salary`, `lastUpdated`) VALUES
 	(2003, 1, '310-98-4', '1005', 'Jennifer', 'Palo', 'Dantes', 'Permanent', '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HRD Head', 'Level 10', 'M1', 'Regular', 10000, '2017-05-25 13:31:17'),
@@ -2370,21 +2367,21 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2023, 212, '', '', 'Arnold', 'Aboyme', 'Plaza', 'Part-Time', '09-4157916-6', '162508071957', '', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
 	(2024, 222, '', '', 'Jimrey', 'R.', 'Abenoja', 'Permanent', '09-3224951-5', '160506266820', '121122325178', '455239111', 'Currahee Construction Corporation', 'CDO', 'General Maintenance Service', '', 'S1', 'Regular', 0, '2017-05-29 02:07:23'),
 	(2025, 232, '', '', 'Nerio', 'Gildore', 'Amper', 'Permanent', '0916548070', '190902066156', '388004036012', '922208289', 'Currahee Construction Corporation', 'DVO', 'Financial comptroller', '', 'M2', 'Regular', 0, '2017-05-29 01:58:25'),
-	(2026, 262, '', '', 'James', 'C.', 'Baldosano', 'Permanent', '08-1841488-8', '150502798830', '121028250041', '405322115', 'Currahee Construction Corporation', 'CDO', 'Field Engineer', '', 'M1', 'Regular', 0, '2017-05-30 01:17:23'),
+	(2026, 262, '', '', 'James', 'C.', 'Baldosano', 'Permanent', '08-1841488-8', '150502798830', '121028250041', '405322115', 'Currahee Construction Corporation', 'CDO', 'Field Engineer', '', 'M1', 'Regular', 0, '2017-06-28 05:38:38'),
 	(2027, 282, '', '', 'Renante', 'M.', 'Cabigas', 'Permanent', '0613995298', '152016370597', '111129529206', '422012853', 'Currahee Construction Corporation', 'CDO', 'Liaison and Purchaser', '', 'M2', 'Regular', 0, '2017-05-30 01:19:47'),
-	(2028, 292, '', '', 'Gerald', 'Detoyato', 'Caro', 'Permanent', '3430488752', '112021267328', '121166288885', '', 'Currahee Construction Corporation', 'CDO', 'Draftsman', '', 'M1', 'Regular', 0, '2017-05-30 01:25:07'),
-	(2029, 312, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Permanent', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'Level 6', 'M', 'Regular', 32, '2017-05-25 13:31:17'),
+	(2028, 292, '', '', 'Gerald', 'Detoyato', 'Caro', 'Permanent', '3430488752', '112021267328', '121166288885', '', 'Currahee Construction Corporation', 'CDO', 'Draftsman', '', 'M1', 'Regular', 0, '2017-06-28 06:04:55'),
+	(2029, 312, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Flexible', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'Level 6', 'M', 'Regular', 32, '2017-06-30 05:12:21'),
 	(2030, 322, '', '', 'Elgin', 'Cabunilas', 'Camilotes', 'Permanent', '09-3653870-9', '160505803776', '121098218437', '440119377', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'M2', 'Regular', 0, '2017-05-29 01:43:57'),
 	(2031, 332, '', '', 'Aileen Joy', 'C', 'Castro', 'Permanent', '0928422634', '160502867331', '188000966823', '945454280', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-29 01:56:18'),
 	(2032, 352, '', '', 'Elvira', 'Carvajal', 'Montera', 'Permanent', '09-2211068-3', '160501550245', '121042672683', '928503260', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Acctg & Audit Head', 'Level 5', 'M3', 'Regular', 0, '2017-05-25 05:52:49'),
-	(2033, 362, '', '', 'Kristine Joy', 'Carreon', 'Dealca', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
-	(2034, 372, '', '10021', 'Raul Adrian', 'Apuli', 'Altavano', 'Permanent', '34-6405963-6', '150504494774', '121144034952', '445182360', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'S', 'Regular', 11000, '2017-05-25 13:31:17'),
+	(2033, 362, '', '', 'Kristine Joy', 'Carreon', 'Dealca', 'Permanent', '', '', '', '', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-06-28 06:01:15'),
+	(2034, 372, '', '10021', 'Raul Adrian', 'Apuli', 'Altavano', 'Permanent', '34-6405963-6', '150504494774', '121144034952', '445182360', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'S', 'Regular', 11000, '2017-07-05 00:58:40'),
 	(2035, 382, '', '', 'May', 'Abroguena', 'Ebalang', 'Permanent', '08-1441611-0', '150251158837', '121030943288', '930-840161', 'Currahee Construction Corporation', 'CDO', 'Administrative Staff', '', 'S', 'Probationary', 0, '2017-05-25 05:44:42'),
-	(2036, 392, '', '10002', 'Charlene', 'Jomoc', 'Almuete', 'Permanent', '0826525316', '150504277390', '', '330785931', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'S', 'Regular', 12000, '2017-05-25 13:31:17'),
+	(2036, 392, 'null', '10002', 'Charlene', 'Jomoc', 'Almuete', 'Flexible', '0826525316', '150504277390', '', '330785931', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'S', 'Regular', 12000, '2017-07-05 00:55:31'),
 	(2037, 402, '', '', 'Patricio', 'R.', 'Galdo', 'Permanent', '08-1623217-2', '020506435049', '104002270786', '272572003', 'Currahee Construction Corporation', 'CDO', 'Utility Service Personnel', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
-	(2038, 412, '', '1003', 'Marco', 'Costamero', 'Arangco', 'Permanent', '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'M2', 'Regular', 16000, '2017-05-25 13:31:17'),
+	(2038, 412, '', '1003', 'Marco', 'Costamero', 'Arangco', 'Permanent', '06-2815784-3', '120507216566', '912202004888', '268-593-414', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Software Developer', 'Level 1', 'M2', 'Regular', 16000, '2017-07-05 01:11:21'),
 	(2039, 422, '', '', 'Izza Honey', 'C.', 'Manluza', 'Permanent', '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Currahee Construction Corporation', 'CDO', 'Office Engineer', '', 'M', 'Regular', 0, '2017-05-25 13:31:17'),
-	(2040, 442, '', '', 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'Permanent', '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Currahee Construction Corporation', 'CDO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2040, 442, '', '', 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'Permanent', '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Currahee Construction Corporation', 'CDO', 'Bookkeeper', '', 'S', 'Regular', 0, '2017-06-27 03:30:55'),
 	(2041, 452, '', '', 'Arnaldo', 'Arguilles', 'Mantillas', 'Permanent', '08-1075836-1', '180514581443', '310101797702', '180-027-122', 'Currahee Construction Corporation', 'CDO', 'Operations Manager', 'Level 10', 'M1', 'Regular', 0, '2017-05-25 13:31:17'),
 	(2042, 462, '', '10017', 'Brazzel Gay', 'J.', 'Cabaltera', 'Permanent', '0939595806', '010520667240', '121151311466', '472885607', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Social Media Associate', 'Level 1', 'S', 'Regular', 10, '2017-05-25 13:31:17'),
 	(2043, 472, '', '110', 'Renan', 'A.', 'Moreno', 'Permanent', '0816173053', '150502397216', '182000543107', '410675176', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Web Lead', 'Level 3', 'M', 'Regular', 0, '2017-05-25 06:20:18'),
@@ -2394,9 +2391,9 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2047, 542, '', '104', 'Robert', 'Batonghinog', 'Bersano', 'Permanent', '0815082802', '020503777364', '104002242398', '937694691', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Lead', 'Level 3', 'M1', 'Regular', 0, '2017-05-25 13:31:17'),
 	(2048, 552, '', '1006', 'Pete Emmanuell', 'L.', 'Balagosa', 'Permanent', '08-1801748-9', '150503883890', '121134979348', '330784605', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
 	(2049, 562, '', '117', 'Khristian Darylle Joe', 'Bona', 'Battad', 'Permanent', '3442813205', '020262108512', '121131509835', '468727860', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
-	(2050, 582, '', '', 'John', 'M.', 'Mingo', 'Permanent', '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Currahee Construction Corporation', 'DVO', 'Field Engineer', '', 'S', 'Regular', 0, '2017-05-29 02:26:11'),
-	(2051, 592, '', '', 'Gina', 'Aboyme', 'Micoy', 'Permanent', '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Currahee Construction Corporation', 'DVO', 'Accounting Supervisor', '', 'M2', 'Regular', 0, '2017-05-29 02:23:27'),
-	(2052, 602, '', '', 'Lowie', 'G.', 'Ulo', 'Permanent', '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Currahee Construction Corporation', 'DVO', 'General Maintenance Service', '', 'M', 'Regular', 0, '2017-05-30 01:14:08'),
+	(2050, 582, '', '', 'John', 'M.', 'Mingo', 'Permanent', '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Currahee Construction Corporation', 'DVO', 'Field Engineer', '', 'S', 'Regular', 0, '2017-06-28 06:17:40'),
+	(2051, 592, '', '', 'Gina', 'Aboyme', 'Micoy', 'Permanent', '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Currahee Construction Corporation', 'DVO', 'Accounting Supervisor', '', 'M2', 'Regular', 0, '2017-06-20 05:31:48'),
+	(2052, 602, '', '', 'Lowie', 'G.', 'Ulo', 'Permanent', '09-3438201-4', '162008037167', '121142112706', '466-263-405', 'Currahee Construction Corporation', 'DVO', 'General Maintenance Service', '', 'M', 'Regular', 0, '2017-06-28 06:19:13'),
 	(2053, 612, '', '', 'Mario', 'Quiam', 'Tolosa', 'Project Based', '33-2666182-9', '082011907160', '', '', 'Currahee Construction Corporation', 'CDO', 'Foreman', '', 'M3', 'Regular', 0, '2017-05-27 06:39:05'),
 	(2054, 622, '', '', 'Julius', 'B.', 'Lascano', 'Part-Time', '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Currahee Construction Corporation', 'CDO', 'Logistic Manager', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
 	(2055, 632, '', '', 'Romnick June', 'A.', 'Elcana', 'Part-Time', '09-2857476-0', '160502796558', '121194643961', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'S', 'Probationary', 10, '2017-05-29 02:18:06'),
@@ -2404,7 +2401,7 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2057, 652, '', '10014', 'Cresar John', 'Reyes', 'Arce', 'Permanent', '0922273135', '162003641023', '190000056276', '947987046', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'Level 1', 'M2', 'Regular', 12500, '2017-05-25 13:31:17'),
 	(2058, 662, '', '10013', 'Lorman', 'S.', 'Saladaga', 'Permanent', '1009497752', '140251248725', '914301364780', '816667', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 12, '2017-05-25 06:54:45'),
 	(2059, 672, '', '', 'Geneth', 'S.', 'Jadulan', 'Permanent', '0935125869', '160505344984', '121070911178', '429361074', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 15, '2017-05-25 13:31:17'),
-	(2060, 682, '', '', 'Nancy', 'Montebon', 'Wong', 'Permanent', '0919148684', '160501640325', '101000063572', '940042814', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', '', 'S1', 'Regular', 24, '2017-05-25 13:31:17'),
+	(2060, 682, '', '', 'Nancy', 'Montebon', 'Wong', 'Permanent', '0919148684', '160501640325', '101000063572', '940042814', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', '', 'S1', 'Regular', 24, '2017-06-28 01:14:58'),
 	(2061, 692, '', '', 'Jeffrey', 'Moneba', 'Antoque', 'Permanent', '0937380136', '160255309649', '121111591247', '409174979', 'Norminring Development Corporation', 'CDO', 'Senior Service Mechanic', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
 	(2062, 702, '', '', 'Salome', 'M.', 'Bodiongan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Inventory Controller', '', 'S', 'Regular', 14, '2017-05-25 13:31:17'),
 	(2063, 712, '', '', 'Ryan Evan', 'P.', 'Almacin', 'Part-Time', '09-2732070-8', '', '', '432-197-977', 'Norminring Development Corporation', 'DVO', 'GSP', '', 'M', 'Probationary', 10, '2017-05-25 13:31:17'),
@@ -2426,7 +2423,7 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2079, 872, '', '', 'Arnulfo', 'V.', 'Layco', 'Permanent', '33-5724371', '020500083639', '1040-0040-57', '213-811-070', 'Norminring Development Corporation', 'DVO', 'General Manager', '', 'M2', 'Regular', 0, '2017-05-25 13:31:17'),
 	(2080, 882, '', '', 'Stephanie', 'A.', 'Somoza', 'Part-Time', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S', 'Probationary', 10, '2017-05-25 13:31:17'),
 	(2081, 892, '', '', 'Jaymar', 'R.', 'Coresis', 'Permanent', '09-2984886-4', '060503261070', '', '', 'Norminring Development Corporation', 'DVO', 'Partsman', '', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
-	(2082, 902, '', '', 'Mark Anthony', 'M.', 'Montera', 'Permanent', '0920192988', '162003621529', '', '924469729', 'Norminring Development Corporation', 'DVO', 'Utility/Liaison', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2082, 902, '', '', 'Mark Anthony', 'M.', 'Montera', 'Permanent', '0920192988', '162003621529', '', '924469729', 'Norminring Development Corporation', 'DVO', 'Utility Service Personnel', '', 'S', 'Probationary', 0, '2017-06-28 05:41:16'),
 	(2083, 912, '', '', 'Rizza Mae', 'C.', 'Lapinid', 'Part-Time', '0942047011', '170253314020', '4866783', '485272573', 'Norminring Development Corporation', 'DVO', 'Sales Associate', '', 'S1', 'Probationary', 10, '2017-05-25 13:31:17'),
 	(2084, 922, '', '', 'Pamela Ivy', 'A.', 'Improgo', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'CDO', 'Branch Manager', '', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
 	(2085, 932, '', '', 'Jenner Nino', 'B.', 'Moneba', 'Permanent', '0924271258', '160501354306', '', '928767649', 'Norminring Development Corporation', 'DVO', 'Service and After Sales Manager', '', '', 'Regular', 0, '2017-05-25 13:31:17'),
@@ -2446,35 +2443,39 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2099, 1082, '', '', 'Joer', 'S.', 'Delas Penas', 'Permanent', '', '170501971165', '', '280184534', 'Norminring Development Corporation', 'DVO', 'MRP - Sales', '', 'S', 'Regular', 11, '2017-05-25 13:31:17'),
 	(98, 1092, '', '', 'Ivy', 'R.', 'Florentino', 'Permanent', '0941791452', '162511202515', '916236620041', '‎498-109-584', 'Bellarmine Magister Enrichment Corporation', '', 'Front Desk Officer', '', 'S', '', 0, '2017-05-30 05:39:23'),
 	(99, 1102, '', '', 'April Dan', 'S.', 'Borromeo', 'Permanent', '940335961', '162500434732', '916273954122', '‎498-110-152', 'Bellarmine Magister Enrichment Corporation', '', 'Maintenance/Marketing Assistant', '', 'S', '', 0, '2017-05-30 06:19:19'),
-	(2100, 1112, '', '', 'Junalona', 'R.', 'Basalo', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', '', 'Trainer-Full Time', '', 'S', '', 0, '2017-05-25 13:31:17'),
+	(2100, 1112, '', '', 'Junalona', 'R.', 'Basalo', 'Part-Time', '34-6623444-6', '160507460396', '917073582478', '498-110-756', 'Bellarmine Magister Enrichment Corporation', '', 'Trainer-Full Time', '', 'S', '', 0, '2017-07-10 07:42:52'),
 	(2101, 1122, '', '', 'Margilen', 'Edrozo', 'Abuhan', 'Project Based', '', '150254168765', '', '461537289', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
 	(2102, 1132, '', '', 'Alejando', 'Tilos', 'Paloma', 'Permanent', '09-2341709-7', '162005511844', '', '291789935', 'My Only Way, Inc.', '', 'Farm Caretaker', '', 'M1', '', 0, '2017-05-25 13:31:17'),
 	(2103, 1142, '', '', 'Alex', 'Alejandro', 'Paloma', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
 	(2104, 1152, '', '', 'Danilo', 'Delgado', 'Vedida Jr.', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
 	(2105, 1162, '', '', 'Ronald', 'Eduave', 'Tawacal', 'Project Based', '', '230027168227', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
 	(2106, 1172, '', '', 'Anthony', 'Sanchez', 'Potot', 'Project Based', '', '', '', '', 'My Only Way, Inc.', '', 'Farm Caretaker', '', '', '', 0, '2017-05-25 13:31:17'),
-	(2107, 1182, '', '112', 'Janine', 'Llanos', 'Jasmin', 'Permanent', '08-2399113-4', '150503497044', '121098502267', '440560910', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S1', 'Regular', 0, '2017-05-25 13:31:17'),
+	(2107, 1182, '', '112', 'Janine', 'Llanos', 'Jasmin', 'Permanent', '08-2399113-4', '150503497044', '121098502267', '440560910', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S1', 'Regular', 0, '2017-06-17 02:47:56'),
 	(2108, 1192, '', '', 'Christian', 'Morden', 'Rebuyas', 'Part-Time', '09-4212214-3', '162519095378', '917059132863', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', '', 'Probationary', 0, '2017-05-25 13:31:17'),
-	(2109, 1202, '', '', 'Joseph', 'R.', 'Giron II', 'Permanent', '339-6120-303', '150502868960', '914343835204', '290055877000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, '2017-05-25 13:31:17'),
-	(2110, 1212, '', '10022', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'Level 1', 'S', 'Regular', 11, '2017-05-25 07:35:25'),
+	(2109, 1202, '', '', 'Joseph', 'R.', 'Giron II', 'Permanent', '339-6120-303', '150502868960', '914343835204', '290055877000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, '2017-06-27 06:26:29'),
+	(2110, 1212, '', '', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'Level 1', 'S', 'Regular', 11, '2017-06-27 09:05:23'),
 	(2111, 1222, '', '', 'Franco', 'Puzon', 'Amesola', 'Part-Time', '011101706862', '030205910474', '107012316640', '935614253', 'Norminring Development Corporation', 'CDO', 'Sales Associate/Operations', '', 'S', 'Probationary', 12, '2017-06-02 05:18:08'),
-	(2112, 1232, '', '', 'Mary Grace', 'A.', 'Escalona', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Admin Head/Bookkeeper/HR Point Person', '', 'M2', 'Probationary', 10, '2017-05-25 13:31:17'),
+	(2112, 1232, '', '', 'Mary Grace', 'A.', 'Escalona', 'Part-Time', '09-1791751-6', '17-025032233', '121066409538', '926-570958', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Admin Head/Bookkeeper/HR Point Person', '', 'M2', 'Probationary', 10, '2017-07-10 07:51:01'),
 	(2113, 1242, '', '', 'Noel', 'P.', 'Sobejana', 'Part-Time', '0813387680', '190895509276', '1900958641', '215413654', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Administrator', '', 'S1', 'Probationary', 0, '2017-05-25 13:31:17'),
-	(2114, 1252, '', '', 'Kareen', 'J.', 'De Guzman', 'Part-Time', '', '', '', '', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Trainer-Part time', '', 'S', 'Probationary', 0, '2017-05-25 13:31:17'),
+	(2114, 1252, '', '', 'Kareen', 'J.', 'De Guzman', 'Part-Time', '0939720192', '162510793048', '916048342279', '702-030-994', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Trainer-Part time', '', 'S', 'Probationary', 0, '2017-07-10 07:45:58'),
 	(2115, 1262, '', '', 'Franco', 'Custodio', 'Pimentel', 'Permanent', '', '', '', '', 'Mindanao Precast Structures Inc.', 'CDO', 'General Maintenance', '', '', 'Probationary', 0, '2017-05-29 01:11:59'),
 	(2116, 1272, '', '', 'Arlyn', 'Cainglet', 'Benito', 'Part-Time', '0814214095', '150501615953', '121060054763', '935614238', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'Level 2', 'S3', 'Probationary', 0, '2017-05-31 01:44:28'),
-	(2117, 1282, '', '', 'Stephen', 'V.', 'Lagunero', 'Part-Time', '', '', '', '', '', '', '', '', '', '', 0, '2017-06-03 03:01:50');
+	(2117, 1282, '', '', 'Stephen', 'V.', 'Lagunero', 'Part-Time', '', '', '', '', '', '', '', '', '', '', 0, '2017-06-03 03:01:50'),
+	(2118, 1292, 'null', 'null', 'Josephine Veronique', 'Lacson', 'Noel', 'Permanent', '33-1486498-4', '190904730606', '104002207893', '137-176-598', 'Amaara Corporation', 'Head Office', 'HR Director', '', 'M', 'Regular', 0, '2017-06-13 02:17:12'),
+	(2119, 1302, '', '', 'Lysette', 'M.', 'Parcon', 'Part-Time', '10-1028409-3', '', '', '', 'Norminring Development Corporation', 'DPL', 'Cashier', '', 'S', 'Project Based', 1, '2017-06-29 06:47:38'),
+	(2120, 1312, '', '', 'Stephen', 'V.', 'Lagunero', 'Part-Time', '', '', '', '', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Driver', '', 'S3', 'Probationary', 0, '2017-06-29 07:09:44');
 /*!40000 ALTER TABLE `tbl_employee` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_incentives
 DROP TABLE IF EXISTS `tbl_incentives`;
 CREATE TABLE IF NOT EXISTS `tbl_incentives` (
   `incentives_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payslip_id` int(11) DEFAULT NULL,
+  `cutoff_id` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `amount` double DEFAULT NULL,
   PRIMARY KEY (`incentives_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_incentives: 0 rows
 /*!40000 ALTER TABLE `tbl_incentives` DISABLE KEYS */;
@@ -3286,11 +3287,12 @@ INSERT INTO `tbl_loans` (`loan_id`, `employee_id`, `loan_type`, `lendingCompany`
 DROP TABLE IF EXISTS `tbl_otherdeductions`;
 CREATE TABLE IF NOT EXISTS `tbl_otherdeductions` (
   `deduct_id` int(11) NOT NULL AUTO_INCREMENT,
-  `payslip_id` int(11) DEFAULT NULL,
+  `cutoff_id` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
-  `amount` int(11) DEFAULT NULL,
+  `amount` double DEFAULT NULL,
   PRIMARY KEY (`deduct_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_otherdeductions: 0 rows
 /*!40000 ALTER TABLE `tbl_otherdeductions` DISABLE KEYS */;
@@ -3343,19 +3345,21 @@ CREATE TABLE IF NOT EXISTS `tbl_payslip` (
   `incentives` double DEFAULT NULL,
   `lateabsent_deduct` double DEFAULT NULL,
   `undertime_deduct` double DEFAULT NULL,
-  `tax` double DEFAULT NULL,
   `sss` double DEFAULT NULL,
   `phic` double DEFAULT NULL,
   `hdmf` double DEFAULT NULL,
+  `otherdeduct` double DEFAULT NULL,
   `gross_income` double DEFAULT NULL,
+  `tax` double DEFAULT NULL,
   `net_income` double DEFAULT NULL,
   PRIMARY KEY (`payslip_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_payslip: 1 rows
+-- Dumping data for table hris_payroll.tbl_payslip: 2 rows
 /*!40000 ALTER TABLE `tbl_payslip` DISABLE KEYS */;
-INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `totalWorkHours`, `income`, `regot_pay`, `holot_pay`, `ot_pay`, `allowances`, `incentives`, `lateabsent_deduct`, `undertime_deduct`, `tax`, `sss`, `phic`, `hdmf`, `gross_income`, `net_income`) VALUES
-	(1, '372', 1, 8, 5500, 0, 0, 0, 0, 0, 0, 0, 390.46, 199.8, 68.75, 50, 5181.45, 4790.99);
+INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `totalWorkHours`, `income`, `regot_pay`, `holot_pay`, `ot_pay`, `allowances`, `incentives`, `lateabsent_deduct`, `undertime_deduct`, `sss`, `phic`, `hdmf`, `otherdeduct`, `gross_income`, `tax`, `net_income`) VALUES
+	(1, '372', 1, 8, 5500, 0, 0, 0, 0, 0, 0, 0, 199.8, 68.75, 50, NULL, 5181.45, 390.46, 4790.99),
+	(2, '12', 1, 0, 5500, 0, 0, 0, 0, 0, 0, 0, 199.8, 68.75, 50, NULL, 4181.45, 231.44, 3950.01);
 /*!40000 ALTER TABLE `tbl_payslip` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_shifts

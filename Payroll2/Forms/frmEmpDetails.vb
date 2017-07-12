@@ -67,12 +67,12 @@ Public Class frmEmpDetails
         'display current cutoff
         lbl_cutoff.Text = current_cutoff
         'check if current cutoff is finished
-        If isCutoffFinished(current_cutoff) = True Then
-            Dim ctrl As Control
-            For Each ctrl In TabPage1.Controls
-                ctrl.Enabled = False
-            Next
-        End If
+        'If isCutoffFinished(current_cutoff) = True Then
+        '    Dim ctrl As Control
+        '    For Each ctrl In TabPage1.Controls
+        '        ctrl.Enabled = False
+        '    Next
+        'End If
         'get previous cutoff days for deductions
         GetPrevCutoff()
         'get timesheet from hris
@@ -80,9 +80,8 @@ Public Class frmEmpDetails
         'payroll computations
         computeWage(employmentStatus, tb_monthlysalary.Text)
         tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2)
-        tb_regularot.Text = 0
-        tb_holidayot.Text = 0
-        totalOT()
+        tb_regularot.Text = totalOT(id)(0)
+        tb_holidayot.Text = totalOT(id)(1)
         totalTimesheetDeduct()
         tb_late.Text = ComputeLates(tb_biometricid.Text, id)
         tb_loans.Text = computeloans(id)
@@ -115,62 +114,6 @@ Public Class frmEmpDetails
     End Sub
 
 #Region "computations"
-
-    Sub totalOT()
-        Dim isRestdayOT As Boolean = False
-        Dim isRegHolidayOT As Boolean = False
-        Dim isSpecHolidayOT As Boolean = False
-        Dim isRegOt As Boolean = False
-        StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
-                            & "status = 'Approved by HR' AND cutoffDate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
-        QryReadP()
-        Dim otreader As MySqlDataReader = cmd.ExecuteReader
-        If otreader.HasRows Then
-            While otreader.Read
-                Dim totalhours = otreader("totaltime")
-                StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & otreader("overtimedate").ToString("dddd") & "'"
-                QryReadP()
-                Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
-                If Not shiftreader.HasRows Then
-                    isRestdayOT = True
-                Else
-                    isRegOt = True
-                End If
-                'check if holiday
-                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & otreader("overtimedate").ToString("yyyy-MM-dd") & "'"
-                QryReadP()
-                Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
-                If holidayreader.HasRows Then
-                    holidayreader.Read()
-                    If holidayreader("type") = "Regular Holidays" Then
-                        isRegHolidayOT = True
-                    ElseIf holidayreader("type") = "Special (Non-Working) Days" Then
-                        isSpecHolidayOT = True
-                    End If
-                End If
-                'if restday, regholiday and specialholiday are all false then regOT is true
-                If isRestdayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
-                    tb_regularot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
-                ElseIf isSpecHolidayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
-                    tb_holidayot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
-                ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 195%)
-                    tb_holidayot.Text += Math.Round(empHourlyWage * 1.95 * totalhours, 2)
-                ElseIf isRegHolidayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 260%)
-                    tb_holidayot.Text += Math.Round(empHourlyWage * 2.6 * totalhours, 2)
-                ElseIf isRegHolidayOT = True And isRestdayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 338%)
-                    tb_holidayot.Text += Math.Round(empHourlyWage * 3.38 * totalhours, 2)
-                ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
-                    'Hourly rate * 125% * number of hours
-                    tb_regularot.Text += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
-                End If
-            End While
-        End If
-    End Sub
 
     Sub totalTimesheetDeduct()
         'loop cutoff range dates
@@ -595,7 +538,8 @@ Public Class frmEmpDetails
             timesheet.ShowDialog()
             loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
         End Using
-        totalOT()
+        tb_regularot.Text = totalOT(id)(0)
+        tb_holidayot.Text = totalOT(id)(1)
         totalTimesheetDeduct()
         tb_late.Text = ComputeLates(tb_biometricid.Text, id)
         tb_loans.Text = computeloans(id)

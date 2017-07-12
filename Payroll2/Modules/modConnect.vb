@@ -452,8 +452,8 @@ Module modConnect
         Dim j = 0
         While j <= rows - 1
             frmMain.dgv_payroll.Rows(j).Cells(6).Value = Math.Round((Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(5).Value) / 2), 2) ' Basic pay
-            frmMain.dgv_payroll.Rows(j).Cells(7).Value = 0 ' Regular OT
-            frmMain.dgv_payroll.Rows(j).Cells(8).Value = 0 ' Holiday OT
+            frmMain.dgv_payroll.Rows(j).Cells(7).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(0).Value)(0) ' Regular OT
+            frmMain.dgv_payroll.Rows(j).Cells(8).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(0).Value)(1) ' Holiday OT
             frmMain.dgv_payroll.Rows(j).Cells(9).Value = frmMain.dgv_payroll.Rows(j).Cells(7).Value + frmMain.dgv_payroll.Rows(j).Cells(8).Value ' Total OT
             frmMain.dgv_payroll.Rows(j).Cells(10).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'allowances
             frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'incentives
@@ -463,7 +463,7 @@ Module modConnect
             frmMain.dgv_payroll.Rows(j).Cells(15).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(5).Value)(2) 'phic
             frmMain.dgv_payroll.Rows(j).Cells(16).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(5).Value) 'hdmf/pag-ibig
             frmMain.dgv_payroll.Rows(j).Cells(17).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'other deductions
-            Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value)
+            Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(7).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(8).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value)
             Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(12).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value)
             frmMain.dgv_payroll.Rows(j).Cells(18).Value = a - b
             frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(21).Value)

@@ -869,6 +869,7 @@ Partial Class frmEmpDetails
         '
         Me.dgv_emptimesheet.AllowUserToAddRows = False
         Me.dgv_emptimesheet.AllowUserToDeleteRows = False
+        Me.dgv_emptimesheet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgv_emptimesheet.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_emptimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgv_emptimesheet.Location = New System.Drawing.Point(3, 33)

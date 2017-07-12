@@ -87,6 +87,7 @@ Partial Class frmMain
         Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.tsb_printpayroll = New System.Windows.Forms.ToolStripButton()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
         Me.TabControl3.SuspendLayout()
@@ -381,7 +382,7 @@ Partial Class frmMain
         Me.bindingnavigator.CountItem = Nothing
         Me.bindingnavigator.DeleteItem = Nothing
         Me.bindingnavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.bindingnavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.tsbtn_cutoff, Me.btn_loadpayroll, Me.btn_resetpayroll, Me.ToolStripButton1})
+        Me.bindingnavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.tsbtn_cutoff, Me.btn_loadpayroll, Me.btn_resetpayroll, Me.ToolStripButton1, Me.tsb_printpayroll})
         Me.bindingnavigator.Location = New System.Drawing.Point(0, 0)
         Me.bindingnavigator.MoveFirstItem = Nothing
         Me.bindingnavigator.MoveLastItem = Nothing
@@ -624,6 +625,15 @@ Partial Class frmMain
         Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
         Me.label_loggedinas.Text = "ToolStripStatusLabel3"
         '
+        'tsb_printpayroll
+        '
+        Me.tsb_printpayroll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsb_printpayroll.Image = CType(resources.GetObject("tsb_printpayroll.Image"), System.Drawing.Image)
+        Me.tsb_printpayroll.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_printpayroll.Name = "tsb_printpayroll"
+        Me.tsb_printpayroll.Size = New System.Drawing.Size(91, 22)
+        Me.tsb_printpayroll.Text = "Print Payroll"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -721,5 +731,6 @@ Partial Class frmMain
     Friend WithEvents cb_companylist As System.Windows.Forms.ComboBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents tsb_printpayroll As System.Windows.Forms.ToolStripButton
 
 End Class
