@@ -49,7 +49,6 @@ Public Class frmMain
         tstb_searchdgv.Clear()
         loadEmployee()
     End Sub
-
     'open employee details
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
@@ -61,15 +60,6 @@ Public Class frmMain
             End If
         End Using
     End Sub
-
-    Friend Sub ReloadCutoff()
-        GetCompanyCutoff(cb_companylist.Text)
-        If dt.Rows.Count > 0 Then
-            cb_cutoff.DataSource = dt
-            cb_cutoff.DisplayMember = "cutoff_range"
-        End If
-    End Sub
-
     'search employee
     Private Sub tstb_searchdgv_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tstb_searchdgv.TextChanged
         modConnect.bsData.Filter = String.Format("[Employee] Like '%{0}%'", Me.tstb_searchdgv.Text.Trim())
@@ -79,30 +69,25 @@ Public Class frmMain
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
         frmAbout.ShowDialog()
     End Sub
-
     'settings form
     Private Sub SettingsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SettingsToolStripMenuItem.Click
         frmSettings.ShowDialog()
     End Sub
-
     Private Sub EmployeePayToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EmployeePayToolStripMenuItem.Click
         Using reportgen As New frmReportGen(1)
             reportgen.ShowDialog()
         End Using
     End Sub
-
     Private Sub LeavesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LeavesToolStripMenuItem.Click
         Using reportgen As New frmReportGen(2)
             reportgen.ShowDialog()
         End Using
     End Sub
-
     Private Sub ToolStripMenuItem2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem2.Click
         Using reportgen As New frmReportGen(3)
             reportgen.ShowDialog()
         End Using
     End Sub
-
     Private Sub PaidOvertimesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PaidOvertimesToolStripMenuItem.Click
         Using reportgen As New frmReportGen(4)
             reportgen.ShowDialog()
@@ -274,5 +259,66 @@ Public Class frmMain
             cb_cutoff.DataSource = dt
             cb_cutoff.DisplayMember = "cutoff_range"
         End If
+    End Sub
+
+    Private Sub tsb_printpayroll_Click(sender As System.Object, e As System.EventArgs) Handles tsb_printpayroll.Click
+        PrintDocument1.Print()
+    End Sub
+    Private Sub PrintDocument1_PrintPage(sender As System.Object, e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
+        Dim bm As New Bitmap(Me.dgv_payroll.Width, Me.dgv_payroll.Height)
+        dgv_payroll.DrawToBitmap(bm, New Rectangle(0, 0, Me.dgv_payroll.Width, Me.dgv_payroll.Height))
+        e.Graphics.DrawImage(bm, 0, 0)
+    End Sub
+
+    Private Sub btn_savepayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_savepayroll.Click
+        Dim rows = dgv_payroll.Rows.Count
+        Dim j = 0
+        While j <= rows - 1
+            'check if saved payslip
+            StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = " & dgv_payroll.Rows(j).Cells(0).Value.ToString & " AND cutoff_id = '" & cutoff_id & "'"
+            QryReadP()
+            Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+            If dtareader.HasRows Then
+                dtareader.Read()
+                'payslip_id = dtareader("payslip_id").ToString
+                'edit/update database
+                StrSql = "UPDATE tbl_payslip SET " _
+                        & "income =" & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," _
+                        & "regot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
+                        & "holot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
+                        & "ot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
+                        & "allowances =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
+                        & "incentives =" & dgv_payroll.Rows(j).Cells(11).Value.ToString & "," _
+                        & "lateabsent_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," _
+                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
+                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
+                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
+                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
+                        & "otherdeduct =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
+                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
+                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," _
+                        & "net_income =" & dgv_payroll.Rows(j).Cells(20).Value.ToString _
+                        & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Else
+                'saved new payslip
+                StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(0).Value.ToString & "'," & cutoff_id & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & ")"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            End If
+            cmd.Dispose()
+            Close_Connect()
+            Console.Write(dgv_payroll.Rows(j).Cells(0).Value.ToString + " " + vbCrLf)
+            j = j + 1
+        End While
+        MessageBox.Show("Payslip Saved!")
+        'load payslip for the current cutoff
+        getPayslip(current_cutoff)
     End Sub
 End Class

@@ -403,7 +403,7 @@ Public Class frmEmpDetails
             dtareader.Read()
             'payslip_id = dtareader("payslip_id").ToString
             'edit/update database
-            StrSql = "UPDATE tbl_payslip SET totalWorkHours =" & tb_totalworkhours.Text & "," _
+            StrSql = "UPDATE tbl_payslip SET " _
                     & "income =" & CDbl(tb_income.Text) & "," & "regot_pay =" & CDbl(tb_regularot.Text) & "," _
                     & "holot_pay =" & CDbl(tb_holidayot.Text) & "," & "ot_pay =" & CDbl(tb_totalot.Text) & "," _
                     & "allowances =" & CDbl(tb_allowance.Text) & "," & "incentives =" & totalBenefits & "," _
@@ -420,7 +420,7 @@ Public Class frmEmpDetails
         Else
             'saved new payslip
             StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
-                    & tb_totalworkhours.Text & "," & CDbl(tb_income.Text) & "," & CDbl(tb_regularot.Text) & "," _
+                    & CDbl(tb_income.Text) & "," & CDbl(tb_regularot.Text) & "," _
                     & CDbl(tb_holidayot.Text) & "," & CDbl(tb_totalot.Text) & "," & CDbl(tb_allowance.Text) & "," _
                     & totalBenefits & "," & CDbl(tb_late.Text) & "," & CDbl(tb_undertime.Text) & "," _
                     & CDbl(tb_tax.Text) & "," & CDbl(tb_sss.Text) & "," & CDbl(tb_phic.Text) & "," _

@@ -413,7 +413,7 @@ Module modConnect
     Sub getPayslip(ByVal current_cutoff As String)
         adpt.Dispose()
         'use this query string if app is integrated with HRIS
-        StrSql = "SELECT tbl_employee.id_employee, tbl_cutoff.cutoff_range as 'Cutoff', code as 'Company', " _
+        StrSql = "SELECT tbl_employee.id_employee, tbl_cutoff.cutoff_id as 'Cutoff', code as 'Company', " _
                     & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, tbl_employee.employment_status, tbl_employee.basic_salary, tbl_payslip.income as 'Basic Pay',  " _
                     & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT',  tbl_payslip.ot_pay as 'Total OT',  " _
                     & "tbl_payslip.allowances as 'Allowances', tbl_payslip.incentives as 'Incentives',  " _
@@ -465,9 +465,9 @@ Module modConnect
             frmMain.dgv_payroll.Rows(j).Cells(17).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(0).Value) 'other deductions
             Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(7).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(8).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value)
             Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(12).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value)
-            frmMain.dgv_payroll.Rows(j).Cells(18).Value = a - b
-            frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(21).Value)
-            frmMain.dgv_payroll.Rows(j).Cells(20).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value
+            frmMain.dgv_payroll.Rows(j).Cells(18).Value = a - b 'gross pay
+            frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(21).Value) 'tax
+            frmMain.dgv_payroll.Rows(j).Cells(20).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value 'net pay
             j = j + 1
         End While
 
