@@ -127,7 +127,7 @@ Module modSync
                 Else
                     'insert
                     Try
-                        StrSql = "INSERT INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary,lastUpdated) " _
+                        StrSql = "INSERT INTO tbl_employee(id_employee,emp_id,emp_bio_id,fName,mName,lName,shiftgroup,sss_id,phic_id,hdmf_id,tin,company,branch,position,rank,tax_status,employment_status,basic_salary,isInPayroll,lastUpdated) " _
                                     & "VALUES(" & dt.Rows(i)(0).ToString & ",'" & dt.Rows(i)(1).ToString & "'," _
                                     & "'" & dt.Rows(i)(2).ToString & "','" & dt.Rows(i)(3).ToString & "'," _
                                     & "'" & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "'," _
@@ -136,7 +136,7 @@ Module modSync
                                     & "'" & dt.Rows(i)(10).ToString & "','" & dt.Rows(i)(11).ToString & "'," _
                                     & "'" & dt.Rows(i)(12).ToString & "','" & dt.Rows(i)(13).ToString & "'," _
                                     & "'" & dt.Rows(i)(14).ToString & "','" & dt.Rows(i)(15).ToString & "'," _
-                                    & "'" & dt.Rows(i)(16).ToString & "'," & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & ",'" & DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "')"
+                                    & "'" & dt.Rows(i)(16).ToString & "'," & If(String.IsNullOrEmpty(dt.Rows(i)(17).ToString), 0, dt.Rows(i)(17).ToString) & ",1,'" & DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") & "')"
                         'Console.Write(StrSql)
                         QryReadP()
                         cmd.ExecuteNonQuery()

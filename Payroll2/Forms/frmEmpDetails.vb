@@ -529,24 +529,24 @@ Public Class frmEmpDetails
         End Using
     End Sub
     'edit timesheet
-    Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
-        Dim LogDate = DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
-        Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
-        Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
-        'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
-        Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
-            timesheet.ShowDialog()
-            loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
-        End Using
-        tb_regularot.Text = totalOT(id)(0)
-        tb_holidayot.Text = totalOT(id)(1)
-        totalTimesheetDeduct()
-        tb_late.Text = ComputeLates(tb_biometricid.Text, id)
-        tb_loans.Text = computeloans(id)
-        tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
-        tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
-        tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
-        tb_allowance.Text = computeAllowance(id)
-        computeTotal()
-    End Sub
+    'Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
+    '    Dim LogDate = DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
+    '    Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
+    '    Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
+    '    'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
+    '    Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
+    '        timesheet.ShowDialog()
+    '        loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
+    '    End Using
+    '    tb_regularot.Text = totalOT(id)(0)
+    '    tb_holidayot.Text = totalOT(id)(1)
+    '    totalTimesheetDeduct()
+    '    tb_late.Text = ComputeLates(tb_biometricid.Text, id)
+    '    tb_loans.Text = computeloans(id)
+    '    tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
+    '    tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
+    '    tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+    '    tb_allowance.Text = computeAllowance(id)
+    '    computeTotal()
+    'End Sub
 End Class

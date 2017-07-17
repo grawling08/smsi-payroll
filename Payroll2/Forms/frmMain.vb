@@ -283,42 +283,63 @@ Public Class frmMain
                 'payslip_id = dtareader("payslip_id").ToString
                 'edit/update database
                 StrSql = "UPDATE tbl_payslip SET " _
-                        & "income =" & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," _
-                        & "regot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
-                        & "holot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                        & "ot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
-                        & "allowances =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
-                        & "incentives =" & dgv_payroll.Rows(j).Cells(11).Value.ToString & "," _
-                        & "lateabsent_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," _
-                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
-                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
-                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
-                        & "otherdeduct =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," _
-                        & "net_income =" & dgv_payroll.Rows(j).Cells(20).Value.ToString _
+                        & "income =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
+                        & "regot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
+                        & "holot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
+                        & "ot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
+                        & "allowances =" & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
+                        & "incentives =" & dgv_payroll.Rows(j).Cells(12).Value.ToString & "," _
+                        & "lateabsent_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
+                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
+                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
+                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
+                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
+                        & "otherdeduct =" & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
+                        & "gross_income =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
+                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," _
+                        & "net_income =" & dgv_payroll.Rows(j).Cells(21).Value.ToString _
                         & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
                 QryReadP()
                 cmd.ExecuteNonQuery()
             Else
                 'saved new payslip
-                StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(0).Value.ToString & "'," & cutoff_id & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & ")"
+                StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(1).Value.ToString & "'," & cutoff_id & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
+                        & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & ")"
                 QryReadP()
                 cmd.ExecuteNonQuery()
             End If
             cmd.Dispose()
             Close_Connect()
-            Console.Write(dgv_payroll.Rows(j).Cells(0).Value.ToString + " " + vbCrLf)
+            'Console.Write(dgv_payroll.Rows(j).Cells(0).Value.ToString + " " + vbCrLf)
             j = j + 1
         End While
         MessageBox.Show("Payslip Saved!")
         'load payslip for the current cutoff
         getPayslip(current_cutoff)
+    End Sub
+
+    Private Sub dgv_payroll_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_payroll.CellClick
+        If dgv_payroll.CurrentRow.Cells(0).Value = True Then
+            dgv_payroll.CurrentRow.Cells(0).Value = False
+        Else
+            dgv_payroll.CurrentRow.Cells(0).Value = True
+        End If
+    End Sub
+
+    Private Sub tsb_remfrompayroll_Click(sender As System.Object, e As System.EventArgs) Handles tsb_remfrompayroll.Click
+        For a = (dgv_payroll.Rows.Count - 1) To 0 Step -1
+            If dgv_payroll.Rows(a).Cells(0).Value = True Then
+                'turn off
+                StrSql = "UPDATE tbl_employee SET isInPayroll = 0 WHERE id_employee ='" & dgv_payroll.Rows(a).Cells(1).Value.ToString & "'"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+                Close_Connect()
+                dgv_payroll.Rows.RemoveAt(a)
+            End If
+        Next
     End Sub
 End Class

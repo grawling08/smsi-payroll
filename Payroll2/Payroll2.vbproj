@@ -48,6 +48,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
