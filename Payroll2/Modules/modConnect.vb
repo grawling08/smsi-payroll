@@ -411,15 +411,22 @@ Module modConnect
 
     'get payslip
     Sub getPayslip(ByVal current_cutoff As String)
-        adpt.Dispose()
+        'adpt.Dispose()
         'use this query string if app is integrated with HRIS
         StrSql = "SELECT tbl_employee.id_employee, tbl_cutoff.cutoff_id as 'Cutoff', code as 'Company', " _
-                    & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, tbl_employee.employment_status, tbl_employee.basic_salary, tbl_payslip.income as 'Basic Pay',  " _
-                    & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT',  tbl_payslip.ot_pay as 'Total OT',  " _
-                    & "tbl_payslip.allowances as 'Allowances', tbl_payslip.incentives as 'Incentives',  " _
-                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', tbl_payslip.undertime_deduct as 'Undertime',  " _
-                    & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', tbl_payslip.otherdeduct as 'Other Deductions', " _
-                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status " _
+                    & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, " _
+                    & "tbl_employee.employment_status, " _
+                    & "tbl_employee.basic_salary, " _
+                    & "tbl_payslip.income as 'Basic Pay',  " _
+                    & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT', tbl_payslip.ot_pay as 'Total OT', " _
+                    & "tbl_payslip.allowances as 'Allowances', " _
+                    & "tbl_payslip.incentives as 'Incentives',  " _
+                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
+                    & "tbl_payslip.undertime_deduct as 'Undertime',  " _
+                    & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', " _
+                    & "tbl_payslip.otherdeduct as 'Other Deductions', " _
+                    & "tbl_payslip.gross_income as 'Gross Pay', " _
+                    & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status " _
                     & "FROM tbl_employee " _
                     & "LEFT JOIN tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id " _
                     & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
@@ -428,6 +435,14 @@ Module modConnect
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
+
+        frmMain.dgv_payroll.DataSource = Nothing
+        If frmMain.dgv_payroll.Columns.Count > 0 Then
+            frmMain.dgv_payroll.Columns.Remove("chk")
+        End If
+        frmMain.dgv_payroll.Refresh()
+
+
         Dim chk As New DataGridViewCheckBoxColumn()
         frmMain.dgv_payroll.Columns.Add(chk)
         chk.HeaderText = "SELECT"
@@ -455,7 +470,8 @@ Module modConnect
         Dim rows = frmMain.dgv_payroll.Rows.Count
         Dim j = 0
         While j <= rows - 1
-            Console.Write(frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString + vbCrLf)
+            Console.Write(If(Not String.IsNullOrEmpty(cutoff_id.ToString), cutoff_id.ToString, "2") + vbCrLf)
+            'computeWage()
             frmMain.dgv_payroll.Rows(j).Cells(7).Value = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) / 2 ' Basic pay
             frmMain.dgv_payroll.Rows(j).Cells(8).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0) ' Regular OT
             frmMain.dgv_payroll.Rows(j).Cells(9).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(1) ' Holiday OT
@@ -463,7 +479,7 @@ Module modConnect
             frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'allowances
             frmMain.dgv_payroll.Rows(j).Cells(12).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'incentives
             frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'lates + absent
-            frmMain.dgv_payroll.Rows(j).Cells(14).Value = 0 'undertime
+            frmMain.dgv_payroll.Rows(j).Cells(14).Value = ComputeUndertime("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
             frmMain.dgv_payroll.Rows(j).Cells(15).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'sss
             frmMain.dgv_payroll.Rows(j).Cells(16).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'phic
             frmMain.dgv_payroll.Rows(j).Cells(17).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(6).Value) 'hdmf/pag-ibig
@@ -471,11 +487,11 @@ Module modConnect
             Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(7).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(8).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(12).Value)
             Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(18).Value)
             frmMain.dgv_payroll.Rows(j).Cells(19).Value = a - b 'gross pay
-            frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(21).Value) 'tax
-            frmMain.dgv_payroll.Rows(j).Cells(21).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value 'net pay
+            frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(19).Value, frmMain.dgv_payroll.Rows(j).Cells(22).Value) 'tax
+            frmMain.dgv_payroll.Rows(j).Cells(21).Value = frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value 'net pay
             j = j + 1
         End While
-        
+
         Close_Connect()
     End Sub
 

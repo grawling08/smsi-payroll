@@ -179,9 +179,9 @@ Public Class frmEmpDetails
         End While
         Label34.Text = countattendance
         tb_absents.Text = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-        tb_undertime.Text = Math.Round(totalUndertime * empHourlyWage, 2)
+        'tb_undertime.Text = Math.Round(totalUndertime * empHourlyWage, 2)
         tb_totalworkhours.Text = totalWorkHours
-        ' Math.Round(daysPresent * empDailyWage, 2)
+        'Math.Round(daysPresent * empDailyWage, 2)
     End Sub
 
     Sub loadpayslip()
@@ -392,6 +392,60 @@ Public Class frmEmpDetails
         End If
     End Sub
 
+    'load other deductions
+    Private Sub loadotherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
+        StrSql = "SELECT name as Name, amount as Amount FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        If dtareader.HasRows Then
+            While dtareader.Read()
+                Dim row As String() = New String() {dtareader("Name").ToString, dtareader("Amount").ToString}
+                dgv_otherdeduct.Rows.Add(row)
+            End While
+        End If
+    End Sub
+    'add new other deductions
+    Private Sub btn_adddeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_adddeduct.Click
+        Dim row As String() = New String() {"Edit", "0"}
+        dgv_otherdeduct.Rows.Add(row)
+    End Sub
+    'save other deductions
+    Private Sub btn_deldeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_deldeduct.Click
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            Dim name = dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString
+            Dim amount = dgv_otherdeduct.CurrentRow.Cells(1).Value.ToString
+            StrSql = "DELETE FROM tbl_otherdeductions WHERE name = '" & name & "' AND amount = " & amount & " AND cutoff_id = " & cutoff_id & " AND employee_id = " & id
+            QryReadP()
+            cmd.ExecuteNonQuery()
+            dgv_otherdeduct.Rows.Remove(dgv_otherdeduct.SelectedRows(0))
+            computeTotal()
+            getPayslip(current_cutoff)
+        Else
+            MessageBox.Show("No data to delete.")
+        End If
+    End Sub
+    'autocompute after cell edit
+    Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
+        computeTotal()
+        'save to db
+        save_otherdeduct(cutoff_id, id)
+        'refresh dgv
+        getPayslip(current_cutoff)
+    End Sub
+    'save other deductions
+    Sub save_otherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
+        StrSql = "DELETE FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
+        QryReadP()
+        cmd.ExecuteNonQuery()
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            For Each row In dgv_otherdeduct.Rows
+                StrSql = "INSERT INTO tbl_otherdeductions(cutoff_id,employee_id,name,amount) VALUES(" & cutoff_id & "," & id_employee & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            Next
+        End If
+    End Sub
+
     'save payslip
     Private Sub btn_savepayslip_Click(sender As System.Object, e As System.EventArgs) Handles btn_savepayslip.Click
         'Dim payslip_id
@@ -468,60 +522,6 @@ Public Class frmEmpDetails
         End Using
     End Sub
 
-    'load other deductions
-    Private Sub loadotherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
-        StrSql = "SELECT name as Name, amount as Amount FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
-        QryReadP()
-        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
-        If dtareader.HasRows Then
-            While dtareader.Read()
-                Dim row As String() = New String() {dtareader("Name").ToString, dtareader("Amount").ToString}
-                dgv_otherdeduct.Rows.Add(row)
-            End While
-        End If
-    End Sub
-    'add new other deductions
-    Private Sub btn_adddeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_adddeduct.Click
-        Dim row As String() = New String() {"Edit", "0"}
-        dgv_otherdeduct.Rows.Add(row)
-    End Sub
-    'save other deductions
-    Private Sub btn_deldeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_deldeduct.Click
-        If dgv_otherdeduct.Rows.Count > 0 Then
-            Dim name = dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString
-            Dim amount = dgv_otherdeduct.CurrentRow.Cells(1).Value.ToString
-            StrSql = "DELETE FROM tbl_otherdeductions WHERE name = '" & name & "' AND amount = " & amount & " AND cutoff_id = " & cutoff_id & " AND employee_id = " & id
-            QryReadP()
-            cmd.ExecuteNonQuery()
-            dgv_otherdeduct.Rows.Remove(dgv_otherdeduct.SelectedRows(0))
-            computeTotal()
-            getPayslip(current_cutoff)
-        Else
-            MessageBox.Show("No data to delete.")
-        End If
-    End Sub
-    'autocompute after cell edit
-    Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
-        computeTotal()
-        'save to db
-        save_otherdeduct(cutoff_id, id)
-        'refresh dgv
-        getPayslip(current_cutoff)
-    End Sub
-    'save other deductions
-    Sub save_otherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
-        StrSql = "DELETE FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
-        QryReadP()
-        cmd.ExecuteNonQuery()
-        If dgv_otherdeduct.Rows.Count > 0 Then
-            For Each row In dgv_otherdeduct.Rows
-                StrSql = "INSERT INTO tbl_otherdeductions(cutoff_id,employee_id,name,amount) VALUES(" & cutoff_id & "," & id_employee & ",'" & row.Cells(0).Value.ToString() & "'," & row.Cells(1).Value.ToString() & ")"
-                QryReadP()
-                cmd.ExecuteNonQuery()
-            Next
-        End If
-    End Sub
-
     'add timesheet
     Private Sub btn_addtimesheet_Click(sender As System.Object, e As System.EventArgs) Handles btn_addtimesheet.Click
         Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id)
@@ -529,24 +529,26 @@ Public Class frmEmpDetails
         End Using
     End Sub
     'edit timesheet
-    'Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
-    '    Dim LogDate = DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
-    '    Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
-    '    Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
-    '    'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
-    '    Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
-    '        timesheet.ShowDialog()
-    '        loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
-    '    End Using
-    '    tb_regularot.Text = totalOT(id)(0)
-    '    tb_holidayot.Text = totalOT(id)(1)
-    '    totalTimesheetDeduct()
-    '    tb_late.Text = ComputeLates(tb_biometricid.Text, id)
-    '    tb_loans.Text = computeloans(id)
-    '    tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
-    '    tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
-    '    tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
-    '    tb_allowance.Text = computeAllowance(id)
-    '    computeTotal()
-    'End Sub
+    Private Sub dgv_emptimesheet_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emptimesheet.CellDoubleClick
+        If app_mode = "alone" Then
+            Dim LogDate = DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(1).Value.ToString).ToString("MM/dd/yyyy")
+            Dim Time_in = If(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(3).Value.ToString).ToString("hh:mm tt"), Nothing)
+            Dim Time_out = If(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString <> "-", DateTime.Parse(dgv_emptimesheet.CurrentRow.Cells(4).Value.ToString).ToString("hh:mm tt"), Nothing)
+            'MessageBox.Show(tb_biometricid.Text & " " & id & " " & LogDate & " " & Time_in & " " & Time_out)
+            Using timesheet As New frmEditTimesheet("final", tb_biometricid.Text, id, LogDate, Time_in, Time_out)
+                timesheet.ShowDialog()
+                loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
+            End Using
+            tb_regularot.Text = totalOT(id)(0)
+            tb_holidayot.Text = totalOT(id)(1)
+            totalTimesheetDeduct()
+            tb_late.Text = ComputeLates(tb_biometricid.Text, id)
+            tb_loans.Text = computeloans(id)
+            tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
+            tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
+            tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+            tb_allowance.Text = computeAllowance(id)
+            computeTotal()
+        End If
+    End Sub
 End Class

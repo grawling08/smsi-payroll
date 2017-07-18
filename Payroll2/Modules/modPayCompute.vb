@@ -32,6 +32,21 @@ Module modPayCompute
         Return Math.Round(totalLate * 5, 2)
     End Function
 
+    Function ComputeUndertime(ByVal emp_bio_id As String, ByVal id_employee As String) As Double
+        'get total lates
+        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
+        QryReadP()
+        Dim underreader As MySqlDataReader = cmd.ExecuteReader
+        If underreader.HasRows Then
+            While underreader.Read()
+                If CDbl(underreader("undertime")) >= 1 Then
+                    totalUndertime += CDbl(underreader("late"))
+                End If
+            End While
+        End If
+        Return Math.Round(totalUndertime * empHourlyWage, 2)
+    End Function
+
     Function computeloans(ByVal id_employee As String) As Double
         StrSql = "SELECT tbl_loans.* FROM tbl_loans WHERE tbl_loans.employee_id='" & id_employee & "' AND endDate >= '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
         QryReadP()
@@ -66,11 +81,6 @@ Module modPayCompute
             End While
         End If
         Return a
-    End Function
-
-    Function computeNetIncome() As Double
-
-        Return True
     End Function
 
     Function computeIncentives(ByVal cutoff_id As String, ByVal id_employee As String) As Double

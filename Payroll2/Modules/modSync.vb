@@ -102,7 +102,8 @@ Module modSync
                 If reader1.HasRows Then
                     'read, compare lastupdated and update or not
                     While reader1.Read()
-                        If DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") > DateTime.Parse(reader1(19).ToString).ToString("yyyy-MM-dd HH:mm:ss") Then
+                        Console.Write(dt.Rows(i)(0).ToString & " > " & reader1(19).ToString)
+                        If DateTime.Parse(dt.Rows(i)(18).ToString).ToString("yyyy-MM-dd HH:mm:ss") > DateTime.Parse(reader1(20).ToString).ToString("yyyy-MM-dd HH:mm:ss") Then
                             'update
                             Try
                                 StrSql = "UPDATE tbl_employee SET emp_id = '" & dt.Rows(i)(1).ToString & "'," _

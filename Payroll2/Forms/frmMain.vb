@@ -275,7 +275,7 @@ Public Class frmMain
         Dim j = 0
         While j <= rows - 1
             'check if saved payslip
-            StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = " & dgv_payroll.Rows(j).Cells(0).Value.ToString & " AND cutoff_id = '" & cutoff_id & "'"
+            StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = " & dgv_payroll.Rows(j).Cells(1).Value.ToString & " AND cutoff_id = '" & cutoff_id & "'"
             QryReadP()
             Dim dtareader As MySqlDataReader = cmd.ExecuteReader
             If dtareader.HasRows Then
