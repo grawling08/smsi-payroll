@@ -70,6 +70,19 @@ Module modPayCompute
         Return Math.Round(totalLoans, 2)
     End Function
 
+    Function computeInsurance(ByVal id_employee As String) As Double
+        Dim a As Double = 0
+        StrSql = "SELECT * FROM tbl_insurance WHERE id_employee = '" & id_employee & "'"
+        QryReadP()
+        Dim dtareader3 As MySqlDataReader = cmd.ExecuteReader
+        If dtareader3.HasRows Then
+            While dtareader3.Read()
+                a += Double.Parse(dtareader3("amount"))
+            End While
+        End If
+        Return a
+    End Function
+
     Function computeAllowance(ByVal id_employee As String) As Double
         Dim a As Double = 0
         StrSql = "SELECT * FROM tbl_allowances WHERE employee_id = " & id_employee

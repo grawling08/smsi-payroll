@@ -237,12 +237,6 @@
     <Compile Include="Forms\frmShifts.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmTray.Designer.vb">
-      <DependentUpon>frmTray.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmTray.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\frmUploadedTimesheet.Designer.vb">
       <DependentUpon>frmUploadedTimesheet.vb</DependentUpon>
     </Compile>
@@ -316,11 +310,11 @@
     <EmbeddedResource Include="Forms\frmShifts.resx">
       <DependentUpon>frmShifts.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmTray.resx">
-      <DependentUpon>frmTray.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmUser.resx">
       <DependentUpon>frmUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Report1.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\frmReport.resx">
       <DependentUpon>frmReport.vb</DependentUpon>
@@ -328,6 +322,7 @@
     <EmbeddedResource Include="Reports\Report2.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptPayroll.rdlc" />
     <EmbeddedResource Include="Reports\rptPayrollReg.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

@@ -445,9 +445,9 @@ CREATE TABLE IF NOT EXISTS `tbl_attendance` (
   `overtime` varchar(50) DEFAULT NULL,
   `remarks` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`att_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=688 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=692 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hris_payroll.tbl_attendance: 685 rows
+-- Dumping data for table hris_payroll.tbl_attendance: 689 rows
 /*!40000 ALTER TABLE `tbl_attendance` DISABLE KEYS */;
 INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `time_in`, `time_out`, `totalHours`, `late`, `undertime`, `overtime`, `remarks`) VALUES
 	(1, 0, '10002', '2017-05-03', '07:59', '17:49', '9.83', '0', '0', '0', 'Regular'),
@@ -1134,7 +1134,11 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(684, 0, '112', '2017-06-29', '08:47', '17:13', '8.43', '0', '0', '0', 'Regular'),
 	(685, 0, '112', '2017-06-30', '08:47', '18:34', '9.78', '0', '0', '0', ''),
 	(686, 0, '116', '2017-06-29', '08:43', '18:14', '9.52', '0', '0', '0', 'Regular'),
-	(687, 0, '117', '2017-06-29', '-', '17:32', '0', '0', '0', '0', 'Unable to Time In');
+	(687, 0, '117', '2017-06-29', '-', '17:32', '0', '0', '0', '0', 'Unable to Time In'),
+	(688, 0, '10021', '2017-05-15', '08:20', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(689, 0, '1004', '2017-05-06', '08:21', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(690, 0, '1004', '2017-05-10', '08:37', '-', '0', '0', '0', '0', 'Unable to Time Out'),
+	(691, 0, '1004', '2017-05-15', '17:14', '-', '0', '494', '0', '0', 'Unable to Time Out');
 /*!40000 ALTER TABLE `tbl_attendance` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_attendancefinal
@@ -2268,8 +2272,8 @@ INSERT INTO `tbl_businessdates` (`id`, `business_id`, `businessdate`, `daystatus
 DROP TABLE IF EXISTS `tbl_company`;
 CREATE TABLE IF NOT EXISTS `tbl_company` (
   `company_id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `code` varchar(50) DEFAULT NULL,
+  `name` text,
+  `code` text,
   PRIMARY KEY (`company_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
@@ -2329,7 +2333,7 @@ CREATE TABLE IF NOT EXISTS `tbl_employee` (
   `phic_id` varchar(50) DEFAULT NULL,
   `hdmf_id` varchar(50) DEFAULT NULL,
   `tin` varchar(50) DEFAULT NULL,
-  `company` varchar(100) DEFAULT NULL,
+  `company` text,
   `branch` varchar(50) DEFAULT NULL,
   `position` varchar(50) DEFAULT NULL,
   `rank` varchar(50) DEFAULT NULL,
@@ -2495,15 +2499,17 @@ INSERT INTO `tbl_incentives` (`incentives_id`, `cutoff_id`, `employee_id`, `name
 -- Dumping structure for table hris_payroll.tbl_insurance
 DROP TABLE IF EXISTS `tbl_insurance`;
 CREATE TABLE IF NOT EXISTS `tbl_insurance` (
-  `insurance_id` int(11) NOT NULL,
+  `insurance_id` int(11) NOT NULL AUTO_INCREMENT,
   `id_employee` int(11) DEFAULT NULL,
   `insurance_name` varchar(100) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   PRIMARY KEY (`insurance_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hris_payroll.tbl_insurance: 0 rows
 /*!40000 ALTER TABLE `tbl_insurance` DISABLE KEYS */;
+INSERT INTO `tbl_insurance` (`insurance_id`, `id_employee`, `insurance_name`, `amount`) VALUES
+	(1, 12, 'Stronghold', 50);
 /*!40000 ALTER TABLE `tbl_insurance` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_leavedates
@@ -3281,16 +3287,16 @@ CREATE TABLE IF NOT EXISTS `tbl_loans` (
 -- Dumping data for table hris_payroll.tbl_loans: 10 rows
 /*!40000 ALTER TABLE `tbl_loans` DISABLE KEYS */;
 INSERT INTO `tbl_loans` (`loan_id`, `employee_id`, `loan_type`, `lendingCompany`, `amount`, `term`, `monthlyAmortization`, `startDate`, `endDate`, `remarks`, `lastUpdated`) VALUES
-	(22, 502, 'ACE Loan', 'AFC', 80000, '24', 1892, '2017-05-15', '2019-05-15', 'Reloan', '2017-06-06 17:05:39'),
-	(52, 642, 'ACE Loan', 'AFC', 35000, '18', 1118, '2016-03-31', '2017-09-30', 'New Loan', '2017-06-06 17:05:39'),
-	(62, 662, 'ACE Loan', 'AFC', 120000, '24', 2875, '2015-05-31', '2017-05-31', 'Reloan', '2017-06-06 17:05:39'),
-	(72, 542, 'ACE Loan', 'AFC', 100000, '24', 2396, '2016-08-30', '2018-08-30', 'Reloan', '2017-06-06 17:05:39'),
-	(82, 562, 'ACE Loan', 'AFC', 50000, '12', 2365, '2016-10-15', '2017-10-30', 'New Loan', '2017-06-06 17:05:39'),
-	(92, 512, 'ACE Loan', 'AFC', 30000, '12', 1419, '2016-06-15', '2017-06-15', 'New Loan', '2017-06-06 17:05:39'),
-	(102, 472, 'ACE Loan', 'AFC', 100000, '24', 2396, '2015-12-30', '2018-01-30', 'Reloan', '2017-06-06 17:05:39'),
-	(112, 412, 'Salary Loan', 'AFC', 50000, '18 mos.', 4792, '2016-03-30', '2017-03-15', 'Fully Paid', '2017-06-06 17:05:39'),
-	(122, 1182, 'ACE Loan', 'AFC', 50000, '24 mos', 2396, '2015-05-15', '2017-04-30', '', '2017-06-06 17:05:39'),
-	(132, 352, 'ACE Loan', 'AFC', 150000, '24mos', 7188, '2015-03-15', '2016-02-28', '', '2017-06-06 17:05:39');
+	(22, 502, 'ACE Loan', 'AFC', 80000, '24', 1892, '2017-05-15', '2019-05-15', 'Reloan', '2017-07-19 11:46:49'),
+	(52, 642, 'ACE Loan', 'AFC', 35000, '18', 1118, '2016-03-31', '2017-09-30', 'New Loan', '2017-07-19 11:46:49'),
+	(62, 662, 'ACE Loan', 'AFC', 120000, '24', 2875, '2015-05-31', '2017-05-31', 'Reloan', '2017-07-19 11:46:49'),
+	(72, 542, 'ACE Loan', 'AFC', 100000, '24', 2396, '2016-08-30', '2018-08-30', 'Reloan', '2017-07-19 11:46:49'),
+	(82, 562, 'ACE Loan', 'AFC', 50000, '12', 2365, '2016-10-15', '2017-10-30', 'New Loan', '2017-07-19 11:46:49'),
+	(92, 512, 'ACE Loan', 'AFC', 30000, '12', 1419, '2016-06-15', '2017-06-15', 'New Loan', '2017-07-19 11:46:49'),
+	(102, 472, 'ACE Loan', 'AFC', 100000, '24', 2396, '2015-12-30', '2018-01-30', 'Reloan', '2017-07-19 11:46:49'),
+	(112, 412, 'Salary Loan', 'AFC', 50000, '18 mos.', 4792, '2016-03-30', '2017-03-15', 'Fully Paid', '2017-07-19 11:46:49'),
+	(122, 1182, 'ACE Loan', 'AFC', 50000, '24 mos', 2396, '2015-05-15', '2017-04-30', '', '2017-07-19 11:46:49'),
+	(132, 352, 'ACE Loan', 'AFC', 150000, '24mos', 7188, '2015-03-15', '2016-02-28', '', '2017-07-19 11:46:49');
 /*!40000 ALTER TABLE `tbl_loans` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_otherdeductions
@@ -3359,6 +3365,7 @@ CREATE TABLE IF NOT EXISTS `tbl_payslip` (
   `sss` double DEFAULT NULL,
   `phic` double DEFAULT NULL,
   `hdmf` double DEFAULT NULL,
+  `insurance` double DEFAULT NULL,
   `otherdeduct` double DEFAULT NULL,
   `gross_income` double DEFAULT NULL,
   `tax` double DEFAULT NULL,
@@ -3368,28 +3375,28 @@ CREATE TABLE IF NOT EXISTS `tbl_payslip` (
 
 -- Dumping data for table hris_payroll.tbl_payslip: 21 rows
 /*!40000 ALTER TABLE `tbl_payslip` DISABLE KEYS */;
-INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `income`, `regot_pay`, `holot_pay`, `ot_pay`, `allowances`, `incentives`, `lateabsent_deduct`, `undertime_deduct`, `sss`, `phic`, `hdmf`, `otherdeduct`, `gross_income`, `tax`, `net_income`) VALUES
-	(44, '642', 1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -94, 0, -94),
-	(43, '1312', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(42, '1182', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(41, '672', 1, 7.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -92.5, 0, -92.5),
-	(40, '502', 1, 7500, 0, 0, 0, 2000, 0, 0, 0, 272.5, 93.75, 50, 0, 9083.75, 1229.1875, 7854.5625),
-	(39, '1202', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(38, '462', 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -95, 0, -95),
-	(37, '542', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(36, '1272', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(35, '562', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(34, '552', 1, 5.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -94.5, 0, -94.5),
-	(33, '512', 1, 5000, 0, 0, 0, 1500, 0, 0, 0, 181.7, 62.5, 50, 0, 6205.8, 386.93, 5818.87),
-	(32, '652', 1, 6250, 0, 0, 0, 0, 0, 0, 0, 236.2, 75, 50, 0, 5888.8, 174.94, 5713.86),
-	(31, '412', 1, 8000, 0, 0, 0, 0, 0, 0, 0, 290.7, 100, 50, 0, 7559.3, 449.43, 7109.87),
-	(30, '372', 1, 5500, 0, 0, 0, 0, 0, 0, 0, 199.8, 68.75, 50, 0, 5181.45, 390.46, 4790.99),
-	(29, '392', 1, 6000, 0, 0, 0, 0, 0, 0, 0, 218, 75, 50, 0, 5657, 485.57, 5171.43),
-	(28, '12', 1, 5500, 0, 0, 0, 0, 100, 0, 0, 199.8, 68.75, 50, 100, 5181.45, 390.46, 4790.99),
-	(45, '352', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(46, '472', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -100, 0, -100),
-	(47, '662', 1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -94, 0, -94),
-	(48, '1212', 1, 5.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, -94.5, 0, -94.5);
+INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `income`, `regot_pay`, `holot_pay`, `ot_pay`, `allowances`, `incentives`, `lateabsent_deduct`, `undertime_deduct`, `sss`, `phic`, `hdmf`, `insurance`, `otherdeduct`, `gross_income`, `tax`, `net_income`) VALUES
+	(44, '642', 1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -94, 0, 0),
+	(43, '1312', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(42, '1182', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(41, '672', 1, 7.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -92.5, 0, 0),
+	(40, '502', 1, 7500, 0, 0, 0, 2000, 0, 0, 0, 272.5, 93.75, 50, 0, 0, 9083.75, 0, 1229.1875),
+	(39, '1202', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(38, '462', 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -95, 0, 0),
+	(37, '542', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(36, '1272', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(35, '562', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(34, '552', 1, 5.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -94.5, 0, 0),
+	(33, '512', 1, 5000, 0, 0, 0, 1500, 0, 0, 0, 181.7, 62.5, 50, 0, 0, 6205.8, 0, 386.93),
+	(32, '652', 1, 6250, 0, 0, 0, 0, 0, 0, 0, 236.2, 75, 50, 0, 0, 5888.8, 0, 174.94),
+	(31, '412', 1, 8000, 0, 0, 0, 0, 0, 0, 0, 290.7, 100, 50, 0, 0, 7559.3, 0, 449.43),
+	(30, '372', 1, 5500, 0, 0, 0, 0, 0, 0, 0, 199.8, 68.75, 50, 0, 0, 5181.45, 0, 390.46),
+	(29, '392', 1, 6000, 0, 0, 0, 0, 0, 0, 0, 218, 75, 50, 0, 0, 5657, 0, 485.57),
+	(28, '12', 1, 5500, 0, 0, 0, 0, 100, 0, 0, 199.8, 68.75, 50, 0, 100, 5181.45, 50, 390.46),
+	(45, '352', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(46, '472', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -100, 0, 0),
+	(47, '662', 1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -94, 0, 0),
+	(48, '1212', 1, 5.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, -94.5, 0, 0);
 /*!40000 ALTER TABLE `tbl_payslip` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_shifts

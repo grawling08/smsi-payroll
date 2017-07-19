@@ -81,8 +81,6 @@ Partial Class frmEmpDetails
         Me.tb_regularot = New System.Windows.Forms.TextBox()
         Me.tb_income = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.tb_totalworkhours = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
         Me.tb_netpaywithtax = New System.Windows.Forms.TextBox()
         Me.tb_tax = New System.Windows.Forms.TextBox()
         Me.tb_netincome = New System.Windows.Forms.TextBox()
@@ -133,6 +131,14 @@ Partial Class frmEmpDetails
         Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.tb_insurance = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.dgv_insurance = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_editinsurance = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -154,6 +160,9 @@ Partial Class frmEmpDetails
         CType(Me.dgv_travelorders, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage5.SuspendLayout()
+        CType(Me.dgv_insurance, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -194,6 +203,7 @@ Partial Class frmEmpDetails
         Me.TabControl2.Controls.Add(Me.TabPage1)
         Me.TabControl2.Controls.Add(Me.TabPage3)
         Me.TabControl2.Controls.Add(Me.TabPage7)
+        Me.TabControl2.Controls.Add(Me.TabPage5)
         Me.TabControl2.Controls.Add(Me.TabPage8)
         Me.TabControl2.Controls.Add(Me.TabPage2)
         Me.TabControl2.Controls.Add(Me.TabPage4)
@@ -220,8 +230,6 @@ Partial Class frmEmpDetails
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.tb_income)
         Me.TabPage1.Controls.Add(Me.Label15)
-        Me.TabPage1.Controls.Add(Me.tb_totalworkhours)
-        Me.TabPage1.Controls.Add(Me.Label14)
         Me.TabPage1.Controls.Add(Me.tb_netpaywithtax)
         Me.TabPage1.Controls.Add(Me.tb_tax)
         Me.TabPage1.Controls.Add(Me.tb_netincome)
@@ -328,6 +336,7 @@ Partial Class frmEmpDetails
         Me.GroupBox3.Controls.Add(Me.Label38)
         Me.GroupBox3.Controls.Add(Me.dgv_otherdeduct)
         Me.GroupBox3.Controls.Add(Me.Label29)
+        Me.GroupBox3.Controls.Add(Me.Label14)
         Me.GroupBox3.Controls.Add(Me.Label21)
         Me.GroupBox3.Controls.Add(Me.Label28)
         Me.GroupBox3.Controls.Add(Me.Label27)
@@ -336,6 +345,7 @@ Partial Class frmEmpDetails
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Label23)
         Me.GroupBox3.Controls.Add(Me.tb_totaldeductions)
+        Me.GroupBox3.Controls.Add(Me.tb_insurance)
         Me.GroupBox3.Controls.Add(Me.tb_loans)
         Me.GroupBox3.Controls.Add(Me.tb_hdmf)
         Me.GroupBox3.Controls.Add(Me.tb_phic)
@@ -343,16 +353,16 @@ Partial Class frmEmpDetails
         Me.GroupBox3.Controls.Add(Me.tb_undertime)
         Me.GroupBox3.Controls.Add(Me.tb_absents)
         Me.GroupBox3.Controls.Add(Me.tb_late)
-        Me.GroupBox3.Location = New System.Drawing.Point(3, 82)
+        Me.GroupBox3.Location = New System.Drawing.Point(2, 56)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(270, 409)
+        Me.GroupBox3.Size = New System.Drawing.Size(270, 433)
         Me.GroupBox3.TabIndex = 7
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Deductions"
         '
         'btn_deldeduct
         '
-        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 198)
+        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 222)
         Me.btn_deldeduct.Name = "btn_deldeduct"
         Me.btn_deldeduct.Size = New System.Drawing.Size(35, 23)
         Me.btn_deldeduct.TabIndex = 17
@@ -361,7 +371,7 @@ Partial Class frmEmpDetails
         '
         'btn_adddeduct
         '
-        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 198)
+        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 222)
         Me.btn_adddeduct.Name = "btn_adddeduct"
         Me.btn_adddeduct.Size = New System.Drawing.Size(35, 23)
         Me.btn_adddeduct.TabIndex = 16
@@ -371,7 +381,7 @@ Partial Class frmEmpDetails
         'Label38
         '
         Me.Label38.AutoSize = True
-        Me.Label38.Location = New System.Drawing.Point(7, 203)
+        Me.Label38.Location = New System.Drawing.Point(7, 227)
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(90, 13)
         Me.Label38.TabIndex = 15
@@ -383,7 +393,7 @@ Partial Class frmEmpDetails
         Me.dgv_otherdeduct.AllowUserToDeleteRows = False
         Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
-        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 227)
+        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 251)
         Me.dgv_otherdeduct.MultiSelect = False
         Me.dgv_otherdeduct.Name = "dgv_otherdeduct"
         Me.dgv_otherdeduct.RowHeadersVisible = False
@@ -404,7 +414,7 @@ Partial Class frmEmpDetails
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(7, 383)
+        Me.Label29.Location = New System.Drawing.Point(7, 407)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(116, 13)
         Me.Label29.TabIndex = 12
@@ -475,7 +485,7 @@ Partial Class frmEmpDetails
         '
         'tb_totaldeductions
         '
-        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 380)
+        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 404)
         Me.tb_totaldeductions.Name = "tb_totaldeductions"
         Me.tb_totaldeductions.ReadOnly = True
         Me.tb_totaldeductions.Size = New System.Drawing.Size(124, 20)
@@ -727,7 +737,7 @@ Partial Class frmEmpDetails
         '
         'tb_income
         '
-        Me.tb_income.Location = New System.Drawing.Point(146, 56)
+        Me.tb_income.Location = New System.Drawing.Point(147, 30)
         Me.tb_income.Name = "tb_income"
         Me.tb_income.ReadOnly = True
         Me.tb_income.Size = New System.Drawing.Size(126, 20)
@@ -737,29 +747,11 @@ Partial Class frmEmpDetails
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(8, 59)
+        Me.Label15.Location = New System.Drawing.Point(8, 33)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(65, 13)
         Me.Label15.TabIndex = 4
         Me.Label15.Text = "Basic Salary"
-        '
-        'tb_totalworkhours
-        '
-        Me.tb_totalworkhours.Location = New System.Drawing.Point(146, 30)
-        Me.tb_totalworkhours.Name = "tb_totalworkhours"
-        Me.tb_totalworkhours.ReadOnly = True
-        Me.tb_totalworkhours.Size = New System.Drawing.Size(126, 20)
-        Me.tb_totalworkhours.TabIndex = 3
-        Me.tb_totalworkhours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(8, 33)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(91, 13)
-        Me.Label14.TabIndex = 2
-        Me.Label14.Text = "Total Work Hours"
         '
         'tb_netpaywithtax
         '
@@ -1294,6 +1286,80 @@ Partial Class frmEmpDetails
         Me.dgv_shift.Size = New System.Drawing.Size(283, 195)
         Me.dgv_shift.TabIndex = 24
         '
+        'tb_insurance
+        '
+        Me.tb_insurance.Location = New System.Drawing.Point(140, 198)
+        Me.tb_insurance.Name = "tb_insurance"
+        Me.tb_insurance.ReadOnly = True
+        Me.tb_insurance.Size = New System.Drawing.Size(124, 20)
+        Me.tb_insurance.TabIndex = 11
+        Me.tb_insurance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(7, 201)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(54, 13)
+        Me.Label14.TabIndex = 10
+        Me.Label14.Text = "Insurance"
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.ToolStrip1)
+        Me.TabPage5.Controls.Add(Me.dgv_insurance)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage5.TabIndex = 8
+        Me.TabPage5.Text = "Insurance and Savings"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'dgv_insurance
+        '
+        Me.dgv_insurance.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.dgv_insurance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_insurance.Location = New System.Drawing.Point(3, 31)
+        Me.dgv_insurance.Name = "dgv_insurance"
+        Me.dgv_insurance.Size = New System.Drawing.Size(545, 463)
+        Me.dgv_insurance.TabIndex = 0
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_addinsureance, Me.tsb_editinsurance, Me.tsb_deleteinsurance})
+        Me.ToolStrip1.Location = New System.Drawing.Point(3, 3)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.ToolStrip1.Size = New System.Drawing.Size(545, 25)
+        Me.ToolStrip1.TabIndex = 1
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'tsb_addinsureance
+        '
+        Me.tsb_addinsureance.Image = CType(resources.GetObject("tsb_addinsureance.Image"), System.Drawing.Image)
+        Me.tsb_addinsureance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_addinsureance.Name = "tsb_addinsureance"
+        Me.tsb_addinsureance.Size = New System.Drawing.Size(76, 22)
+        Me.tsb_addinsureance.Text = "Add New"
+        '
+        'tsb_editinsurance
+        '
+        Me.tsb_editinsurance.Image = CType(resources.GetObject("tsb_editinsurance.Image"), System.Drawing.Image)
+        Me.tsb_editinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_editinsurance.Name = "tsb_editinsurance"
+        Me.tsb_editinsurance.Size = New System.Drawing.Size(47, 22)
+        Me.tsb_editinsurance.Text = "Edit"
+        '
+        'tsb_deleteinsurance
+        '
+        Me.tsb_deleteinsurance.Image = CType(resources.GetObject("tsb_deleteinsurance.Image"), System.Drawing.Image)
+        Me.tsb_deleteinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_deleteinsurance.Name = "tsb_deleteinsurance"
+        Me.tsb_deleteinsurance.Size = New System.Drawing.Size(60, 22)
+        Me.tsb_deleteinsurance.Text = "Delete"
+        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1337,6 +1403,11 @@ Partial Class frmEmpDetails
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage5.PerformLayout()
+        CType(Me.dgv_insurance, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1401,8 +1472,6 @@ Partial Class frmEmpDetails
     Friend WithEvents tb_regularot As System.Windows.Forms.TextBox
     Friend WithEvents tb_income As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents tb_totalworkhours As System.Windows.Forms.TextBox
-    Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents tb_netincome As System.Windows.Forms.TextBox
     Friend WithEvents tb_monthlysalary As System.Windows.Forms.TextBox
     Friend WithEvents Label13 As System.Windows.Forms.Label
@@ -1449,4 +1518,12 @@ Partial Class frmEmpDetails
     Friend WithEvents dgv_travelorders As System.Windows.Forms.DataGridView
     Friend WithEvents Label39 As System.Windows.Forms.Label
     Friend WithEvents dtp_timesheetmonth2 As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents tb_insurance As System.Windows.Forms.TextBox
+    Friend WithEvents TabPage5 As System.Windows.Forms.TabPage
+    Friend WithEvents dgv_insurance As System.Windows.Forms.DataGridView
+    Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
+    Friend WithEvents tsb_addinsureance As System.Windows.Forms.ToolStripButton
+    Friend WithEvents tsb_editinsurance As System.Windows.Forms.ToolStripButton
+    Friend WithEvents tsb_deleteinsurance As System.Windows.Forms.ToolStripButton
 End Class

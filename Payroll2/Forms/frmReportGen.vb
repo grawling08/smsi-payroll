@@ -92,7 +92,7 @@ Public Class frmReportGen
                 'payroll register
                 GetPayrollBatch(cb_selcutoff.Text, cb_selcompany.Text)
                 ReportViewer1.ProcessingMode = ProcessingMode.Local
-                ReportViewer1.LocalReport.ReportPath = Application.StartupPath & "\Reports\rptPayrollReg.rdlc"
+                ReportViewer1.LocalReport.ReportPath = Application.StartupPath & "\Reports\Report1.rdlc"
                 ReportViewer1.LocalReport.DataSources.Clear()
                 ReportViewer1.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("pay")))
                 ReportViewer1.DocumentMapCollapsed = True

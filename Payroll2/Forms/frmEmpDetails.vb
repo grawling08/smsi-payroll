@@ -49,6 +49,8 @@ Public Class frmEmpDetails
         GetEmpShift(id)
         'get employee travel orders
         GetEmpTO(id)
+        'get employee insurance
+        GetEmpInsurance(id)
 
         'reset dgv_emptimesheet & other dgv's
         dgv_emptimesheet.Refresh()
@@ -83,6 +85,7 @@ Public Class frmEmpDetails
         tb_regularot.Text = totalOT(id)(0)
         tb_holidayot.Text = totalOT(id)(1)
         totalTimesheetDeduct()
+        tb_undertime.Text = Math.Round(ComputeUndertime(tb_biometricid.Text, id), 2)
         tb_late.Text = ComputeLates(tb_biometricid.Text, id)
         tb_loans.Text = computeloans(id)
         tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
@@ -145,10 +148,8 @@ Public Class frmEmpDetails
                         dtareader5.Read()
                         If dtareader5("daystatus").ToString = "Whole Day" Then
                             daysAbsent -= 1.0
-                            totalWorkHours += 8.0
                         ElseIf dtareader5("daystatus").ToString = "AM" Or dtareader5("daystatus").ToString = "PM" Then
                             daysAbsent -= 0.5
-                            totalWorkHours += 4.0
                         End If
                     End If
                 Else
@@ -179,9 +180,6 @@ Public Class frmEmpDetails
         End While
         Label34.Text = countattendance
         tb_absents.Text = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-        'tb_undertime.Text = Math.Round(totalUndertime * empHourlyWage, 2)
-        tb_totalworkhours.Text = totalWorkHours
-        'Math.Round(daysPresent * empDailyWage, 2)
     End Sub
 
     Sub loadpayslip()
@@ -333,6 +331,20 @@ Public Class frmEmpDetails
         Dim col = dgv_overtime.Columns.Count - 1
         For i As Integer = 0 To col
             dgv_overtime.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            i = i + i
+        Next
+        Close_Connect()
+    End Sub
+    'employee insurance
+    Private Sub GetEmpInsurance(id As String)
+        StrSql = "SELECT * FROM tbl_insurance WHERE id_employee = '" & id & "'"
+        QryReadP()
+        ds = New DataSet()
+        adpt.Fill(ds, "Insurance")
+        dgv_insurance.DataSource = ds.Tables(0)
+        Dim col = dgv_insurance.Columns.Count - 1
+        For i As Integer = 0 To col
+            dgv_insurance.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             i = i + i
         Next
         Close_Connect()
@@ -496,7 +508,7 @@ Public Class frmEmpDetails
     End Sub
 
     'automatic compute net pay on enter
-    Private Sub tb_allowance_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_allowance.KeyUp, tb_tax.KeyUp, tb_sss.KeyUp, tb_phic.KeyUp, tb_hdmf.KeyUp, tb_loans.KeyUp, tb_netpaywithtax.KeyUp
+    Private Sub tb_allowance_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_allowance.KeyUp, tb_tax.KeyUp, tb_sss.KeyUp, tb_phic.KeyUp, tb_hdmf.KeyUp, tb_loans.KeyUp, tb_netpaywithtax.KeyUp, tb_insurance.KeyUp
         If e.KeyCode = Keys.Enter Then
             'MsgBox("enter key pressd ")
             computeTotal()
@@ -551,4 +563,7 @@ Public Class frmEmpDetails
             computeTotal()
         End If
     End Sub
+
+    
+
 End Class
