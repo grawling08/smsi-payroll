@@ -469,7 +469,7 @@ Module modConnect
         Dim rows = frmMain.dgv_payroll.Rows.Count
         Dim j = 0
         While j <= rows - 1
-            'Console.Write(If(Not String.IsNullOrEmpty(cutoff_id.ToString), cutoff_id.ToString, "2") + vbCrLf)
+            Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
             computeWage(frmMain.dgv_payroll.Rows(j).Cells(22).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString)
             frmMain.dgv_payroll.Rows(j).Cells(7).Value = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) / 2 ' Basic pay
             frmMain.dgv_payroll.Rows(j).Cells(8).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0) ' Regular OT

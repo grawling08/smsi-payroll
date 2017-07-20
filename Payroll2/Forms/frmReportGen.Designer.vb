@@ -153,7 +153,8 @@ Partial Class frmReportGen
         Me.Controls.Add(FlowLayoutPanel1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(1070, 614)
         Me.Name = "frmReportGen"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Generate Reports"

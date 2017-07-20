@@ -133,7 +133,7 @@ Module modPayCompute
         Dim isSpecHolidayOT As Boolean = False
         Dim isRegOt As Boolean = False
         StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
-                            & "status = 'Approved by HR' AND cutoffDate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+                            & "status = 'Approved by HR' AND overtimedate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim otreader As MySqlDataReader = cmd.ExecuteReader
         If otreader.HasRows Then

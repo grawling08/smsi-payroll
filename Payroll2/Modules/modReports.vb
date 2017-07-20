@@ -3,16 +3,16 @@
         StrSql = "SELECT tbl_employee.company as 'Company', " _
                     & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, " _
                     & "tbl_employee.employment_status, " _
-                    & "tbl_payslip.income as 'Basic Pay', " _
-                    & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT', tbl_payslip.ot_pay as 'Total OT', " _
+                    & "tbl_payslip.income as 'BasicPay', " _
+                    & "tbl_payslip.regot_pay as 'RegularOT', tbl_payslip.holot_pay as 'HolidayOT', tbl_payslip.ot_pay as 'TotalOT', " _
                     & "tbl_payslip.allowances as 'Allowances', " _
                     & "tbl_payslip.incentives as 'Incentives', " _
-                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
+                    & "tbl_payslip.lateabsent_deduct as 'LateAbsent', " _
                     & "tbl_payslip.undertime_deduct as 'Undertime', " _
                     & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', " _
-                    & "tbl_payslip.otherdeduct as 'Other Deductions', " _
-                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.insurance as 'Insurance', " _
-                    & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay' " _
+                    & "tbl_payslip.otherdeduct as 'OtherDeductions', " _
+                    & "tbl_payslip.gross_income as 'GrossPay', tbl_payslip.insurance as 'Insurance', " _
+                    & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'NetPay' " _
                     & "FROM tbl_payslip " _
                     & "JOIN tbl_employee ON tbl_payslip.employee_id = tbl_employee.id_employee " _
                     & "WHERE tbl_payslip.cutoff_id = (SELECT cutoff_id FROM tbl_cutoff WHERE cutoff_range = '" & cutoff & "') AND tbl_employee.company = '" & company & "' ORDER BY Employee"
