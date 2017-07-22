@@ -3,7 +3,9 @@
 Module modPayCompute
     Public empHourlyWage, empDailyWage As Double
     Public totalLate, totalUndertime, totalOvertime, totalWorkHours, totalAllowance, totalBenefits, totalLoans As Double
-
+    Public daysAbsent As Double = 0
+    Public daysPresent As Double = 0
+    Public monthlysalary As Double = 0
     'compute daily and ourly wage
     Sub computeWage(ByVal employmentStatus As String, ByVal monthlysalary As String)
         'daily rate
@@ -19,12 +21,14 @@ Module modPayCompute
 
     Function ComputeLates(ByVal emp_bio_id As String, ByVal id_employee As String) As Double
         'get total lates
-        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
+        StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
+        'Console.Write(StrSql + vbCrLf)
         QryReadP()
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then
             While latereader.Read()
                 If CDbl(latereader("late")) >= 10 Then
+                    Console.Write(latereader("late").ToString + vbCrLf)
                     totalLate += CDbl(latereader("late"))
                 End If
             End While
@@ -63,7 +67,7 @@ Module modPayCompute
                 '    loanpayreader.Read()
 
                 'End If
-                loans = dtareader("monthlyAmortization")
+                loans = dtareader("monthlyAmortization") / 2 'default: divide my 2 for semi-monthly
                 totalLoans += loans
             End While
         End If
@@ -132,8 +136,7 @@ Module modPayCompute
         Dim isRegHolidayOT As Boolean = False
         Dim isSpecHolidayOT As Boolean = False
         Dim isRegOt As Boolean = False
-        StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND " _
-                            & "status = 'Approved by HR' AND overtimedate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
+        StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND status = 'Approved by HR' AND overtimedate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim otreader As MySqlDataReader = cmd.ExecuteReader
         If otreader.HasRows Then
@@ -185,4 +188,75 @@ Module modPayCompute
         End If
         Return ot
     End Function
+
+    Function totalTimesheetDeduct(ByVal id_employee As String, ByVal emp_bio_id As String)
+        Dim totalabsent() As Double = {0, 0} '0: totalabsent, 1: countattendance
+        'reset value of Dim daysAbsent to 0
+        daysAbsent = 0
+        daysPresent = 0
+        'loop cutoff range dates
+        'check for absenses and leaves
+        Dim countattendance = 0
+        Dim CurrD As DateTime = prevcutoff_fromdate
+        While (CurrD <= prevcutoff_todate)
+            countattendance += 1
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
+            'Console.Write(StrSql + vbCrLf)
+            QryReadP()
+            Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
+            If Not dtareader2.HasRows Then
+                'check if current day in loop is not within the shift schedule
+                StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id_employee & "') AND day='" & CurrD.ToString("dddd") & "'"
+                QryReadP()
+                Dim dtareader4 As MySqlDataReader = cmd.ExecuteReader()
+                If dtareader4.HasRows Then
+                    'whole day absent 
+                    daysAbsent += 1
+                    'query leave where leave is approved by the hr
+                    'if leave is with pay -1 to absent
+                    'leave is without pay, treated as absent
+                    StrSql = "SELECT tbl_leaves.*, tbl_leavedates.* FROM tbl_leaves JOIN tbl_leavedates ON tbl_leavedates.leaveapp_id = tbl_leaves.id WHERE tbl_leaves.employee_id = '" & id_employee & "' AND tbl_leavedates.leavedate = '" & CurrD.ToString("yyyy-MM-dd") & "' AND tbl_leaves.status = 'Approved by HR' AND tbl_leaves.mode = 'with pay'"
+                    QryReadP()
+                    Dim dtareader5 As MySqlDataReader = cmd.ExecuteReader
+                    If dtareader5.HasRows Then
+                        'merong leave
+                        dtareader5.Read()
+                        If dtareader5("daystatus").ToString = "Whole Day" Then
+                            daysAbsent -= 1.0
+                        ElseIf dtareader5("daystatus").ToString = "AM" Or dtareader5("daystatus").ToString = "PM" Then
+                            daysAbsent -= 0.5
+                        End If
+                    End If
+                Else
+                    If CurrD.ToString("dddd") = "Sunday" Then
+                        daysPresent += 1
+                    End If
+                End If
+                'check if holiday
+                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+                QryReadP()
+                Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
+                If holidayreader.HasRows Then
+                    daysAbsent -= 1
+                End If
+            Else
+                dtareader2.Read()
+                Dim checktimein = DateTime.Parse(dtareader2("time_in")).ToString("hh:mm tt")
+                Dim checktimeout = DateTime.Parse(dtareader2("time_out")).ToString("hh:mm tt")
+                If DateTime.Parse(checktimein) >= #12:00:00 PM# And DateTime.Parse(checktimein) <= #1:00:00 PM# Then
+                    'halfday absent am
+                    daysAbsent += 0.5
+                ElseIf DateTime.Parse(checktimeout) >= #12:00:00 PM# And DateTime.Parse(checktimeout) <= #1:00:00 PM# Then
+                    'halfday absent pm
+                    daysAbsent += 0.5
+                End If
+            End If
+            CurrD = CurrD.AddDays(1)
+        End While
+        totalabsent(1) = countattendance
+        totalabsent(0) = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
+        Console.Write("id: " + id_employee.ToString + " absents" + daysAbsent.ToString + vbCrLf)
+        Return totalabsent
+    End Function
+
 End Module

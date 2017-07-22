@@ -231,6 +231,9 @@ Public Class frmMain
         GetCutoffOccurences()
         'get the date range of the cutoff
         getCutoffRange()
+        'get previous cutoff days for deductions
+        GetPrevCutoff()
+        'get initial payslip summary
         getPayslip(current_cutoff)
         loadEmployee()
         loading.Close()
@@ -294,11 +297,12 @@ Public Class frmMain
                         & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
                         & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
                         & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "otherdeduct =" & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
-                        & "gross_income =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
-                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & "net_income =" & dgv_payroll.Rows(j).Cells(22).Value.ToString _
+                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
+                        & "loans =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
+                        & "otherdeduct =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
+                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
+                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
+                        & "net_income =" & dgv_payroll.Rows(j).Cells(23).Value.ToString _
                         & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
                 QryReadP()
                 cmd.ExecuteNonQuery()
@@ -315,11 +319,12 @@ Public Class frmMain
                         & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
                         & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
                         & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "otherdeduct =" & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
-                        & "gross_income =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
-                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & "net_income =" & dgv_payroll.Rows(j).Cells(22).Value.ToString _
+                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
+                        & "loans =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
+                        & "otherdeduct =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
+                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
+                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
+                        & "net_income =" & dgv_payroll.Rows(j).Cells(23).Value.ToString _
                         & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
                     'QryReadH()
                 End If
@@ -331,7 +336,7 @@ Public Class frmMain
                         & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
                         & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
                         & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & ")"
+                        & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & ")"
                 QryReadP()
                 cmd.ExecuteNonQuery()
             End If

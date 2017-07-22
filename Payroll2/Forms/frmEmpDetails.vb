@@ -4,8 +4,7 @@ Imports Microsoft.Office.Interop
 
 Public Class frmEmpDetails
     Private id, emp_fullname, employee_id, employmentStatus, taxcode As String
-    Private daysAbsent As Double = 0
-    Private daysPresent As Double = 0
+    
 
     Sub New(ByVal emp_id As String)
         MyBase.New()
@@ -29,7 +28,7 @@ Public Class frmEmpDetails
             tb_company.Text = dtareader("company").ToString
             tb_branch.Text = dtareader("branch").ToString
             tb_position.Text = dtareader("position").ToString
-            tb_monthlysalary.Text = If(String.IsNullOrEmpty(dtareader("basic_salary").ToString), 0, dtareader("basic_salary").ToString)
+            monthlysalary = If(String.IsNullOrEmpty(dtareader("basic_salary").ToString), 0, dtareader("basic_salary").ToString)
             tb_employmentstatus.Text = dtareader("employment_status").ToString
             employmentStatus = dtareader("employment_status").ToString
             taxcode = If(String.IsNullOrEmpty(dtareader("tax_status").ToString), 0, dtareader("tax_status").ToString)
@@ -51,6 +50,7 @@ Public Class frmEmpDetails
         GetEmpTO(id)
         'get employee insurance
         GetEmpInsurance(id)
+        
 
         'reset dgv_emptimesheet & other dgv's
         dgv_emptimesheet.Refresh()
@@ -59,10 +59,10 @@ Public Class frmEmpDetails
         dgv_emptimesheet.DataSource = Nothing
 
         ' Set the CustomFormat string.
-        dtp_timesheetmonth.Value = frmdate_cutoff
+        dtp_timesheetmonth.Value = prevcutoff_fromdate
         dtp_timesheetmonth.Format = DateTimePickerFormat.Custom
         dtp_timesheetmonth.CustomFormat = "MMMM dd, yyyy"
-        dtp_timesheetmonth2.Value = todate_cutoff
+        dtp_timesheetmonth2.Value = prevcutoff_todate
         dtp_timesheetmonth2.Format = DateTimePickerFormat.Custom
         dtp_timesheetmonth2.CustomFormat = "MMMM dd, yyyy"
 
@@ -75,27 +75,28 @@ Public Class frmEmpDetails
         '        ctrl.Enabled = False
         '    Next
         'End If
-        'get previous cutoff days for deductions
-        GetPrevCutoff()
+        
         'get timesheet from hris
-        loadtimesheetsp(frmdate_cutoff.ToString("yyyy-MM-dd"), todate_cutoff.ToString("yyyy-MM-dd"))
+        loadtimesheetsp(prevcutoff_fromdate.ToString("yyyy-MM-dd"), prevcutoff_todate.ToString("yyyy-MM-dd"))
         'payroll computations
-        computeWage(employmentStatus, tb_monthlysalary.Text)
-        tb_income.Text = Math.Round((Double.Parse(tb_monthlysalary.Text) / 2), 2)
+        computeWage(employmentStatus, monthlysalary)
+        tb_income.Text = Math.Round((Double.Parse(monthlysalary) / 2), 2)
         tb_regularot.Text = totalOT(id)(0)
         tb_holidayot.Text = totalOT(id)(1)
-        totalTimesheetDeduct()
+        tb_absents.Text = totalTimesheetDeduct(id, tb_biometricid.Text)(0)
+        Label34.Text = totalTimesheetDeduct(id, tb_biometricid.Text)(1) ' hidden count attendance
         tb_undertime.Text = Math.Round(ComputeUndertime(tb_biometricid.Text, id), 2)
         tb_late.Text = ComputeLates(tb_biometricid.Text, id)
         tb_loans.Text = computeloans(id)
-        tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
-        tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
-        tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+        tb_hdmf.Text = computeHDMF(monthlysalary)
+        tb_phic.Text = computePhilhealth(monthlysalary)(2)
+        tb_sss.Text = computeSSS(monthlysalary)(2)
         loadincentives(cutoff_id, id)
         loadotherdeduct(cutoff_id, id)
         'computeTotalContributions()
         totalAllowance = computeAllowance(id)
         tb_allowance.Text = totalAllowance
+        tb_insurance.Text = computeInsurance(id)
         'check for saved payslip
         StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
         QryReadP()
@@ -118,70 +119,6 @@ Public Class frmEmpDetails
 
 #Region "computations"
 
-    Sub totalTimesheetDeduct()
-        'loop cutoff range dates
-        'check for absenses and leaves
-        Dim countattendance = 0
-        Dim CurrD As DateTime = prevcutoff_fromdate
-        While (CurrD <= prevcutoff_todate)
-            countattendance += 1
-            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(tb_biometricid.Text), "id_employee = '" & id & "'", "emp_bio_id = '" & tb_biometricid.Text & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
-            'Console.Write(StrSql)
-            QryReadP()
-            Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
-            If Not dtareader2.HasRows Then
-                'check if current day in loop is not within the shift schedule
-                StrSql = "Select * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day='" & CurrD.ToString("dddd") & "'"
-                QryReadP()
-                Dim dtareader4 As MySqlDataReader = cmd.ExecuteReader()
-                If dtareader4.HasRows Then
-                    'whole day absent 
-                    daysAbsent += 1
-                    'query leave where leave is approved by the hr
-                    'if leave is with pay -1 to absent
-                    'leave is without pay, treated as absent
-                    StrSql = "SELECT tbl_leaves.*, tbl_leavedates.* FROM tbl_leaves JOIN tbl_leavedates ON tbl_leavedates.leaveapp_id = tbl_leaves.id WHERE tbl_leaves.employee_id = '" & id & "' AND tbl_leavedates.leavedate = '" & CurrD.ToString("yyyy-MM-dd") & "' AND tbl_leaves.status = 'Approved by HR' AND tbl_leaves.mode = 'with pay'"
-                    QryReadP()
-                    Dim dtareader5 As MySqlDataReader = cmd.ExecuteReader
-                    If dtareader5.HasRows Then
-                        'merong leave
-                        dtareader5.Read()
-                        If dtareader5("daystatus").ToString = "Whole Day" Then
-                            daysAbsent -= 1.0
-                        ElseIf dtareader5("daystatus").ToString = "AM" Or dtareader5("daystatus").ToString = "PM" Then
-                            daysAbsent -= 0.5
-                        End If
-                    End If
-                Else
-                    If CurrD.ToString("dddd") = "Sunday" Then
-                        daysPresent += 1
-                    End If
-                End If
-                'check if holiday
-                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & CurrD.ToString("yyyy-MM-dd") & "'"
-                QryReadP()
-                Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
-                If holidayreader.HasRows Then
-                    daysAbsent -= 1
-                End If
-            Else
-                dtareader2.Read()
-                Dim checktimein = DateTime.Parse(dtareader2("time_in")).ToString("hh:mm tt")
-                Dim checktimeout = DateTime.Parse(dtareader2("time_out")).ToString("hh:mm tt")
-                If DateTime.Parse(checktimein) >= #12:00:00 PM# And DateTime.Parse(checktimein) <= #1:00:00 PM# Then
-                    'halfday absent am
-                    daysAbsent += 0.5
-                ElseIf DateTime.Parse(checktimeout) >= #12:00:00 PM# And DateTime.Parse(checktimeout) <= #1:00:00 PM# Then
-                    'halfday absent pm
-                    daysAbsent += 0.5
-                End If
-            End If
-            CurrD = CurrD.AddDays(1)
-        End While
-        Label34.Text = countattendance
-        tb_absents.Text = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-    End Sub
-
     Sub loadpayslip()
         StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
         QryReadP()
@@ -197,26 +134,25 @@ Public Class frmEmpDetails
     End Sub
 
     Sub computeTotal()
-        tb_totalot.Text = CDbl(tb_regularot.Text) + CDbl(tb_holidayot.Text) 'plus holiday computation
+        tb_grosspay.Text = Double.Parse(tb_income.Text) - Double.Parse(tb_late.Text) - Double.Parse(tb_absents.Text) - Double.Parse(tb_undertime.Text) + Double.Parse(tb_regularot.Text) + Double.Parse(tb_holidayot.Text)
+        tb_taxableincome.Text = Double.Parse(tb_grosspay.Text) - Double.Parse(tb_sss.Text) - Double.Parse(tb_phic.Text) - Double.Parse(tb_hdmf.Text)
+        tb_tax.Text = Math.Round(computeTax(tb_taxableincome.Text, taxcode), 2)
+        tb_netpaywithtax.Text = Double.Parse(tb_taxableincome.Text) - Double.Parse(tb_tax.Text)
         totalBenefits = 0
         If dgv_incentives.Rows.Count > 0 Then
             For Each row In dgv_incentives.Rows
-                totalBenefits += CDbl(row.Cells(1).Value.ToString())
+                totalBenefits += Double.Parse(row.Cells(1).Value.ToString())
             Next
         End If
         Dim otherdeduct = 0
         If dgv_otherdeduct.Rows.Count > 0 Then
             For Each row In dgv_otherdeduct.Rows
-                otherdeduct += CDbl(row.Cells(1).Value.ToString())
+                otherdeduct += Double.Parse(row.Cells(1).Value.ToString())
             Next
         End If
-        tb_totaldeductions.Text = CDbl(tb_late.Text) + CDbl(tb_absents.Text) + CDbl(tb_undertime.Text) + CDbl(tb_sss.Text) + CDbl(tb_phic.Text) + CDbl(tb_hdmf.Text) + CDbl(otherdeduct)
-        tb_totalbenefits.Text = CDbl(tb_allowance.Text) + totalBenefits
-        tb_grossincome.Text = Math.Round(CDbl(tb_totalot.Text) + CDbl(tb_income.Text) - CDbl(tb_totaldeductions.Text), 2)
-        tb_tax.Text = Math.Round(computeTax(tb_grossincome.Text, taxcode), 2)
-        Dim taxated_income = CDbl(tb_grossincome.Text) - CDbl(tb_tax.Text)
-        tb_netpaywithtax.Text = taxated_income
-        tb_netincome.Text = Math.Round((taxated_income + CDbl(tb_totalbenefits.Text) - CDbl(tb_loans.Text)), 2)
+        tb_totalbenefits.Text = Double.Parse(tb_allowance.Text) + totalBenefits
+        tb_totaldeductions.Text = otherdeduct + Double.Parse(tb_loans.Text) + Double.Parse(tb_insurance.Text)
+        tb_netincome.Text = Math.Round(Double.Parse(tb_netpaywithtax.Text) + Double.Parse(tb_totalbenefits.Text) - Double.Parse(tb_totaldeductions.Text), 2)
     End Sub
 
 #End Region
@@ -238,26 +174,6 @@ Public Class frmEmpDetails
     'load timesheet
     Private Sub btn_loadtimesheet_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_loadtimesheet.Click
         loadtimesheetsp(dtp_timesheetmonth.Value.ToString("yyyy-MM-dd"), dtp_timesheetmonth2.Value.ToString("yyyy-MM-dd"))
-        'StrSql = "SELECT emp_bio_id, dateLog, DATE_FORMAT(STR_TO_DATE(timein, '%T'),'%h:%s %p') as timein, DATE_FORMAT(STR_TO_DATE(timeout, '%T'),'%h:%s %p') as timeout, totalHours, late, undertime, overtime, remarks " _
-        '            & "FROM timesheet WHERE emp_bio_id = '" & tb_biometricid.Text & "' " _
-        '            & "AND Month(dateLog) = Month('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') " _
-        '            & "AND Year(dateLog) = Year('" & dtp_timesheetmonth.Value.ToString("yyyy-MM-dd") & "') ORDER BY dateLog"
-        'QryReadH()
-        'ds = New DataSet
-        'adpt.Fill(ds, "TimesheetRaw")
-        ''reset dgv
-        'dgv_emptimesheet.Columns.Clear()
-        'dgv_emptimesheet.DataSource = Nothing
-        'dgv_emptimesheet.DataSource = ds.Tables(0)
-        'Dim col = dgv_emptimesheet.Columns.Count
-        'Dim i As Integer = 0
-        'While i <= col - 1
-        '    dgv_emptimesheet.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-        '    dgv_emptimesheet.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-        '    i = i + 1
-        'End While
-        'dgv_emptimesheet.Columns(0).Visible = False
-        '' dgv_emptimesheet.Columns(2).Visible = False
     End Sub
     'load employee travel orders
     Private Sub GetEmpTO(id As String)
@@ -368,7 +284,7 @@ Public Class frmEmpDetails
         dgv_incentives.Rows.Add(row)
     End Sub
     'after cell edit compute net pay
-    Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_incentives.CellEndEdit
+    Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
         computeTotal()
         'save to db
         save_incentives(cutoff_id, id)
@@ -437,7 +353,7 @@ Public Class frmEmpDetails
         End If
     End Sub
     'autocompute after cell edit
-    Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
+    Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
         computeTotal()
         'save to db
         save_otherdeduct(cutoff_id, id)
@@ -471,12 +387,12 @@ Public Class frmEmpDetails
             'edit/update database
             StrSql = "UPDATE tbl_payslip SET " _
                     & "income =" & CDbl(tb_income.Text) & "," & "regot_pay =" & CDbl(tb_regularot.Text) & "," _
-                    & "holot_pay =" & CDbl(tb_holidayot.Text) & "," & "ot_pay =" & CDbl(tb_totalot.Text) & "," _
+                    & "holot_pay =" & CDbl(tb_holidayot.Text) & "," & "ot_pay =" & CDbl(tb_grosspay.Text) & "," _
                     & "allowances =" & CDbl(tb_allowance.Text) & "," & "incentives =" & totalBenefits & "," _
                     & "lateabsent_deduct =" & CDbl(tb_late.Text) & "," & "undertime_deduct =" & CDbl(tb_undertime.Text) & "," _
                     & "tax =" & CDbl(tb_tax.Text) & "," & "sss =" & CDbl(tb_sss.Text) & "," _
                     & "phic =" & CDbl(tb_phic.Text) & "," & "hdmf =" & CDbl(tb_hdmf.Text) & "," _
-                    & "gross_income =" & tb_grossincome.Text & "," & "net_income =" & tb_netincome.Text _
+                    & "gross_income =" & tb_taxableincome.Text & "," & "net_income =" & tb_netincome.Text _
                     & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
             QryReadP()
             cmd.ExecuteNonQuery()
@@ -487,10 +403,10 @@ Public Class frmEmpDetails
             'saved new payslip
             StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
                     & CDbl(tb_income.Text) & "," & CDbl(tb_regularot.Text) & "," _
-                    & CDbl(tb_holidayot.Text) & "," & CDbl(tb_totalot.Text) & "," & CDbl(tb_allowance.Text) & "," _
+                    & CDbl(tb_holidayot.Text) & "," & CDbl(tb_grosspay.Text) & "," & CDbl(tb_allowance.Text) & "," _
                     & totalBenefits & "," & CDbl(tb_late.Text) & "," & CDbl(tb_undertime.Text) & "," _
                     & CDbl(tb_tax.Text) & "," & CDbl(tb_sss.Text) & "," & CDbl(tb_phic.Text) & "," _
-                    & CDbl(tb_hdmf.Text) & "," & tb_grossincome.Text & "," & tb_netincome.Text & ")"
+                    & CDbl(tb_hdmf.Text) & "," & tb_taxableincome.Text & "," & tb_netincome.Text & ")"
             QryReadP()
             cmd.ExecuteNonQuery()
             payslip_id = cmd.LastInsertedId.ToString()
@@ -508,14 +424,14 @@ Public Class frmEmpDetails
     End Sub
 
     'automatic compute net pay on enter
-    Private Sub tb_allowance_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_allowance.KeyUp, tb_tax.KeyUp, tb_sss.KeyUp, tb_phic.KeyUp, tb_hdmf.KeyUp, tb_loans.KeyUp, tb_netpaywithtax.KeyUp, tb_insurance.KeyUp
+    Private Sub tb_allowance_KeyUp(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_tax.KeyUp, tb_sss.KeyUp, tb_phic.KeyUp, tb_hdmf.KeyUp, tb_netpaywithtax.KeyUp
         If e.KeyCode = Keys.Enter Then
             'MsgBox("enter key pressd ")
             computeTotal()
         End If
     End Sub
     'nnumbers only input 
-    Private Sub tb_allowance_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles tb_tax.KeyPress, tb_sss.KeyPress, tb_phic.KeyPress, tb_hdmf.KeyPress, tb_allowance.KeyPress, tb_netpaywithtax.KeyPress
+    Private Sub tb_allowance_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles tb_tax.KeyPress, tb_sss.KeyPress, tb_phic.KeyPress, tb_hdmf.KeyPress, tb_netpaywithtax.KeyPress
         If Not Char.IsNumber(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) AndAlso Not e.KeyChar = "." Then
             e.Handled = True
         End If
@@ -553,17 +469,16 @@ Public Class frmEmpDetails
             End Using
             tb_regularot.Text = totalOT(id)(0)
             tb_holidayot.Text = totalOT(id)(1)
-            totalTimesheetDeduct()
+            tb_absents.Text = totalTimesheetDeduct(id, tb_biometricid.Text)(0)
+            Label34.Text = totalTimesheetDeduct(id, tb_biometricid.Text)(1) ' hidden count attendance
             tb_late.Text = ComputeLates(tb_biometricid.Text, id)
             tb_loans.Text = computeloans(id)
-            tb_hdmf.Text = computeHDMF(tb_monthlysalary.Text)
-            tb_phic.Text = computePhilhealth(tb_monthlysalary.Text)(2)
-            tb_sss.Text = computeSSS(tb_monthlysalary.Text)(2)
+            tb_hdmf.Text = computeHDMF(monthlysalary)
+            tb_phic.Text = computePhilhealth(monthlysalary)(2)
+            tb_sss.Text = computeSSS(monthlysalary)(2)
             tb_allowance.Text = computeAllowance(id)
+            tb_insurance.Text = computeInsurance(id)
             computeTotal()
         End If
     End Sub
-
-    
-
 End Class

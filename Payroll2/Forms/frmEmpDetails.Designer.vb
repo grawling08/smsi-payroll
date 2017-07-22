@@ -28,15 +28,17 @@ Partial Class frmEmpDetails
         Me.dgv_empleave = New System.Windows.Forms.DataGridView()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.Label34 = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.btn_savepayslip = New System.Windows.Forms.Button()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.lbl_cutoff = New System.Windows.Forms.Label()
-        Me.Label36 = New System.Windows.Forms.Label()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label30 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.tb_allowance = New System.Windows.Forms.TextBox()
+        Me.dgv_incentives = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btn_delincentive = New System.Windows.Forms.Button()
+        Me.btn_addincentive = New System.Windows.Forms.Button()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.tb_totalbenefits = New System.Windows.Forms.TextBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.btn_deldeduct = New System.Windows.Forms.Button()
         Me.btn_adddeduct = New System.Windows.Forms.Button()
@@ -45,47 +47,45 @@ Partial Class frmEmpDetails
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
-        Me.Label28 = New System.Windows.Forms.Label()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.Label26 = New System.Windows.Forms.Label()
+        Me.tb_totaldeductions = New System.Windows.Forms.TextBox()
+        Me.tb_insurance = New System.Windows.Forms.TextBox()
+        Me.tb_loans = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.tb_holidayot = New System.Windows.Forms.TextBox()
+        Me.btn_savepayslip = New System.Windows.Forms.Button()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.tb_grosspay = New System.Windows.Forms.TextBox()
+        Me.lbl_cutoff = New System.Windows.Forms.Label()
+        Me.tb_regularot = New System.Windows.Forms.TextBox()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label30 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.tb_taxableincome = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.tb_totaldeductions = New System.Windows.Forms.TextBox()
-        Me.tb_loans = New System.Windows.Forms.TextBox()
-        Me.tb_hdmf = New System.Windows.Forms.TextBox()
-        Me.tb_phic = New System.Windows.Forms.TextBox()
-        Me.tb_sss = New System.Windows.Forms.TextBox()
-        Me.tb_undertime = New System.Windows.Forms.TextBox()
-        Me.tb_absents = New System.Windows.Forms.TextBox()
-        Me.tb_late = New System.Windows.Forms.TextBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.dgv_incentives = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btn_delincentive = New System.Windows.Forms.Button()
-        Me.btn_addincentive = New System.Windows.Forms.Button()
-        Me.Label31 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.tb_totalbenefits = New System.Windows.Forms.TextBox()
-        Me.tb_allowance = New System.Windows.Forms.TextBox()
-        Me.tb_grossincome = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.tb_holidayot = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.tb_totalot = New System.Windows.Forms.TextBox()
-        Me.tb_regularot = New System.Windows.Forms.TextBox()
+        Me.tb_sss = New System.Windows.Forms.TextBox()
+        Me.tb_phic = New System.Windows.Forms.TextBox()
+        Me.tb_hdmf = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.tb_income = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.tb_netpaywithtax = New System.Windows.Forms.TextBox()
         Me.tb_tax = New System.Windows.Forms.TextBox()
         Me.tb_netincome = New System.Windows.Forms.TextBox()
-        Me.tb_monthlysalary = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.tb_undertime = New System.Windows.Forms.TextBox()
+        Me.tb_late = New System.Windows.Forms.TextBox()
+        Me.tb_absents = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.btn_addtimesheet = New System.Windows.Forms.Button()
@@ -98,6 +98,12 @@ Partial Class frmEmpDetails
         Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_editinsurance = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
+        Me.dgv_insurance = New System.Windows.Forms.DataGridView()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.dgv_overtime = New System.Windows.Forms.DataGridView()
@@ -131,28 +137,23 @@ Partial Class frmEmpDetails
         Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
-        Me.tb_insurance = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.dgv_insurance = New System.Windows.Forms.DataGridView()
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_editinsurance = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         CType(Me.dgv_incentives, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox3.SuspendLayout()
+        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage7.SuspendLayout()
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.BindingNavigator1.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
+        CType(Me.dgv_insurance, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -160,9 +161,6 @@ Partial Class frmEmpDetails
         CType(Me.dgv_travelorders, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage5.SuspendLayout()
-        CType(Me.dgv_insurance, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -178,7 +176,7 @@ Partial Class frmEmpDetails
         Me.dgv_emploans.ReadOnly = True
         Me.dgv_emploans.RowHeadersVisible = False
         Me.dgv_emploans.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emploans.Size = New System.Drawing.Size(545, 463)
+        Me.dgv_emploans.Size = New System.Drawing.Size(545, 420)
         Me.dgv_emploans.TabIndex = 0
         '
         'dgv_empleave
@@ -195,7 +193,7 @@ Partial Class frmEmpDetails
         Me.dgv_empleave.ReadOnly = True
         Me.dgv_empleave.RowHeadersVisible = False
         Me.dgv_empleave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_empleave.Size = New System.Drawing.Size(545, 491)
+        Me.dgv_empleave.Size = New System.Drawing.Size(545, 448)
         Me.dgv_empleave.TabIndex = 0
         '
         'TabControl2
@@ -210,124 +208,154 @@ Partial Class frmEmpDetails
         Me.TabControl2.Location = New System.Drawing.Point(302, 1)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(559, 523)
+        Me.TabControl2.Size = New System.Drawing.Size(559, 480)
         Me.TabControl2.TabIndex = 0
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.GroupBox2)
+        Me.TabPage1.Controls.Add(Me.GroupBox3)
+        Me.TabPage1.Controls.Add(Me.Label18)
         Me.TabPage1.Controls.Add(Me.Label34)
+        Me.TabPage1.Controls.Add(Me.Label17)
         Me.TabPage1.Controls.Add(Me.Label33)
+        Me.TabPage1.Controls.Add(Me.Label16)
+        Me.TabPage1.Controls.Add(Me.tb_holidayot)
         Me.TabPage1.Controls.Add(Me.btn_savepayslip)
         Me.TabPage1.Controls.Add(Me.Label32)
+        Me.TabPage1.Controls.Add(Me.tb_grosspay)
         Me.TabPage1.Controls.Add(Me.lbl_cutoff)
+        Me.TabPage1.Controls.Add(Me.tb_regularot)
         Me.TabPage1.Controls.Add(Me.Label36)
         Me.TabPage1.Controls.Add(Me.Label25)
         Me.TabPage1.Controls.Add(Me.Label22)
         Me.TabPage1.Controls.Add(Me.Label30)
-        Me.TabPage1.Controls.Add(Me.GroupBox3)
-        Me.TabPage1.Controls.Add(Me.GroupBox2)
-        Me.TabPage1.Controls.Add(Me.tb_grossincome)
+        Me.TabPage1.Controls.Add(Me.Label24)
+        Me.TabPage1.Controls.Add(Me.Label5)
+        Me.TabPage1.Controls.Add(Me.tb_taxableincome)
+        Me.TabPage1.Controls.Add(Me.Label23)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.tb_income)
         Me.TabPage1.Controls.Add(Me.Label15)
         Me.TabPage1.Controls.Add(Me.tb_netpaywithtax)
         Me.TabPage1.Controls.Add(Me.tb_tax)
         Me.TabPage1.Controls.Add(Me.tb_netincome)
-        Me.TabPage1.Controls.Add(Me.tb_monthlysalary)
-        Me.TabPage1.Controls.Add(Me.Label13)
+        Me.TabPage1.Controls.Add(Me.tb_undertime)
+        Me.TabPage1.Controls.Add(Me.tb_late)
+        Me.TabPage1.Controls.Add(Me.tb_absents)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage1.Size = New System.Drawing.Size(551, 454)
         Me.TabPage1.TabIndex = 3
         Me.TabPage1.Text = "Payroll Details"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
-        'Label34
+        'GroupBox2
         '
-        Me.Label34.AutoSize = True
-        Me.Label34.Location = New System.Drawing.Point(499, 7)
-        Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(45, 13)
-        Me.Label34.TabIndex = 12
-        Me.Label34.Text = "Label33"
-        Me.Label34.Visible = False
+        Me.GroupBox2.Controls.Add(Me.Label19)
+        Me.GroupBox2.Controls.Add(Me.tb_allowance)
+        Me.GroupBox2.Controls.Add(Me.dgv_incentives)
+        Me.GroupBox2.Controls.Add(Me.btn_delincentive)
+        Me.GroupBox2.Controls.Add(Me.btn_addincentive)
+        Me.GroupBox2.Controls.Add(Me.Label31)
+        Me.GroupBox2.Controls.Add(Me.Label20)
+        Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
+        Me.GroupBox2.Location = New System.Drawing.Point(275, 210)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(270, 180)
+        Me.GroupBox2.TabIndex = 15
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Additionals"
         '
-        'Label33
+        'Label19
         '
-        Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(448, 7)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(45, 13)
-        Me.Label33.TabIndex = 12
-        Me.Label33.Text = "Label33"
-        Me.Label33.Visible = False
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(6, 129)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(56, 13)
+        Me.Label19.TabIndex = 8
+        Me.Label19.Text = "Allowance"
         '
-        'btn_savepayslip
+        'tb_allowance
         '
-        Me.btn_savepayslip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_savepayslip.ForeColor = System.Drawing.Color.Red
-        Me.btn_savepayslip.Location = New System.Drawing.Point(288, 466)
-        Me.btn_savepayslip.Name = "btn_savepayslip"
-        Me.btn_savepayslip.Size = New System.Drawing.Size(254, 23)
-        Me.btn_savepayslip.TabIndex = 13
-        Me.btn_savepayslip.Text = "S A V E  P A Y S L I P"
-        Me.btn_savepayslip.UseVisualStyleBackColor = True
+        Me.tb_allowance.Location = New System.Drawing.Point(139, 126)
+        Me.tb_allowance.Name = "tb_allowance"
+        Me.tb_allowance.ReadOnly = True
+        Me.tb_allowance.Size = New System.Drawing.Size(124, 20)
+        Me.tb_allowance.TabIndex = 9
+        Me.tb_allowance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label32
+        'dgv_incentives
         '
-        Me.Label32.AutoSize = True
-        Me.Label32.Location = New System.Drawing.Point(285, 7)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(75, 13)
-        Me.Label32.TabIndex = 3
-        Me.Label32.Text = "Current Cutoff:"
+        Me.dgv_incentives.AllowUserToAddRows = False
+        Me.dgv_incentives.AllowUserToDeleteRows = False
+        Me.dgv_incentives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_incentives.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
+        Me.dgv_incentives.Location = New System.Drawing.Point(6, 40)
+        Me.dgv_incentives.MultiSelect = False
+        Me.dgv_incentives.Name = "dgv_incentives"
+        Me.dgv_incentives.RowHeadersVisible = False
+        Me.dgv_incentives.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_incentives.Size = New System.Drawing.Size(257, 80)
+        Me.dgv_incentives.TabIndex = 5
         '
-        'lbl_cutoff
+        'Column1
         '
-        Me.lbl_cutoff.AutoSize = True
-        Me.lbl_cutoff.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_cutoff.Location = New System.Drawing.Point(357, 7)
-        Me.lbl_cutoff.Name = "lbl_cutoff"
-        Me.lbl_cutoff.Size = New System.Drawing.Size(52, 13)
-        Me.lbl_cutoff.TabIndex = 3
-        Me.lbl_cutoff.Text = "Label31"
+        Me.Column1.HeaderText = "Name"
+        Me.Column1.Name = "Column1"
         '
-        'Label36
+        'Column2
         '
-        Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(285, 417)
-        Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(117, 13)
-        Me.Label36.TabIndex = 9
-        Me.Label36.Text = "NET INCOME W/ TAX"
+        Me.Column2.HeaderText = "Amount"
+        Me.Column2.Name = "Column2"
         '
-        'Label25
+        'btn_delincentive
         '
-        Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(285, 391)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(28, 13)
-        Me.Label25.TabIndex = 9
-        Me.Label25.Text = "TAX"
+        Me.btn_delincentive.Location = New System.Drawing.Point(228, 13)
+        Me.btn_delincentive.Name = "btn_delincentive"
+        Me.btn_delincentive.Size = New System.Drawing.Size(35, 23)
+        Me.btn_delincentive.TabIndex = 4
+        Me.btn_delincentive.Text = "Del"
+        Me.btn_delincentive.UseVisualStyleBackColor = True
         '
-        'Label22
+        'btn_addincentive
         '
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(284, 365)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(100, 13)
-        Me.Label22.TabIndex = 8
-        Me.Label22.Text = "TAXABLE INCOME"
+        Me.btn_addincentive.Location = New System.Drawing.Point(187, 13)
+        Me.btn_addincentive.Name = "btn_addincentive"
+        Me.btn_addincentive.Size = New System.Drawing.Size(35, 23)
+        Me.btn_addincentive.TabIndex = 3
+        Me.btn_addincentive.Text = "Add"
+        Me.btn_addincentive.UseVisualStyleBackColor = True
         '
-        'Label30
+        'Label31
         '
-        Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(285, 443)
-        Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(74, 13)
-        Me.Label30.TabIndex = 11
-        Me.Label30.Text = "NET INCOME"
+        Me.Label31.AutoSize = True
+        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label31.Location = New System.Drawing.Point(4, 155)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(134, 13)
+        Me.Label31.TabIndex = 6
+        Me.Label31.Text = "TOTAL ADDITIONALS"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(6, 18)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(111, 13)
+        Me.Label20.TabIndex = 2
+        Me.Label20.Text = "Incentives and Others"
+        '
+        'tb_totalbenefits
+        '
+        Me.tb_totalbenefits.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_totalbenefits.Location = New System.Drawing.Point(139, 152)
+        Me.tb_totalbenefits.Name = "tb_totalbenefits"
+        Me.tb_totalbenefits.ReadOnly = True
+        Me.tb_totalbenefits.Size = New System.Drawing.Size(124, 20)
+        Me.tb_totalbenefits.TabIndex = 7
+        Me.tb_totalbenefits.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'GroupBox3
         '
@@ -338,31 +366,19 @@ Partial Class frmEmpDetails
         Me.GroupBox3.Controls.Add(Me.Label29)
         Me.GroupBox3.Controls.Add(Me.Label14)
         Me.GroupBox3.Controls.Add(Me.Label21)
-        Me.GroupBox3.Controls.Add(Me.Label28)
-        Me.GroupBox3.Controls.Add(Me.Label27)
-        Me.GroupBox3.Controls.Add(Me.Label26)
-        Me.GroupBox3.Controls.Add(Me.Label24)
-        Me.GroupBox3.Controls.Add(Me.Label5)
-        Me.GroupBox3.Controls.Add(Me.Label23)
         Me.GroupBox3.Controls.Add(Me.tb_totaldeductions)
         Me.GroupBox3.Controls.Add(Me.tb_insurance)
         Me.GroupBox3.Controls.Add(Me.tb_loans)
-        Me.GroupBox3.Controls.Add(Me.tb_hdmf)
-        Me.GroupBox3.Controls.Add(Me.tb_phic)
-        Me.GroupBox3.Controls.Add(Me.tb_sss)
-        Me.GroupBox3.Controls.Add(Me.tb_undertime)
-        Me.GroupBox3.Controls.Add(Me.tb_absents)
-        Me.GroupBox3.Controls.Add(Me.tb_late)
-        Me.GroupBox3.Location = New System.Drawing.Point(2, 56)
+        Me.GroupBox3.Location = New System.Drawing.Point(275, 3)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(270, 433)
-        Me.GroupBox3.TabIndex = 7
+        Me.GroupBox3.Size = New System.Drawing.Size(270, 205)
+        Me.GroupBox3.TabIndex = 14
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Deductions"
         '
         'btn_deldeduct
         '
-        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 222)
+        Me.btn_deldeduct.Location = New System.Drawing.Point(229, 12)
         Me.btn_deldeduct.Name = "btn_deldeduct"
         Me.btn_deldeduct.Size = New System.Drawing.Size(35, 23)
         Me.btn_deldeduct.TabIndex = 17
@@ -371,7 +387,7 @@ Partial Class frmEmpDetails
         '
         'btn_adddeduct
         '
-        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 222)
+        Me.btn_adddeduct.Location = New System.Drawing.Point(188, 12)
         Me.btn_adddeduct.Name = "btn_adddeduct"
         Me.btn_adddeduct.Size = New System.Drawing.Size(35, 23)
         Me.btn_adddeduct.TabIndex = 16
@@ -381,7 +397,7 @@ Partial Class frmEmpDetails
         'Label38
         '
         Me.Label38.AutoSize = True
-        Me.Label38.Location = New System.Drawing.Point(7, 227)
+        Me.Label38.Location = New System.Drawing.Point(6, 17)
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(90, 13)
         Me.Label38.TabIndex = 15
@@ -393,12 +409,12 @@ Partial Class frmEmpDetails
         Me.dgv_otherdeduct.AllowUserToDeleteRows = False
         Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
-        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 251)
+        Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 38)
         Me.dgv_otherdeduct.MultiSelect = False
         Me.dgv_otherdeduct.Name = "dgv_otherdeduct"
         Me.dgv_otherdeduct.RowHeadersVisible = False
         Me.dgv_otherdeduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_otherdeduct.Size = New System.Drawing.Size(257, 147)
+        Me.dgv_otherdeduct.Size = New System.Drawing.Size(257, 80)
         Me.dgv_otherdeduct.TabIndex = 14
         '
         'DataGridViewTextBoxColumn1
@@ -414,52 +430,208 @@ Partial Class frmEmpDetails
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(7, 407)
+        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.Location = New System.Drawing.Point(4, 179)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(116, 13)
+        Me.Label29.Size = New System.Drawing.Size(132, 13)
         Me.Label29.TabIndex = 12
         Me.Label29.Text = "TOTAL DEDUCTIONS"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(6, 153)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(54, 13)
+        Me.Label14.TabIndex = 10
+        Me.Label14.Text = "Insurance"
         '
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(7, 175)
+        Me.Label21.Location = New System.Drawing.Point(6, 127)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(36, 13)
         Me.Label21.TabIndex = 10
         Me.Label21.Text = "Loans"
         '
-        'Label28
+        'tb_totaldeductions
         '
-        Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(7, 149)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(38, 13)
-        Me.Label28.TabIndex = 8
-        Me.Label28.Text = "HDMF"
+        Me.tb_totaldeductions.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 176)
+        Me.tb_totaldeductions.Name = "tb_totaldeductions"
+        Me.tb_totaldeductions.ReadOnly = True
+        Me.tb_totaldeductions.Size = New System.Drawing.Size(124, 20)
+        Me.tb_totaldeductions.TabIndex = 13
+        Me.tb_totaldeductions.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label27
+        'tb_insurance
         '
-        Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(7, 123)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(32, 13)
-        Me.Label27.TabIndex = 6
-        Me.Label27.Text = "PHIC"
+        Me.tb_insurance.Location = New System.Drawing.Point(140, 150)
+        Me.tb_insurance.Name = "tb_insurance"
+        Me.tb_insurance.ReadOnly = True
+        Me.tb_insurance.Size = New System.Drawing.Size(124, 20)
+        Me.tb_insurance.TabIndex = 11
+        Me.tb_insurance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label26
+        'tb_loans
         '
-        Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(7, 97)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(28, 13)
-        Me.Label26.TabIndex = 4
-        Me.Label26.Text = "SSS"
+        Me.tb_loans.Location = New System.Drawing.Point(140, 124)
+        Me.tb_loans.Name = "tb_loans"
+        Me.tb_loans.ReadOnly = True
+        Me.tb_loans.Size = New System.Drawing.Size(124, 20)
+        Me.tb_loans.TabIndex = 11
+        Me.tb_loans.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(8, 163)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(78, 13)
+        Me.Label18.TabIndex = 4
+        Me.Label18.Text = "GROSS PAY"
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(9, 433)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(45, 13)
+        Me.Label34.TabIndex = 12
+        Me.Label34.Text = "Label33"
+        Me.Label34.Visible = False
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(9, 137)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(44, 13)
+        Me.Label17.TabIndex = 2
+        Me.Label17.Text = "Hol. OT"
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Location = New System.Drawing.Point(9, 420)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(45, 13)
+        Me.Label33.TabIndex = 12
+        Me.Label33.Text = "Label33"
+        Me.Label33.Visible = False
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(9, 111)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(48, 13)
+        Me.Label16.TabIndex = 0
+        Me.Label16.Text = "Reg. OT"
+        '
+        'tb_holidayot
+        '
+        Me.tb_holidayot.Location = New System.Drawing.Point(142, 134)
+        Me.tb_holidayot.Name = "tb_holidayot"
+        Me.tb_holidayot.ReadOnly = True
+        Me.tb_holidayot.Size = New System.Drawing.Size(121, 20)
+        Me.tb_holidayot.TabIndex = 3
+        Me.tb_holidayot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'btn_savepayslip
+        '
+        Me.btn_savepayslip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_savepayslip.ForeColor = System.Drawing.Color.Red
+        Me.btn_savepayslip.Location = New System.Drawing.Point(282, 396)
+        Me.btn_savepayslip.Name = "btn_savepayslip"
+        Me.btn_savepayslip.Size = New System.Drawing.Size(256, 35)
+        Me.btn_savepayslip.TabIndex = 13
+        Me.btn_savepayslip.Text = "S A V E  P A Y S L I P"
+        Me.btn_savepayslip.UseVisualStyleBackColor = True
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Location = New System.Drawing.Point(9, 407)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(75, 13)
+        Me.Label32.TabIndex = 3
+        Me.Label32.Text = "Current Cutoff:"
+        '
+        'tb_grosspay
+        '
+        Me.tb_grosspay.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_grosspay.Location = New System.Drawing.Point(142, 160)
+        Me.tb_grosspay.Name = "tb_grosspay"
+        Me.tb_grosspay.ReadOnly = True
+        Me.tb_grosspay.Size = New System.Drawing.Size(121, 20)
+        Me.tb_grosspay.TabIndex = 5
+        Me.tb_grosspay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lbl_cutoff
+        '
+        Me.lbl_cutoff.AutoSize = True
+        Me.lbl_cutoff.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_cutoff.Location = New System.Drawing.Point(81, 407)
+        Me.lbl_cutoff.Name = "lbl_cutoff"
+        Me.lbl_cutoff.Size = New System.Drawing.Size(52, 13)
+        Me.lbl_cutoff.TabIndex = 3
+        Me.lbl_cutoff.Text = "Label31"
+        '
+        'tb_regularot
+        '
+        Me.tb_regularot.Location = New System.Drawing.Point(142, 108)
+        Me.tb_regularot.Name = "tb_regularot"
+        Me.tb_regularot.ReadOnly = True
+        Me.tb_regularot.Size = New System.Drawing.Size(121, 20)
+        Me.tb_regularot.TabIndex = 1
+        Me.tb_regularot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label36.Location = New System.Drawing.Point(9, 348)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(125, 13)
+        Me.Label36.TabIndex = 9
+        Me.Label36.Text = "Total Pay Net of Tax"
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(9, 322)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(84, 13)
+        Me.Label25.TabIndex = 9
+        Me.Label25.Text = "Withholding Tax"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Location = New System.Drawing.Point(8, 296)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(97, 13)
+        Me.Label22.TabIndex = 8
+        Me.Label22.Text = "Taxable Income"
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label30.Location = New System.Drawing.Point(9, 374)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(84, 13)
+        Me.Label30.TabIndex = 11
+        Me.Label30.Text = "NET INCOME"
         '
         'Label24
         '
         Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(7, 71)
+        Me.Label24.Location = New System.Drawing.Point(8, 85)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(55, 13)
         Me.Label24.TabIndex = 2
@@ -468,286 +640,113 @@ Partial Class frmEmpDetails
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(7, 45)
+        Me.Label5.Location = New System.Drawing.Point(8, 59)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(53, 13)
         Me.Label5.TabIndex = 0
         Me.Label5.Text = "Absenses"
         '
+        'tb_taxableincome
+        '
+        Me.tb_taxableincome.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_taxableincome.Location = New System.Drawing.Point(142, 293)
+        Me.tb_taxableincome.Name = "tb_taxableincome"
+        Me.tb_taxableincome.ReadOnly = True
+        Me.tb_taxableincome.Size = New System.Drawing.Size(121, 20)
+        Me.tb_taxableincome.TabIndex = 9
+        Me.tb_taxableincome.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'Label23
         '
         Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(7, 19)
+        Me.Label23.Location = New System.Drawing.Point(8, 33)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(28, 13)
         Me.Label23.TabIndex = 0
         Me.Label23.Text = "Late"
         '
-        'tb_totaldeductions
+        'GroupBox1
         '
-        Me.tb_totaldeductions.Location = New System.Drawing.Point(140, 404)
-        Me.tb_totaldeductions.Name = "tb_totaldeductions"
-        Me.tb_totaldeductions.ReadOnly = True
-        Me.tb_totaldeductions.Size = New System.Drawing.Size(124, 20)
-        Me.tb_totaldeductions.TabIndex = 13
-        Me.tb_totaldeductions.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tb_loans
-        '
-        Me.tb_loans.Location = New System.Drawing.Point(140, 172)
-        Me.tb_loans.Name = "tb_loans"
-        Me.tb_loans.ReadOnly = True
-        Me.tb_loans.Size = New System.Drawing.Size(124, 20)
-        Me.tb_loans.TabIndex = 11
-        Me.tb_loans.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tb_hdmf
-        '
-        Me.tb_hdmf.Location = New System.Drawing.Point(140, 146)
-        Me.tb_hdmf.Name = "tb_hdmf"
-        Me.tb_hdmf.ReadOnly = True
-        Me.tb_hdmf.Size = New System.Drawing.Size(124, 20)
-        Me.tb_hdmf.TabIndex = 9
-        Me.tb_hdmf.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tb_phic
-        '
-        Me.tb_phic.Location = New System.Drawing.Point(140, 120)
-        Me.tb_phic.Name = "tb_phic"
-        Me.tb_phic.ReadOnly = True
-        Me.tb_phic.Size = New System.Drawing.Size(124, 20)
-        Me.tb_phic.TabIndex = 7
-        Me.tb_phic.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.GroupBox1.Controls.Add(Me.tb_sss)
+        Me.GroupBox1.Controls.Add(Me.tb_phic)
+        Me.GroupBox1.Controls.Add(Me.tb_hdmf)
+        Me.GroupBox1.Controls.Add(Me.Label26)
+        Me.GroupBox1.Controls.Add(Me.Label27)
+        Me.GroupBox1.Controls.Add(Me.Label28)
+        Me.GroupBox1.Location = New System.Drawing.Point(6, 186)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(263, 101)
+        Me.GroupBox1.TabIndex = 6
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Less"
         '
         'tb_sss
         '
-        Me.tb_sss.Location = New System.Drawing.Point(140, 94)
+        Me.tb_sss.Location = New System.Drawing.Point(136, 19)
         Me.tb_sss.Name = "tb_sss"
         Me.tb_sss.ReadOnly = True
-        Me.tb_sss.Size = New System.Drawing.Size(124, 20)
+        Me.tb_sss.Size = New System.Drawing.Size(121, 20)
         Me.tb_sss.TabIndex = 5
         Me.tb_sss.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'tb_undertime
+        'tb_phic
         '
-        Me.tb_undertime.Location = New System.Drawing.Point(140, 68)
-        Me.tb_undertime.Name = "tb_undertime"
-        Me.tb_undertime.ReadOnly = True
-        Me.tb_undertime.Size = New System.Drawing.Size(124, 20)
-        Me.tb_undertime.TabIndex = 3
-        Me.tb_undertime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tb_phic.Location = New System.Drawing.Point(136, 45)
+        Me.tb_phic.Name = "tb_phic"
+        Me.tb_phic.ReadOnly = True
+        Me.tb_phic.Size = New System.Drawing.Size(121, 20)
+        Me.tb_phic.TabIndex = 7
+        Me.tb_phic.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'tb_absents
+        'tb_hdmf
         '
-        Me.tb_absents.Location = New System.Drawing.Point(140, 42)
-        Me.tb_absents.Name = "tb_absents"
-        Me.tb_absents.Size = New System.Drawing.Size(124, 20)
-        Me.tb_absents.TabIndex = 1
-        Me.tb_absents.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tb_hdmf.Location = New System.Drawing.Point(136, 71)
+        Me.tb_hdmf.Name = "tb_hdmf"
+        Me.tb_hdmf.ReadOnly = True
+        Me.tb_hdmf.Size = New System.Drawing.Size(121, 20)
+        Me.tb_hdmf.TabIndex = 9
+        Me.tb_hdmf.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'tb_late
+        'Label26
         '
-        Me.tb_late.Location = New System.Drawing.Point(140, 16)
-        Me.tb_late.Name = "tb_late"
-        Me.tb_late.ReadOnly = True
-        Me.tb_late.Size = New System.Drawing.Size(124, 20)
-        Me.tb_late.TabIndex = 1
-        Me.tb_late.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(2, 22)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(28, 13)
+        Me.Label26.TabIndex = 4
+        Me.Label26.Text = "SSS"
         '
-        'GroupBox2
+        'Label27
         '
-        Me.GroupBox2.Controls.Add(Me.dgv_incentives)
-        Me.GroupBox2.Controls.Add(Me.btn_delincentive)
-        Me.GroupBox2.Controls.Add(Me.btn_addincentive)
-        Me.GroupBox2.Controls.Add(Me.Label31)
-        Me.GroupBox2.Controls.Add(Me.Label20)
-        Me.GroupBox2.Controls.Add(Me.Label19)
-        Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
-        Me.GroupBox2.Controls.Add(Me.tb_allowance)
-        Me.GroupBox2.Location = New System.Drawing.Point(278, 120)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(270, 236)
-        Me.GroupBox2.TabIndex = 8
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Additionals"
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(3, 48)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(32, 13)
+        Me.Label27.TabIndex = 6
+        Me.Label27.Text = "PHIC"
         '
-        'dgv_incentives
+        'Label28
         '
-        Me.dgv_incentives.AllowUserToAddRows = False
-        Me.dgv_incentives.AllowUserToDeleteRows = False
-        Me.dgv_incentives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_incentives.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
-        Me.dgv_incentives.Location = New System.Drawing.Point(10, 68)
-        Me.dgv_incentives.MultiSelect = False
-        Me.dgv_incentives.Name = "dgv_incentives"
-        Me.dgv_incentives.RowHeadersVisible = False
-        Me.dgv_incentives.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_incentives.Size = New System.Drawing.Size(257, 136)
-        Me.dgv_incentives.TabIndex = 5
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Name"
-        Me.Column1.Name = "Column1"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Amount"
-        Me.Column2.Name = "Column2"
-        '
-        'btn_delincentive
-        '
-        Me.btn_delincentive.Location = New System.Drawing.Point(231, 39)
-        Me.btn_delincentive.Name = "btn_delincentive"
-        Me.btn_delincentive.Size = New System.Drawing.Size(35, 23)
-        Me.btn_delincentive.TabIndex = 4
-        Me.btn_delincentive.Text = "Del"
-        Me.btn_delincentive.UseVisualStyleBackColor = True
-        '
-        'btn_addincentive
-        '
-        Me.btn_addincentive.Location = New System.Drawing.Point(190, 39)
-        Me.btn_addincentive.Name = "btn_addincentive"
-        Me.btn_addincentive.Size = New System.Drawing.Size(35, 23)
-        Me.btn_addincentive.TabIndex = 3
-        Me.btn_addincentive.Text = "Add"
-        Me.btn_addincentive.UseVisualStyleBackColor = True
-        '
-        'Label31
-        '
-        Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(7, 213)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(117, 13)
-        Me.Label31.TabIndex = 6
-        Me.Label31.Text = "TOTAL ADDITIONALS"
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(7, 45)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(111, 13)
-        Me.Label20.TabIndex = 2
-        Me.Label20.Text = "Incentives and Others"
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(7, 19)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(56, 13)
-        Me.Label19.TabIndex = 0
-        Me.Label19.Text = "Allowance"
-        '
-        'tb_totalbenefits
-        '
-        Me.tb_totalbenefits.Location = New System.Drawing.Point(140, 210)
-        Me.tb_totalbenefits.Name = "tb_totalbenefits"
-        Me.tb_totalbenefits.ReadOnly = True
-        Me.tb_totalbenefits.Size = New System.Drawing.Size(124, 20)
-        Me.tb_totalbenefits.TabIndex = 7
-        Me.tb_totalbenefits.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tb_allowance
-        '
-        Me.tb_allowance.Location = New System.Drawing.Point(140, 16)
-        Me.tb_allowance.Name = "tb_allowance"
-        Me.tb_allowance.Size = New System.Drawing.Size(126, 20)
-        Me.tb_allowance.TabIndex = 1
-        Me.tb_allowance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tb_grossincome
-        '
-        Me.tb_grossincome.Location = New System.Drawing.Point(418, 362)
-        Me.tb_grossincome.Name = "tb_grossincome"
-        Me.tb_grossincome.ReadOnly = True
-        Me.tb_grossincome.Size = New System.Drawing.Size(124, 20)
-        Me.tb_grossincome.TabIndex = 9
-        Me.tb_grossincome.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.Label18)
-        Me.GroupBox1.Controls.Add(Me.Label17)
-        Me.GroupBox1.Controls.Add(Me.tb_holidayot)
-        Me.GroupBox1.Controls.Add(Me.Label16)
-        Me.GroupBox1.Controls.Add(Me.tb_totalot)
-        Me.GroupBox1.Controls.Add(Me.tb_regularot)
-        Me.GroupBox1.Location = New System.Drawing.Point(278, 23)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(270, 94)
-        Me.GroupBox1.TabIndex = 6
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Overtime Hrs. / Day"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(6, 71)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(125, 13)
-        Me.Label18.TabIndex = 4
-        Me.Label18.Text = "TOTAL OVERTIME PAY"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(6, 45)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(44, 13)
-        Me.Label17.TabIndex = 2
-        Me.Label17.Text = "Hol. OT"
-        '
-        'tb_holidayot
-        '
-        Me.tb_holidayot.Location = New System.Drawing.Point(140, 42)
-        Me.tb_holidayot.Name = "tb_holidayot"
-        Me.tb_holidayot.ReadOnly = True
-        Me.tb_holidayot.Size = New System.Drawing.Size(126, 20)
-        Me.tb_holidayot.TabIndex = 3
-        Me.tb_holidayot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(6, 19)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(48, 13)
-        Me.Label16.TabIndex = 0
-        Me.Label16.Text = "Reg. OT"
-        '
-        'tb_totalot
-        '
-        Me.tb_totalot.Location = New System.Drawing.Point(140, 68)
-        Me.tb_totalot.Name = "tb_totalot"
-        Me.tb_totalot.ReadOnly = True
-        Me.tb_totalot.Size = New System.Drawing.Size(126, 20)
-        Me.tb_totalot.TabIndex = 5
-        Me.tb_totalot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'tb_regularot
-        '
-        Me.tb_regularot.Location = New System.Drawing.Point(140, 16)
-        Me.tb_regularot.Name = "tb_regularot"
-        Me.tb_regularot.ReadOnly = True
-        Me.tb_regularot.Size = New System.Drawing.Size(126, 20)
-        Me.tb_regularot.TabIndex = 1
-        Me.tb_regularot.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(3, 74)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(38, 13)
+        Me.Label28.TabIndex = 8
+        Me.Label28.Text = "HDMF"
         '
         'tb_income
         '
-        Me.tb_income.Location = New System.Drawing.Point(147, 30)
+        Me.tb_income.Location = New System.Drawing.Point(142, 4)
         Me.tb_income.Name = "tb_income"
         Me.tb_income.ReadOnly = True
-        Me.tb_income.Size = New System.Drawing.Size(126, 20)
+        Me.tb_income.Size = New System.Drawing.Size(121, 20)
         Me.tb_income.TabIndex = 5
         Me.tb_income.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(8, 33)
+        Me.Label15.Location = New System.Drawing.Point(3, 7)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(65, 13)
         Me.Label15.TabIndex = 4
@@ -755,48 +754,59 @@ Partial Class frmEmpDetails
         '
         'tb_netpaywithtax
         '
-        Me.tb_netpaywithtax.Location = New System.Drawing.Point(418, 414)
+        Me.tb_netpaywithtax.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_netpaywithtax.Location = New System.Drawing.Point(142, 345)
         Me.tb_netpaywithtax.Name = "tb_netpaywithtax"
         Me.tb_netpaywithtax.ReadOnly = True
-        Me.tb_netpaywithtax.Size = New System.Drawing.Size(124, 20)
+        Me.tb_netpaywithtax.Size = New System.Drawing.Size(121, 20)
         Me.tb_netpaywithtax.TabIndex = 10
         Me.tb_netpaywithtax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tb_tax
         '
-        Me.tb_tax.Location = New System.Drawing.Point(418, 388)
+        Me.tb_tax.Location = New System.Drawing.Point(142, 319)
         Me.tb_tax.Name = "tb_tax"
         Me.tb_tax.ReadOnly = True
-        Me.tb_tax.Size = New System.Drawing.Size(124, 20)
+        Me.tb_tax.Size = New System.Drawing.Size(121, 20)
         Me.tb_tax.TabIndex = 10
         Me.tb_tax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tb_netincome
         '
-        Me.tb_netincome.Location = New System.Drawing.Point(418, 440)
+        Me.tb_netincome.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tb_netincome.Location = New System.Drawing.Point(142, 371)
         Me.tb_netincome.Name = "tb_netincome"
         Me.tb_netincome.ReadOnly = True
-        Me.tb_netincome.Size = New System.Drawing.Size(124, 20)
+        Me.tb_netincome.Size = New System.Drawing.Size(121, 20)
         Me.tb_netincome.TabIndex = 12
         Me.tb_netincome.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'tb_monthlysalary
+        'tb_undertime
         '
-        Me.tb_monthlysalary.Location = New System.Drawing.Point(146, 4)
-        Me.tb_monthlysalary.Name = "tb_monthlysalary"
-        Me.tb_monthlysalary.ReadOnly = True
-        Me.tb_monthlysalary.Size = New System.Drawing.Size(126, 20)
-        Me.tb_monthlysalary.TabIndex = 1
-        Me.tb_monthlysalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tb_undertime.Location = New System.Drawing.Point(142, 82)
+        Me.tb_undertime.Name = "tb_undertime"
+        Me.tb_undertime.ReadOnly = True
+        Me.tb_undertime.Size = New System.Drawing.Size(121, 20)
+        Me.tb_undertime.TabIndex = 3
+        Me.tb_undertime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label13
+        'tb_late
         '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(8, 7)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(76, 13)
-        Me.Label13.TabIndex = 0
-        Me.Label13.Text = "Monthly Salary"
+        Me.tb_late.Location = New System.Drawing.Point(142, 30)
+        Me.tb_late.Name = "tb_late"
+        Me.tb_late.ReadOnly = True
+        Me.tb_late.Size = New System.Drawing.Size(121, 20)
+        Me.tb_late.TabIndex = 1
+        Me.tb_late.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'tb_absents
+        '
+        Me.tb_absents.Location = New System.Drawing.Point(142, 56)
+        Me.tb_absents.Name = "tb_absents"
+        Me.tb_absents.ReadOnly = True
+        Me.tb_absents.Size = New System.Drawing.Size(121, 20)
+        Me.tb_absents.TabIndex = 1
+        Me.tb_absents.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'TabPage3
         '
@@ -809,9 +819,9 @@ Partial Class frmEmpDetails
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage3.Size = New System.Drawing.Size(551, 454)
         Me.TabPage3.TabIndex = 1
-        Me.TabPage3.Text = "Timesheet"
+        Me.TabPage3.Text = "Absents"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'Label39
@@ -871,7 +881,7 @@ Partial Class frmEmpDetails
         Me.dgv_emptimesheet.RowHeadersVisible = False
         Me.dgv_emptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.dgv_emptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 461)
+        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 418)
         Me.dgv_emptimesheet.TabIndex = 2
         '
         'TabPage7
@@ -881,7 +891,7 @@ Partial Class frmEmpDetails
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage7.Size = New System.Drawing.Size(551, 454)
         Me.TabPage7.TabIndex = 4
         Me.TabPage7.Text = "Loans"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -929,13 +939,78 @@ Partial Class frmEmpDetails
         Me.tsb_loandelete.Size = New System.Drawing.Size(60, 22)
         Me.tsb_loandelete.Text = "Delete"
         '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.ToolStrip1)
+        Me.TabPage5.Controls.Add(Me.dgv_insurance)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(551, 454)
+        Me.TabPage5.TabIndex = 8
+        Me.TabPage5.Text = "Insurance and Savings"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_addinsureance, Me.tsb_editinsurance, Me.tsb_deleteinsurance})
+        Me.ToolStrip1.Location = New System.Drawing.Point(3, 3)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.ToolStrip1.Size = New System.Drawing.Size(545, 25)
+        Me.ToolStrip1.TabIndex = 1
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'tsb_addinsureance
+        '
+        Me.tsb_addinsureance.Image = CType(resources.GetObject("tsb_addinsureance.Image"), System.Drawing.Image)
+        Me.tsb_addinsureance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_addinsureance.Name = "tsb_addinsureance"
+        Me.tsb_addinsureance.Size = New System.Drawing.Size(76, 22)
+        Me.tsb_addinsureance.Text = "Add New"
+        '
+        'tsb_editinsurance
+        '
+        Me.tsb_editinsurance.Image = CType(resources.GetObject("tsb_editinsurance.Image"), System.Drawing.Image)
+        Me.tsb_editinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_editinsurance.Name = "tsb_editinsurance"
+        Me.tsb_editinsurance.Size = New System.Drawing.Size(47, 22)
+        Me.tsb_editinsurance.Text = "Edit"
+        '
+        'tsb_deleteinsurance
+        '
+        Me.tsb_deleteinsurance.Image = CType(resources.GetObject("tsb_deleteinsurance.Image"), System.Drawing.Image)
+        Me.tsb_deleteinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_deleteinsurance.Name = "tsb_deleteinsurance"
+        Me.tsb_deleteinsurance.Size = New System.Drawing.Size(60, 22)
+        Me.tsb_deleteinsurance.Text = "Delete"
+        '
+        'dgv_insurance
+        '
+        Me.dgv_insurance.AllowUserToAddRows = False
+        Me.dgv_insurance.AllowUserToDeleteRows = False
+        Me.dgv_insurance.AllowUserToResizeColumns = False
+        Me.dgv_insurance.AllowUserToResizeRows = False
+        Me.dgv_insurance.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.dgv_insurance.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
+        Me.dgv_insurance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_insurance.Location = New System.Drawing.Point(3, 31)
+        Me.dgv_insurance.Name = "dgv_insurance"
+        Me.dgv_insurance.ReadOnly = True
+        Me.dgv_insurance.RowHeadersVisible = False
+        Me.dgv_insurance.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Me.dgv_insurance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_insurance.Size = New System.Drawing.Size(545, 420)
+        Me.dgv_insurance.TabIndex = 0
+        '
         'TabPage8
         '
         Me.TabPage8.Controls.Add(Me.dgv_empleave)
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage8.Size = New System.Drawing.Size(551, 454)
         Me.TabPage8.TabIndex = 5
         Me.TabPage8.Text = "Leave"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -946,7 +1021,7 @@ Partial Class frmEmpDetails
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage2.Size = New System.Drawing.Size(551, 454)
         Me.TabPage2.TabIndex = 6
         Me.TabPage2.Text = "Overtime"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -965,7 +1040,7 @@ Partial Class frmEmpDetails
         Me.dgv_overtime.ReadOnly = True
         Me.dgv_overtime.RowHeadersVisible = False
         Me.dgv_overtime.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_overtime.Size = New System.Drawing.Size(545, 491)
+        Me.dgv_overtime.Size = New System.Drawing.Size(545, 448)
         Me.dgv_overtime.TabIndex = 0
         '
         'TabPage4
@@ -974,7 +1049,7 @@ Partial Class frmEmpDetails
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(551, 497)
+        Me.TabPage4.Size = New System.Drawing.Size(551, 454)
         Me.TabPage4.TabIndex = 7
         Me.TabPage4.Text = "Travel Orders"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -994,7 +1069,7 @@ Partial Class frmEmpDetails
         Me.dgv_travelorders.RowHeadersVisible = False
         Me.dgv_travelorders.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgv_travelorders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_travelorders.Size = New System.Drawing.Size(545, 491)
+        Me.dgv_travelorders.Size = New System.Drawing.Size(545, 448)
         Me.dgv_travelorders.TabIndex = 0
         '
         'tb_middlename
@@ -1245,7 +1320,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(2, 2)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(298, 522)
+        Me.GroupBox4.Size = New System.Drawing.Size(298, 479)
         Me.GroupBox4.TabIndex = 3
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Employee Details"
@@ -1283,88 +1358,14 @@ Partial Class frmEmpDetails
         Me.dgv_shift.RowHeadersVisible = False
         Me.dgv_shift.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_shift.Size = New System.Drawing.Size(283, 195)
+        Me.dgv_shift.Size = New System.Drawing.Size(283, 155)
         Me.dgv_shift.TabIndex = 24
-        '
-        'tb_insurance
-        '
-        Me.tb_insurance.Location = New System.Drawing.Point(140, 198)
-        Me.tb_insurance.Name = "tb_insurance"
-        Me.tb_insurance.ReadOnly = True
-        Me.tb_insurance.Size = New System.Drawing.Size(124, 20)
-        Me.tb_insurance.TabIndex = 11
-        Me.tb_insurance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(7, 201)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(54, 13)
-        Me.Label14.TabIndex = 10
-        Me.Label14.Text = "Insurance"
-        '
-        'TabPage5
-        '
-        Me.TabPage5.Controls.Add(Me.ToolStrip1)
-        Me.TabPage5.Controls.Add(Me.dgv_insurance)
-        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(551, 497)
-        Me.TabPage5.TabIndex = 8
-        Me.TabPage5.Text = "Insurance and Savings"
-        Me.TabPage5.UseVisualStyleBackColor = True
-        '
-        'dgv_insurance
-        '
-        Me.dgv_insurance.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.dgv_insurance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_insurance.Location = New System.Drawing.Point(3, 31)
-        Me.dgv_insurance.Name = "dgv_insurance"
-        Me.dgv_insurance.Size = New System.Drawing.Size(545, 463)
-        Me.dgv_insurance.TabIndex = 0
-        '
-        'ToolStrip1
-        '
-        Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_addinsureance, Me.tsb_editinsurance, Me.tsb_deleteinsurance})
-        Me.ToolStrip1.Location = New System.Drawing.Point(3, 3)
-        Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.ToolStrip1.Size = New System.Drawing.Size(545, 25)
-        Me.ToolStrip1.TabIndex = 1
-        Me.ToolStrip1.Text = "ToolStrip1"
-        '
-        'tsb_addinsureance
-        '
-        Me.tsb_addinsureance.Image = CType(resources.GetObject("tsb_addinsureance.Image"), System.Drawing.Image)
-        Me.tsb_addinsureance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_addinsureance.Name = "tsb_addinsureance"
-        Me.tsb_addinsureance.Size = New System.Drawing.Size(76, 22)
-        Me.tsb_addinsureance.Text = "Add New"
-        '
-        'tsb_editinsurance
-        '
-        Me.tsb_editinsurance.Image = CType(resources.GetObject("tsb_editinsurance.Image"), System.Drawing.Image)
-        Me.tsb_editinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_editinsurance.Name = "tsb_editinsurance"
-        Me.tsb_editinsurance.Size = New System.Drawing.Size(47, 22)
-        Me.tsb_editinsurance.Text = "Edit"
-        '
-        'tsb_deleteinsurance
-        '
-        Me.tsb_deleteinsurance.Image = CType(resources.GetObject("tsb_deleteinsurance.Image"), System.Drawing.Image)
-        Me.tsb_deleteinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_deleteinsurance.Name = "tsb_deleteinsurance"
-        Me.tsb_deleteinsurance.Size = New System.Drawing.Size(60, 22)
-        Me.tsb_deleteinsurance.Text = "Delete"
         '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(864, 526)
+        Me.ClientSize = New System.Drawing.Size(864, 484)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.TabControl2)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
@@ -1379,12 +1380,12 @@ Partial Class frmEmpDetails
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.dgv_incentives, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
@@ -1395,6 +1396,11 @@ Partial Class frmEmpDetails
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.BindingNavigator1.ResumeLayout(False)
         Me.BindingNavigator1.PerformLayout()
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage5.PerformLayout()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
+        CType(Me.dgv_insurance, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.dgv_overtime, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1403,11 +1409,6 @@ Partial Class frmEmpDetails
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage5.ResumeLayout(False)
-        Me.TabPage5.PerformLayout()
-        CType(Me.dgv_insurance, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1442,53 +1443,35 @@ Partial Class frmEmpDetails
     Friend WithEvents btn_loadtimesheet As System.Windows.Forms.Button
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents Label30 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label29 As System.Windows.Forms.Label
     Friend WithEvents Label28 As System.Windows.Forms.Label
     Friend WithEvents Label27 As System.Windows.Forms.Label
     Friend WithEvents Label26 As System.Windows.Forms.Label
     Friend WithEvents Label25 As System.Windows.Forms.Label
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents Label23 As System.Windows.Forms.Label
-    Friend WithEvents tb_totaldeductions As System.Windows.Forms.TextBox
     Friend WithEvents tb_hdmf As System.Windows.Forms.TextBox
     Friend WithEvents tb_phic As System.Windows.Forms.TextBox
     Friend WithEvents tb_sss As System.Windows.Forms.TextBox
     Friend WithEvents tb_tax As System.Windows.Forms.TextBox
     Friend WithEvents tb_undertime As System.Windows.Forms.TextBox
     Friend WithEvents tb_late As System.Windows.Forms.TextBox
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents Label22 As System.Windows.Forms.Label
-    Friend WithEvents Label20 As System.Windows.Forms.Label
-    Friend WithEvents Label19 As System.Windows.Forms.Label
-    Friend WithEvents tb_grossincome As System.Windows.Forms.TextBox
-    Friend WithEvents tb_allowance As System.Windows.Forms.TextBox
+    Friend WithEvents tb_taxableincome As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents tb_holidayot As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
-    Friend WithEvents tb_totalot As System.Windows.Forms.TextBox
+    Friend WithEvents tb_grosspay As System.Windows.Forms.TextBox
     Friend WithEvents tb_regularot As System.Windows.Forms.TextBox
     Friend WithEvents tb_income As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents tb_netincome As System.Windows.Forms.TextBox
-    Friend WithEvents tb_monthlysalary As System.Windows.Forms.TextBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
     Friend WithEvents Label32 As System.Windows.Forms.Label
     Friend WithEvents lbl_cutoff As System.Windows.Forms.Label
-    Friend WithEvents Label31 As System.Windows.Forms.Label
-    Friend WithEvents tb_totalbenefits As System.Windows.Forms.TextBox
-    Friend WithEvents btn_delincentive As System.Windows.Forms.Button
-    Friend WithEvents btn_addincentive As System.Windows.Forms.Button
-    Friend WithEvents dgv_incentives As System.Windows.Forms.DataGridView
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btn_savepayslip As System.Windows.Forms.Button
-    Friend WithEvents Label21 As System.Windows.Forms.Label
-    Friend WithEvents tb_loans As System.Windows.Forms.TextBox
     Friend WithEvents Label33 As System.Windows.Forms.Label
     Friend WithEvents Label34 As System.Windows.Forms.Label
     Friend WithEvents tb_employmentstatus As System.Windows.Forms.TextBox
@@ -1508,22 +1491,38 @@ Partial Class frmEmpDetails
     Friend WithEvents tsb_loanedit As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_addtimesheet As System.Windows.Forms.Button
     Friend WithEvents lbl_shift As System.Windows.Forms.Label
-    Friend WithEvents btn_deldeduct As System.Windows.Forms.Button
-    Friend WithEvents btn_adddeduct As System.Windows.Forms.Button
-    Friend WithEvents Label38 As System.Windows.Forms.Label
-    Friend WithEvents dgv_otherdeduct As System.Windows.Forms.DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
     Friend WithEvents dgv_travelorders As System.Windows.Forms.DataGridView
     Friend WithEvents Label39 As System.Windows.Forms.Label
     Friend WithEvents dtp_timesheetmonth2 As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents tb_insurance As System.Windows.Forms.TextBox
     Friend WithEvents TabPage5 As System.Windows.Forms.TabPage
     Friend WithEvents dgv_insurance As System.Windows.Forms.DataGridView
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents tsb_addinsureance As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_editinsurance As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_deleteinsurance As System.Windows.Forms.ToolStripButton
+    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents btn_deldeduct As System.Windows.Forms.Button
+    Friend WithEvents btn_adddeduct As System.Windows.Forms.Button
+    Friend WithEvents Label38 As System.Windows.Forms.Label
+    Friend WithEvents dgv_otherdeduct As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Label29 As System.Windows.Forms.Label
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents tb_totaldeductions As System.Windows.Forms.TextBox
+    Friend WithEvents tb_insurance As System.Windows.Forms.TextBox
+    Friend WithEvents tb_loans As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents dgv_incentives As System.Windows.Forms.DataGridView
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents btn_delincentive As System.Windows.Forms.Button
+    Friend WithEvents btn_addincentive As System.Windows.Forms.Button
+    Friend WithEvents Label31 As System.Windows.Forms.Label
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents tb_totalbenefits As System.Windows.Forms.TextBox
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents tb_allowance As System.Windows.Forms.TextBox
 End Class
