@@ -481,4 +481,15 @@ Public Class frmEmpDetails
             computeTotal()
         End If
     End Sub
+
+    Private Sub tsb_fullypaid_Click(sender As System.Object, e As System.EventArgs) Handles tsb_fullypaid.Click
+        If tsb_fullypaid.CheckState = CheckState.Checked Then
+            tsb_fullypaid.Checked = False
+            tsb_filterloan.Text = "Filter"
+        Else
+            tsb_fullypaid.Checked = True
+            tsb_filterloan.Text = "Filter: Fully Paid"
+        End If
+    End Sub
+
 End Class

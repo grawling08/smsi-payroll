@@ -255,7 +255,7 @@ Module modPayCompute
         End While
         totalabsent(1) = countattendance
         totalabsent(0) = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-        Console.Write("id: " + id_employee.ToString + " absents" + daysAbsent.ToString + vbCrLf)
+        Console.Write("id: " + id_employee.ToString + " daily wage: " + empDailyWage.ToString + " absents:" + daysAbsent.ToString + vbCrLf)
         Return totalabsent
     End Function
 

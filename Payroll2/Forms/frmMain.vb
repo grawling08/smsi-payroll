@@ -265,12 +265,12 @@ Public Class frmMain
     End Sub
 
     Private Sub tsb_printpayroll_Click(sender As System.Object, e As System.EventArgs) Handles tsb_printpayroll.Click
-        PrintDocument1.Print()
+        'PrintDocument1.Print()
     End Sub
     Private Sub PrintDocument1_PrintPage(sender As System.Object, e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
-        Dim bm As New Bitmap(Me.dgv_payroll.Width, Me.dgv_payroll.Height)
-        dgv_payroll.DrawToBitmap(bm, New Rectangle(0, 0, Me.dgv_payroll.Width, Me.dgv_payroll.Height))
-        e.Graphics.DrawImage(bm, 0, 0)
+        'Dim bm As New Bitmap(Me.dgv_payroll.Width, Me.dgv_payroll.Height)
+        'dgv_payroll.DrawToBitmap(bm, New Rectangle(0, 0, Me.dgv_payroll.Width, Me.dgv_payroll.Height))
+        'e.Graphics.DrawImage(bm, 0, 0)
     End Sub
 
     Private Sub btn_savepayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_savepayroll.Click

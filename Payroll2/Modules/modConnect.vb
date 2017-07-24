@@ -255,7 +255,6 @@ Module modConnect
     'End Sub
 
     'add new cutoff
-
     Sub AddNewCutoff(ByVal fromDate As String, ByVal toDate As String, ByVal occurence As String)
         If CheckCutoff(fromDate, toDate, occurence) = False Then
             StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) VALUES('" & DateTime.Parse(fromDate).ToString("d MMM yyyy") & " to " & DateTime.Parse(toDate).ToString("d MMM yyyy") & "',@current_company,(SELECT occurence_id from tblref_occurences where name=@occurence), @from, @to, 'Processing')"
@@ -426,7 +425,7 @@ Module modConnect
                     & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', " _
                     & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.loans, " _
                     & "tbl_payslip.otherdeduct as 'Other Deductions', tbl_payslip.insurance as 'Insurance', " _
-                    & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status " _
+                    & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status, tbl_employee.emp_bio_id " _
                     & "FROM tbl_employee " _
                     & "LEFT JOIN tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id " _
                     & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
@@ -444,7 +443,7 @@ Module modConnect
 
         Dim chk As New DataGridViewCheckBoxColumn()
         frmMain.dgv_payroll.Columns.Add(chk)
-        chk.HeaderText = "SELECT"
+        chk.HeaderText = " "
         chk.Name = "chk"
         frmMain.dgv_payroll.DataSource = ds.Tables(0)
         Dim col = frmMain.dgv_payroll.Columns.Count
@@ -458,26 +457,27 @@ Module modConnect
             End If
             i = i + 1
         End While
-        frmMain.dgv_payroll.Columns(1).Visible = False
-        frmMain.dgv_payroll.Columns(2).Visible = False
-        frmMain.dgv_payroll.Columns(3).Visible = False
-        frmMain.dgv_payroll.Columns(5).Visible = False
-        frmMain.dgv_payroll.Columns(6).Visible = False
-        frmMain.dgv_payroll.Columns(24).Visible = False
+        frmMain.dgv_payroll.Columns(1).Visible = False 'id_employee
+        frmMain.dgv_payroll.Columns(2).Visible = False 'cutoff_id
+        frmMain.dgv_payroll.Columns(3).Visible = False 'code (company)
+        frmMain.dgv_payroll.Columns(5).Visible = False 'employment_status
+        frmMain.dgv_payroll.Columns(6).Visible = False 'basic/monthly salary
+        frmMain.dgv_payroll.Columns(24).Visible = False 'tax-status
+        frmMain.dgv_payroll.Columns(25).Visible = False 'emp_bio_id
 
         'additional payslip info
         Dim rows = frmMain.dgv_payroll.Rows.Count
         Dim j = 0
         While j <= rows - 1
             'Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
-            computeWage(frmMain.dgv_payroll.Rows(j).Cells(22).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString)
+            computeWage(frmMain.dgv_payroll.Rows(j).Cells(22).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) ' compute wages
             frmMain.dgv_payroll.Rows(j).Cells(7).Value = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) / 2 ' Basic pay
             frmMain.dgv_payroll.Rows(j).Cells(8).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0) ' Regular OT
             frmMain.dgv_payroll.Rows(j).Cells(9).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(1) ' Holiday OT
             frmMain.dgv_payroll.Rows(j).Cells(10).Value = frmMain.dgv_payroll.Rows(j).Cells(8).Value + frmMain.dgv_payroll.Rows(j).Cells(9).Value ' Total OT
             frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'allowances
             frmMain.dgv_payroll.Rows(j).Cells(12).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'incentives
-            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) + totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, "")(0) 'lates + absent
+            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) + totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, frmMain.dgv_payroll.Rows(j).Cells(25).Value)(0) 'lates + absent
             frmMain.dgv_payroll.Rows(j).Cells(14).Value = ComputeUndertime("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
             frmMain.dgv_payroll.Rows(j).Cells(15).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'sss
             frmMain.dgv_payroll.Rows(j).Cells(16).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'phic

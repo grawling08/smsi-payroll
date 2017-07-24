@@ -87,17 +87,21 @@ Partial Class frmEmpDetails
         Me.tb_late = New System.Windows.Forms.TextBox()
         Me.tb_absents = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.dtp_timesheetmonth = New System.Windows.Forms.DateTimePicker()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.btn_addtimesheet = New System.Windows.Forms.Button()
         Me.btn_loadtimesheet = New System.Windows.Forms.Button()
         Me.dtp_timesheetmonth2 = New System.Windows.Forms.DateTimePicker()
-        Me.dtp_timesheetmonth = New System.Windows.Forms.DateTimePicker()
         Me.dgv_emptimesheet = New System.Windows.Forms.DataGridView()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_filterloan = New System.Windows.Forms.ToolStripSplitButton()
+        Me.tsb_fullypaid = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsb_ongoing = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
@@ -147,6 +151,7 @@ Partial Class frmEmpDetails
         CType(Me.dgv_otherdeduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        Me.FlowLayoutPanel1.SuspendLayout()
         CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage7.SuspendLayout()
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -810,11 +815,7 @@ Partial Class frmEmpDetails
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.Label39)
-        Me.TabPage3.Controls.Add(Me.btn_addtimesheet)
-        Me.TabPage3.Controls.Add(Me.btn_loadtimesheet)
-        Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth2)
-        Me.TabPage3.Controls.Add(Me.dtp_timesheetmonth)
+        Me.TabPage3.Controls.Add(Me.FlowLayoutPanel1)
         Me.TabPage3.Controls.Add(Me.dgv_emptimesheet)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
@@ -824,18 +825,38 @@ Partial Class frmEmpDetails
         Me.TabPage3.Text = "Absents"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.Controls.Add(Me.dtp_timesheetmonth)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label39)
+        Me.FlowLayoutPanel1.Controls.Add(Me.dtp_timesheetmonth2)
+        Me.FlowLayoutPanel1.Controls.Add(Me.btn_loadtimesheet)
+        Me.FlowLayoutPanel1.Controls.Add(Me.btn_addtimesheet)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(545, 29)
+        Me.FlowLayoutPanel1.TabIndex = 5
+        '
+        'dtp_timesheetmonth
+        '
+        Me.dtp_timesheetmonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtp_timesheetmonth.Location = New System.Drawing.Point(3, 3)
+        Me.dtp_timesheetmonth.Name = "dtp_timesheetmonth"
+        Me.dtp_timesheetmonth.Size = New System.Drawing.Size(150, 20)
+        Me.dtp_timesheetmonth.TabIndex = 0
+        '
         'Label39
         '
-        Me.Label39.AutoSize = True
-        Me.Label39.Location = New System.Drawing.Point(159, 9)
+        Me.Label39.Location = New System.Drawing.Point(159, 0)
         Me.Label39.Name = "Label39"
-        Me.Label39.Size = New System.Drawing.Size(20, 13)
+        Me.Label39.Size = New System.Drawing.Size(20, 23)
         Me.Label39.TabIndex = 4
         Me.Label39.Text = "To"
+        Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'btn_addtimesheet
         '
-        Me.btn_addtimesheet.Location = New System.Drawing.Point(470, 4)
+        Me.btn_addtimesheet.Location = New System.Drawing.Point(422, 3)
         Me.btn_addtimesheet.Name = "btn_addtimesheet"
         Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
         Me.btn_addtimesheet.TabIndex = 3
@@ -844,7 +865,7 @@ Partial Class frmEmpDetails
         '
         'btn_loadtimesheet
         '
-        Me.btn_loadtimesheet.Location = New System.Drawing.Point(389, 4)
+        Me.btn_loadtimesheet.Location = New System.Drawing.Point(341, 3)
         Me.btn_loadtimesheet.Name = "btn_loadtimesheet"
         Me.btn_loadtimesheet.Size = New System.Drawing.Size(75, 23)
         Me.btn_loadtimesheet.TabIndex = 1
@@ -854,18 +875,10 @@ Partial Class frmEmpDetails
         'dtp_timesheetmonth2
         '
         Me.dtp_timesheetmonth2.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp_timesheetmonth2.Location = New System.Drawing.Point(185, 7)
+        Me.dtp_timesheetmonth2.Location = New System.Drawing.Point(185, 3)
         Me.dtp_timesheetmonth2.Name = "dtp_timesheetmonth2"
         Me.dtp_timesheetmonth2.Size = New System.Drawing.Size(150, 20)
         Me.dtp_timesheetmonth2.TabIndex = 0
-        '
-        'dtp_timesheetmonth
-        '
-        Me.dtp_timesheetmonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp_timesheetmonth.Location = New System.Drawing.Point(3, 7)
-        Me.dtp_timesheetmonth.Name = "dtp_timesheetmonth"
-        Me.dtp_timesheetmonth.Size = New System.Drawing.Size(150, 20)
-        Me.dtp_timesheetmonth.TabIndex = 0
         '
         'dgv_emptimesheet
         '
@@ -874,14 +887,14 @@ Partial Class frmEmpDetails
         Me.dgv_emptimesheet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgv_emptimesheet.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_emptimesheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.dgv_emptimesheet.Location = New System.Drawing.Point(3, 33)
+        Me.dgv_emptimesheet.Location = New System.Drawing.Point(3, 32)
         Me.dgv_emptimesheet.MultiSelect = False
         Me.dgv_emptimesheet.Name = "dgv_emptimesheet"
         Me.dgv_emptimesheet.ReadOnly = True
         Me.dgv_emptimesheet.RowHeadersVisible = False
         Me.dgv_emptimesheet.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.dgv_emptimesheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 418)
+        Me.dgv_emptimesheet.Size = New System.Drawing.Size(545, 419)
         Me.dgv_emptimesheet.TabIndex = 2
         '
         'TabPage7
@@ -902,7 +915,7 @@ Partial Class frmEmpDetails
         Me.BindingNavigator1.CountItem = Nothing
         Me.BindingNavigator1.DeleteItem = Nothing
         Me.BindingNavigator1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_loanadd, Me.tsb_loanedit, Me.tsb_loandelete})
+        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_loanadd, Me.tsb_loanedit, Me.tsb_loandelete, Me.tsb_filterloan})
         Me.BindingNavigator1.Location = New System.Drawing.Point(3, 3)
         Me.BindingNavigator1.MoveFirstItem = Nothing
         Me.BindingNavigator1.MoveLastItem = Nothing
@@ -938,6 +951,29 @@ Partial Class frmEmpDetails
         Me.tsb_loandelete.RightToLeftAutoMirrorImage = True
         Me.tsb_loandelete.Size = New System.Drawing.Size(60, 22)
         Me.tsb_loandelete.Text = "Delete"
+        '
+        'tsb_filterloan
+        '
+        Me.tsb_filterloan.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsb_filterloan.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tsb_filterloan.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_fullypaid, Me.tsb_ongoing})
+        Me.tsb_filterloan.Image = CType(resources.GetObject("tsb_filterloan.Image"), System.Drawing.Image)
+        Me.tsb_filterloan.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_filterloan.Name = "tsb_filterloan"
+        Me.tsb_filterloan.Size = New System.Drawing.Size(49, 22)
+        Me.tsb_filterloan.Text = "Filter"
+        '
+        'tsb_fullypaid
+        '
+        Me.tsb_fullypaid.Name = "tsb_fullypaid"
+        Me.tsb_fullypaid.Size = New System.Drawing.Size(125, 22)
+        Me.tsb_fullypaid.Text = "Fully Paid"
+        '
+        'tsb_ongoing
+        '
+        Me.tsb_ongoing.Name = "tsb_ongoing"
+        Me.tsb_ongoing.Size = New System.Drawing.Size(125, 22)
+        Me.tsb_ongoing.Text = "On Going"
         '
         'TabPage5
         '
@@ -1389,7 +1425,7 @@ Partial Class frmEmpDetails
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
-        Me.TabPage3.PerformLayout()
+        Me.FlowLayoutPanel1.ResumeLayout(False)
         CType(Me.dgv_emptimesheet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
@@ -1525,4 +1561,8 @@ Partial Class frmEmpDetails
     Friend WithEvents tb_totalbenefits As System.Windows.Forms.TextBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents tb_allowance As System.Windows.Forms.TextBox
+    Friend WithEvents tsb_filterloan As System.Windows.Forms.ToolStripSplitButton
+    Friend WithEvents tsb_fullypaid As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsb_ongoing As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
 End Class
