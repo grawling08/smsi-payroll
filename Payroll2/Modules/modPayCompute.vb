@@ -136,13 +136,16 @@ Module modPayCompute
         Dim isRegHolidayOT As Boolean = False
         Dim isSpecHolidayOT As Boolean = False
         Dim isRegOt As Boolean = False
-        StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND status = 'Approved by HR' AND overtimedate = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & " to " & todate_cutoff.ToString("yyyy-MM-dd") & "'"
-        QryReadP()
-        Dim otreader As MySqlDataReader = cmd.ExecuteReader
-        If otreader.HasRows Then
-            While otreader.Read
+
+        Dim CurrD As DateTime = prevcutoff_fromdate
+        While (CurrD <= prevcutoff_todate)
+            StrSql = "SELECT * FROM tbl_overtime WHERE employee_id = '" & id & "' AND status = 'Approved by HR' AND overtimedate = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            QryReadP()
+            Dim otreader As MySqlDataReader = cmd.ExecuteReader
+            If otreader.HasRows Then
+                otreader.Read()
                 Dim totalhours = otreader("totaltime")
-                StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & otreader("overtimedate").ToString("dddd") & "'"
+                StrSql = "SELECT * FROM tbl_shifts WHERE shiftgroup = (SELECT shiftgroup FROM tbl_employee WHERE id_employee = '" & id & "') AND day = '" & CurrD.ToString("dddd") & "'"
                 QryReadP()
                 Dim shiftreader As MySqlDataReader = cmd.ExecuteReader()
                 If Not shiftreader.HasRows Then
@@ -151,7 +154,7 @@ Module modPayCompute
                     isRegOt = True
                 End If
                 'check if holiday
-                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & otreader("overtimedate").ToString("yyyy-MM-dd") & "'"
+                StrSql = "SELECT * FROM tblref_holiday WHERE date1 = '" & CurrD.ToString("yyyy-MM-dd") & "'"
                 QryReadP()
                 Dim holidayreader As MySqlDataReader = cmd.ExecuteReader
                 If holidayreader.HasRows Then
@@ -184,8 +187,9 @@ Module modPayCompute
                     'Hourly rate * 125% * number of hours
                     ot(0) += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
                 End If
-            End While
-        End If
+            End If
+            CurrD = CurrD.AddDays(1)
+        End While
         Return ot
     End Function
 
@@ -224,6 +228,19 @@ Module modPayCompute
                         If dtareader5("daystatus").ToString = "Whole Day" Then
                             daysAbsent -= 1.0
                         ElseIf dtareader5("daystatus").ToString = "AM" Or dtareader5("daystatus").ToString = "PM" Then
+                            daysAbsent -= 0.5
+                        End If
+                    End If
+                    'check for travels
+                    StrSql = "SELECT tbl_business.*, tbl_businessdates.* FROM tbl_business JOIN tbl_businessdates ON tbl_businessdates.business_id = tbl_business.id WHERE tbl_business.employee_id = '" & id_employee & "' AND tbl_businessdates.businessdate = '" & CurrD.ToString("yyyy-MM-dd") & "' AND tbl_business.status = 'Approved by HR'"
+                    QryReadP()
+                    Dim dtareader6 As MySqlDataReader = cmd.ExecuteReader
+                    If dtareader6.HasRows Then
+                        'merong travels
+                        dtareader6.Read()
+                        If dtareader6("daystatus").ToString = "Whole Day" Then
+                            daysAbsent -= 1.0
+                        ElseIf dtareader6("daystatus").ToString = "AM" Or dtareader6("daystatus").ToString = "PM" Then
                             daysAbsent -= 0.5
                         End If
                     End If
