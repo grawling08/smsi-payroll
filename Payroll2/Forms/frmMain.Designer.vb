@@ -36,6 +36,7 @@ Partial Class frmMain
         Me.UploadTimsheetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewRawTimesheetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LeaveConvertToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ThMonthToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.EmployeeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShiftsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -43,12 +44,7 @@ Partial Class frmMain
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.LogoutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReportsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PayrollJournalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EmployeePayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LeavesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PaidOvertimesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LoansToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OtherReportsAreListedHereToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
@@ -87,7 +83,6 @@ Partial Class frmMain
         Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
         Me.TabControl3.SuspendLayout()
@@ -116,7 +111,7 @@ Partial Class frmMain
         '
         'PayrollToolStripMenuItem
         '
-        Me.PayrollToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TimesheetToolStripMenuItem, Me.LeaveConvertToolStripMenuItem, Me.ToolStripSeparator5, Me.EmployeeToolStripMenuItem, Me.ShiftsToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.ToolStripSeparator3, Me.LogoutToolStripMenuItem})
+        Me.PayrollToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TimesheetToolStripMenuItem, Me.LeaveConvertToolStripMenuItem, Me.ThMonthToolStripMenuItem, Me.ToolStripSeparator5, Me.EmployeeToolStripMenuItem, Me.ShiftsToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.ToolStripSeparator3, Me.LogoutToolStripMenuItem})
         Me.PayrollToolStripMenuItem.Name = "PayrollToolStripMenuItem"
         Me.PayrollToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
         Me.PayrollToolStripMenuItem.Text = "Payroll"
@@ -146,6 +141,12 @@ Partial Class frmMain
         Me.LeaveConvertToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.LeaveConvertToolStripMenuItem.Text = "Leave Conversion..."
         Me.LeaveConvertToolStripMenuItem.Visible = False
+        '
+        'ThMonthToolStripMenuItem
+        '
+        Me.ThMonthToolStripMenuItem.Name = "ThMonthToolStripMenuItem"
+        Me.ThMonthToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+        Me.ThMonthToolStripMenuItem.Text = "13th Month"
         '
         'ToolStripSeparator5
         '
@@ -184,47 +185,16 @@ Partial Class frmMain
         '
         'ReportsToolStripMenuItem
         '
-        Me.ReportsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PayrollJournalToolStripMenuItem})
+        Me.ReportsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OtherReportsAreListedHereToolStripMenuItem})
         Me.ReportsToolStripMenuItem.Name = "ReportsToolStripMenuItem"
         Me.ReportsToolStripMenuItem.Size = New System.Drawing.Size(59, 20)
         Me.ReportsToolStripMenuItem.Text = "Reports"
         '
-        'PayrollJournalToolStripMenuItem
+        'OtherReportsAreListedHereToolStripMenuItem
         '
-        Me.PayrollJournalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EmployeePayToolStripMenuItem, Me.LeavesToolStripMenuItem, Me.ToolStripMenuItem2, Me.PaidOvertimesToolStripMenuItem, Me.LoansToolStripMenuItem})
-        Me.PayrollJournalToolStripMenuItem.Name = "PayrollJournalToolStripMenuItem"
-        Me.PayrollJournalToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
-        Me.PayrollJournalToolStripMenuItem.Text = "Generate Reports..."
-        '
-        'EmployeePayToolStripMenuItem
-        '
-        Me.EmployeePayToolStripMenuItem.Name = "EmployeePayToolStripMenuItem"
-        Me.EmployeePayToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.EmployeePayToolStripMenuItem.Text = "Payroll Register"
-        '
-        'LeavesToolStripMenuItem
-        '
-        Me.LeavesToolStripMenuItem.Name = "LeavesToolStripMenuItem"
-        Me.LeavesToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.LeavesToolStripMenuItem.Text = "Employee Pay Inquiry"
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItem2.Text = "Paid Leaves"
-        '
-        'PaidOvertimesToolStripMenuItem
-        '
-        Me.PaidOvertimesToolStripMenuItem.Name = "PaidOvertimesToolStripMenuItem"
-        Me.PaidOvertimesToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.PaidOvertimesToolStripMenuItem.Text = "Paid Overtimes"
-        '
-        'LoansToolStripMenuItem
-        '
-        Me.LoansToolStripMenuItem.Name = "LoansToolStripMenuItem"
-        Me.LoansToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.LoansToolStripMenuItem.Text = "Loans"
+        Me.OtherReportsAreListedHereToolStripMenuItem.Name = "OtherReportsAreListedHereToolStripMenuItem"
+        Me.OtherReportsAreListedHereToolStripMenuItem.Size = New System.Drawing.Size(223, 22)
+        Me.OtherReportsAreListedHereToolStripMenuItem.Text = "Other Reports are listed here"
         '
         'HelpToolStripMenuItem
         '
@@ -625,9 +595,6 @@ Partial Class frmMain
         Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
         Me.label_loggedinas.Text = "ToolStripStatusLabel3"
         '
-        'PrintDocument1
-        '
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -678,7 +645,6 @@ Partial Class frmMain
     Friend WithEvents dgv_emplist As System.Windows.Forms.DataGridView
     Friend WithEvents tstb_searchdgv As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents tsbtn_refreshdgv As System.Windows.Forms.ToolStripButton
-    Friend WithEvents PayrollJournalToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents LogoutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
@@ -696,10 +662,6 @@ Partial Class frmMain
     Friend WithEvents dgv_payroll As System.Windows.Forms.DataGridView
     Friend WithEvents EmployeeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SettingsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents EmployeePayToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents LeavesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents PaidOvertimesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents bindingnavigator As System.Windows.Forms.BindingNavigator
     Friend WithEvents ToolStripLabel2 As System.Windows.Forms.ToolStripLabel
@@ -711,7 +673,6 @@ Partial Class frmMain
     Friend WithEvents UploadTimsheetToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ViewRawTimesheetToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lbl_currentcompany As System.Windows.Forms.Label
-    Friend WithEvents LoansToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShiftsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lnk_setcutoff As System.Windows.Forms.LinkLabel
     Friend WithEvents lnk_addcutoff As System.Windows.Forms.LinkLabel
@@ -723,8 +684,9 @@ Partial Class frmMain
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents tsb_printpayroll As System.Windows.Forms.ToolStripButton
-    Friend WithEvents PrintDocument1 As System.Drawing.Printing.PrintDocument
     Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents tsb_remfrompayroll As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ThMonthToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents OtherReportsAreListedHereToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

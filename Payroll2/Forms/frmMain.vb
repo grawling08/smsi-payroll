@@ -73,26 +73,6 @@ Public Class frmMain
     Private Sub SettingsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SettingsToolStripMenuItem.Click
         frmSettings.ShowDialog()
     End Sub
-    Private Sub EmployeePayToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EmployeePayToolStripMenuItem.Click
-        Using reportgen As New frmReportGen(1)
-            reportgen.ShowDialog()
-        End Using
-    End Sub
-    Private Sub LeavesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LeavesToolStripMenuItem.Click
-        Using reportgen As New frmReportGen(2)
-            reportgen.ShowDialog()
-        End Using
-    End Sub
-    Private Sub ToolStripMenuItem2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem2.Click
-        Using reportgen As New frmReportGen(3)
-            reportgen.ShowDialog()
-        End Using
-    End Sub
-    Private Sub PaidOvertimesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PaidOvertimesToolStripMenuItem.Click
-        Using reportgen As New frmReportGen(4)
-            reportgen.ShowDialog()
-        End Using
-    End Sub
 
     Private Sub btn_loadpayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_loadpayroll.Click
         'load payslip for the current cutoff
@@ -221,6 +201,13 @@ Public Class frmMain
         End If
         QryReadP()
         cmd.ExecuteNonQuery()
+
+        GetCutoffOccurences()
+        'get the date range of the cutoff
+        getCutoffRange()
+        'get previous cutoff days for deductions
+        GetPrevCutoff()
+
         Dim thread As Threading.Thread
         thread = New System.Threading.Thread(AddressOf SyncTimesheet)
         thread.Start()
@@ -228,11 +215,6 @@ Public Class frmMain
         While (thread.IsAlive)
             Application.DoEvents()
         End While
-        GetCutoffOccurences()
-        'get the date range of the cutoff
-        getCutoffRange()
-        'get previous cutoff days for deductions
-        GetPrevCutoff()
         'get initial payslip summary
         getPayslip(current_cutoff)
         loadEmployee()
@@ -265,12 +247,7 @@ Public Class frmMain
     End Sub
 
     Private Sub tsb_printpayroll_Click(sender As System.Object, e As System.EventArgs) Handles tsb_printpayroll.Click
-        'PrintDocument1.Print()
-    End Sub
-    Private Sub PrintDocument1_PrintPage(sender As System.Object, e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
-        'Dim bm As New Bitmap(Me.dgv_payroll.Width, Me.dgv_payroll.Height)
-        'dgv_payroll.DrawToBitmap(bm, New Rectangle(0, 0, Me.dgv_payroll.Width, Me.dgv_payroll.Height))
-        'e.Graphics.DrawImage(bm, 0, 0)
+        frmReport.Show()
     End Sub
 
     Private Sub btn_savepayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_savepayroll.Click

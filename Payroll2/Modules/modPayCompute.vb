@@ -44,11 +44,11 @@ Module modPayCompute
         If underreader.HasRows Then
             While underreader.Read()
                 If CDbl(underreader("undertime")) >= 1 Then
-                    totalUndertime += CDbl(underreader("late"))
+                    totalUndertime += CDbl(underreader("undertime"))
                 End If
             End While
         End If
-        Return Math.Round(totalUndertime * empHourlyWage, 2)
+        Return Math.Round(totalUndertime * 5, 2)
     End Function
 
     Function computeloans(ByVal id_employee As String) As Double
@@ -59,14 +59,6 @@ Module modPayCompute
         totalLoans = 0
         If dtareader.HasRows Then
             While dtareader.Read
-                'StrSql2 = "SELECT SUM(amount), Max(date_paid) FROM tbl_loanpayments WHERE loan_id = '" & dtareader("loan_id").ToString & "'"
-                'Connect_Sub("payroll")
-                'cmd2 = New MySqlCommand(StrSql2, conn2)
-                'Dim loanpayreader As MySqlDataReader = cmd2.ExecuteReader
-                'If loanpayreader.HasRows Then
-                '    loanpayreader.Read()
-
-                'End If
                 loans = dtareader("monthlyAmortization") / 2 'default: divide my 2 for semi-monthly
                 totalLoans += loans
             End While
@@ -272,7 +264,7 @@ Module modPayCompute
         End While
         totalabsent(1) = countattendance
         totalabsent(0) = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-        Console.Write("id: " + id_employee.ToString + " daily wage: " + empDailyWage.ToString + " absents:" + daysAbsent.ToString + vbCrLf)
+        'Console.Write("id: " + id_employee.ToString + " daily wage: " + empDailyWage.ToString + " absents:" + daysAbsent.ToString + vbCrLf)
         Return totalabsent
     End Function
 

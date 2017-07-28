@@ -357,8 +357,6 @@ Partial Public Class DataSet1
         
         Private columnEmployee As Global.System.Data.DataColumn
         
-        Private columnemployement_status As Global.System.Data.DataColumn
-        
         Private columnBasicPay As Global.System.Data.DataColumn
         
         Private columnRegularOT As Global.System.Data.DataColumn
@@ -439,14 +437,6 @@ Partial Public Class DataSet1
         Public ReadOnly Property EmployeeColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnEmployee
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property employement_statusColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnemployement_status
             End Get
         End Property
         
@@ -618,25 +608,24 @@ Partial Public Class DataSet1
         Public Overloads Function AddpayRow( _
                     ByVal Company As String,  _
                     ByVal Employee As String,  _
-                    ByVal employement_status As String,  _
-                    ByVal BasicPay As String,  _
-                    ByVal RegularOT As String,  _
-                    ByVal HolidayOT As String,  _
-                    ByVal TotalOT As String,  _
-                    ByVal Allowances As String,  _
-                    ByVal Incentives As String,  _
-                    ByVal LateAbsent As String,  _
-                    ByVal Undertime As String,  _
-                    ByVal SSS As String,  _
-                    ByVal PHIC As String,  _
-                    ByVal HDMF As String,  _
-                    ByVal OtherDeductions As String,  _
-                    ByVal GrossPay As String,  _
-                    ByVal Insurance As String,  _
-                    ByVal Tax As String,  _
-                    ByVal NetPay As String) As payRow
+                    ByVal BasicPay As Double,  _
+                    ByVal RegularOT As Double,  _
+                    ByVal HolidayOT As Double,  _
+                    ByVal TotalOT As Double,  _
+                    ByVal Allowances As Double,  _
+                    ByVal Incentives As Double,  _
+                    ByVal LateAbsent As Double,  _
+                    ByVal Undertime As Double,  _
+                    ByVal SSS As Double,  _
+                    ByVal PHIC As Double,  _
+                    ByVal HDMF As Double,  _
+                    ByVal OtherDeductions As Double,  _
+                    ByVal GrossPay As Double,  _
+                    ByVal Insurance As Double,  _
+                    ByVal Tax As Double,  _
+                    ByVal NetPay As Double) As payRow
             Dim rowpayRow As payRow = CType(Me.NewRow,payRow)
-            Dim columnValuesArray() As Object = New Object() {Company, Employee, employement_status, BasicPay, RegularOT, HolidayOT, TotalOT, Allowances, Incentives, LateAbsent, Undertime, SSS, PHIC, HDMF, OtherDeductions, GrossPay, Insurance, Tax, NetPay}
+            Dim columnValuesArray() As Object = New Object() {Company, Employee, BasicPay, RegularOT, HolidayOT, TotalOT, Allowances, Incentives, LateAbsent, Undertime, SSS, PHIC, HDMF, OtherDeductions, GrossPay, Insurance, Tax, NetPay}
             rowpayRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowpayRow)
             Return rowpayRow
@@ -661,7 +650,6 @@ Partial Public Class DataSet1
         Friend Sub InitVars()
             Me.columnCompany = MyBase.Columns("Company")
             Me.columnEmployee = MyBase.Columns("Employee")
-            Me.columnemployement_status = MyBase.Columns("employement_status")
             Me.columnBasicPay = MyBase.Columns("BasicPay")
             Me.columnRegularOT = MyBase.Columns("RegularOT")
             Me.columnHolidayOT = MyBase.Columns("HolidayOT")
@@ -687,39 +675,37 @@ Partial Public Class DataSet1
             MyBase.Columns.Add(Me.columnCompany)
             Me.columnEmployee = New Global.System.Data.DataColumn("Employee", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnEmployee)
-            Me.columnemployement_status = New Global.System.Data.DataColumn("employement_status", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnemployement_status)
-            Me.columnBasicPay = New Global.System.Data.DataColumn("BasicPay", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnBasicPay = New Global.System.Data.DataColumn("BasicPay", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnBasicPay)
-            Me.columnRegularOT = New Global.System.Data.DataColumn("RegularOT", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnRegularOT = New Global.System.Data.DataColumn("RegularOT", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnRegularOT)
-            Me.columnHolidayOT = New Global.System.Data.DataColumn("HolidayOT", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnHolidayOT = New Global.System.Data.DataColumn("HolidayOT", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnHolidayOT)
-            Me.columnTotalOT = New Global.System.Data.DataColumn("TotalOT", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnTotalOT = New Global.System.Data.DataColumn("TotalOT", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTotalOT)
-            Me.columnAllowances = New Global.System.Data.DataColumn("Allowances", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnAllowances = New Global.System.Data.DataColumn("Allowances", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnAllowances)
-            Me.columnIncentives = New Global.System.Data.DataColumn("Incentives", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnIncentives = New Global.System.Data.DataColumn("Incentives", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnIncentives)
-            Me.columnLateAbsent = New Global.System.Data.DataColumn("LateAbsent", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnLateAbsent = New Global.System.Data.DataColumn("LateAbsent", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnLateAbsent)
-            Me.columnUndertime = New Global.System.Data.DataColumn("Undertime", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnUndertime = New Global.System.Data.DataColumn("Undertime", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnUndertime)
-            Me.columnSSS = New Global.System.Data.DataColumn("SSS", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnSSS = New Global.System.Data.DataColumn("SSS", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnSSS)
-            Me.columnPHIC = New Global.System.Data.DataColumn("PHIC", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnPHIC = New Global.System.Data.DataColumn("PHIC", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnPHIC)
-            Me.columnHDMF = New Global.System.Data.DataColumn("HDMF", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnHDMF = New Global.System.Data.DataColumn("HDMF", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnHDMF)
-            Me.columnOtherDeductions = New Global.System.Data.DataColumn("OtherDeductions", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnOtherDeductions = New Global.System.Data.DataColumn("OtherDeductions", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnOtherDeductions)
-            Me.columnGrossPay = New Global.System.Data.DataColumn("GrossPay", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnGrossPay = New Global.System.Data.DataColumn("GrossPay", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnGrossPay)
-            Me.columnInsurance = New Global.System.Data.DataColumn("Insurance", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnInsurance = New Global.System.Data.DataColumn("Insurance", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnInsurance)
-            Me.columnTax = New Global.System.Data.DataColumn("Tax", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnTax = New Global.System.Data.DataColumn("Tax", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTax)
-            Me.columnNetPay = New Global.System.Data.DataColumn("NetPay", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnNetPay = New Global.System.Data.DataColumn("NetPay", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnNetPay)
         End Sub
         
@@ -1622,25 +1608,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property employement_status() As String
+        Public Property BasicPay() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.employement_statusColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'employement_status' in table 'pay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tablepay.employement_statusColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property BasicPay() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tablepay.BasicPayColumn),String)
+                    Return CType(Me(Me.tablepay.BasicPayColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'BasicPay' in table 'pay' is DBNull.", e)
                 End Try
@@ -1652,10 +1623,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property RegularOT() As String
+        Public Property RegularOT() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.RegularOTColumn),String)
+                    Return CType(Me(Me.tablepay.RegularOTColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'RegularOT' in table 'pay' is DBNull.", e)
                 End Try
@@ -1667,10 +1638,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property HolidayOT() As String
+        Public Property HolidayOT() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.HolidayOTColumn),String)
+                    Return CType(Me(Me.tablepay.HolidayOTColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'HolidayOT' in table 'pay' is DBNull.", e)
                 End Try
@@ -1682,10 +1653,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property TotalOT() As String
+        Public Property TotalOT() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.TotalOTColumn),String)
+                    Return CType(Me(Me.tablepay.TotalOTColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'TotalOT' in table 'pay' is DBNull.", e)
                 End Try
@@ -1697,10 +1668,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Allowances() As String
+        Public Property Allowances() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.AllowancesColumn),String)
+                    Return CType(Me(Me.tablepay.AllowancesColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'Allowances' in table 'pay' is DBNull.", e)
                 End Try
@@ -1712,10 +1683,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Incentives() As String
+        Public Property Incentives() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.IncentivesColumn),String)
+                    Return CType(Me(Me.tablepay.IncentivesColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'Incentives' in table 'pay' is DBNull.", e)
                 End Try
@@ -1727,10 +1698,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property LateAbsent() As String
+        Public Property LateAbsent() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.LateAbsentColumn),String)
+                    Return CType(Me(Me.tablepay.LateAbsentColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'LateAbsent' in table 'pay' is DBNull.", e)
                 End Try
@@ -1742,10 +1713,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Undertime() As String
+        Public Property Undertime() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.UndertimeColumn),String)
+                    Return CType(Me(Me.tablepay.UndertimeColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'Undertime' in table 'pay' is DBNull.", e)
                 End Try
@@ -1757,10 +1728,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property SSS() As String
+        Public Property SSS() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.SSSColumn),String)
+                    Return CType(Me(Me.tablepay.SSSColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'SSS' in table 'pay' is DBNull.", e)
                 End Try
@@ -1772,10 +1743,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property PHIC() As String
+        Public Property PHIC() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.PHICColumn),String)
+                    Return CType(Me(Me.tablepay.PHICColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'PHIC' in table 'pay' is DBNull.", e)
                 End Try
@@ -1787,10 +1758,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property HDMF() As String
+        Public Property HDMF() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.HDMFColumn),String)
+                    Return CType(Me(Me.tablepay.HDMFColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'HDMF' in table 'pay' is DBNull.", e)
                 End Try
@@ -1802,10 +1773,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property OtherDeductions() As String
+        Public Property OtherDeductions() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.OtherDeductionsColumn),String)
+                    Return CType(Me(Me.tablepay.OtherDeductionsColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'OtherDeductions' in table 'pay' is DBNull.", e)
                 End Try
@@ -1817,10 +1788,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property GrossPay() As String
+        Public Property GrossPay() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.GrossPayColumn),String)
+                    Return CType(Me(Me.tablepay.GrossPayColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'GrossPay' in table 'pay' is DBNull.", e)
                 End Try
@@ -1832,10 +1803,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Insurance() As String
+        Public Property Insurance() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.InsuranceColumn),String)
+                    Return CType(Me(Me.tablepay.InsuranceColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'Insurance' in table 'pay' is DBNull.", e)
                 End Try
@@ -1847,10 +1818,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Tax() As String
+        Public Property Tax() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.TaxColumn),String)
+                    Return CType(Me(Me.tablepay.TaxColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'Tax' in table 'pay' is DBNull.", e)
                 End Try
@@ -1862,10 +1833,10 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property NetPay() As String
+        Public Property NetPay() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablepay.NetPayColumn),String)
+                    Return CType(Me(Me.tablepay.NetPayColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'NetPay' in table 'pay' is DBNull.", e)
                 End Try
@@ -1897,18 +1868,6 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetEmployeeNull()
             Me(Me.tablepay.EmployeeColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Isemployement_statusNull() As Boolean
-            Return Me.IsNull(Me.tablepay.employement_statusColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Setemployement_statusNull()
-            Me(Me.tablepay.employement_statusColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

@@ -164,7 +164,7 @@ Public Class frmEditTimesheet
                 End If
             End While
         End If
-        Console.Write(Time_in & " - " & Time_out)
+        'Console.Write(Time_in & " - " & Time_out)
         StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & No & "' AND date = '" & DateTime.Parse(log_date).ToString("yyyy-MM-dd") & "'"
         QryReadP()
         Dim checktimereader As MySqlDataReader = cmd.ExecuteReader
@@ -177,7 +177,7 @@ Public Class frmEditTimesheet
                     & "VALUES('" & id_employee & "','" & No & "','" & DateTime.Parse(log_date).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(Time_in).ToString("HH:mm") & "','" _
                     & DateTime.Parse(Time_out).ToString("HH:mm") & "','" & totalHours & "','" & totalLate & "','" & totalUndertime & "','" & totalOvertime & "','" & remarks & "')"
         End If
-        Console.Write(StrSql)
+        'Console.Write(StrSql)
         QryReadP()
         cmd.ExecuteNonQuery()
         MessageBox.Show("Saved!")
