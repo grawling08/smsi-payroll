@@ -361,6 +361,12 @@ Module modSync
     End Function
 
     Sub SyncTimesheet()
+        Dim CurrD As DateTime = prevcutoff_fromdate
+        While (CurrD <= prevcutoff_todate)
+            StrSql = "SELECT * FROM timesheet WHERE dateLog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            QryReadH()
+            CurrD = CurrD.AddDays(1)
+        End While
         StrSql = "SELECT * FROM timesheet WHERE dateLog BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
         QryReadH()
         Dim dt = New DataTable
