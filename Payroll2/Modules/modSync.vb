@@ -361,27 +361,11 @@ Module modSync
     End Function
 
     Sub SyncTimesheet()
-        Dim CurrD As DateTime = prevcutoff_fromdate
-        While (CurrD <= prevcutoff_todate)
-            StrSql = "SELECT * FROM timesheet WHERE dateLog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
-            QryReadH()
-            CurrD = CurrD.AddDays(1)
-        End While
         StrSql = "SELECT * FROM timesheet WHERE dateLog BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
         QryReadH()
         Dim dt = New DataTable
         adpt.Fill(dt)
         For i = 0 To dt.Rows.Count - 1
-            'check if there are any corrections from timesheetalter table
-            StrSql = "SELECT * FROM timesheetalter WHERE private_key = '" & dt.Rows(i)(1).ToString & "' AND status = 'Approved by HR'"
-            QryReadH()
-            Dim timealter As MySqlDataReader = cmd.ExecuteReader
-            If timealter.HasRows Then
-                timealter.Read()
-                dt.Rows(i)(3) = timealter("dateLog")
-                dt.Rows(i)(4) = timealter("timein")
-                dt.Rows(i)(5) = timealter("timeout")
-            End If
             StrSql = "SELECT * FROM tbl_attendance WHERE " _
                         & "emp_bio_id = '" & dt.Rows(i)(2).ToString & "' AND " _
                         & "date = '" & DateTime.Parse(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "' AND " _
@@ -389,17 +373,7 @@ Module modSync
                         & "time_out = '" & dt.Rows(i)(5).ToString & "'"
             QryReadP()
             Dim paytimerdr As MySqlDataReader = cmd.ExecuteReader
-            If paytimerdr.HasRows Then
-                'recalculate total hours, lates, overtime and undertime
-                StrSql = "UPDATE tbl_attendance SET " _
-                            & "date" _
-                            & "time_in" _
-                            & "time_out" _
-                            & "" _
-                            & "" _
-                            & "" _
-                            & ""
-            Else
+            If Not paytimerdr.HasRows Then
                 StrSql = "INSERT INTO tbl_attendance(emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
                             & "VALUES('" & dt.Rows(i)(2).ToString & "','" & DateTime.Parse(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
                             & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
@@ -410,6 +384,46 @@ Module modSync
             QryReadP()
             cmd.ExecuteNonQuery()
         Next
+        'check, insert and/or update corrections on timesheet
+        checktimealter()
     End Sub
+    Sub checktimealter()
+        'check if there are any corrections from timesheetalter table
+        StrSql = "SELECT employees.biometric_id, timesheetalter.* FROM timesheetalter " _
+                    & "LEFT JOIN employees ON timesheetalter.employee_id = employees.id " _
+                    & "WHERE timesheetalter.status = 'Approved by Manager' AND (dateLog BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "')"
+        QryReadH()
+        Dim dt = New DataTable
+        adpt.Fill(dt)
+        For i = 0 To dt.Rows.Count - 1
+            StrSql = "SELECT * FROM tbl_attendance WHERE emp_bio_id = '" & dt.Rows(i)(0).ToString & "' AND date = '" & dt.Rows(i)(3).ToString & "'"
+            QryReadP()
+            Dim attendreader As MySqlDataReader = cmd.ExecuteReader
+            If attendreader.HasRows Then
+                'UPDATE
+                StrSql = "UPDATE tbl_attendance SET " _
+                            & "date = '" & dt.Rows(i)(3).ToString & "'" _
+                            & "time_in = '" & dt.Rows(i)(4).ToString & "'" _
+                            & "time_out = '" & dt.Rows(i)(5).ToString & "'" _
+                            & "totalHours = '" & dt.Rows(i)(6).ToString & "'" _
+                            & "late = '" & dt.Rows(i)(7).ToString & "'" _
+                            & "undertime = '" & dt.Rows(i)(8).ToString & "'" _
+                            & "overtime = '" & dt.Rows(i)(9).ToString & "'" _
+                            & "remarks = '" & dt.Rows(i)(10).ToString & "'" _
+                            & "WHERE emp_bio_id = '" & dt.Rows(i)(0).ToString & "' AND date = '" & dt.Rows(i)(3).ToString & "'"
+            Else
+                'INSERT
+                StrSql = "INSERT INTO tbl_attendance(emp_bio_id,date,time_in,time_out,totalHours,late,undertime,overtime,remarks) " _
+                            & "VALUES('" & dt.Rows(i)(0).ToString & "','" & DateTime.Parse(dt.Rows(i)(3).ToString).ToString("yyyy-MM-dd") & "','" _
+                            & dt.Rows(i)(4).ToString & "','" & dt.Rows(i)(5).ToString & "','" _
+                            & dt.Rows(i)(6).ToString & "','" & dt.Rows(i)(7).ToString & "','" _
+                            & dt.Rows(i)(8).ToString & "','" & dt.Rows(i)(9).ToString & "','" _
+                            & dt.Rows(i)(10).ToString & "')"
+            End If
+            QryReadP()
+            cmd.ExecuteNonQuery()
+        Next
+    End Sub
+
 
 End Module
