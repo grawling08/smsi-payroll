@@ -17,6 +17,15 @@ DROP DATABASE IF EXISTS `hris_payroll`;
 CREATE DATABASE IF NOT EXISTS `hris_payroll` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `hris_payroll`;
 
+-- Dumping structure for procedure hris_payroll.sp_payroll
+DROP PROCEDURE IF EXISTS `sp_payroll`;
+DELIMITER //
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_payroll`()
+BEGIN
+
+END//
+DELIMITER ;
+
 -- Dumping structure for procedure hris_payroll.sp_timesheetPR
 DROP PROCEDURE IF EXISTS `sp_timesheetPR`;
 DELIMITER //
@@ -144,6 +153,91 @@ INSERT INTO `tblref_occurences` (`occurence_id`, `name`) VALUES
 	(2, 'Semi-Monthly'),
 	(3, 'Weekly');
 /*!40000 ALTER TABLE `tblref_occurences` ENABLE KEYS */;
+
+-- Dumping structure for table hris_payroll.tblref_paystructure
+DROP TABLE IF EXISTS `tblref_paystructure`;
+CREATE TABLE IF NOT EXISTS `tblref_paystructure` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `region` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `grade` int(11) NOT NULL DEFAULT '0',
+  `field` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `increment` double(8,2) NOT NULL DEFAULT '0.00',
+  `step1` double(8,0) NOT NULL DEFAULT '0',
+  `step2` double(8,0) NOT NULL DEFAULT '0',
+  `step3` double(8,0) NOT NULL DEFAULT '0',
+  `step4` double(8,0) NOT NULL DEFAULT '0',
+  `step5` double(8,0) NOT NULL DEFAULT '0',
+  `step6` double(8,0) NOT NULL DEFAULT '0',
+  `step7` double(8,0) NOT NULL DEFAULT '0',
+  `step8` double(8,0) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table hris_payroll.tblref_paystructure: 61 rows
+/*!40000 ALTER TABLE `tblref_paystructure` DISABLE KEYS */;
+INSERT INTO `tblref_paystructure` (`id`, `region`, `grade`, `field`, `increment`, `step1`, `step2`, `step3`, `step4`, `step5`, `step6`, `step7`, `step8`) VALUES
+	(1, 'NCR', 1, 'Finance', 492.86, 15000, 15493, 15986, 16479, 16971, 17464, 17957, 18450),
+	(2, 'NCR', 2, 'Finance', 540.00, 15750, 16290, 16830, 17370, 17910, 18450, 18990, 19530),
+	(3, 'NCR', 3, 'Finance', 567.00, 16538, 17105, 17672, 18239, 18806, 19373, 19940, 20507),
+	(4, 'NCR', 4, 'Finance', 669.77, 17364, 18034, 18704, 19373, 20043, 20713, 21383, 22052),
+	(5, 'NCR', 5, 'Finance', 709.95, 18406, 19116, 19826, 20536, 21246, 21956, 22666, 23376),
+	(6, 'NCR', 6, 'Finance', 752.55, 19511, 20264, 21016, 21769, 22521, 23274, 24026, 24779),
+	(7, 'NCR', 7, 'Finance', 805.23, 20876, 21681, 22486, 23292, 24097, 24902, 25707, 26513),
+	(8, 'NCR', 8, 'Finance', 957.33, 22338, 23295, 24253, 25210, 26167, 27125, 28082, 29039),
+	(9, 'NCR', 9, 'Finance', 1195.07, 23901, 25096, 26291, 27486, 28681, 29876, 31071, 32266),
+	(10, 'NCR', 10, 'Finance', 1475.05, 25813, 27288, 28763, 30238, 31713, 33188, 34663, 36138),
+	(11, 'NCR', 11, 'Finance', 1792.19, 27879, 29671, 31463, 33256, 35048, 36840, 38632, 40424),
+	(12, 'NCR', 12, 'Finance', 2150.63, 30109, 32260, 34410, 36561, 38712, 40862, 43013, 45163),
+	(13, 'NCR', 13, 'Finance', 2415.59, 32518, 34934, 37349, 39765, 42180, 44596, 47012, 49427),
+	(14, 'NCR', 14, 'Finance', 2759.34, 35119, 37878, 40638, 43397, 46156, 48916, 51675, 54434),
+	(15, 'NCR', 15, 'Finance', 3251.00, 37928, 41179, 44430, 47681, 50932, 54183, 57434, 60685),
+	(16, 'MIN', 1, 'Finance', 314.29, 11000, 11314, 11629, 11943, 12257, 12571, 12886, 13200),
+	(17, 'MIN', 2, 'Finance', 371.43, 11800, 12171, 12543, 12914, 13286, 13657, 14029, 14400),
+	(18, 'MIN', 3, 'Finance', 465.14, 12744, 13209, 13674, 14139, 14605, 15070, 15535, 16000),
+	(19, 'MIN', 4, 'Finance', 505.21, 13764, 14269, 14774, 15280, 15785, 16290, 16795, 17300),
+	(20, 'MIN', 5, 'Finance', 633.63, 14865, 15499, 16132, 16766, 17400, 18033, 18667, 19300),
+	(21, 'MIN', 6, 'Finance', 763.75, 16054, 16818, 17582, 18345, 19109, 19873, 20637, 21400),
+	(22, 'MIN', 7, 'Finance', 941.21, 17338, 18279, 19220, 20162, 21103, 22044, 22985, 23926),
+	(23, 'MIN', 8, 'Finance', 1070.01, 18725, 19795, 20865, 21935, 23005, 24075, 25145, 26215),
+	(24, 'MIN', 9, 'Finance', 1312.10, 20410, 21722, 23034, 24346, 25658, 26971, 28283, 29595),
+	(25, 'MIN', 10, 'Finance', 1603.67, 22451, 24055, 25658, 27262, 28866, 30469, 32073, 33677),
+	(26, 'MIN', 11, 'Finance', 1834.60, 24697, 26532, 28366, 30201, 32035, 33870, 35705, 37539),
+	(27, 'MIN', 12, 'Finance', 2173.30, 27660, 29833, 32007, 34180, 36353, 38527, 40700, 42873),
+	(28, 'MIN', 13, 'Finance', 2434.09, 30979, 33413, 35847, 38281, 40715, 43149, 45584, 48018),
+	(29, 'MIN', 14, 'Finance', 2825.32, 34697, 37522, 40348, 43173, 45998, 48824, 51649, 54474),
+	(30, 'MIN', 15, 'Finance', 3390.38, 39554, 42944, 46335, 49725, 53116, 56506, 59896, 63287),
+	(31, 'MIN', 1, 'Mobility', 314.29, 11000, 11314, 11629, 11943, 12257, 12571, 12886, 13200),
+	(32, 'MIN', 2, 'Mobility', 330.00, 11550, 11880, 12210, 12540, 12870, 13200, 13530, 13860),
+	(33, 'MIN', 3, 'Mobility', 381.15, 12128, 12509, 12890, 13271, 13653, 14034, 14415, 14796),
+	(34, 'MIN', 4, 'Mobility', 400.21, 12734, 13134, 13534, 13935, 14335, 14735, 15135, 15535),
+	(35, 'MIN', 5, 'Mobility', 486.62, 13625, 14112, 14598, 15085, 15571, 16058, 16545, 17031),
+	(36, 'MIN', 6, 'Mobility', 697.61, 15260, 15958, 16655, 17353, 18050, 18748, 19446, 20143),
+	(37, 'MIN', 7, 'Mobility', 427.29, 17092, 17519, 17947, 18374, 18801, 19228, 19656, 20083),
+	(38, 'MIN', 1, 'Support', 314.29, 11000, 11314, 11629, 11943, 12257, 12571, 12886, 13200),
+	(39, 'MIN', 2, 'Support', 330.00, 11550, 11880, 12210, 12540, 12870, 13200, 13530, 13860),
+	(40, 'MIN', 3, 'Support', 388.41, 12359, 12747, 13136, 13524, 13913, 14301, 14689, 15078),
+	(41, 'MIN', 4, 'Support', 415.60, 13224, 13640, 14055, 14471, 14886, 15302, 15718, 16133),
+	(42, 'MIN', 5, 'Support', 505.33, 14149, 14654, 15160, 15665, 16170, 16676, 17181, 17686),
+	(43, 'MIN', 6, 'Support', 711.50, 15564, 16276, 16987, 17699, 18410, 19122, 19833, 20545),
+	(44, 'MIN', 7, 'Support', 856.03, 17121, 17977, 18833, 19689, 20545, 21401, 22257, 23113),
+	(45, 'MIN', 8, 'Support', 1232.68, 19175, 20408, 21640, 22873, 24106, 25338, 26571, 27804),
+	(46, 'MIN', 1, 'Construction', 314.29, 11000, 11314, 11629, 11943, 12257, 12571, 12886, 13200),
+	(47, 'MIN', 2, 'Construction', 330.00, 11550, 11880, 12210, 12540, 12870, 13200, 13530, 13860),
+	(48, 'MIN', 3, 'Construction', 381.15, 12128, 12509, 12890, 13271, 13653, 14034, 14415, 14796),
+	(49, 'MIN', 4, 'Construction', 400.21, 12734, 13134, 13534, 13935, 14335, 14735, 15135, 15535),
+	(50, 'MIN', 5, 'Construction', 486.62, 13625, 14112, 14598, 15085, 15571, 16058, 16545, 17031),
+	(51, 'MIN', 6, 'Construction', 666.47, 14579, 15245, 15912, 16578, 17245, 17911, 18578, 19244),
+	(52, 'MIN', 7, 'Construction', 801.85, 16037, 16839, 17641, 18443, 19244, 20046, 20848, 21650),
+	(53, 'MIN', 8, 'Construction', 1134.04, 17641, 18775, 19909, 21043, 22177, 23311, 24445, 25579),
+	(54, 'MIN', 1, 'Food', 314.29, 11000, 11314, 11629, 11943, 12257, 12571, 12886, 13200),
+	(55, 'MIN', 2, 'Food', 346.50, 11550, 11897, 12243, 12590, 12936, 13283, 13629, 13976),
+	(56, 'MIN', 3, 'Food', 381.15, 12128, 12509, 12890, 13271, 13653, 14034, 14415, 14796),
+	(57, 'MIN', 4, 'Food', 400.21, 12734, 13134, 13534, 13935, 14335, 14735, 15135, 15535),
+	(58, 'MIN', 5, 'Food', 428.22, 13625, 14053, 14481, 14910, 15338, 15766, 16194, 16623),
+	(59, 'MIN', 6, 'Food', 501.41, 15260, 15761, 16263, 16764, 17266, 17767, 18268, 18770),
+	(60, 'MIN', 7, 'Food', 561.58, 17092, 17654, 18215, 18777, 19338, 19900, 20461, 21023),
+	(61, 'MIN', 8, 'Food', 842.37, 19655, 20497, 21340, 22182, 23024, 23867, 24709, 25552);
+/*!40000 ALTER TABLE `tblref_paystructure` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tblref_philhealth
 DROP TABLE IF EXISTS `tblref_philhealth`;
@@ -1141,27 +1235,6 @@ INSERT INTO `tbl_attendance` (`att_id`, `id_employee`, `emp_bio_id`, `date`, `ti
 	(690, 0, '1004', '2017-05-10', '08:37', '-', '0', '0', '0', '0', 'Unable to Time Out'),
 	(691, 0, '1004', '2017-05-15', '17:14', '-', '0', '494', '0', '0', 'Unable to Time Out');
 /*!40000 ALTER TABLE `tbl_attendance` ENABLE KEYS */;
-
--- Dumping structure for table hris_payroll.tbl_attendancefinal
-DROP TABLE IF EXISTS `tbl_attendancefinal`;
-CREATE TABLE IF NOT EXISTS `tbl_attendancefinal` (
-  `att_id` int(10) NOT NULL AUTO_INCREMENT,
-  `id_employee` int(10) NOT NULL DEFAULT '0',
-  `emp_bio_id` varchar(50) DEFAULT NULL,
-  `date` date DEFAULT NULL,
-  `time_in` varchar(50) DEFAULT NULL,
-  `time_out` varchar(50) DEFAULT NULL,
-  `totalHours` varchar(50) DEFAULT NULL,
-  `late` varchar(50) DEFAULT NULL,
-  `undertime` varchar(50) DEFAULT NULL,
-  `overtime` varchar(50) DEFAULT NULL,
-  `remarks` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`att_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- Dumping data for table hris_payroll.tbl_attendancefinal: 0 rows
-/*!40000 ALTER TABLE `tbl_attendancefinal` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_attendancefinal` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_attendanceraw
 DROP TABLE IF EXISTS `tbl_attendanceraw`;
@@ -2353,7 +2426,7 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2003, 1, '310-98-4', '1005', 'Jennifer', 'Palo', 'Dantes', 'Permanent', '09-2010232-1', '19-050708923', '1040-0220-82', '916-191-555', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HRD Head', 'Level 10', 'M1', 'Regular', 10000, 0, '2017-07-17 16:28:31'),
 	(2004, 2, '', '10025', 'Charizze Mae', 'Taboada', 'Lumagsao', 'Part-Time', '8-15700359', '150501399622', '121025696574', '', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Payroll', 'Level 2', 'S', 'Resigned', 0, 1, '2017-07-17 15:49:30'),
 	(2005, 12, '', '1004', 'Shiela', 'L.', 'Achas', 'Permanent', '08-2580153-6', '150504178309', '121148071155', '330785488000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'Level 1', 'S', 'Regular', 11000, 1, '2017-07-17 15:49:30'),
-	(2006, 22, '', '10023', 'Daina Jane', 'Layar', 'Lungtad', 'Part-Time', '08-2663610-8', '150253033462', '121148247833', '331694187', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Staff', 'Level 1', 'S', 'Regular', 11, 0, '2017-07-17 16:25:44'),
+	(2006, 22, '', '10023', 'Daina Jane', 'Layar', 'Lungtad', 'Part-Time', '08-2663610-8', '150253033462', '121148247833', '331694187', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'HR Staff', 'Level 1', 'S', 'Regular', 11000, 0, '2017-07-26 11:03:39'),
 	(2007, 32, '', '', 'Angelito', 'Diaz', 'Delada', 'Permanent', '09-28611092', '160504045878', '121031718739', '945606122', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2008, 42, '', '', 'Kimberly', 'Arcena', 'Bicong', 'Permanent', '', '162506289777', '915170351768', '429744351', 'Primo Partners Phils, Inc.', 'Davao', 'Food Server', '', '', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2009, 52, '', '', 'Rachel', 'Likit', 'Brua', 'Permanent', '09-3103097-4', '170252743289', '121101750577', '445-307-079', 'Primo Partners Phils, Inc.', 'Davao', 'Admin Supervisor/Cash Custodian/HR', '', 'S', 'Regular', 15, 1, '2017-07-17 15:49:30'),
@@ -2376,7 +2449,7 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2026, 262, '', '', 'James', 'C.', 'Baldosano', 'Permanent', '08-1841488-8', '150502798830', '121028250041', '405322115', 'Currahee Construction Corporation', 'CDO', 'Field Engineer', '', 'M1', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2027, 282, '', '', 'Renante', 'M.', 'Cabigas', 'Permanent', '0613995298', '152016370597', '111129529206', '422012853', 'Currahee Construction Corporation', 'CDO', 'Liaison and Purchaser', '', 'M2', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2028, 292, '', '', 'Gerald', 'Detoyato', 'Caro', 'Permanent', '3430488752', '112021267328', '121166288885', '', 'Currahee Construction Corporation', 'CDO', 'Draftsman', '', 'M1', 'Regular', 0, 1, '2017-07-17 15:49:30'),
-	(2029, 312, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Flexible', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'Level 6', 'M', 'Regular', 32, 0, '2017-07-17 16:21:25'),
+	(2029, 312, '', '', 'Ramon Alejandro', 'Magtajas', 'Valleser', 'Flexible', '08-1543251-7', '150251923010', '121048504092', '942957588', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'General Manager', 'Level 6', 'M', 'Regular', 32000, 0, '2017-07-26 11:03:59'),
 	(2030, 322, '', '', 'Elgin', 'Cabunilas', 'Camilotes', 'Permanent', '09-3653870-9', '160505803776', '121098218437', '440119377', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'M2', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2031, 332, '', '', 'Aileen Joy', 'C', 'Castro', 'Permanent', '0928422634', '160502867331', '188000966823', '945454280', 'Currahee Construction Corporation', 'DVO', 'Bookkeeper', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2032, 352, '', '', 'Elvira', 'Carvajal', 'Montera', 'Permanent', '09-2211068-3', '160501550245', '121042672683', '928503260', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Acctg & Audit Head', 'Level 5', 'M3', 'Regular', 0, 1, '2017-07-17 15:49:30'),
@@ -2389,13 +2462,13 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2039, 422, '', '', 'Izza Honey', 'C.', 'Manluza', 'Permanent', '08-1832709-8', '030507822025', '121137475012', '326-755-623', 'Currahee Construction Corporation', 'CDO', 'Office Engineer', '', 'M', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2040, 442, '', '', 'Cherie Mae', 'Dela Torre', 'Maghanoy', 'Permanent', '08-1275316-3', '150251721450', '121099680814', '907-060-178', 'Currahee Construction Corporation', 'CDO', 'Bookkeeper', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2041, 452, '', '', 'Arnaldo', 'Arguilles', 'Mantillas', 'Permanent', '08-1075836-1', '180514581443', '310101797702', '180-027-122', 'Currahee Construction Corporation', 'CDO', 'Operations Manager', 'Level 10', 'M1', 'Regular', 0, 1, '2017-07-17 15:49:30'),
-	(2042, 462, '', '10017', 'Brazzel Gay', 'J.', 'Cabaltera', 'Permanent', '0939595806', '010520667240', '121151311466', '472885607', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Social Media Associate', 'Level 1', 'S', 'Regular', 10, 1, '2017-07-17 15:49:30'),
+	(2042, 462, '', '10017', 'Brazzel Gay', 'J.', 'Cabaltera', 'Permanent', '0939595806', '010520667240', '121151311466', '472885607', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Social Media Associate', 'Level 1', 'S', 'Regular', 10000, 1, '2017-07-26 11:04:03'),
 	(2043, 472, '', '110', 'Renan', 'A.', 'Moreno', 'Permanent', '0816173053', '150502397216', '182000543107', '410675176', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Web Lead', 'Level 3', 'M', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2044, 482, '', '', 'Rolando', 'T.', 'Mosqueda', 'Permanent', '09-2739922-1', '160505100007', '104002257284', '422-012-424', 'Currahee Construction Corporation', 'DVO', 'Utility Service Personnel', '', 'M1', 'Project Based', 0, 1, '2017-07-17 15:49:30'),
 	(2045, 502, '', '111', 'Jean', 'S.', 'Godornes', 'Permanent', '0816613128', '150501858430', '182000563981', '950159075', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Operations Supervisor', 'Level 5', 'M', 'Regular', 15000, 1, '2017-07-17 15:49:30'),
 	(2046, 512, '', '116', 'Michael', 'Dayag', 'Baculio', 'Permanent', '08-1605491-0', '010505744239', '109002186565', '256027612', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'M1', 'Regular', 10000, 1, '2017-07-17 15:49:30'),
 	(2047, 542, '', '104', 'Robert', 'Batonghinog', 'Bersano', 'Permanent', '0815082802', '020503777364', '104002242398', '937694691', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Lead', 'Level 3', 'M1', 'Regular', 0, 1, '2017-07-17 15:49:30'),
-	(2048, 552, '', '1006', 'Pete Emmanuell', 'L.', 'Balagosa', 'Permanent', '08-1801748-9', '150503883890', '121134979348', '330784605', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'S', 'Regular', 11, 1, '2017-07-17 15:49:30'),
+	(2048, 552, '', '1006', 'Pete Emmanuell', 'L.', 'Balagosa', 'Permanent', '08-1801748-9', '150503883890', '121134979348', '330784605', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support Personnel', 'Level 1', 'S', 'Regular', 11000, 1, '2017-07-26 11:04:06'),
 	(2049, 562, '', '117', 'Khristian Darylle Joe', 'Bona', 'Battad', 'Permanent', '3442813205', '020262108512', '121131509835', '468727860', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2050, 582, '', '', 'John', 'M.', 'Mingo', 'Permanent', '09-3781267-5', '160506605102', '121122227418', '466-263-614', 'Currahee Construction Corporation', 'DVO', 'Field Engineer', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2051, 592, '', '', 'Gina', 'Aboyme', 'Micoy', 'Permanent', '09-2734790-1', '160502253724', '121059984317', '946-922-702', 'Currahee Construction Corporation', 'DVO', 'Accounting Supervisor', '', 'M2', 'Regular', 0, 1, '2017-07-17 15:49:30'),
@@ -2403,10 +2476,10 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2053, 612, '', '', 'Mario', 'Quiam', 'Tolosa', 'Project Based', '33-2666182-9', '082011907160', '', '', 'Currahee Construction Corporation', 'CDO', 'Foreman', '', 'M3', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2054, 622, '', '', 'Julius', 'B.', 'Lascano', 'Part-Time', '33-3909769-7', '190521055409', '108000076981', '918-900-880', 'Currahee Construction Corporation', 'CDO', 'Logistic Manager', '', 'S', 'Probationary', 0, 1, '2017-07-17 15:49:30'),
 	(2055, 632, '', '', 'Romnick June', 'A.', 'Elcana', 'Part-Time', '09-2857476-0', '160502796558', '121194643961', '', 'Currahee Construction Corporation', 'DVO', 'Draftsman', '', 'S', 'Probationary', 10, 1, '2017-07-17 15:49:30'),
-	(2056, 642, '', '10019', 'Diane Joy', 'Yu', 'Mapano', 'Permanent', '1010277291', '140251731043', '121007858757', '452117419', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Accounting Technician', '', 'S', 'Regular', 12, 1, '2017-07-17 15:49:30'),
+	(2056, 642, '', '10019', 'Diane Joy', 'Yu', 'Mapano', 'Permanent', '1010277291', '140251731043', '121007858757', '452117419', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Accounting Technician', '', 'S', 'Regular', 12000, 1, '2017-07-26 11:04:09'),
 	(2057, 652, '', '10014', 'Cresar John', 'Reyes', 'Arce', 'Permanent', '0922273135', '162003641023', '190000056276', '947987046', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Administrative Assistant /Cashier', 'Level 1', 'M2', 'Regular', 12500, 1, '2017-07-17 15:49:30'),
-	(2058, 662, '', '10013', 'Lorman', 'S.', 'Saladaga', 'Permanent', '1009497752', '140251248725', '914301364780', '816667', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 12, 1, '2017-07-17 15:49:30'),
-	(2059, 672, '', '', 'Geneth', 'S.', 'Jadulan', 'Permanent', '0935125869', '160505344984', '121070911178', '429361074', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 15, 1, '2017-07-17 15:49:30'),
+	(2058, 662, '', '10013', 'Lorman', 'S.', 'Saladaga', 'Permanent', '1009497752', '140251248725', '914301364780', '816667', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 12000, 1, '2017-07-26 11:04:15'),
+	(2059, 672, '', '', 'Geneth', 'S.', 'Jadulan', 'Permanent', '0935125869', '160505344984', '121070911178', '429361074', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Senior Internal Auditor', 'Level 3', 'S', 'Regular', 15000, 1, '2017-07-26 11:04:18'),
 	(2060, 682, '', '', 'Nancy', 'Montebon', 'Wong', 'Permanent', '0919148684', '160501640325', '101000063572', '940042814', 'Primo Partners Phils, Inc.', 'Davao', 'Operations Manager', '', 'S1', 'Regular', 24, 1, '2017-07-17 15:49:30'),
 	(2061, 692, '', '', 'Jeffrey', 'Moneba', 'Antoque', 'Permanent', '0937380136', '160255309649', '121111591247', '409174979', 'Norminring Development Corporation', 'CDO', 'Senior Service Mechanic', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2062, 702, '', '', 'Salome', 'M.', 'Bodiongan', 'Permanent', '', '', '', '', 'Norminring Development Corporation', 'DVO', 'Inventory Controller', '', 'S', 'Regular', 14, 1, '2017-07-17 15:49:30'),
@@ -2459,7 +2532,7 @@ INSERT INTO `tbl_employee` (`id`, `id_employee`, `emp_id`, `emp_bio_id`, `fName`
 	(2107, 1182, '', '112', 'Janine', 'Llanos', 'Jasmin', 'Permanent', '08-2399113-4', '150503497044', '121098502267', '440560910', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Systems Developer', 'Level 1', 'S1', 'Regular', 0, 1, '2017-07-17 15:49:30'),
 	(2108, 1192, '', '', 'Christian', 'Morden', 'Rebuyas', 'Part-Time', '09-4212214-3', '162519095378', '917059132863', '', 'Primo Partners Phils, Inc.', 'Davao', 'Steward', '', '', 'Probationary', 0, 1, '2017-07-17 15:49:30'),
 	(2109, 1202, '', '', 'Joseph', 'R.', 'Giron II', 'Permanent', '339-6120-303', '150502868960', '914343835204', '290055877000', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Technical Support', '', 'S', 'Regular', 0, 1, '2017-07-17 15:49:30'),
-	(2110, 1212, '', '', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'Level 1', 'S', 'Regular', 11, 1, '2017-07-17 15:49:30'),
+	(2110, 1212, '', '', 'Chad Louei', 'C.', 'Sullaga', 'Permanent', '0941828228', '162013068828', '121189041310', '335284227', 'Solutions Management Systems Inc.', 'Cagayan De Oro', 'Graphic Designer', 'Level 1', 'S', 'Regular', 11000, 1, '2017-07-26 11:04:22'),
 	(2111, 1222, '', '', 'Franco', 'Puzon', 'Amesola', 'Part-Time', '011101706862', '030205910474', '107012316640', '935614253', 'Norminring Development Corporation', 'CDO', 'Sales Associate/Operations', '', 'S', 'Probationary', 12, 1, '2017-07-17 15:49:30'),
 	(2112, 1232, '', '', 'Mary Grace', 'A.', 'Escalona', 'Part-Time', '09-1791751-6', '17-025032233', '121066409538', '926-570958', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Admin Head/Bookkeeper/HR Point Person', '', 'M2', 'Probationary', 10, 1, '2017-07-17 15:49:30'),
 	(2113, 1242, '', '', 'Noel', 'P.', 'Sobejana', 'Part-Time', '0813387680', '190895509276', '1900958641', '215413654', 'Bellarmine Magister Enrichment Corporation', 'DVO', 'Administrator', '', 'S1', 'Probationary', 0, 1, '2017-07-17 15:49:30'),
@@ -3378,27 +3451,27 @@ CREATE TABLE IF NOT EXISTS `tbl_payslip` (
 -- Dumping data for table hris_payroll.tbl_payslip: 21 rows
 /*!40000 ALTER TABLE `tbl_payslip` DISABLE KEYS */;
 INSERT INTO `tbl_payslip` (`payslip_id`, `employee_id`, `cutoff_id`, `income`, `regot_pay`, `holot_pay`, `ot_pay`, `allowances`, `incentives`, `lateabsent_deduct`, `undertime_deduct`, `sss`, `phic`, `hdmf`, `gross_income`, `loans`, `otherdeduct`, `insurance`, `tax`, `net_income`) VALUES
-	(44, '642', 1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -94, NULL, 0, 0, 0, 0),
-	(43, '1312', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(42, '1182', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(41, '672', 1, 7.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -92.5, NULL, 0, 0, 0, 0),
-	(40, '502', 1, 7500, 0, 0, 0, 2000, 0, 0, 0, 272.5, 93.75, 50, 9083.75, NULL, 0, 0, 0, 1229.1875),
-	(39, '1202', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(38, '462', 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -95, NULL, 0, 0, 0, 0),
-	(37, '542', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(36, '1272', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(35, '562', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(34, '552', 1, 5.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -94.5, NULL, 0, 0, 0, 0),
-	(33, '512', 1, 5000, 0, 0, 0, 1500, 0, 0, 0, 181.7, 62.5, 50, 6205.8, NULL, 0, 0, 0, 386.93),
-	(32, '652', 1, 6250, 0, 0, 0, 0, 0, 0, 0, 236.2, 75, 50, 5888.8, NULL, 0, 0, 0, 174.94),
-	(31, '412', 1, 8000, 0, 0, 0, 0, 0, 0, 0, 290.7, 100, 50, 7559.3, NULL, 0, 0, 0, 449.43),
-	(30, '372', 1, 5500, 0, 0, 0, 0, 0, 0, 0, 199.8, 68.75, 50, 5181.45, NULL, 0, 0, 0, 390.46),
-	(29, '392', 1, 6000, 0, 0, 0, 0, 0, 0, 0, 218, 75, 50, 5657, NULL, 0, 0, 0, 485.57),
-	(28, '12', 1, 5500, 0, 0, 5500, 0, 0, 0, 0, 199.8, 68.75, 50, 5181.45, NULL, 100, 0, 390.46, 4640.99),
-	(45, '352', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(46, '472', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, NULL, 0, 0, 0, 0),
-	(47, '662', 1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -94, NULL, 0, 0, 0, 0),
-	(48, '1212', 1, 5.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -94.5, NULL, 0, 0, 0, 0);
+	(44, '642', 1, 6000, 0, 0, 0, 0, 0, 1615.38, 0, 218, 75, 50, 4041.62, 559, 0, 0, 210.463, 3272.157),
+	(43, '1312', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 0, 0, 0, 0, -100),
+	(42, '1182', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 0, 0, 0, 0, -100),
+	(41, '672', 1, 7500, 0, 0, 0, 0, 0, 6923.08, 0, 272.5, 93.75, 50, 160.67, 0, 0, 0, 0, 160.67),
+	(40, '502', 1, 7500, 0, 0, 0, 2000, 0, 4038.46, 0, 272.5, 93.75, 50, 5045.29, 946, 0, 0, 363.228, 3736.062),
+	(39, '1202', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 0, 0, 0, 0, -100),
+	(38, '462', 1, 5000, 0, 0, 0, 0, 0, 0, 0, 181.7, 62.5, 50, 4705.8, 0, 0, 0, 310.09, 4395.71),
+	(37, '542', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 1198, 0, 0, 0, -1298),
+	(36, '1272', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 0, 0, 0, 0, -100),
+	(35, '562', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 1182.5, 0, 0, 0, -1282.5),
+	(34, '552', 1, 5500, 0, 0, 0, 0, 0, 846.15, 0, 199.8, 68.75, 50, 4335.3, 0, 0, 0, 254.515, 4080.785),
+	(33, '512', 1, 5000, 0, 0, 0, 1500, 0, 1153.85, 0, 181.7, 62.5, 50, 5051.95, 709.5, 0, 0, 205.7125, 4136.7375),
+	(32, '652', 1, 6250, 0, 0, 0, 0, 0, 0, 0, 236.2, 75, 50, 5888.8, 0, 0, 0, 174.94, 5713.86),
+	(31, '412', 1, 8000, 0, 0, 0, 0, 0, 1230.77, 0, 290.7, 100, 50, 6328.53, 0, 0, 0, 240.8995, 6087.6305),
+	(30, '372', 1, 5500, 0, 0, 0, 0, 0, 0, 0, 199.8, 68.75, 50, 5181.45, 0, 0, 0, 390.46, 4790.99),
+	(29, '392', 1, 6000, 0, 0, 0, 0, 0, 0, 0, 218, 75, 50, 5657, 0, 0, 0, 485.57, 5171.43),
+	(28, '12', 1, 5500, 66.11, 0, 66.11, 0, 0, 0, 0, 199.8, 68.75, 50, 5313.67, 0, 100, 50, 416.904, 4746.766),
+	(45, '352', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 0, 0, 0, 0, -100),
+	(46, '472', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, -100, 1198, 0, 0, 0, -1298),
+	(47, '662', 1, 6000, 0, 0, 0, 0, 0, 461.54, 0, 218, 75, 50, 5195.46, 1437.5, 0, 0, 393.262, 3364.698),
+	(48, '1212', 1, 5500, 0, 0, 0, 0, 0, 5076.92, 0, 199.8, 68.75, 50, 104.53, 0, 0, 0, 0, 104.53);
 /*!40000 ALTER TABLE `tbl_payslip` ENABLE KEYS */;
 
 -- Dumping structure for table hris_payroll.tbl_shifts

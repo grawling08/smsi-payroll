@@ -13,7 +13,7 @@ Public Class frmReport
                     & "tbl_payslip.lateabsent_deduct as 'LateAbsent', " _
                     & "tbl_payslip.undertime_deduct as 'Undertime', " _
                     & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', " _
-                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.loans as 'Loans', " _
+                    & "tbl_payslip.gross_income as 'GrossPay', tbl_payslip.loans as 'Loans', " _
                     & "tbl_payslip.otherdeduct as 'Other Deductions', tbl_payslip.insurance as 'Insurance', " _
                     & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'NetPay' " _
                     & "FROM tbl_payslip " _

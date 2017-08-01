@@ -51,8 +51,6 @@ C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debu
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.SplashScreen1.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmSettings.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmReportGen.resources
-C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\RdlCompile.cache
-C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\RdlCompile.compiled
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frm1.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.ctrlServerSettings.resources
 C:\Users\RA\Documents\Visual Studio 2010\Projects\Payroll2\Payroll2\obj\x86\Debug\Payroll2.frmLeaveConversion.resources

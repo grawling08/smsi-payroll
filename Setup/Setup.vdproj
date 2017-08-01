@@ -16,37 +16,25 @@
         "Entry"
         {
         "MsmKey" = "8:_1822EEDA93ACEBACBE0BDFCFCA713EB8"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1BFA9D024B974141A6D69F19DBA2D4EE"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1D6E705760EBE8CB77510219B9617ADA"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_238508EAB16711A42BDACA4DD7D5C8E4"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_238508EAB16711A42BDACA4DD7D5C8E4"
         "OwnerKey" = "8:_2E2790E532A96D8330473DC218ED0E23"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2D07506AC2A142468FC43F1D4048D3CF"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2E2790E532A96D8330473DC218ED0E23"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2E5490076034AADE9B57B673C3DBC9E9"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,25 +70,19 @@
         "Entry"
         {
         "MsmKey" = "8:_412C0213DC00EA4C60E6EE9D6AF9F875"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_56C90F1D44FD4D8A8C1A4BAA5C27AA69"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5FD6669F33D01142A6D15FDBC03775D2"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7E255AE853103489C44AA432FDBF824C"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,73 +94,67 @@
         "Entry"
         {
         "MsmKey" = "8:_8247B5324FD3BDB37A47A21FBE320AA9"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_8CAF6890A9FB366970C31C8EC32562E5"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_931BC26FC69A4B39933EEB8BE1EDFA3C"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
         "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B0D11280D4754C4F897EC68283DCA714"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_BC4C5CD03E913CD894D6758E36B020CF"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
         "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CECA0EFAA402410D9B28684C7515AE1C"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F03768F10E0545F38E6D2ACE2C107A21"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F661794D620241A3978870505D9054D0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F9A548EF15774D22B11CA87F55530369"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -190,7 +166,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F9A548EF15774D22B11CA87F55530369"
+        "OwnerKey" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -407,26 +383,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1BFA9D024B974141A6D69F19DBA2D4EE"
-            {
-            "SourcePath" = "8:..\\Payroll2\\Reports\\rptPayrollReg.rdlc"
-            "TargetName" = "8:rptPayrollReg.rdlc"
-            "Tag" = "8:"
-            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D6E705760EBE8CB77510219B9617ADA"
             {
             "AssemblyRegister" = "3:1"
@@ -487,26 +443,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2D07506AC2A142468FC43F1D4048D3CF"
-            {
-            "SourcePath" = "8:..\\Payroll2\\Reports\\Report2.rdlc"
-            "TargetName" = "8:Report2.rdlc"
-            "Tag" = "8:"
-            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2E2790E532A96D8330473DC218ED0E23"
@@ -600,26 +536,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56C90F1D44FD4D8A8C1A4BAA5C27AA69"
-            {
-            "SourcePath" = "8:..\\Payroll2\\Reports\\rptPaidOvertime.rdlc"
-            "TargetName" = "8:rptPaidOvertime.rdlc"
-            "Tag" = "8:"
-            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5FD6669F33D01142A6D15FDBC03775D2"
@@ -746,26 +662,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_931BC26FC69A4B39933EEB8BE1EDFA3C"
-            {
-            "SourcePath" = "8:..\\Payroll2\\Reports\\Report1.rdlc"
-            "TargetName" = "8:Report1.rdlc"
-            "Tag" = "8:"
-            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_97094987C43C4556CB1789CC64E48A6D"
             {
             "AssemblyRegister" = "3:1"
@@ -795,6 +691,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B0D11280D4754C4F897EC68283DCA714"
+            {
+            "SourcePath" = "8:..\\Payroll2\\Reports\\PayrollReport.rpt"
+            "TargetName" = "8:PayrollReport.rpt"
+            "Tag" = "8:"
+            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BC4C5CD03E913CD894D6758E36B020CF"
@@ -859,6 +775,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CECA0EFAA402410D9B28684C7515AE1C"
+            {
+            "SourcePath" = "8:..\\Payroll2\\Reports\\rptPayroll.rpt"
+            "TargetName" = "8:rptPayroll.rpt"
+            "Tag" = "8:"
+            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
             {
             "AssemblyRegister" = "3:1"
@@ -888,46 +824,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F03768F10E0545F38E6D2ACE2C107A21"
-            {
-            "SourcePath" = "8:..\\Payroll2\\Reports\\rptPayroll.rdlc"
-            "TargetName" = "8:rptPayroll.rdlc"
-            "Tag" = "8:"
-            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F661794D620241A3978870505D9054D0"
-            {
-            "SourcePath" = "8:..\\Payroll2\\Reports\\rptLeavePay.rdlc"
-            "TargetName" = "8:rptLeavePay.rdlc"
-            "Tag" = "8:"
-            "Folder" = "8:_6B0FA3C364BA4B478829C070625F9AAB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -1118,6 +1014,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_10E4EF4295D44B47A636FBB1F6FDFFB3"
+            {
+            "Name" = "8:PAYROLL"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
+            "Folder" = "8:_DD135EE2F1F74DB28EBCA69AE4BAD534"
+            "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9C0B3390F69C44D999923F4D566045AE"
+            {
+            "Name" = "8:PAYROLL"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_BA0E171EA7D94599A3C595EAB5BFE712"
+            "Folder" = "8:_31D405953247477BBD18F74172BF59BA"
+            "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -1517,7 +1441,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_F9A548EF15774D22B11CA87F55530369"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BA0E171EA7D94599A3C595EAB5BFE712"
             {
             "SourcePath" = "8:..\\Payroll2\\obj\\x86\\Debug\\Payroll2.exe"
             "TargetName" = "8:"

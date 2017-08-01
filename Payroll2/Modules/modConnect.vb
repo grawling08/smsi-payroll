@@ -477,8 +477,8 @@ Module modConnect
             frmMain.dgv_payroll.Rows(j).Cells(10).Value = frmMain.dgv_payroll.Rows(j).Cells(8).Value + frmMain.dgv_payroll.Rows(j).Cells(9).Value ' Total OT
             frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'allowances
             frmMain.dgv_payroll.Rows(j).Cells(12).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'incentives
-            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) + totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, frmMain.dgv_payroll.Rows(j).Cells(25).Value)(0) 'lates + absent
-            frmMain.dgv_payroll.Rows(j).Cells(14).Value = ComputeUndertime("", frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
+            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates(frmMain.dgv_payroll.Rows(j).Cells(25).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) + totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, frmMain.dgv_payroll.Rows(j).Cells(25).Value)(0) 'lates + absent
+            frmMain.dgv_payroll.Rows(j).Cells(14).Value = ComputeUndertime(frmMain.dgv_payroll.Rows(j).Cells(25).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
             frmMain.dgv_payroll.Rows(j).Cells(15).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'sss
             frmMain.dgv_payroll.Rows(j).Cells(16).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'phic
             frmMain.dgv_payroll.Rows(j).Cells(17).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(6).Value) 'hdmf/pag-ibig

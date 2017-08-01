@@ -365,16 +365,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PayrollReport.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Report1.rdlc" />
-    <EmbeddedResource Include="Reports\Report2.rdlc" />
-    <EmbeddedResource Include="Reports\rptLeavePay.rdlc" />
-    <EmbeddedResource Include="Reports\rptPaidOvertime.rdlc" />
-    <EmbeddedResource Include="Reports\rptPayroll.rdlc" />
     <EmbeddedResource Include="Reports\rptPayroll.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptPayroll.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptPayrollReg.rdlc" />
     <EmbeddedResource Include="SplashScreen1.resx">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
     </EmbeddedResource>
