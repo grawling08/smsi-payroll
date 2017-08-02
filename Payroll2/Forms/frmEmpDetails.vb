@@ -4,7 +4,7 @@ Imports Microsoft.Office.Interop
 
 Public Class frmEmpDetails
     Private id, emp_fullname, employee_id, employmentStatus, taxcode As String
-    
+    Private isExcluded As Boolean
 
     Sub New(ByVal emp_id As String)
         MyBase.New()
@@ -36,7 +36,10 @@ Public Class frmEmpDetails
             tb_hdmfID.Text = dtareader("hdmf_id").ToString
             tb_phicID.Text = dtareader("phic_id").ToString
             lbl_shift.Text = dtareader("shiftgroup").ToString
+            isExcluded = If(dtareader("isInPayroll").ToString = "1", False, True)
         End If
+
+        chkbox_excluded.Checked = isExcluded
 
         'get employee loans
         GetEmployeeLoans(id)
@@ -50,7 +53,7 @@ Public Class frmEmpDetails
         GetEmpTO(id)
         'get employee insurance
         GetEmpInsurance(id)
-        
+
 
         'reset dgv_emptimesheet & other dgv's
         dgv_emptimesheet.Refresh()
@@ -75,7 +78,7 @@ Public Class frmEmpDetails
         '        ctrl.Enabled = False
         '    Next
         'End If
-        
+
         'get timesheet from hris
         loadtimesheetsp(prevcutoff_fromdate.ToString("yyyy-MM-dd"), prevcutoff_todate.ToString("yyyy-MM-dd"))
         'payroll computations
@@ -492,4 +495,33 @@ Public Class frmEmpDetails
         End If
     End Sub
 
+    Private Sub dgv_otherdeduct_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles dgv_otherdeduct.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            Dim ht As DataGridView.HitTestInfo
+            ht = Me.dgv_otherdeduct.HitTest(e.X, e.Y)
+            If ht.Type = DataGridViewHitTestType.Cell Then
+                dgv_otherdeduct.ContextMenuStrip = cms_deduct
+            End If
+        End If
+    End Sub
+
+    Private Sub AddOtherDeductionToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AddOtherDeductionToolStripMenuItem.Click
+        Dim row As String() = New String() {"Edit", "0"}
+        dgv_otherdeduct.Rows.Add(row)
+    End Sub
+
+    Private Sub DeleteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
+        If dgv_otherdeduct.Rows.Count > 0 Then
+            Dim name = dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString
+            Dim amount = dgv_otherdeduct.CurrentRow.Cells(1).Value.ToString
+            StrSql = "DELETE FROM tbl_otherdeductions WHERE name = '" & name & "' AND amount = " & amount & " AND cutoff_id = " & cutoff_id & " AND employee_id = " & id
+            QryReadP()
+            cmd.ExecuteNonQuery()
+            dgv_otherdeduct.Rows.Remove(dgv_otherdeduct.SelectedRows(0))
+            computeTotal()
+            getPayslip(current_cutoff)
+        Else
+            MessageBox.Show("No data to delete.")
+        End If
+    End Sub
 End Class

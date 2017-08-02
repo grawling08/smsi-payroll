@@ -400,8 +400,8 @@ Partial Class frmMain
         Me.tsb_remfrompayroll.Image = CType(resources.GetObject("tsb_remfrompayroll.Image"), System.Drawing.Image)
         Me.tsb_remfrompayroll.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.tsb_remfrompayroll.Name = "tsb_remfrompayroll"
-        Me.tsb_remfrompayroll.Size = New System.Drawing.Size(138, 22)
-        Me.tsb_remfrompayroll.Text = "Remove from Payroll"
+        Me.tsb_remfrompayroll.Size = New System.Drawing.Size(135, 22)
+        Me.tsb_remfrompayroll.Text = "Exclude from Payroll"
         '
         'dgv_payroll
         '

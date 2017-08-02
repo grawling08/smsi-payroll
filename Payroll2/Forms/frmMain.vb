@@ -317,16 +317,31 @@ Public Class frmMain
     End Sub
 
     Private Sub tsb_remfrompayroll_Click(sender As System.Object, e As System.EventArgs) Handles tsb_remfrompayroll.Click
+        Dim chked As Integer = 0
         For a = (dgv_payroll.Rows.Count - 1) To 0 Step -1
             If dgv_payroll.Rows(a).Cells(0).Value = True Then
-                'turn off
-                StrSql = "UPDATE tbl_employee SET isInPayroll = 0 WHERE id_employee ='" & dgv_payroll.Rows(a).Cells(1).Value.ToString & "'"
-                QryReadP()
-                cmd.ExecuteNonQuery()
-                Close_Connect()
-                dgv_payroll.Rows.RemoveAt(a)
+                chked += 1
             End If
         Next
+        If chked > 0 Then
+            Dim result As Integer = MessageBox.Show("Remove Checked Employees from Payroll?", "Remove", MessageBoxButtons.YesNo)
+            If result = DialogResult.Yes Then
+                'MessageBox.Show("Yes pressed")
+                For a = (dgv_payroll.Rows.Count - 1) To 0 Step -1
+                    If dgv_payroll.Rows(a).Cells(0).Value = True Then
+                        'turn off
+                        StrSql = "UPDATE tbl_employee SET isInPayroll = 0 WHERE id_employee ='" & dgv_payroll.Rows(a).Cells(1).Value.ToString & "'"
+                        QryReadP()
+                        cmd.ExecuteNonQuery()
+                        Close_Connect()
+                        dgv_payroll.Rows.RemoveAt(a)
+                    End If
+                Next
+            End If
+        Else
+            MessageBox.Show("No Employees Selected")
+        End If
+
     End Sub
 
     Private Sub SavePayslipToHRIS()

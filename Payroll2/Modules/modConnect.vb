@@ -470,7 +470,7 @@ Module modConnect
         Dim j = 0
         While j <= rows - 1
             'Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
-            computeWage(frmMain.dgv_payroll.Rows(j).Cells(22).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) ' compute wages
+            computeWage(frmMain.dgv_payroll.Rows(j).Cells(5).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) ' compute wages
             frmMain.dgv_payroll.Rows(j).Cells(7).Value = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) / 2 ' Basic pay
             frmMain.dgv_payroll.Rows(j).Cells(8).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0) ' Regular OT
             frmMain.dgv_payroll.Rows(j).Cells(9).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(1) ' Holiday OT
@@ -497,7 +497,7 @@ Module modConnect
     End Sub
 
     Function computeSSS(ByVal basic_pay As Double) As String()
-        Dim sssContrib(4) As String
+        Dim sssContrib() As String = {0, 0, 0, 0}
         StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & (basic_pay / num_occurence)
         QryReadP()
         Dim sssreader As MySqlDataReader = cmd.ExecuteReader
@@ -512,7 +512,7 @@ Module modConnect
     End Function
 
     Function computePhilhealth(ByVal basic_pay As Double) As String()
-        Dim phicContrib(4) As String
+        Dim phicContrib() As String = {0, 0, 0, 0}
         StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_philhealth WHERE salary <= " & basic_pay
         QryReadP()
         Dim phicreader As MySqlDataReader = cmd.ExecuteReader
@@ -522,11 +522,6 @@ Module modConnect
             phicContrib(1) = If(String.IsNullOrEmpty(phicreader("employer").ToString), 0, phicreader("employer").ToString) / num_occurence
             phicContrib(2) = If(String.IsNullOrEmpty(phicreader("employee").ToString), 0, phicreader("employee").ToString) / num_occurence
             phicContrib(3) = If(String.IsNullOrEmpty(phicreader("total").ToString), 0, phicreader("total").ToString)
-        Else
-            phicContrib(0) = 0
-            phicContrib(1) = 0
-            phicContrib(2) = 0
-            phicContrib(3) = 0
         End If
         Return phicContrib
     End Function
@@ -570,12 +565,6 @@ Module modConnect
         Return tax
     End Function
 
-    Function generatePayBatchNumber(ByVal cut_off As String, ByVal payslip_id As String) As String
-        Dim batch_number As String = ""
-        Return batch_number
-    End Function
 #End Region
-
-
 
 End Module

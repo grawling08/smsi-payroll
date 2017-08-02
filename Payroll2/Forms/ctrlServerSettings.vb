@@ -17,7 +17,7 @@ Public Class ctrlServerSettings
             MessageBox.Show("Settings Saved!")
         ElseIf rb_mode_integrate.Checked = True Then
             app_mode = "integrate"
-            If Not String.IsNullOrEmpty(tb_serverHR.Text) And Not String.IsNullOrEmpty(tb_uidHR.Text) And Not String.IsNullOrEmpty(tb_pwordHR.Text) And Not String.IsNullOrEmpty(tb_dbHR.Text) Then
+            If Not String.IsNullOrEmpty(tb_serverHR.Text) And Not String.IsNullOrEmpty(tb_uidHR.Text) And Not String.IsNullOrEmpty(tb_dbHR.Text) Then
                 SaveSystemSettings(PayrollStrings, HRStrings)
                 init_form()
                 MessageBox.Show("Settings Saved!")

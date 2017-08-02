@@ -90,9 +90,9 @@ Partial Class frmEmpDetails
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.dtp_timesheetmonth = New System.Windows.Forms.DateTimePicker()
         Me.Label39 = New System.Windows.Forms.Label()
-        Me.btn_addtimesheet = New System.Windows.Forms.Button()
-        Me.btn_loadtimesheet = New System.Windows.Forms.Button()
         Me.dtp_timesheetmonth2 = New System.Windows.Forms.DateTimePicker()
+        Me.btn_loadtimesheet = New System.Windows.Forms.Button()
+        Me.btn_addtimesheet = New System.Windows.Forms.Button()
         Me.dgv_emptimesheet = New System.Windows.Forms.DataGridView()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
@@ -138,9 +138,13 @@ Partial Class frmEmpDetails
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.chkbox_excluded = New System.Windows.Forms.CheckBox()
         Me.lbl_shift = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgv_shift = New System.Windows.Forms.DataGridView()
+        Me.cms_deduct = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.AddOtherDeductionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -166,6 +170,7 @@ Partial Class frmEmpDetails
         CType(Me.dgv_travelorders, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cms_deduct.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgv_emploans
@@ -854,14 +859,13 @@ Partial Class frmEmpDetails
         Me.Label39.Text = "To"
         Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'btn_addtimesheet
+        'dtp_timesheetmonth2
         '
-        Me.btn_addtimesheet.Location = New System.Drawing.Point(422, 3)
-        Me.btn_addtimesheet.Name = "btn_addtimesheet"
-        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
-        Me.btn_addtimesheet.TabIndex = 3
-        Me.btn_addtimesheet.Text = "Add New"
-        Me.btn_addtimesheet.UseVisualStyleBackColor = True
+        Me.dtp_timesheetmonth2.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtp_timesheetmonth2.Location = New System.Drawing.Point(185, 3)
+        Me.dtp_timesheetmonth2.Name = "dtp_timesheetmonth2"
+        Me.dtp_timesheetmonth2.Size = New System.Drawing.Size(150, 20)
+        Me.dtp_timesheetmonth2.TabIndex = 0
         '
         'btn_loadtimesheet
         '
@@ -872,13 +876,14 @@ Partial Class frmEmpDetails
         Me.btn_loadtimesheet.Text = "Load"
         Me.btn_loadtimesheet.UseVisualStyleBackColor = True
         '
-        'dtp_timesheetmonth2
+        'btn_addtimesheet
         '
-        Me.dtp_timesheetmonth2.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp_timesheetmonth2.Location = New System.Drawing.Point(185, 3)
-        Me.dtp_timesheetmonth2.Name = "dtp_timesheetmonth2"
-        Me.dtp_timesheetmonth2.Size = New System.Drawing.Size(150, 20)
-        Me.dtp_timesheetmonth2.TabIndex = 0
+        Me.btn_addtimesheet.Location = New System.Drawing.Point(422, 3)
+        Me.btn_addtimesheet.Name = "btn_addtimesheet"
+        Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
+        Me.btn_addtimesheet.TabIndex = 3
+        Me.btn_addtimesheet.Text = "Add New"
+        Me.btn_addtimesheet.UseVisualStyleBackColor = True
         '
         'dgv_emptimesheet
         '
@@ -1110,105 +1115,105 @@ Partial Class frmEmpDetails
         '
         'tb_middlename
         '
-        Me.tb_middlename.Location = New System.Drawing.Point(140, 76)
+        Me.tb_middlename.Location = New System.Drawing.Point(152, 76)
         Me.tb_middlename.Name = "tb_middlename"
         Me.tb_middlename.ReadOnly = True
-        Me.tb_middlename.Size = New System.Drawing.Size(125, 20)
+        Me.tb_middlename.Size = New System.Drawing.Size(140, 20)
         Me.tb_middlename.TabIndex = 9
         '
         'tb_firstname
         '
-        Me.tb_firstname.Location = New System.Drawing.Point(9, 76)
+        Me.tb_firstname.Location = New System.Drawing.Point(6, 76)
         Me.tb_firstname.Name = "tb_firstname"
         Me.tb_firstname.ReadOnly = True
-        Me.tb_firstname.Size = New System.Drawing.Size(125, 20)
+        Me.tb_firstname.Size = New System.Drawing.Size(140, 20)
         Me.tb_firstname.TabIndex = 7
         '
         'tb_biometricid
         '
-        Me.tb_biometricid.Location = New System.Drawing.Point(140, 37)
+        Me.tb_biometricid.Location = New System.Drawing.Point(152, 36)
         Me.tb_biometricid.Name = "tb_biometricid"
         Me.tb_biometricid.ReadOnly = True
-        Me.tb_biometricid.Size = New System.Drawing.Size(125, 20)
+        Me.tb_biometricid.Size = New System.Drawing.Size(140, 20)
         Me.tb_biometricid.TabIndex = 3
         '
         'tb_employmentstatus
         '
-        Me.tb_employmentstatus.Location = New System.Drawing.Point(140, 115)
+        Me.tb_employmentstatus.Location = New System.Drawing.Point(152, 115)
         Me.tb_employmentstatus.Name = "tb_employmentstatus"
         Me.tb_employmentstatus.ReadOnly = True
-        Me.tb_employmentstatus.Size = New System.Drawing.Size(125, 20)
+        Me.tb_employmentstatus.Size = New System.Drawing.Size(140, 20)
         Me.tb_employmentstatus.TabIndex = 23
         '
         'tb_hdmfID
         '
-        Me.tb_hdmfID.Location = New System.Drawing.Point(9, 271)
+        Me.tb_hdmfID.Location = New System.Drawing.Point(6, 270)
         Me.tb_hdmfID.Name = "tb_hdmfID"
         Me.tb_hdmfID.ReadOnly = True
-        Me.tb_hdmfID.Size = New System.Drawing.Size(125, 20)
+        Me.tb_hdmfID.Size = New System.Drawing.Size(140, 20)
         Me.tb_hdmfID.TabIndex = 23
         '
         'tb_phicID
         '
-        Me.tb_phicID.Location = New System.Drawing.Point(140, 232)
+        Me.tb_phicID.Location = New System.Drawing.Point(152, 232)
         Me.tb_phicID.Name = "tb_phicID"
         Me.tb_phicID.ReadOnly = True
-        Me.tb_phicID.Size = New System.Drawing.Size(125, 20)
+        Me.tb_phicID.Size = New System.Drawing.Size(140, 20)
         Me.tb_phicID.TabIndex = 21
         '
         'tb_position
         '
-        Me.tb_position.Location = New System.Drawing.Point(140, 193)
+        Me.tb_position.Location = New System.Drawing.Point(152, 193)
         Me.tb_position.Name = "tb_position"
         Me.tb_position.ReadOnly = True
-        Me.tb_position.Size = New System.Drawing.Size(125, 20)
+        Me.tb_position.Size = New System.Drawing.Size(140, 20)
         Me.tb_position.TabIndex = 17
         '
         'tb_branch
         '
-        Me.tb_branch.Location = New System.Drawing.Point(9, 193)
+        Me.tb_branch.Location = New System.Drawing.Point(6, 193)
         Me.tb_branch.Name = "tb_branch"
         Me.tb_branch.ReadOnly = True
-        Me.tb_branch.Size = New System.Drawing.Size(125, 20)
+        Me.tb_branch.Size = New System.Drawing.Size(140, 20)
         Me.tb_branch.TabIndex = 15
         '
         'tb_company
         '
-        Me.tb_company.Location = New System.Drawing.Point(9, 154)
+        Me.tb_company.Location = New System.Drawing.Point(6, 154)
         Me.tb_company.Name = "tb_company"
         Me.tb_company.ReadOnly = True
-        Me.tb_company.Size = New System.Drawing.Size(256, 20)
+        Me.tb_company.Size = New System.Drawing.Size(286, 20)
         Me.tb_company.TabIndex = 13
         '
         'tb_sssID
         '
-        Me.tb_sssID.Location = New System.Drawing.Point(9, 232)
+        Me.tb_sssID.Location = New System.Drawing.Point(6, 232)
         Me.tb_sssID.Name = "tb_sssID"
         Me.tb_sssID.ReadOnly = True
-        Me.tb_sssID.Size = New System.Drawing.Size(125, 20)
+        Me.tb_sssID.Size = New System.Drawing.Size(140, 20)
         Me.tb_sssID.TabIndex = 19
         '
         'tb_empid
         '
-        Me.tb_empid.Location = New System.Drawing.Point(9, 37)
+        Me.tb_empid.Location = New System.Drawing.Point(6, 37)
         Me.tb_empid.Name = "tb_empid"
         Me.tb_empid.ReadOnly = True
-        Me.tb_empid.Size = New System.Drawing.Size(125, 20)
+        Me.tb_empid.Size = New System.Drawing.Size(140, 20)
         Me.tb_empid.TabIndex = 1
         '
         'tb_surname
         '
-        Me.tb_surname.Location = New System.Drawing.Point(9, 115)
+        Me.tb_surname.Location = New System.Drawing.Point(6, 115)
         Me.tb_surname.Name = "tb_surname"
         Me.tb_surname.ReadOnly = True
-        Me.tb_surname.Size = New System.Drawing.Size(125, 20)
+        Me.tb_surname.Size = New System.Drawing.Size(140, 20)
         Me.tb_surname.TabIndex = 5
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(137, 60)
+        Me.Label4.Location = New System.Drawing.Point(149, 60)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(80, 13)
         Me.Label4.TabIndex = 8
@@ -1218,7 +1223,7 @@ Partial Class frmEmpDetails
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(6, 60)
+        Me.Label3.Location = New System.Drawing.Point(3, 60)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(67, 13)
         Me.Label3.TabIndex = 6
@@ -1228,7 +1233,7 @@ Partial Class frmEmpDetails
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(137, 177)
+        Me.Label9.Location = New System.Drawing.Point(149, 177)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(52, 13)
         Me.Label9.TabIndex = 16
@@ -1238,7 +1243,7 @@ Partial Class frmEmpDetails
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(6, 177)
+        Me.Label8.Location = New System.Drawing.Point(3, 177)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(47, 13)
         Me.Label8.TabIndex = 14
@@ -1248,7 +1253,7 @@ Partial Class frmEmpDetails
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(6, 138)
+        Me.Label7.Location = New System.Drawing.Point(3, 138)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(58, 13)
         Me.Label7.TabIndex = 12
@@ -1258,7 +1263,7 @@ Partial Class frmEmpDetails
         '
         Me.Label35.AutoSize = True
         Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(137, 99)
+        Me.Label35.Location = New System.Drawing.Point(149, 99)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(121, 13)
         Me.Label35.TabIndex = 22
@@ -1268,7 +1273,7 @@ Partial Class frmEmpDetails
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(137, 21)
+        Me.Label6.Location = New System.Drawing.Point(149, 21)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(42, 13)
         Me.Label6.TabIndex = 2
@@ -1278,7 +1283,7 @@ Partial Class frmEmpDetails
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(6, 255)
+        Me.Label12.Location = New System.Drawing.Point(3, 255)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(42, 13)
         Me.Label12.TabIndex = 22
@@ -1288,7 +1293,7 @@ Partial Class frmEmpDetails
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(137, 216)
+        Me.Label11.Location = New System.Drawing.Point(148, 216)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(53, 13)
         Me.Label11.TabIndex = 20
@@ -1298,7 +1303,7 @@ Partial Class frmEmpDetails
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(6, 216)
+        Me.Label10.Location = New System.Drawing.Point(3, 216)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(48, 13)
         Me.Label10.TabIndex = 18
@@ -1308,7 +1313,7 @@ Partial Class frmEmpDetails
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(6, 21)
+        Me.Label1.Location = New System.Drawing.Point(3, 21)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(78, 13)
         Me.Label1.TabIndex = 0
@@ -1318,7 +1323,7 @@ Partial Class frmEmpDetails
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(6, 99)
+        Me.Label2.Location = New System.Drawing.Point(3, 99)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(56, 13)
         Me.Label2.TabIndex = 4
@@ -1326,6 +1331,7 @@ Partial Class frmEmpDetails
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.chkbox_excluded)
         Me.GroupBox4.Controls.Add(Me.lbl_shift)
         Me.GroupBox4.Controls.Add(Me.Label37)
         Me.GroupBox4.Controls.Add(Me.dgv_shift)
@@ -1361,6 +1367,16 @@ Partial Class frmEmpDetails
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Employee Details"
         '
+        'chkbox_excluded
+        '
+        Me.chkbox_excluded.AutoSize = True
+        Me.chkbox_excluded.Location = New System.Drawing.Point(167, 272)
+        Me.chkbox_excluded.Name = "chkbox_excluded"
+        Me.chkbox_excluded.Size = New System.Drawing.Size(127, 17)
+        Me.chkbox_excluded.TabIndex = 27
+        Me.chkbox_excluded.Text = "Excluded from Payroll"
+        Me.chkbox_excluded.UseVisualStyleBackColor = True
+        '
         'lbl_shift
         '
         Me.lbl_shift.AutoSize = True
@@ -1374,7 +1390,7 @@ Partial Class frmEmpDetails
         '
         Me.Label37.AutoSize = True
         Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label37.Location = New System.Drawing.Point(6, 301)
+        Me.Label37.Location = New System.Drawing.Point(3, 301)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(90, 13)
         Me.Label37.TabIndex = 25
@@ -1388,14 +1404,32 @@ Partial Class frmEmpDetails
         Me.dgv_shift.AllowUserToResizeRows = False
         Me.dgv_shift.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgv_shift.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_shift.Location = New System.Drawing.Point(9, 317)
+        Me.dgv_shift.Location = New System.Drawing.Point(6, 317)
         Me.dgv_shift.MultiSelect = False
         Me.dgv_shift.Name = "dgv_shift"
         Me.dgv_shift.RowHeadersVisible = False
         Me.dgv_shift.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgv_shift.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_shift.Size = New System.Drawing.Size(283, 155)
+        Me.dgv_shift.Size = New System.Drawing.Size(286, 155)
         Me.dgv_shift.TabIndex = 24
+        '
+        'cms_deduct
+        '
+        Me.cms_deduct.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddOtherDeductionToolStripMenuItem, Me.DeleteToolStripMenuItem})
+        Me.cms_deduct.Name = "cms_deduct"
+        Me.cms_deduct.Size = New System.Drawing.Size(108, 48)
+        '
+        'AddOtherDeductionToolStripMenuItem
+        '
+        Me.AddOtherDeductionToolStripMenuItem.Name = "AddOtherDeductionToolStripMenuItem"
+        Me.AddOtherDeductionToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.AddOtherDeductionToolStripMenuItem.Text = "Add"
+        '
+        'DeleteToolStripMenuItem
+        '
+        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
+        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.DeleteToolStripMenuItem.Text = "Delete"
         '
         'frmEmpDetails
         '
@@ -1445,6 +1479,7 @@ Partial Class frmEmpDetails
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.dgv_shift, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.cms_deduct.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1565,4 +1600,8 @@ Partial Class frmEmpDetails
     Friend WithEvents tsb_fullypaid As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsb_ongoing As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents cms_deduct As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents AddOtherDeductionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents chkbox_excluded As System.Windows.Forms.CheckBox
 End Class
