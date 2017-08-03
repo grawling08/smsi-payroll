@@ -420,17 +420,18 @@ Module modConnect
                     & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT', tbl_payslip.ot_pay as 'Total OT', " _
                     & "tbl_payslip.allowances as 'Allowances', " _
                     & "tbl_payslip.incentives as 'Incentives',  " _
-                    & "tbl_payslip.lateabsent_deduct as 'Late/Absent', " _
+                    & "tbl_payslip.late_deduct as 'Late', " _
+                    & "tbl_payslip.absent as 'Absent', " _
                     & "tbl_payslip.undertime_deduct as 'Undertime',  " _
                     & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', " _
-                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.loans, " _
+                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.loans as 'Loans', " _
                     & "tbl_payslip.otherdeduct as 'Other Deductions', tbl_payslip.insurance as 'Insurance', " _
                     & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status, tbl_employee.emp_bio_id " _
                     & "FROM tbl_employee " _
                     & "LEFT JOIN tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id " _
                     & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
                     & "LEft JOIN tbl_company ON tbl_employee.company = tbl_company.name  " _
-                    & "WHERE tbl_company.name = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') AND isInPayroll = 1 ORDER BY Employee"
+                    & "WHERE tbl_company.name = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') AND isExcluded = 0 ORDER BY Employee"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
@@ -462,8 +463,8 @@ Module modConnect
         frmMain.dgv_payroll.Columns(3).Visible = False 'code (company)
         frmMain.dgv_payroll.Columns(5).Visible = False 'employment_status
         frmMain.dgv_payroll.Columns(6).Visible = False 'basic/monthly salary
-        frmMain.dgv_payroll.Columns(24).Visible = False 'tax-status
-        frmMain.dgv_payroll.Columns(25).Visible = False 'emp_bio_id
+        frmMain.dgv_payroll.Columns(25).Visible = False 'tax-status
+        frmMain.dgv_payroll.Columns(26).Visible = False 'emp_bio_id
 
         'additional payslip info
         Dim rows = frmMain.dgv_payroll.Rows.Count
@@ -477,19 +478,20 @@ Module modConnect
             frmMain.dgv_payroll.Rows(j).Cells(10).Value = frmMain.dgv_payroll.Rows(j).Cells(8).Value + frmMain.dgv_payroll.Rows(j).Cells(9).Value ' Total OT
             frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'allowances
             frmMain.dgv_payroll.Rows(j).Cells(12).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'incentives
-            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates(frmMain.dgv_payroll.Rows(j).Cells(25).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) + totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, frmMain.dgv_payroll.Rows(j).Cells(25).Value)(0) 'lates + absent
-            frmMain.dgv_payroll.Rows(j).Cells(14).Value = ComputeUndertime(frmMain.dgv_payroll.Rows(j).Cells(25).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
-            frmMain.dgv_payroll.Rows(j).Cells(15).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'sss
-            frmMain.dgv_payroll.Rows(j).Cells(16).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'phic
-            frmMain.dgv_payroll.Rows(j).Cells(17).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(6).Value) 'hdmf/pag-ibig
+            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates(frmMain.dgv_payroll.Rows(j).Cells(25).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'lates 
+            frmMain.dgv_payroll.Rows(j).Cells(14).Value = totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, frmMain.dgv_payroll.Rows(j).Cells(26).Value)(0) ' absent
+            frmMain.dgv_payroll.Rows(j).Cells(15).Value = ComputeUndertime(frmMain.dgv_payroll.Rows(j).Cells(26).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
+            frmMain.dgv_payroll.Rows(j).Cells(16).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'sss
+            frmMain.dgv_payroll.Rows(j).Cells(17).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'phic
+            frmMain.dgv_payroll.Rows(j).Cells(18).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(6).Value) 'hdmf/pag-ibig
             Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(7).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(8).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(12).Value)
-            Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value)
-            frmMain.dgv_payroll.Rows(j).Cells(18).Value = a - b 'gross pay
-            frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
-            frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
-            frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
-            frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(24).Value) 'tax
-            frmMain.dgv_payroll.Rows(j).Cells(23).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value 'net pay
+            Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(18).Value)
+            frmMain.dgv_payroll.Rows(j).Cells(19).Value = a - b 'gross pay
+            frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
+            frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
+            frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
+            frmMain.dgv_payroll.Rows(j).Cells(23).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(19).Value, frmMain.dgv_payroll.Rows(j).Cells(25).Value) 'tax
+            frmMain.dgv_payroll.Rows(j).Cells(24).Value = frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value - frmMain.dgv_payroll.Rows(j).Cells(23).Value 'net pay
             j = j + 1
         End While
 

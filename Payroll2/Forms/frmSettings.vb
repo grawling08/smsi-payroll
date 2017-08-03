@@ -300,35 +300,7 @@ Public Class frmSettings
         'End Using
         MessageBox.Show("Exported!")
     End Sub
-    'export cutoff
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles btn_exportcutoff.Click
-        StrSql = "SELECT DATE_FORMAT(tbl_cutoff.from_date,'%Y-%m-%d') as from_date, DATE_FORMAT(tbl_cutoff.to_date,'%Y-%m-%d') as to_date FROM tbl_cutoff, tblref_occurences WHERE tbl_cutoff.occurence_id = tblref_occurences.occurence_id"
-        QryReadP()
-        dt = New DataTable
-        adpt.Fill(dt)
-        Dim txt As String = String.Empty
-        Dim line As String = ""
-        For Each column As DataColumn In dt.Columns
-            'Add the Header row for Text file.
-            line += "," & column.ColumnName
-        Next
-        'Add new line.
-        txt += line.Substring(1) & vbCr & vbLf
-        line = ""
-        For Each row As DataRow In dt.Rows
-            For Each column As DataColumn In dt.Columns
-                'Add the Data rows.
-                line += "," & row(column.ColumnName).ToString()
-            Next
-            'Add new line.
-            txt += line.Substring(1) & vbCr & vbLf
-            line = ""
-        Next
-        Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\cutoff.csv")
-            sw.WriteLine(txt)
-        End Using
-        MessageBox.Show("Exported!")
-    End Sub
+    
     'load users
     Public Sub load_users()
         StrSql = "SELECT * FROM tbl_user"
@@ -416,6 +388,11 @@ Public Class frmSettings
         End While
         loading.Close()
         MessageBox.Show("Synced Shifts")
+    End Sub
+
+    'sync cutoff
+    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles btn_synccutoff.Click
+
     End Sub
 #End Region
     'users CRUD

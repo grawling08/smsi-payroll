@@ -37,23 +37,16 @@ Module modSync
         QryReadH()
         Dim dt = New DataTable
         adpt.Fill(dt)
-        StrSql = "TRUNCATE tbl_cutoff"
-        QryReadP()
-        cmd.ExecuteNonQuery()
         For i = 0 To dt.Rows.Count - 1
             'dt.Rows({row number})({field/column}).ToString
             'dt.Rows(i)(0).ToString
-            Try
-                StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) " _
+            StrSql = "SELECT * FROM tbl_cutoff WHERE "
+            StrSql = "INSERT INTO tbl_cutoff(cutoff_range,company_id,occurence_id,from_date,to_date,status) " _
                             & "VALUES('" & DateTime.Parse(dt.Rows(i)(1).ToString).ToString("d MMM yyyy") & " to " & DateTime.Parse(dt.Rows(i)(2).ToString).ToString("d MMM yyyy") & "', " _
                             & "'" & dt.Rows(i)(0).ToString & "',(SELECT occurence_id FROM tblref_occurences WHERE name='" & dt.Rows(i)(3).ToString & "'),'" & DateTime.Parse(dt.Rows(i)(1).ToString).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(dt.Rows(i)(2).ToString).ToString("yyyy-MM-dd") & "','" & dt.Rows(i)(4).ToString & "')"
-                'Console.Write(StrSql)
-                QryReadP()
-                cmd.ExecuteNonQuery()
-            Catch e As MySqlException
-                MessageBox.Show(e.ToString)
-                Return False
-            End Try
+            'Console.Write(StrSql)
+            QryReadP()
+            cmd.ExecuteNonQuery()
         Next
         Return True
     End Function

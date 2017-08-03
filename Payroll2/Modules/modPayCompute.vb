@@ -23,7 +23,7 @@ Module modPayCompute
         totalLate = 0
         'get total lates
         StrSql = "SELECT late FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
-        Console.Write(StrSql + vbCrLf)
+        'Console.Write(StrSql + vbCrLf)
         QryReadP()
         Dim latereader As MySqlDataReader = cmd.ExecuteReader
         If latereader.HasRows Then

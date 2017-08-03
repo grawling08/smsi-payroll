@@ -236,6 +236,7 @@ Public Class frmMain
         cmd.ExecuteNonQuery()
         loadcutoff()
     End Sub
+
     Sub loadcutoff()
         cb_cutoff.DataSource = Nothing
         cb_cutoff.Items.Clear()
@@ -269,17 +270,18 @@ Public Class frmMain
                         & "ot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
                         & "allowances =" & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
                         & "incentives =" & dgv_payroll.Rows(j).Cells(12).Value.ToString & "," _
-                        & "lateabsent_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
-                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
-                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
-                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
-                        & "loans =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
-                        & "otherdeduct =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
-                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
-                        & "net_income =" & dgv_payroll.Rows(j).Cells(23).Value.ToString _
+                        & "late_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
+                        & "absent =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
+                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
+                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
+                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
+                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
+                        & "gross_income =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
+                        & "loans =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
+                        & "otherdeduct =" & dgv_payroll.Rows(j).Cells(21).Value.ToString & "," _
+                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
+                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & "," _
+                        & "net_income =" & dgv_payroll.Rows(j).Cells(24).Value.ToString _
                         & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
                 QryReadP()
                 cmd.ExecuteNonQuery()
@@ -291,7 +293,7 @@ Public Class frmMain
                         & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
                         & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
                         & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & ")"
+                        & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(24).Value.ToString) & ")"
                 QryReadP()
                 cmd.ExecuteNonQuery()
             End If
@@ -330,7 +332,7 @@ Public Class frmMain
                 For a = (dgv_payroll.Rows.Count - 1) To 0 Step -1
                     If dgv_payroll.Rows(a).Cells(0).Value = True Then
                         'turn off
-                        StrSql = "UPDATE tbl_employee SET isInPayroll = 0 WHERE id_employee ='" & dgv_payroll.Rows(a).Cells(1).Value.ToString & "'"
+                        StrSql = "UPDATE tbl_employee SET isExcluded = 1 WHERE id_employee ='" & dgv_payroll.Rows(a).Cells(1).Value.ToString & "'"
                         QryReadP()
                         cmd.ExecuteNonQuery()
                         Close_Connect()
@@ -349,42 +351,43 @@ Public Class frmMain
         Dim j = 0
         While j <= rows - 1
             'check if saved payslip
-            StrSql = "SELECT * FROM payslip WHERE employee_id = " & dgv_payroll.Rows(j).Cells(1).Value.ToString & " AND cutoff = '" & current_cutoff & "'"
+            StrSql = "SELECT * FROM payslip WHERE employee_id = " & dgv_payroll.Rows(j).Cells(1).Value.ToString & " AND from_date = '" & frmdate_cutoff.ToString("yyyy-MM-dd") & "' AND to_date = '" & todate_cutoff.ToString("yyyy-MM-dd") & "'"
             QryReadH()
             Dim dtareader As MySqlDataReader = cmd.ExecuteReader
             If dtareader.HasRows Then
                 dtareader.Read()
                 'payslip_id = dtareader("payslip_id").ToString
                 'edit/update database
-                StrSql = "UPDATE tbl_payslip SET " _
-                        & "income =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
-                        & "regot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                        & "holot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
-                        & "ot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
-                        & "allowances =" & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
+                StrSql = "UPDATE payslip SET " _
+                        & "basic_pay =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
+                        & "regular_ot =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
+                        & "holiday_ot =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
+                        & "total_ot =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
+                        & "additionals =" & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
                         & "incentives =" & dgv_payroll.Rows(j).Cells(12).Value.ToString & "," _
-                        & "lateabsent_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
-                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
-                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
-                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
-                        & "loans =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
-                        & "otherdeduct =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
-                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
-                        & "net_income =" & dgv_payroll.Rows(j).Cells(23).Value.ToString _
-                        & " WHERE payslip_id = '" & dtareader("id").ToString & "'"
-                QryReadP()
+                        & "late =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
+                        & "absent =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
+                        & "undertime =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
+                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
+                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
+                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
+                        & "grossIncome =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
+                        & "loans =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
+                        & "otherDeductions =" & dgv_payroll.Rows(j).Cells(21).Value.ToString & "," _
+                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
+                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & "," _
+                        & "netIncome =" & dgv_payroll.Rows(j).Cells(24).Value.ToString _
+                        & " WHERE id = '" & dtareader("id").ToString & "'"
+                QryReadH()
                 cmd.ExecuteNonQuery()
             Else
-                StrSql = "INSERT INTO payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(1).Value.ToString & "','" & current_cutoff & "','" & current_company & "'," _
+                StrSql = "INSERT INTO payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(1).Value.ToString & "','" & frmdate_cutoff.ToString("yyyy-MM-dd") & "','" & todate_cutoff.ToString("yyyy-MM-dd") & "','" & current_company & "'," & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," _
                             & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
                             & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," _
                             & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
                             & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," _
                             & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & ")"
+                            & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(24).Value.ToString) & ")"
                 QryReadH()
                 cmd.ExecuteNonQuery()
             End If

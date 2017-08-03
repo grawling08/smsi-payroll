@@ -67,7 +67,7 @@ Partial Class frmSettings
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.group_export = New System.Windows.Forms.GroupBox()
-        Me.btn_exportcutoff = New System.Windows.Forms.Button()
+        Me.btn_synccutoff = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btn_exportpayslip = New System.Windows.Forms.Button()
@@ -384,7 +384,9 @@ Partial Class frmSettings
         '
         'group_sync
         '
+        Me.group_sync.Controls.Add(Me.btn_synccutoff)
         Me.group_sync.Controls.Add(Me.Button2)
+        Me.group_sync.Controls.Add(Me.Label5)
         Me.group_sync.Controls.Add(Me.Label9)
         Me.group_sync.Controls.Add(Me.Label2)
         Me.group_sync.Controls.Add(Me.Button1)
@@ -396,9 +398,9 @@ Partial Class frmSettings
         Me.group_sync.Controls.Add(Me.Label6)
         Me.group_sync.Controls.Add(Me.Label7)
         Me.group_sync.Controls.Add(Me.Label4)
-        Me.group_sync.Location = New System.Drawing.Point(7, 102)
+        Me.group_sync.Location = New System.Drawing.Point(7, 73)
         Me.group_sync.Name = "group_sync"
-        Me.group_sync.Size = New System.Drawing.Size(379, 190)
+        Me.group_sync.Size = New System.Drawing.Size(379, 219)
         Me.group_sync.TabIndex = 4
         Me.group_sync.TabStop = False
         Me.group_sync.Text = "Syncronize"
@@ -513,32 +515,30 @@ Partial Class frmSettings
         '
         'group_export
         '
-        Me.group_export.Controls.Add(Me.btn_exportcutoff)
-        Me.group_export.Controls.Add(Me.Label5)
         Me.group_export.Controls.Add(Me.Label3)
         Me.group_export.Controls.Add(Me.btn_exportpayslip)
         Me.group_export.Controls.Add(Me.Label1)
         Me.group_export.Controls.Add(Me.btn_exporttimesheet)
         Me.group_export.Location = New System.Drawing.Point(6, 3)
         Me.group_export.Name = "group_export"
-        Me.group_export.Size = New System.Drawing.Size(380, 99)
+        Me.group_export.Size = New System.Drawing.Size(380, 70)
         Me.group_export.TabIndex = 3
         Me.group_export.TabStop = False
         Me.group_export.Text = "Exports"
         '
-        'btn_exportcutoff
+        'btn_synccutoff
         '
-        Me.btn_exportcutoff.Location = New System.Drawing.Point(289, 70)
-        Me.btn_exportcutoff.Name = "btn_exportcutoff"
-        Me.btn_exportcutoff.Size = New System.Drawing.Size(75, 23)
-        Me.btn_exportcutoff.TabIndex = 2
-        Me.btn_exportcutoff.Text = "Export"
-        Me.btn_exportcutoff.UseVisualStyleBackColor = True
+        Me.btn_synccutoff.Location = New System.Drawing.Point(279, 188)
+        Me.btn_synccutoff.Name = "btn_synccutoff"
+        Me.btn_synccutoff.Size = New System.Drawing.Size(84, 23)
+        Me.btn_synccutoff.TabIndex = 2
+        Me.btn_synccutoff.Text = "Sync"
+        Me.btn_synccutoff.UseVisualStyleBackColor = True
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(9, 75)
+        Me.Label5.Location = New System.Drawing.Point(8, 193)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(35, 13)
         Me.Label5.TabIndex = 0
@@ -746,7 +746,7 @@ Partial Class frmSettings
     Friend WithEvents group_sync As System.Windows.Forms.GroupBox
     Friend WithEvents btn_syncloans As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents btn_exportcutoff As System.Windows.Forms.Button
+    Friend WithEvents btn_synccutoff As System.Windows.Forms.Button
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents TabPage9 As System.Windows.Forms.TabPage
     Friend WithEvents Panel1 As System.Windows.Forms.Panel

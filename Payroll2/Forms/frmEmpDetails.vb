@@ -36,7 +36,7 @@ Public Class frmEmpDetails
             tb_hdmfID.Text = dtareader("hdmf_id").ToString
             tb_phicID.Text = dtareader("phic_id").ToString
             lbl_shift.Text = dtareader("shiftgroup").ToString
-            isExcluded = If(dtareader("isInPayroll").ToString = "1", False, True)
+            isExcluded = If(dtareader("isExcluded").ToString = "1", True, False)
         End If
 
         chkbox_excluded.Checked = isExcluded
@@ -389,13 +389,13 @@ Public Class frmEmpDetails
             'payslip_id = dtareader("payslip_id").ToString
             'edit/update database
             StrSql = "UPDATE tbl_payslip SET " _
-                    & "income =" & CDbl(tb_income.Text) & "," & "regot_pay =" & CDbl(tb_regularot.Text) & "," _
-                    & "holot_pay =" & CDbl(tb_holidayot.Text) & "," & "ot_pay =" & CDbl(tb_grosspay.Text) & "," _
-                    & "allowances =" & CDbl(tb_allowance.Text) & "," & "incentives =" & totalBenefits & "," _
-                    & "lateabsent_deduct =" & CDbl(tb_late.Text) & "," & "undertime_deduct =" & CDbl(tb_undertime.Text) & "," _
-                    & "tax =" & CDbl(tb_tax.Text) & "," & "sss =" & CDbl(tb_sss.Text) & "," _
-                    & "phic =" & CDbl(tb_phic.Text) & "," & "hdmf =" & CDbl(tb_hdmf.Text) & "," _
-                    & "gross_income =" & tb_taxableincome.Text & "," & "net_income =" & tb_netincome.Text _
+                    & "income =" & CDbl(tb_income.Text) & ", regot_pay =" & CDbl(tb_regularot.Text) & "," _
+                    & "holot_pay =" & CDbl(tb_holidayot.Text) & ", ot_pay =" & CDbl(tb_grosspay.Text) & "," _
+                    & "allowances =" & CDbl(tb_allowance.Text) & ", incentives =" & totalBenefits & "," _
+                    & "late_deduct =" & CDbl(tb_late.Text) & ", absent =" & CDbl(tb_absents.Text) & ",undertime_deduct =" & CDbl(tb_undertime.Text) & "," _
+                    & "tax =" & CDbl(tb_tax.Text) & ", sss =" & CDbl(tb_sss.Text) & "," _
+                    & "phic =" & CDbl(tb_phic.Text) & ", hdmf =" & CDbl(tb_hdmf.Text) & "," _
+                    & "gross_income =" & tb_taxableincome.Text & ", net_income =" & tb_netincome.Text _
                     & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
             QryReadP()
             cmd.ExecuteNonQuery()
@@ -407,7 +407,7 @@ Public Class frmEmpDetails
             StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
                     & CDbl(tb_income.Text) & "," & CDbl(tb_regularot.Text) & "," _
                     & CDbl(tb_holidayot.Text) & "," & CDbl(tb_grosspay.Text) & "," & CDbl(tb_allowance.Text) & "," _
-                    & totalBenefits & "," & CDbl(tb_late.Text) & "," & CDbl(tb_undertime.Text) & "," _
+                    & totalBenefits & "," & CDbl(tb_late.Text) & "," & CDbl(tb_absents.Text) & "," & CDbl(tb_undertime.Text) & "," _
                     & CDbl(tb_tax.Text) & "," & CDbl(tb_sss.Text) & "," & CDbl(tb_phic.Text) & "," _
                     & CDbl(tb_hdmf.Text) & "," & tb_taxableincome.Text & "," & tb_netincome.Text & ")"
             QryReadP()
@@ -523,5 +523,25 @@ Public Class frmEmpDetails
         Else
             MessageBox.Show("No data to delete.")
         End If
+    End Sub
+
+    Private Sub chkbox_excluded_MouseClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles chkbox_excluded.MouseClick
+
+        If chkbox_excluded.CheckState Then
+            Dim result = MessageBox.Show("Exclude this employee in Payroll?", "Exclude from Payroll", MessageBoxButtons.YesNo)
+            If result Then
+                StrSql = "UPDATE tbl_employee SET isExcluded = " & chkbox_excluded.Checked & " WHERE id_employee =" & id
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            End If
+        Else
+            Dim result = MessageBox.Show("Return this employee in Payroll?", "Return to Payroll", MessageBoxButtons.YesNo)
+            If result Then
+                StrSql = "UPDATE tbl_employee SET isExcluded = " & chkbox_excluded.Checked & " WHERE id_employee =" & id
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            End If
+        End If
+        
     End Sub
 End Class
