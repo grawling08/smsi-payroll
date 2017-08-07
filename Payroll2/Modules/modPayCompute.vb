@@ -2,7 +2,7 @@
 
 Module modPayCompute
     Public empHourlyWage, empDailyWage As Double
-    Public totalLate, totalUndertime, totalOvertime, totalWorkHours, totalAllowance, totalBenefits, totalLoans As Double
+    Public totalLate, totalUndertime, totalOvertime, totalWorkHours, totalAllowance, totalBenefits, totalLoans, otherdeduct As Double
     Public daysAbsent As Double = 0
     Public daysPresent As Double = 0
     Public monthlysalary As Double = 0
@@ -29,7 +29,6 @@ Module modPayCompute
         If latereader.HasRows Then
             While latereader.Read()
                 If CDbl(latereader("late")) >= 10 Then
-                    'Console.Write(latereader("late").ToString + vbCrLf)
                     totalLate += CDbl(latereader("late"))
                 End If
             End While
@@ -161,25 +160,23 @@ Module modPayCompute
                 End If
                 'if restday, regholiday and specialholiday are all false then regOT is true
                 If isRestdayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
-                    'tb_regularot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
-                    ot(0) += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                    'OT on a Rest day 
+                    ot(0) += Math.Round((empHourlyWage + ((empHourlyWage * 1.3) * 0.3)) * totalhours, 2)
                 ElseIf isSpecHolidayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day or special holiday X 169%)
-                    'tb_holidayot.Text += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
-                    ot(1) += Math.Round(empHourlyWage * 1.69 * totalhours, 2)
+                    'OT on a Special holiday
+                    ot(1) += Math.Round((empHourlyWage + ((empHourlyWage * 1.3) * 0.3)) * totalhours, 2)
                 ElseIf isRestdayOT = True And isSpecHolidayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 195%)
-                    ot(1) += Math.Round(empHourlyWage * 1.95 * totalhours, 2)
+                    'OT on a rest day w/c falls on a special holiday
+                    ot(1) += Math.Round((empHourlyWage + ((empHourlyWage * 1.5) * 0.3)) * totalhours, 2)
                 ElseIf isRegHolidayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 260%)
-                    ot(1) += Math.Round(empHourlyWage * 2.6 * totalhours, 2)
+                    'OT on a Regular holiday
+                    ot(1) += Math.Round((empHourlyWage + ((empHourlyWage * 2) * 0.3)) * totalhours, 2)
                 ElseIf isRegHolidayOT = True And isRestdayOT = True Then
-                    'Overtime rate/hour = (hourly rate on rest day and special holiday X 338%)
-                    ot(1) += Math.Round(empHourlyWage * 3.38 * totalhours, 2)
+                    'OT on a rest day w/c falls on a regular holiday
+                    ot(1) += Math.Round((empHourlyWage + ((empHourlyWage * 2.6) * 0.3)) * totalhours, 2)
                 ElseIf isRegHolidayOT = False And isRestdayOT = False And isSpecHolidayOT = False Then
-                    'Hourly rate * 125% * number of hours
-                    ot(0) += Math.Round(empHourlyWage * 1.25 * totalhours, 2)
+                    'Ordinary OT
+                    ot(0) += Math.Round((empHourlyWage + (empHourlyWage * 0.25)) * totalhours, 2)
                 End If
             End If
             CurrD = CurrD.AddDays(1)
@@ -199,7 +196,6 @@ Module modPayCompute
         While (CurrD <= prevcutoff_todate)
             countattendance += 1
             StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
-            'Console.Write(StrSql + vbCrLf)
             QryReadP()
             Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
             If Not dtareader2.HasRows Then
@@ -266,7 +262,6 @@ Module modPayCompute
         End While
         totalabsent(1) = countattendance
         totalabsent(0) = Math.Round((CDbl(daysAbsent) * empDailyWage), 2)
-        'Console.Write("id: " + id_employee.ToString + " daily wage: " + empDailyWage.ToString + " absents:" + daysAbsent.ToString + vbCrLf)
         Return totalabsent
     End Function
 

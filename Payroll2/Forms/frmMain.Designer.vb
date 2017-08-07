@@ -260,6 +260,8 @@ Partial Class frmMain
         '
         'cb_companylist
         '
+        Me.cb_companylist.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_companylist.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cb_companylist.FormattingEnabled = True
         Me.cb_companylist.Location = New System.Drawing.Point(6, 20)
         Me.cb_companylist.Name = "cb_companylist"
@@ -296,6 +298,8 @@ Partial Class frmMain
         '
         'cb_cutoff
         '
+        Me.cb_cutoff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_cutoff.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cb_cutoff.FormattingEnabled = True
         Me.cb_cutoff.Location = New System.Drawing.Point(3, 60)
         Me.cb_cutoff.Name = "cb_cutoff"
@@ -520,6 +524,7 @@ Partial Class frmMain
         Me.dgv_emplist.AllowUserToResizeRows = False
         Me.dgv_emplist.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.dgv_emplist.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -551,7 +556,7 @@ Partial Class frmMain
         Me.dgv_emplist.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.dgv_emplist.RowHeadersVisible = False
         Me.dgv_emplist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emplist.Size = New System.Drawing.Size(284, 447)
+        Me.dgv_emplist.Size = New System.Drawing.Size(280, 447)
         Me.dgv_emplist.TabIndex = 0
         '
         'ToolStripSeparator2

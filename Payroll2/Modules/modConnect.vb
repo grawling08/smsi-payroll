@@ -23,6 +23,7 @@ Module modConnect
     Public isfrmLogin_expanded As Boolean
     Public logged_user, logged_id As String
     Public prevcutoff_fromdate, prevcutoff_todate As DateTime
+    Public prevcutoff_id As Integer
     Public prevcutoff_company As String
 
     Sub SaveSystemSettings(ByVal Payroll_Connect() As String, ByVal HR_Connect() As String)
@@ -295,6 +296,7 @@ Module modConnect
         Dim prevcutoffreader As MySqlDataReader = cmd.ExecuteReader
         If prevcutoffreader.HasRows Then
             prevcutoffreader.Read()
+            prevcutoff_id = prevcutoffreader("cutoff_id").ToString
             prevcutoff_fromdate = prevcutoffreader("from_date").ToString
             prevcutoff_todate = prevcutoffreader("to_date").ToString
             prevcutoff_company = prevcutoffreader("company_id").ToString

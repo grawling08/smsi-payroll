@@ -1,6 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.Text.RegularExpressions
-Imports Microsoft.Office.Interop
 
 Public Class frmEmpDetails
     Private id, emp_fullname, employee_id, employmentStatus, taxcode As String
@@ -147,7 +146,7 @@ Public Class frmEmpDetails
                 totalBenefits += Double.Parse(row.Cells(1).Value.ToString())
             Next
         End If
-        Dim otherdeduct = 0
+        otherdeduct = 0
         If dgv_otherdeduct.Rows.Count > 0 Then
             For Each row In dgv_otherdeduct.Rows
                 otherdeduct += Double.Parse(row.Cells(1).Value.ToString())
@@ -204,7 +203,6 @@ Public Class frmEmpDetails
         Dim i = 0
         While i <= col
             dgv_shift.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-            dgv_shift.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + 1
         End While
     End Sub
@@ -287,7 +285,7 @@ Public Class frmEmpDetails
         dgv_incentives.Rows.Add(row)
     End Sub
     'after cell edit compute net pay
-    Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_incentives.CellEndEdit
         computeTotal()
         'save to db
         save_incentives(cutoff_id, id)
@@ -389,13 +387,24 @@ Public Class frmEmpDetails
             'payslip_id = dtareader("payslip_id").ToString
             'edit/update database
             StrSql = "UPDATE tbl_payslip SET " _
-                    & "income =" & CDbl(tb_income.Text) & ", regot_pay =" & CDbl(tb_regularot.Text) & "," _
-                    & "holot_pay =" & CDbl(tb_holidayot.Text) & ", ot_pay =" & CDbl(tb_grosspay.Text) & "," _
-                    & "allowances =" & CDbl(tb_allowance.Text) & ", incentives =" & totalBenefits & "," _
-                    & "late_deduct =" & CDbl(tb_late.Text) & ", absent =" & CDbl(tb_absents.Text) & ",undertime_deduct =" & CDbl(tb_undertime.Text) & "," _
-                    & "tax =" & CDbl(tb_tax.Text) & ", sss =" & CDbl(tb_sss.Text) & "," _
-                    & "phic =" & CDbl(tb_phic.Text) & ", hdmf =" & CDbl(tb_hdmf.Text) & "," _
-                    & "gross_income =" & tb_taxableincome.Text & ", net_income =" & tb_netincome.Text _
+                    & "income =" & CDbl(tb_income.Text) & "," _
+                    & "regot_pay =" & CDbl(tb_regularot.Text) & "," _
+                    & "holot_pay =" & CDbl(tb_holidayot.Text) & ", " _
+                    & "ot_pay =" & CDbl(tb_regularot.Text) + CDbl(tb_holidayot.Text) & "," _
+                    & "allowances =" & CDbl(tb_allowance.Text) & "," _
+                    & "incentives =" & totalBenefits & "," _
+                    & "late_deduct =" & CDbl(tb_late.Text) & "," _
+                    & "absent =" & CDbl(tb_absents.Text) & "," _
+                    & "undertime_deduct =" & CDbl(tb_undertime.Text) & "," _
+                    & "sss =" & CDbl(tb_sss.Text) & "," _
+                    & "phic =" & CDbl(tb_phic.Text) & "," _
+                    & "hdmf =" & CDbl(tb_hdmf.Text) & "," _
+                    & "gross_income =" & tb_taxableincome.Text & "," _
+                    & "loans =" & CDbl(tb_loans.Text) & "," _
+                    & "otherdeduct =" & CDbl(otherdeduct) & "," _
+                    & "insurance =" & CDbl(tb_insurance.Text) & "," _
+                    & "tax =" & CDbl(tb_tax.Text) & "," _
+                    & "net_income =" & tb_netincome.Text _
                     & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
             QryReadP()
             cmd.ExecuteNonQuery()
@@ -406,10 +415,10 @@ Public Class frmEmpDetails
             'saved new payslip
             StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & id & "'," & cutoff_id & "," _
                     & CDbl(tb_income.Text) & "," & CDbl(tb_regularot.Text) & "," _
-                    & CDbl(tb_holidayot.Text) & "," & CDbl(tb_grosspay.Text) & "," & CDbl(tb_allowance.Text) & "," _
+                    & CDbl(tb_holidayot.Text) & "," & CDbl(tb_regularot.Text) + CDbl(tb_holidayot.Text) & "," & CDbl(tb_allowance.Text) & "," _
                     & totalBenefits & "," & CDbl(tb_late.Text) & "," & CDbl(tb_absents.Text) & "," & CDbl(tb_undertime.Text) & "," _
-                    & CDbl(tb_tax.Text) & "," & CDbl(tb_sss.Text) & "," & CDbl(tb_phic.Text) & "," _
-                    & CDbl(tb_hdmf.Text) & "," & tb_taxableincome.Text & "," & tb_netincome.Text & ")"
+                    & CDbl(tb_sss.Text) & "," & CDbl(tb_phic.Text) & "," & CDbl(tb_hdmf.Text) & "," _
+                    & CDbl(tb_taxableincome.Text) & "," & tb_loans.Text & "," & otherdeduct & "," & tb_insurance.Text & "," & tb_tax.Text & "," & tb_netincome.Text & ")"
             QryReadP()
             cmd.ExecuteNonQuery()
             payslip_id = cmd.LastInsertedId.ToString()
@@ -525,23 +534,25 @@ Public Class frmEmpDetails
         End If
     End Sub
 
-    Private Sub chkbox_excluded_MouseClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles chkbox_excluded.MouseClick
-
-        If chkbox_excluded.CheckState Then
-            Dim result = MessageBox.Show("Exclude this employee in Payroll?", "Exclude from Payroll", MessageBoxButtons.YesNo)
-            If result Then
-                StrSql = "UPDATE tbl_employee SET isExcluded = " & chkbox_excluded.Checked & " WHERE id_employee =" & id
-                QryReadP()
-                cmd.ExecuteNonQuery()
-            End If
+    Private Sub chkbox_excluded_MouseClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles chkbox_excluded.MouseDown
+        Dim msgCaption As String = ""
+        Dim msgContent As String = ""
+        Dim a As Boolean = False
+        If Not chkbox_excluded.Checked Then
+            msgCaption = "Exclude this employee from Payroll?"
+            msgContent = "Exclude from Payroll"
+            a = True
         Else
-            Dim result = MessageBox.Show("Return this employee in Payroll?", "Return to Payroll", MessageBoxButtons.YesNo)
-            If result Then
-                StrSql = "UPDATE tbl_employee SET isExcluded = " & chkbox_excluded.Checked & " WHERE id_employee =" & id
-                QryReadP()
-                cmd.ExecuteNonQuery()
-            End If
+            msgCaption = "Return this employee to Payroll?"
+            msgContent = "Return to from Payroll"
+            a = False
         End If
-        
+        Dim result = MessageBox.Show(msgCaption, msgContent, MessageBoxButtons.OKCancel)
+        If result.ToString = "OK" Then
+            StrSql = "UPDATE tbl_employee SET isExcluded = " & a & " WHERE id_employee =" & id
+            QryReadP()
+            cmd.ExecuteNonQuery()
+            chkbox_excluded.Checked = a
+        End If
     End Sub
 End Class

@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Security.AccessControl
-Imports Microsoft.Office.Interop
 Imports MySql.Data.MySqlClient
 
 Public Class frmSettings
@@ -276,28 +275,6 @@ Public Class frmSettings
             QryReadH()
             cmd.ExecuteNonQuery()
         Next
-
-        'Dim txt As String = String.Empty
-        'Dim line As String = ""
-        'For Each column As DataColumn In dt.Columns
-        '    'Add the Header row for Text file.
-        '    line += "," & column.ColumnName
-        'Next
-        ''Add new line.
-        'txt += line.Substring(1) & vbCr & vbLf
-        'line = ""
-        'For Each row As DataRow In dt.Rows
-        '    For Each column As DataColumn In dt.Columns
-        '        'Add the Data rows.
-        '        line += "," & row(column.ColumnName).ToString()
-        '    Next
-        '    'Add new line.
-        '    txt += line.Substring(1) & vbCr & vbLf
-        '    line = ""
-        'Next
-        'Using sw As StreamWriter = New StreamWriter(Application.UserAppDataPath & "\attendance.csv")
-        '    sw.WriteLine(txt)
-        'End Using
         MessageBox.Show("Exported!")
     End Sub
     
@@ -414,6 +391,4 @@ Public Class frmSettings
         dgv_users.Rows.Remove(dgv_users.SelectedRows(0))
         MessageBox.Show("Deleted!")
     End Sub
-
-
 End Class

@@ -300,6 +300,7 @@ Partial Class frmEmpDetails
         '
         Me.dgv_incentives.AllowUserToAddRows = False
         Me.dgv_incentives.AllowUserToDeleteRows = False
+        Me.dgv_incentives.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_incentives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_incentives.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
         Me.dgv_incentives.Location = New System.Drawing.Point(6, 40)
@@ -417,6 +418,7 @@ Partial Class frmEmpDetails
         '
         Me.dgv_otherdeduct.AllowUserToAddRows = False
         Me.dgv_otherdeduct.AllowUserToDeleteRows = False
+        Me.dgv_otherdeduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
         Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 38)
@@ -1402,6 +1404,7 @@ Partial Class frmEmpDetails
         Me.dgv_shift.AllowUserToDeleteRows = False
         Me.dgv_shift.AllowUserToResizeColumns = False
         Me.dgv_shift.AllowUserToResizeRows = False
+        Me.dgv_shift.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_shift.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         Me.dgv_shift.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_shift.Location = New System.Drawing.Point(6, 317)

@@ -38,7 +38,6 @@ Public Class frmMain
         Dim col = dgv_emplist.Columns.Count
         For i As Integer = 0 To col
             dgv_emplist.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-            dgv_emplist.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             i = i + i
         Next
         dgv_emplist.Columns(0).Visible = False
