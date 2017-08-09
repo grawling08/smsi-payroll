@@ -32,20 +32,15 @@ Partial Class frmEmpDetails
         Me.Label19 = New System.Windows.Forms.Label()
         Me.tb_allowance = New System.Windows.Forms.TextBox()
         Me.dgv_incentives = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btn_delincentive = New System.Windows.Forms.Button()
         Me.btn_addincentive = New System.Windows.Forms.Button()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
         Me.tb_totalbenefits = New System.Windows.Forms.TextBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.btn_deldeduct = New System.Windows.Forms.Button()
         Me.btn_adddeduct = New System.Windows.Forms.Button()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.dgv_otherdeduct = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
@@ -145,6 +140,12 @@ Partial Class frmEmpDetails
         Me.cms_deduct = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddOtherDeductionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -269,7 +270,6 @@ Partial Class frmEmpDetails
         Me.GroupBox2.Controls.Add(Me.btn_delincentive)
         Me.GroupBox2.Controls.Add(Me.btn_addincentive)
         Me.GroupBox2.Controls.Add(Me.Label31)
-        Me.GroupBox2.Controls.Add(Me.Label20)
         Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
         Me.GroupBox2.Location = New System.Drawing.Point(275, 210)
         Me.GroupBox2.Name = "GroupBox2"
@@ -302,7 +302,7 @@ Partial Class frmEmpDetails
         Me.dgv_incentives.AllowUserToDeleteRows = False
         Me.dgv_incentives.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_incentives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_incentives.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
+        Me.dgv_incentives.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.Column1, Me.Column2})
         Me.dgv_incentives.Location = New System.Drawing.Point(6, 40)
         Me.dgv_incentives.MultiSelect = False
         Me.dgv_incentives.Name = "dgv_incentives"
@@ -310,16 +310,6 @@ Partial Class frmEmpDetails
         Me.dgv_incentives.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_incentives.Size = New System.Drawing.Size(257, 80)
         Me.dgv_incentives.TabIndex = 5
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Name"
-        Me.Column1.Name = "Column1"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Amount"
-        Me.Column2.Name = "Column2"
         '
         'btn_delincentive
         '
@@ -348,15 +338,6 @@ Partial Class frmEmpDetails
         Me.Label31.Size = New System.Drawing.Size(134, 13)
         Me.Label31.TabIndex = 6
         Me.Label31.Text = "TOTAL ADDITIONALS"
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(6, 18)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(111, 13)
-        Me.Label20.TabIndex = 2
-        Me.Label20.Text = "Incentives and Others"
         '
         'tb_totalbenefits
         '
@@ -420,7 +401,7 @@ Partial Class frmEmpDetails
         Me.dgv_otherdeduct.AllowUserToDeleteRows = False
         Me.dgv_otherdeduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_otherdeduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
+        Me.dgv_otherdeduct.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column4, Me.Column5})
         Me.dgv_otherdeduct.Location = New System.Drawing.Point(7, 38)
         Me.dgv_otherdeduct.MultiSelect = False
         Me.dgv_otherdeduct.Name = "dgv_otherdeduct"
@@ -428,16 +409,6 @@ Partial Class frmEmpDetails
         Me.dgv_otherdeduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_otherdeduct.Size = New System.Drawing.Size(257, 80)
         Me.dgv_otherdeduct.TabIndex = 14
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Name"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Amount"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         '
         'Label29
         '
@@ -1434,6 +1405,38 @@ Partial Class frmEmpDetails
         Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.DeleteToolStripMenuItem.Text = "Delete"
         '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Column3"
+        Me.Column3.Name = "Column3"
+        Me.Column3.Visible = False
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Name"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Amount"
+        Me.Column5.Name = "Column5"
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Column3"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Name"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Amount"
+        Me.Column2.Name = "Column2"
+        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1580,8 +1583,6 @@ Partial Class frmEmpDetails
     Friend WithEvents btn_adddeduct As System.Windows.Forms.Button
     Friend WithEvents Label38 As System.Windows.Forms.Label
     Friend WithEvents dgv_otherdeduct As System.Windows.Forms.DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Label29 As System.Windows.Forms.Label
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
@@ -1590,12 +1591,9 @@ Partial Class frmEmpDetails
     Friend WithEvents tb_loans As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents dgv_incentives As System.Windows.Forms.DataGridView
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents btn_delincentive As System.Windows.Forms.Button
     Friend WithEvents btn_addincentive As System.Windows.Forms.Button
     Friend WithEvents Label31 As System.Windows.Forms.Label
-    Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents tb_totalbenefits As System.Windows.Forms.TextBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents tb_allowance As System.Windows.Forms.TextBox
@@ -1607,4 +1605,10 @@ Partial Class frmEmpDetails
     Friend WithEvents AddOtherDeductionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents chkbox_excluded As System.Windows.Forms.CheckBox
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

@@ -16,19 +16,19 @@
         "Entry"
         {
         "MsmKey" = "8:_1822EEDA93ACEBACBE0BDFCFCA713EB8"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1D6E705760EBE8CB77510219B9617ADA"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_238508EAB16711A42BDACA4DD7D5C8E4"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -46,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2E2790E532A96D8330473DC218ED0E23"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,13 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2E5490076034AADE9B57B673C3DBC9E9"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -76,19 +70,19 @@
         "Entry"
         {
         "MsmKey" = "8:_412C0213DC00EA4C60E6EE9D6AF9F875"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5FD6669F33D01142A6D15FDBC03775D2"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7E255AE853103489C44AA432FDBF824C"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -100,25 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_8247B5324FD3BDB37A47A21FBE320AA9"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_8CAF6890A9FB366970C31C8EC32562E5"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -129,20 +111,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BC4C5CD03E913CD894D6758E36B020CF"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -153,20 +129,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2E5490076034AADE9B57B673C3DBC9E9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_97094987C43C4556CB1789CC64E48A6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+        "OwnerKey" = "8:_BC0C3175F38249BB932B137239BBBB3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -227,24 +197,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_412C0213DC00EA4C60E6EE9D6AF9F875"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2E5490076034AADE9B57B673C3DBC9E9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -662,37 +614,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_97094987C43C4556CB1789CC64E48A6D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevComponents.DotNetBar2, Version=14.0.0.14, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_97094987C43C4556CB1789CC64E48A6D"
-                    {
-                    "Name" = "8:DevComponents.DotNetBar2.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DevComponents.DotNetBar2.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B0D11280D4754C4F897EC68283DCA714"
             {
             "SourcePath" = "8:..\\Payroll2\\Reports\\PayrollReport.rpt"
@@ -744,37 +665,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevComponents.Instrumentation, Version=14.0.0.14, Culture=neutral, PublicKeyToken=f90dc37c26666a67, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_CC8C82A4FD74A12A85BC2A73C3BBDCBA"
-                    {
-                    "Name" = "8:DevComponents.Instrumentation.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DevComponents.Instrumentation.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CECA0EFAA402410D9B28684C7515AE1C"
             {
             "SourcePath" = "8:..\\Payroll2\\Reports\\rptPayroll.rpt"
@@ -793,37 +683,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevComponents.DotNetBar.SuperGrid, Version=14.0.0.14, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_EF9D2BAE8FE04F2D48E0CBC7F3D6D3A6"
-                    {
-                    "Name" = "8:DevComponents.DotNetBar.SuperGrid.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DevComponents.DotNetBar.SuperGrid.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -894,7 +753,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Payroll"
         "ProductCode" = "8:{84026E58-B810-4F0D-BD15-7610524F11C8}"
-        "PackageCode" = "8:{F87349B1-73BC-428F-AD9E-BCE3333331DB}"
+        "PackageCode" = "8:{FD9F9F1E-6B09-4A0C-AC4D-3D4A69CA5A9D}"
         "UpgradeCode" = "8:{0BE6C9DC-CDEC-46A3-8D5D-3F74250DF979}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1014,7 +873,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_55DF6C0AF84A48EA87F879AACE416717"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_ADE8A6051B6F40F099175A7B3A83D7C9"
             {
             "Name" = "8:Payroll"
             "Arguments" = "8:"
@@ -1022,13 +881,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+            "Target" = "8:_BC0C3175F38249BB932B137239BBBB3A"
             "Folder" = "8:_DD135EE2F1F74DB28EBCA69AE4BAD534"
             "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "Icon" = "8:"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_5747A07EDD6E41DB9744738241D46BFD"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B4A01BE327554969BF23CBADD24EE23D"
             {
             "Name" = "8:Payroll"
             "Arguments" = "8:"
@@ -1036,7 +895,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_2F66649B03A4409B99E7543F2EA17C04"
+            "Target" = "8:_BC0C3175F38249BB932B137239BBBB3A"
             "Folder" = "8:_31D405953247477BBD18F74172BF59BA"
             "WorkingFolder" = "8:_A8DD070652284B069A48ED0D5AD903F6"
             "Icon" = "8:"
@@ -1441,7 +1300,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2F66649B03A4409B99E7543F2EA17C04"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BC0C3175F38249BB932B137239BBBB3A"
             {
             "SourcePath" = "8:..\\Payroll2\\obj\\x86\\Debug\\Payroll2.exe"
             "TargetName" = "8:"

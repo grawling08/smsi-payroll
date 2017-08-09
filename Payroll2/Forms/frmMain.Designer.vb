@@ -261,7 +261,6 @@ Partial Class frmMain
         'cb_companylist
         '
         Me.cb_companylist.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_companylist.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cb_companylist.FormattingEnabled = True
         Me.cb_companylist.Location = New System.Drawing.Point(6, 20)
         Me.cb_companylist.Name = "cb_companylist"
@@ -299,7 +298,6 @@ Partial Class frmMain
         'cb_cutoff
         '
         Me.cb_cutoff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_cutoff.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cb_cutoff.FormattingEnabled = True
         Me.cb_cutoff.Location = New System.Drawing.Point(3, 60)
         Me.cb_cutoff.Name = "cb_cutoff"

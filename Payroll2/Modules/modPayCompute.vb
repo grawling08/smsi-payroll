@@ -22,33 +22,83 @@ Module modPayCompute
     Function ComputeLates(ByVal emp_bio_id As String, ByVal id_employee As String) As Double
         totalLate = 0
         'get total lates
-        StrSql = "SELECT late FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "' AND time_in <> '-' AND time_out <> '-'"
-        'Console.Write(StrSql + vbCrLf)
-        QryReadP()
-        Dim latereader As MySqlDataReader = cmd.ExecuteReader
-        If latereader.HasRows Then
-            While latereader.Read()
-                If CDbl(latereader("late")) >= 10 Then
-                    totalLate += CDbl(latereader("late"))
+        Dim CurrD As DateTime = prevcutoff_fromdate
+        While (CurrD <= prevcutoff_todate)
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            QryReadP()
+            Dim latereader As MySqlDataReader = cmd.ExecuteReader
+            If latereader.HasRows Then
+                latereader.Read()
+                Dim a = CDbl(latereader("late"))
+                StrSql = "SELECT * FROM tbl_attendancealter WHERE private_key = '" & latereader("private_key").ToString & "'"
+                QryReadP()
+                Dim alterreader As MySqlDataReader = cmd.ExecuteReader
+                If alterreader.HasRows Then
+                    alterreader.Read()
+                    If CDbl(alterreader("late")) >= 10 Then
+                        totalLate += (CDbl(alterreader("late")) - 10)
+                    End If
+                    alterreader.Close()
+                Else
+                    If a >= 10 Then
+                        totalLate += (a - 10)
+                    End If
                 End If
-            End While
-        End If
+                latereader.Close()
+            Else
+                StrSql = "SELECT * FROM tbl_attendancealter WHERE employee_id = '" & id_employee & "' AND datelog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+                QryReadP()
+                Dim alterreader As MySqlDataReader = cmd.ExecuteReader
+                If alterreader.HasRows Then
+                    alterreader.Read()
+                    If CDbl(alterreader("late")) >= 10 Then
+                        totalLate += (CDbl(alterreader("late")) - 10)
+                    End If
+                    alterreader.Close()
+                End If
+            End If
+            cmd.Dispose()
+            CurrD = CurrD.AddDays(1)
+        End While
         Return Math.Round(totalLate * 5, 2)
     End Function
 
     Function ComputeUndertime(ByVal emp_bio_id As String, ByVal id_employee As String) As Double
         totalUndertime = 0
+        'get total undertime
         'get total lates
-        StrSql = "SELECT undertime FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date BETWEEN '" & prevcutoff_fromdate.ToString("yyyy-MM-dd") & "' AND '" & prevcutoff_todate.ToString("yyyy-MM-dd") & "'"
-        QryReadP()
-        Dim underreader As MySqlDataReader = cmd.ExecuteReader
-        If underreader.HasRows Then
-            While underreader.Read()
-                If CDbl(underreader("undertime")) >= 1 Then
-                    totalUndertime += CDbl(underreader("undertime"))
+        Dim CurrD As DateTime = prevcutoff_fromdate
+        While (CurrD <= prevcutoff_todate)
+            StrSql = "SELECT * FROM tbl_attendance WHERE " & If(String.IsNullOrEmpty(emp_bio_id), "id_employee = '" & id_employee & "'", "emp_bio_id = '" & emp_bio_id & "'") & " AND date = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+            QryReadP()
+            Dim latereader As MySqlDataReader = cmd.ExecuteReader
+            If latereader.HasRows Then
+                latereader.Read()
+                Dim a = CDbl(latereader("undertime"))
+                StrSql = "SELECT * FROM tbl_attendancealter WHERE private_key = '" & latereader("private_key").ToString & "'"
+                QryReadP()
+                Dim alterreader As MySqlDataReader = cmd.ExecuteReader
+                If alterreader.HasRows Then
+                    alterreader.Read()
+                    totalUndertime += CDbl(alterreader("undertime"))
+                    alterreader.Close()
+                Else
+                    totalUndertime += a
                 End If
-            End While
-        End If
+                latereader.Close()
+            Else
+                StrSql = "SELECT * FROM tbl_attendancealter WHERE employee_id = '" & id_employee & "' AND datelog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+                QryReadP()
+                Dim alterreader As MySqlDataReader = cmd.ExecuteReader
+                If alterreader.HasRows Then
+                    alterreader.Read()
+                    totalUndertime += CDbl(alterreader("undertime"))
+                    alterreader.Close()
+                End If
+            End If
+                cmd.Dispose()
+                CurrD = CurrD.AddDays(1)
+        End While
         Return Math.Round(totalUndertime * 5, 2)
     End Function
 

@@ -502,14 +502,14 @@ Module modConnect
 
     Function computeSSS(ByVal basic_pay As Double) As String()
         Dim sssContrib() As String = {0, 0, 0, 0}
-        StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & (basic_pay / num_occurence)
+        StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & basic_pay
         QryReadP()
         Dim sssreader As MySqlDataReader = cmd.ExecuteReader
         If sssreader.HasRows Then
             sssreader.Read()
             sssContrib(0) = If(String.IsNullOrEmpty(sssreader("salary").ToString), 0, sssreader("salary").ToString)
-            sssContrib(1) = If(String.IsNullOrEmpty(sssreader("employer").ToString), 0, sssreader("employer").ToString)
-            sssContrib(2) = If(String.IsNullOrEmpty(sssreader("employee").ToString), 0, sssreader("employee").ToString)
+            sssContrib(1) = If(String.IsNullOrEmpty(sssreader("employer").ToString), 0, Math.Round(Double.Parse(sssreader("employer").ToString) / num_occurence, 2))
+            sssContrib(2) = If(String.IsNullOrEmpty(sssreader("employee").ToString), 0, Math.Round(Double.Parse(sssreader("employee").ToString) / num_occurence, 2))
             sssContrib(3) = If(String.IsNullOrEmpty(sssreader("total").ToString), 0, sssreader("total").ToString)
         End If
         Return sssContrib
@@ -531,12 +531,12 @@ Module modConnect
     End Function
 
     Function computeHDMF(ByVal basic_pay As Double) As Double
-        Dim hdmfContrib As Double
-        If (basic_pay / num_occurence) > 1500 Then
-            hdmfContrib = 5000 * 0.01
-        Else
-            hdmfContrib = 5000 * 0.02
-        End If
+        Dim hdmfContrib As Double = 50
+        'If (basic_pay / num_occurence) > 1500 Then
+        '    hdmfContrib = 5000 * 0.01
+        'Else
+        '    hdmfContrib = 5000 * 0.02
+        'End If
         Return hdmfContrib
     End Function
 

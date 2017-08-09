@@ -183,6 +183,7 @@ Public Class frmMain
     End Sub
 
     Private Sub lnk_setcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_setcutoff.LinkClicked
+        'loading.Show()
         If String.IsNullOrWhiteSpace(cb_cutoff.Text) Then
             MessageBox.Show("Add new Cutoff!")
             lnk_addcutoff.Focus()
@@ -207,17 +208,17 @@ Public Class frmMain
         'get previous cutoff days for deductions
         GetPrevCutoff()
 
-        Dim thread As Threading.Thread
-        thread = New System.Threading.Thread(AddressOf SyncTimesheet)
-        thread.Start()
-        loading.Show()
-        While (thread.IsAlive)
-            Application.DoEvents()
-        End While
+        'Dim thread As Threading.Thread
+        'thread = New System.Threading.Thread(AddressOf SyncTimesheet)
+        'thread.Start()
+        'While (thread.IsAlive)
+        '    Application.DoEvents()
+        'End While
+
         'get initial payslip summary
         getPayslip(current_cutoff)
         loadEmployee()
-        loading.Close()
+        'loading.Close()
         MessageBox.Show("Cutoff changed!")
     End Sub
     Private Sub cb_companylist_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cb_companylist.SelectedIndexChanged
