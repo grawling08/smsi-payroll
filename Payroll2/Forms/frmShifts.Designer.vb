@@ -56,7 +56,6 @@ Partial Class frmShifts
         'cb_shifttype
         '
         Me.cb_shifttype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_shifttype.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cb_shifttype.FormattingEnabled = True
         Me.cb_shifttype.Items.AddRange(New Object() {"Flexible", "Part-Time", "Permanent", "Project Based"})
         Me.cb_shifttype.Location = New System.Drawing.Point(196, 12)
@@ -67,7 +66,6 @@ Partial Class frmShifts
         'cb_shiftday
         '
         Me.cb_shiftday.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_shiftday.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cb_shiftday.FormattingEnabled = True
         Me.cb_shiftday.Items.AddRange(New Object() {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})
         Me.cb_shiftday.Location = New System.Drawing.Point(196, 39)

@@ -88,6 +88,7 @@ Partial Class frmUser
         '
         'cb_userrole
         '
+        Me.cb_userrole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_userrole.FormattingEnabled = True
         Me.cb_userrole.Items.AddRange(New Object() {"Admin", "Payroll Master", "User"})
         Me.cb_userrole.Location = New System.Drawing.Point(94, 91)
@@ -97,6 +98,7 @@ Partial Class frmUser
         '
         'cb_employeeid
         '
+        Me.cb_employeeid.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_employeeid.FormattingEnabled = True
         Me.cb_employeeid.Location = New System.Drawing.Point(94, 12)
         Me.cb_employeeid.Name = "cb_employeeid"
@@ -123,6 +125,7 @@ Partial Class frmUser
         '
         'cb_userstatus
         '
+        Me.cb_userstatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_userstatus.FormattingEnabled = True
         Me.cb_userstatus.Items.AddRange(New Object() {"Active", "Inactive"})
         Me.cb_userstatus.Location = New System.Drawing.Point(94, 118)

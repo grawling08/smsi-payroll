@@ -90,7 +90,6 @@ Partial Class frmAddCutoff
         'cb_occurence
         '
         Me.cb_occurence.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb_occurence.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cb_occurence.FormattingEnabled = True
         Me.cb_occurence.Location = New System.Drawing.Point(12, 129)
         Me.cb_occurence.Name = "cb_occurence"

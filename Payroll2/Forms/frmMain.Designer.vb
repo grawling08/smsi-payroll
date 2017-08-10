@@ -23,7 +23,6 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -63,11 +62,7 @@ Partial Class frmMain
         Me.bindingnavigator = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.tsbtn_cutoff = New System.Windows.Forms.ToolStripTextBox()
-        Me.btn_loadpayroll = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_printpayroll = New System.Windows.Forms.ToolStripButton()
-        Me.btn_savepayroll = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsb_remfrompayroll = New System.Windows.Forms.ToolStripButton()
         Me.dgv_payroll = New System.Windows.Forms.DataGridView()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -75,7 +70,6 @@ Partial Class frmMain
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.tstb_searchdgv = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsbtn_refreshdgv = New System.Windows.Forms.ToolStripButton()
         Me.dgv_emplist = New System.Windows.Forms.DataGridView()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
@@ -83,6 +77,11 @@ Partial Class frmMain
         Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.btn_loadpayroll = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_printpayroll = New System.Windows.Forms.ToolStripButton()
+        Me.btn_savepayroll = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_remfrompayroll = New System.Windows.Forms.ToolStripButton()
+        Me.tsbtn_refreshdgv = New System.Windows.Forms.ToolStripButton()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
         Me.TabControl3.SuspendLayout()
@@ -366,44 +365,10 @@ Partial Class frmMain
         Me.tsbtn_cutoff.Name = "tsbtn_cutoff"
         Me.tsbtn_cutoff.Size = New System.Drawing.Size(200, 25)
         '
-        'btn_loadpayroll
-        '
-        Me.btn_loadpayroll.Image = CType(resources.GetObject("btn_loadpayroll.Image"), System.Drawing.Image)
-        Me.btn_loadpayroll.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btn_loadpayroll.Name = "btn_loadpayroll"
-        Me.btn_loadpayroll.Size = New System.Drawing.Size(53, 22)
-        Me.btn_loadpayroll.Text = "Load"
-        '
-        'tsb_printpayroll
-        '
-        Me.tsb_printpayroll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsb_printpayroll.Image = CType(resources.GetObject("tsb_printpayroll.Image"), System.Drawing.Image)
-        Me.tsb_printpayroll.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_printpayroll.Name = "tsb_printpayroll"
-        Me.tsb_printpayroll.Size = New System.Drawing.Size(91, 22)
-        Me.tsb_printpayroll.Text = "Print Payroll"
-        '
-        'btn_savepayroll
-        '
-        Me.btn_savepayroll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.btn_savepayroll.Image = CType(resources.GetObject("btn_savepayroll.Image"), System.Drawing.Image)
-        Me.btn_savepayroll.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btn_savepayroll.Name = "btn_savepayroll"
-        Me.btn_savepayroll.Size = New System.Drawing.Size(90, 22)
-        Me.btn_savepayroll.Text = "Save Payroll"
-        '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
         Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 25)
-        '
-        'tsb_remfrompayroll
-        '
-        Me.tsb_remfrompayroll.Image = CType(resources.GetObject("tsb_remfrompayroll.Image"), System.Drawing.Image)
-        Me.tsb_remfrompayroll.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_remfrompayroll.Name = "tsb_remfrompayroll"
-        Me.tsb_remfrompayroll.Size = New System.Drawing.Size(135, 22)
-        Me.tsb_remfrompayroll.Text = "Exclude from Payroll"
         '
         'dgv_payroll
         '
@@ -487,7 +452,7 @@ Partial Class frmMain
         Me.BindingNavigator1.Name = "BindingNavigator1"
         Me.BindingNavigator1.PositionItem = Nothing
         Me.BindingNavigator1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.BindingNavigator1.Size = New System.Drawing.Size(222, 25)
+        Me.BindingNavigator1.Size = New System.Drawing.Size(253, 25)
         Me.BindingNavigator1.TabIndex = 1
         Me.BindingNavigator1.Text = "BindingNavigator1"
         '
@@ -506,14 +471,6 @@ Partial Class frmMain
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
-        '
-        'tsbtn_refreshdgv
-        '
-        Me.tsbtn_refreshdgv.Image = CType(resources.GetObject("tsbtn_refreshdgv.Image"), System.Drawing.Image)
-        Me.tsbtn_refreshdgv.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbtn_refreshdgv.Name = "tsbtn_refreshdgv"
-        Me.tsbtn_refreshdgv.Size = New System.Drawing.Size(66, 22)
-        Me.tsbtn_refreshdgv.Text = "Refresh"
         '
         'dgv_emplist
         '
@@ -597,6 +554,48 @@ Partial Class frmMain
         Me.label_loggedinas.Name = "label_loggedinas"
         Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
         Me.label_loggedinas.Text = "ToolStripStatusLabel3"
+        '
+        'btn_loadpayroll
+        '
+        Me.btn_loadpayroll.Image = Global.Payroll2.My.Resources.Resources.repeat
+        Me.btn_loadpayroll.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btn_loadpayroll.Name = "btn_loadpayroll"
+        Me.btn_loadpayroll.Size = New System.Drawing.Size(53, 22)
+        Me.btn_loadpayroll.Text = "Load"
+        '
+        'tsb_printpayroll
+        '
+        Me.tsb_printpayroll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsb_printpayroll.Image = Global.Payroll2.My.Resources.Resources.print
+        Me.tsb_printpayroll.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_printpayroll.Name = "tsb_printpayroll"
+        Me.tsb_printpayroll.Size = New System.Drawing.Size(91, 22)
+        Me.tsb_printpayroll.Text = "Print Payroll"
+        '
+        'btn_savepayroll
+        '
+        Me.btn_savepayroll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.btn_savepayroll.Image = Global.Payroll2.My.Resources.Resources.save
+        Me.btn_savepayroll.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btn_savepayroll.Name = "btn_savepayroll"
+        Me.btn_savepayroll.Size = New System.Drawing.Size(90, 22)
+        Me.btn_savepayroll.Text = "Save Payroll"
+        '
+        'tsb_remfrompayroll
+        '
+        Me.tsb_remfrompayroll.Image = Global.Payroll2.My.Resources.Resources._error
+        Me.tsb_remfrompayroll.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_remfrompayroll.Name = "tsb_remfrompayroll"
+        Me.tsb_remfrompayroll.Size = New System.Drawing.Size(135, 22)
+        Me.tsb_remfrompayroll.Text = "Exclude from Payroll"
+        '
+        'tsbtn_refreshdgv
+        '
+        Me.tsbtn_refreshdgv.Image = Global.Payroll2.My.Resources.Resources.repeat
+        Me.tsbtn_refreshdgv.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtn_refreshdgv.Name = "tsbtn_refreshdgv"
+        Me.tsbtn_refreshdgv.Size = New System.Drawing.Size(66, 22)
+        Me.tsbtn_refreshdgv.Text = "Refresh"
         '
         'frmMain
         '

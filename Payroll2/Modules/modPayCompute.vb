@@ -284,6 +284,13 @@ Module modPayCompute
                             daysAbsent -= 0.5
                         End If
                     End If
+                    'check in timesheet alter if has correction
+                    StrSql = "SELECT * FROM tbl_attendancealter WHERE employee_id = '" & id_employee & "' AND datelog = '" & CurrD.ToString("yyyy-MM-dd") & "'"
+                    QryReadP()
+                    Dim alterreader As MySqlDataReader = cmd.ExecuteReader
+                    If alterreader.HasRows Then
+                        daysAbsent -= 1
+                    End If
                 Else
                     If CurrD.ToString("dddd") = "Sunday" Then
                         daysPresent += 1

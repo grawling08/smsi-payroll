@@ -1,6 +1,6 @@
 .git/
 .gitignore
-/Payroll2/bin/
-/Payroll2/obj/
-/Setup/
+Payroll2/bin/
+Payroll2/obj/
+Setup/
 *.tmp
