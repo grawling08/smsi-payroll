@@ -16,7 +16,7 @@ Public Class frmMain
     'on start up 
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'loadEmployee()
-        label_loggedinas.Text = logged_user
+        'label_loggedinas.Text = logged_user
         getCompanyList()
         If dt.Rows.Count > 0 Then
             cb_companylist.DataSource = dt
@@ -24,6 +24,12 @@ Public Class frmMain
         End If
         If app_mode = "integrate" Then
             EmployeeToolStripMenuItem.Enabled = False
+        End If
+        If String.IsNullOrWhiteSpace(tstxtbox_cutoff.Text) Then
+            btn_loadpayroll.Enabled = False
+            tsb_remfrompayroll.Enabled = False
+            btn_savepayroll.Enabled = False
+            tsb_printpayroll.Enabled = False
         End If
     End Sub
     '
@@ -52,7 +58,7 @@ Public Class frmMain
     Private Sub dgv_emplist_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_emplist.CellDoubleClick
         Dim a = Me.dgv_emplist.CurrentRow.Cells(0).Value.ToString
         Using frmEmpDetails As New frmEmpDetails(a)
-            If Not String.IsNullOrWhiteSpace(tsbtn_cutoff.Text) Then
+            If Not String.IsNullOrWhiteSpace(tstxtbox_cutoff.Text) Then
                 frmEmpDetails.ShowDialog()
             Else
                 MessageBox.Show("Set Cutoff First!")
@@ -144,13 +150,13 @@ Public Class frmMain
                     End Using
                 End If
             End If
-                'Catch Exc As Exception
-                'Console.Write(Exc.InnerException.ToString)
-                'End Try
-                myStream.Close()
-                SaveRawAttendance(dta)
-                frmUploadedTimesheet.ShowDialog()
-            End If
+            'Catch Exc As Exception
+            'Console.Write(Exc.InnerException.ToString)
+            'End Try
+            myStream.Close()
+            SaveRawAttendance(dta)
+            frmUploadedTimesheet.ShowDialog()
+        End If
     End Sub
     Private Function GetValue(doc As SpreadsheetDocument, cell As Cell) As String
         Dim value As String = If(cell.CellValue.InnerText = Nothing, "", cell.CellValue.InnerText)
@@ -190,7 +196,11 @@ Public Class frmMain
             Exit Sub
         End If
         current_cutoff = cb_cutoff.Text
-        tsbtn_cutoff.Text = current_cutoff
+        tstxtbox_cutoff.Text = current_cutoff
+        btn_loadpayroll.Enabled = True
+        tsb_remfrompayroll.Enabled = True
+        btn_savepayroll.Enabled = True
+        tsb_printpayroll.Enabled = True
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
         QryReadP()
         Dim cutoffreader As MySqlDataReader = cmd.ExecuteReader

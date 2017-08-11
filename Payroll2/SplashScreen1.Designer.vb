@@ -13,11 +13,6 @@ Partial Class SplashScreen1
             MyBase.Dispose(disposing)
         End Try
     End Sub
-    Friend WithEvents ApplicationTitle As System.Windows.Forms.Label
-    Friend WithEvents Version As System.Windows.Forms.Label
-    Friend WithEvents Copyright As System.Windows.Forms.Label
-    Friend WithEvents MainLayoutPanel As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents DetailsLayoutPanel As System.Windows.Forms.TableLayoutPanel
 
     'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
@@ -52,7 +47,7 @@ Partial Class SplashScreen1
         Me.MainLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 218.0!))
         Me.MainLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38.0!))
         Me.MainLayoutPanel.Size = New System.Drawing.Size(496, 303)
-        Me.MainLayoutPanel.TabIndex = 0
+        Me.MainLayoutPanel.TabIndex = 1
         '
         'DetailsLayoutPanel
         '
@@ -123,5 +118,10 @@ Partial Class SplashScreen1
         Me.ResumeLayout(False)
 
     End Sub
+    Friend WithEvents MainLayoutPanel As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents DetailsLayoutPanel As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents Version As System.Windows.Forms.Label
+    Friend WithEvents Copyright As System.Windows.Forms.Label
+    Friend WithEvents ApplicationTitle As System.Windows.Forms.Label
 
 End Class

@@ -356,11 +356,14 @@ Public Class frmEmpDetails
     'delete other deductions
     Private Sub btn_deldeduct_Click(sender As System.Object, e As System.EventArgs) Handles btn_deldeduct.Click
         If dgv_otherdeduct.Rows.Count > 0 Then
-            'Dim name = dgv_otherdeduct.CurrentRow.Cells(1).Value.ToString
-            'Dim amount = dgv_otherdeduct.CurrentRow.Cells(2).Value.ToString
-            StrSql = "DELETE FROM tbl_otherdeductions WHERE deduct_id = " & dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString
+            StrSql = "SELECT deduct_id, name as Name, amount as Amount FROM tbl_otherdeductions WHERE deduct_id = '" & dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString & "' AND employee_id = " & id
             QryReadP()
-            cmd.ExecuteNonQuery()
+            Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+            If dtareader.HasRows Then
+                StrSql = "DELETE FROM tbl_otherdeductions WHERE deduct_id = " & dgv_otherdeduct.CurrentRow.Cells(0).Value.ToString
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            End If
             dgv_otherdeduct.Rows.Remove(dgv_otherdeduct.SelectedRows(0))
             loadotherdeduct(cutoff_id, id)
             computeTotal()

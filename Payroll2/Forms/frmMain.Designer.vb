@@ -61,8 +61,12 @@ Partial Class frmMain
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.bindingnavigator = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
-        Me.tsbtn_cutoff = New System.Windows.Forms.ToolStripTextBox()
+        Me.tstxtbox_cutoff = New System.Windows.Forms.ToolStripTextBox()
+        Me.btn_loadpayroll = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_printpayroll = New System.Windows.Forms.ToolStripButton()
+        Me.btn_savepayroll = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsb_remfrompayroll = New System.Windows.Forms.ToolStripButton()
         Me.dgv_payroll = New System.Windows.Forms.DataGridView()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -70,18 +74,9 @@ Partial Class frmMain
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.tstb_searchdgv = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsbtn_refreshdgv = New System.Windows.Forms.ToolStripButton()
         Me.dgv_emplist = New System.Windows.Forms.DataGridView()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.label_serverstatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.label_loggedinas = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.btn_loadpayroll = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_printpayroll = New System.Windows.Forms.ToolStripButton()
-        Me.btn_savepayroll = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_remfrompayroll = New System.Windows.Forms.ToolStripButton()
-        Me.tsbtn_refreshdgv = New System.Windows.Forms.ToolStripButton()
         Me.MainMenu.SuspendLayout()
         Me.tsb_savepayroll.SuspendLayout()
         Me.TabControl3.SuspendLayout()
@@ -95,7 +90,6 @@ Partial Class frmMain
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.BindingNavigator1.SuspendLayout()
         CType(Me.dgv_emplist, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainMenu
@@ -205,18 +199,18 @@ Partial Class frmMain
         'HelpToolStripMenuItem1
         '
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(107, 22)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
         Me.HelpToolStripMenuItem1.Text = "Help"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(104, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(149, 6)
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'tsb_savepayroll
@@ -260,6 +254,7 @@ Partial Class frmMain
         'cb_companylist
         '
         Me.cb_companylist.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_companylist.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.cb_companylist.FormattingEnabled = True
         Me.cb_companylist.Location = New System.Drawing.Point(6, 20)
         Me.cb_companylist.Name = "cb_companylist"
@@ -269,27 +264,30 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label2.Location = New System.Drawing.Point(3, 44)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(35, 13)
+        Me.Label2.Size = New System.Drawing.Size(40, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Cutoff"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label1.Location = New System.Drawing.Point(3, 3)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(51, 13)
+        Me.Label1.Size = New System.Drawing.Size(55, 13)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Company"
         '
         'lnk_setcutoff
         '
         Me.lnk_setcutoff.AutoSize = True
+        Me.lnk_setcutoff.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.lnk_setcutoff.Location = New System.Drawing.Point(227, 84)
         Me.lnk_setcutoff.Name = "lnk_setcutoff"
-        Me.lnk_setcutoff.Size = New System.Drawing.Size(54, 13)
+        Me.lnk_setcutoff.Size = New System.Drawing.Size(59, 13)
         Me.lnk_setcutoff.TabIndex = 2
         Me.lnk_setcutoff.TabStop = True
         Me.lnk_setcutoff.Text = "Set Cutoff"
@@ -297,6 +295,7 @@ Partial Class frmMain
         'cb_cutoff
         '
         Me.cb_cutoff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cb_cutoff.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.cb_cutoff.FormattingEnabled = True
         Me.cb_cutoff.Location = New System.Drawing.Point(3, 60)
         Me.cb_cutoff.Name = "cb_cutoff"
@@ -306,9 +305,10 @@ Partial Class frmMain
         'lnk_addcutoff
         '
         Me.lnk_addcutoff.AutoSize = True
+        Me.lnk_addcutoff.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lnk_addcutoff.Location = New System.Drawing.Point(3, 84)
         Me.lnk_addcutoff.Name = "lnk_addcutoff"
-        Me.lnk_addcutoff.Size = New System.Drawing.Size(57, 13)
+        Me.lnk_addcutoff.Size = New System.Drawing.Size(64, 13)
         Me.lnk_addcutoff.TabIndex = 1
         Me.lnk_addcutoff.TabStop = True
         Me.lnk_addcutoff.Text = "Add Cutoff"
@@ -316,10 +316,10 @@ Partial Class frmMain
         'lbl_currentcompany
         '
         Me.lbl_currentcompany.AutoSize = True
-        Me.lbl_currentcompany.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_currentcompany.Font = New System.Drawing.Font("Segoe UI", 9.25!, System.Drawing.FontStyle.Bold)
         Me.lbl_currentcompany.Location = New System.Drawing.Point(303, 6)
         Me.lbl_currentcompany.Name = "lbl_currentcompany"
-        Me.lbl_currentcompany.Size = New System.Drawing.Size(51, 15)
+        Me.lbl_currentcompany.Size = New System.Drawing.Size(48, 17)
         Me.lbl_currentcompany.TabIndex = 10
         Me.lbl_currentcompany.Text = "Label1"
         '
@@ -332,7 +332,7 @@ Partial Class frmMain
         Me.Panel2.Controls.Add(Me.dgv_payroll)
         Me.Panel2.Location = New System.Drawing.Point(301, 25)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(970, 618)
+        Me.Panel2.Size = New System.Drawing.Size(970, 640)
         Me.Panel2.TabIndex = 9
         '
         'bindingnavigator
@@ -341,7 +341,7 @@ Partial Class frmMain
         Me.bindingnavigator.CountItem = Nothing
         Me.bindingnavigator.DeleteItem = Nothing
         Me.bindingnavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.bindingnavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.tsbtn_cutoff, Me.btn_loadpayroll, Me.tsb_printpayroll, Me.btn_savepayroll, Me.ToolStripSeparator6, Me.tsb_remfrompayroll})
+        Me.bindingnavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.tstxtbox_cutoff, Me.btn_loadpayroll, Me.tsb_printpayroll, Me.btn_savepayroll, Me.ToolStripSeparator6, Me.tsb_remfrompayroll})
         Me.bindingnavigator.Location = New System.Drawing.Point(0, 0)
         Me.bindingnavigator.MoveFirstItem = Nothing
         Me.bindingnavigator.MoveLastItem = Nothing
@@ -360,200 +360,10 @@ Partial Class frmMain
         Me.ToolStripLabel2.Size = New System.Drawing.Size(46, 22)
         Me.ToolStripLabel2.Text = "Cut-off"
         '
-        'tsbtn_cutoff
+        'tstxtbox_cutoff
         '
-        Me.tsbtn_cutoff.Name = "tsbtn_cutoff"
-        Me.tsbtn_cutoff.Size = New System.Drawing.Size(200, 25)
-        '
-        'ToolStripSeparator6
-        '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 25)
-        '
-        'dgv_payroll
-        '
-        Me.dgv_payroll.AllowUserToAddRows = False
-        Me.dgv_payroll.AllowUserToDeleteRows = False
-        Me.dgv_payroll.AllowUserToResizeRows = False
-        Me.dgv_payroll.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_payroll.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgv_payroll.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_payroll.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgv_payroll.Location = New System.Drawing.Point(0, 28)
-        Me.dgv_payroll.Name = "dgv_payroll"
-        Me.dgv_payroll.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_payroll.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.dgv_payroll.RowHeadersVisible = False
-        Me.dgv_payroll.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_payroll.Size = New System.Drawing.Size(967, 590)
-        Me.dgv_payroll.TabIndex = 8
-        '
-        'TabControl1
-        '
-        Me.TabControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Location = New System.Drawing.Point(3, 136)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(295, 507)
-        Me.TabControl1.TabIndex = 0
-        '
-        'TabPage1
-        '
-        Me.TabPage1.Controls.Add(Me.BindingNavigator1)
-        Me.TabPage1.Controls.Add(Me.dgv_emplist)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(287, 481)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Employees"
-        Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'BindingNavigator1
-        '
-        Me.BindingNavigator1.AddNewItem = Nothing
-        Me.BindingNavigator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BindingNavigator1.CountItem = Nothing
-        Me.BindingNavigator1.DeleteItem = Nothing
-        Me.BindingNavigator1.Dock = System.Windows.Forms.DockStyle.None
-        Me.BindingNavigator1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.tstb_searchdgv, Me.ToolStripSeparator1, Me.tsbtn_refreshdgv})
-        Me.BindingNavigator1.Location = New System.Drawing.Point(3, 3)
-        Me.BindingNavigator1.MoveFirstItem = Nothing
-        Me.BindingNavigator1.MoveLastItem = Nothing
-        Me.BindingNavigator1.MoveNextItem = Nothing
-        Me.BindingNavigator1.MovePreviousItem = Nothing
-        Me.BindingNavigator1.Name = "BindingNavigator1"
-        Me.BindingNavigator1.PositionItem = Nothing
-        Me.BindingNavigator1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.BindingNavigator1.Size = New System.Drawing.Size(253, 25)
-        Me.BindingNavigator1.TabIndex = 1
-        Me.BindingNavigator1.Text = "BindingNavigator1"
-        '
-        'ToolStripLabel1
-        '
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(45, 22)
-        Me.ToolStripLabel1.Text = "Search:"
-        '
-        'tstb_searchdgv
-        '
-        Me.tstb_searchdgv.Name = "tstb_searchdgv"
-        Me.tstb_searchdgv.Size = New System.Drawing.Size(100, 25)
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
-        '
-        'dgv_emplist
-        '
-        Me.dgv_emplist.AllowUserToAddRows = False
-        Me.dgv_emplist.AllowUserToDeleteRows = False
-        Me.dgv_emplist.AllowUserToResizeRows = False
-        Me.dgv_emplist.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.dgv_emplist.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_emplist.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.dgv_emplist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_emplist.DefaultCellStyle = DataGridViewCellStyle5
-        Me.dgv_emplist.Location = New System.Drawing.Point(3, 31)
-        Me.dgv_emplist.MultiSelect = False
-        Me.dgv_emplist.Name = "dgv_emplist"
-        Me.dgv_emplist.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_emplist.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.dgv_emplist.RowHeadersVisible = False
-        Me.dgv_emplist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_emplist.Size = New System.Drawing.Size(280, 447)
-        Me.dgv_emplist.TabIndex = 0
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(180, 6)
-        '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.label_serverstatus, Me.ToolStripStatusLabel2, Me.label_loggedinas})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 670)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1274, 22)
-        Me.StatusStrip1.SizingGrip = False
-        Me.StatusStrip1.TabIndex = 2
-        Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(86, 17)
-        Me.ToolStripStatusLabel1.Text = "Server Status:"
-        '
-        'label_serverstatus
-        '
-        Me.label_serverstatus.Name = "label_serverstatus"
-        Me.label_serverstatus.Size = New System.Drawing.Size(89, 17)
-        Me.label_serverstatus.Text = "ToolStripLabel2"
-        '
-        'ToolStripStatusLabel2
-        '
-        Me.ToolStripStatusLabel2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(81, 17)
-        Me.ToolStripStatusLabel2.Text = "Logged In As:"
-        '
-        'label_loggedinas
-        '
-        Me.label_loggedinas.Name = "label_loggedinas"
-        Me.label_loggedinas.Size = New System.Drawing.Size(121, 17)
-        Me.label_loggedinas.Text = "ToolStripStatusLabel3"
+        Me.tstxtbox_cutoff.Name = "tstxtbox_cutoff"
+        Me.tstxtbox_cutoff.Size = New System.Drawing.Size(200, 25)
         '
         'btn_loadpayroll
         '
@@ -581,6 +391,11 @@ Partial Class frmMain
         Me.btn_savepayroll.Size = New System.Drawing.Size(90, 22)
         Me.btn_savepayroll.Text = "Save Payroll"
         '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 25)
+        '
         'tsb_remfrompayroll
         '
         Me.tsb_remfrompayroll.Image = Global.Payroll2.My.Resources.Resources._error
@@ -588,6 +403,108 @@ Partial Class frmMain
         Me.tsb_remfrompayroll.Name = "tsb_remfrompayroll"
         Me.tsb_remfrompayroll.Size = New System.Drawing.Size(135, 22)
         Me.tsb_remfrompayroll.Text = "Exclude from Payroll"
+        '
+        'dgv_payroll
+        '
+        Me.dgv_payroll.AllowUserToAddRows = False
+        Me.dgv_payroll.AllowUserToDeleteRows = False
+        Me.dgv_payroll.AllowUserToResizeRows = False
+        Me.dgv_payroll.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_payroll.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgv_payroll.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 9.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_payroll.DefaultCellStyle = DataGridViewCellStyle2
+        Me.dgv_payroll.Location = New System.Drawing.Point(0, 28)
+        Me.dgv_payroll.Name = "dgv_payroll"
+        Me.dgv_payroll.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_payroll.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.dgv_payroll.RowHeadersVisible = False
+        Me.dgv_payroll.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_payroll.Size = New System.Drawing.Size(967, 609)
+        Me.dgv_payroll.TabIndex = 8
+        '
+        'TabControl1
+        '
+        Me.TabControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Location = New System.Drawing.Point(3, 136)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(295, 529)
+        Me.TabControl1.TabIndex = 0
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.BindingNavigator1)
+        Me.TabPage1.Controls.Add(Me.dgv_emplist)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(287, 503)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Employees"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'BindingNavigator1
+        '
+        Me.BindingNavigator1.AddNewItem = Nothing
+        Me.BindingNavigator1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.BindingNavigator1.CountItem = Nothing
+        Me.BindingNavigator1.DeleteItem = Nothing
+        Me.BindingNavigator1.Dock = System.Windows.Forms.DockStyle.None
+        Me.BindingNavigator1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.tstb_searchdgv, Me.ToolStripSeparator1, Me.tsbtn_refreshdgv})
+        Me.BindingNavigator1.Location = New System.Drawing.Point(3, 3)
+        Me.BindingNavigator1.MoveFirstItem = Nothing
+        Me.BindingNavigator1.MoveLastItem = Nothing
+        Me.BindingNavigator1.MoveNextItem = Nothing
+        Me.BindingNavigator1.MovePreviousItem = Nothing
+        Me.BindingNavigator1.Name = "BindingNavigator1"
+        Me.BindingNavigator1.PositionItem = Nothing
+        Me.BindingNavigator1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.BindingNavigator1.Size = New System.Drawing.Size(222, 25)
+        Me.BindingNavigator1.TabIndex = 1
+        Me.BindingNavigator1.Text = "BindingNavigator1"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(45, 22)
+        Me.ToolStripLabel1.Text = "Search:"
+        '
+        'tstb_searchdgv
+        '
+        Me.tstb_searchdgv.Name = "tstb_searchdgv"
+        Me.tstb_searchdgv.Size = New System.Drawing.Size(100, 25)
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
         '
         'tsbtn_refreshdgv
         '
@@ -597,13 +514,59 @@ Partial Class frmMain
         Me.tsbtn_refreshdgv.Size = New System.Drawing.Size(66, 22)
         Me.tsbtn_refreshdgv.Text = "Refresh"
         '
+        'dgv_emplist
+        '
+        Me.dgv_emplist.AllowUserToAddRows = False
+        Me.dgv_emplist.AllowUserToDeleteRows = False
+        Me.dgv_emplist.AllowUserToResizeRows = False
+        Me.dgv_emplist.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.dgv_emplist.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_emplist.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.dgv_emplist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 9.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_emplist.DefaultCellStyle = DataGridViewCellStyle5
+        Me.dgv_emplist.Location = New System.Drawing.Point(3, 31)
+        Me.dgv_emplist.MultiSelect = False
+        Me.dgv_emplist.Name = "dgv_emplist"
+        Me.dgv_emplist.ReadOnly = True
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_emplist.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.dgv_emplist.RowHeadersVisible = False
+        Me.dgv_emplist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgv_emplist.Size = New System.Drawing.Size(280, 469)
+        Me.dgv_emplist.TabIndex = 0
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(180, 6)
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoSize = True
         Me.ClientSize = New System.Drawing.Size(1274, 692)
-        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.tsb_savepayroll)
         Me.Controls.Add(Me.MainMenu)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -631,8 +594,6 @@ Partial Class frmMain
         Me.BindingNavigator1.ResumeLayout(False)
         Me.BindingNavigator1.PerformLayout()
         CType(Me.dgv_emplist, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -651,11 +612,6 @@ Partial Class frmMain
     Friend WithEvents LogoutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
-    Friend WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents label_serverstatus As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel2 As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents label_loggedinas As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents HelpToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -679,7 +635,7 @@ Partial Class frmMain
     Friend WithEvents lnk_setcutoff As System.Windows.Forms.LinkLabel
     Friend WithEvents lnk_addcutoff As System.Windows.Forms.LinkLabel
     Friend WithEvents cb_cutoff As System.Windows.Forms.ComboBox
-    Friend WithEvents tsbtn_cutoff As System.Windows.Forms.ToolStripTextBox
+    Friend WithEvents tstxtbox_cutoff As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents TabControl3 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
     Friend WithEvents cb_companylist As System.Windows.Forms.ComboBox
