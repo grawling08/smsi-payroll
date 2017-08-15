@@ -30,6 +30,7 @@ Public Class frmMain
             tsb_remfrompayroll.Enabled = False
             btn_savepayroll.Enabled = False
             tsb_printpayroll.Enabled = False
+            tsbtn_refreshdgv.Enabled = False
         End If
     End Sub
     '
@@ -201,6 +202,7 @@ Public Class frmMain
         tsb_remfrompayroll.Enabled = True
         btn_savepayroll.Enabled = True
         tsb_printpayroll.Enabled = True
+        tsbtn_refreshdgv.Enabled = True
         StrSql = "SELECT * FROM tblref_settings WHERE setting_name = 'current_cutoff'"
         QryReadP()
         Dim cutoffreader As MySqlDataReader = cmd.ExecuteReader

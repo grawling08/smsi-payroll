@@ -78,36 +78,32 @@ Public Class frmEmpDetails
         '    Next
         'End If
 
+        'load sp_payrollsummary
+        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','" & id & "')"
+        QryReadP()
+        Dim paysumreader As MySqlDataReader = cmd.ExecuteReader
+        If paysumreader.HasRows Then
+            paysumreader.Read()
+            tb_income.Text = Math.Round((Double.Parse(monthlysalary) / 2), 2)
+            tb_late.Text = paysumreader("late").ToString
+            tb_absents.Text = paysumreader("absent").ToString
+            tb_regularot.Text = paysumreader("regOT").ToString
+            tb_holidayot.Text = paysumreader("holidayOT").ToString
+            tb_sss.Text = paysumreader("sss").ToString
+            tb_phic.Text = paysumreader("phic").ToString
+            tb_hdmf.Text = paysumreader("hdmf").ToString
+            tb_allowance.Text = paysumreader("allowances").ToString
+        End If
         'get timesheet from hris
         loadtimesheetsp(prevcutoff_fromdate.ToString("yyyy-MM-dd"), prevcutoff_todate.ToString("yyyy-MM-dd"))
         'payroll computations
         computeWage(employmentStatus, monthlysalary)
-        tb_income.Text = Math.Round((Double.Parse(monthlysalary) / 2), 2)
-        tb_regularot.Text = totalOT(id)(0)
-        tb_holidayot.Text = totalOT(id)(1)
-        tb_absents.Text = totalTimesheetDeduct(id, tb_biometricid.Text)(0)
-        Label34.Text = totalTimesheetDeduct(id, tb_biometricid.Text)(1) ' hidden count attendance
         tb_undertime.Text = Math.Round(ComputeUndertime(tb_biometricid.Text, id), 2)
-        tb_late.Text = ComputeLates(tb_biometricid.Text, id)
         tb_loans.Text = computeloans(id)
-        tb_hdmf.Text = computeHDMF(monthlysalary)
-        tb_phic.Text = computePhilhealth(monthlysalary)(2)
-        tb_sss.Text = computeSSS(monthlysalary)(2)
+        tb_insurance.Text = computeInsurance(id)
         loadincentives(cutoff_id, id)
         loadotherdeduct(cutoff_id, id)
         'computeTotalContributions()
-        totalAllowance = computeAllowance(id)
-        tb_allowance.Text = totalAllowance
-        tb_insurance.Text = computeInsurance(id)
-        'check for saved payslip
-        StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
-        QryReadP()
-        Dim dtareader2 As MySqlDataReader = cmd.ExecuteReader
-        If dtareader2.HasRows Then
-            dtareader2.Read()
-            payslip_id = dtareader2("payslip_id")
-            loadpayslip()
-        End If
         computeTotal()
 
         Label33.Text = daysPresent
@@ -116,22 +112,6 @@ Public Class frmEmpDetails
             tsb_loanadd.Enabled = False
             tsb_loandelete.Enabled = False
             tsb_loanedit.Enabled = False
-        End If
-    End Sub
-
-#Region "computations"
-
-    Sub loadpayslip()
-        StrSql = "SELECT * FROM tbl_payslip WHERE employee_id = '" & id & "' AND cutoff_id = " & cutoff_id
-        QryReadP()
-        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
-        If dtareader.HasRows Then
-            dtareader.Read()
-            tb_allowance.Text = dtareader("allowances").ToString
-            tb_tax.Text = dtareader("tax").ToString
-            tb_sss.Text = dtareader("sss").ToString
-            tb_phic.Text = dtareader("phic").ToString
-            tb_hdmf.Text = dtareader("hdmf").ToString
         End If
     End Sub
 
@@ -157,10 +137,8 @@ Public Class frmEmpDetails
         tb_netincome.Text = Math.Round(Double.Parse(tb_netpaywithtax.Text) + Double.Parse(tb_totalbenefits.Text) - Double.Parse(tb_totaldeductions.Text), 2)
     End Sub
 
-#End Region
-
     Sub loadtimesheetsp(ByVal startdate As String, ByVal enddate As String)
-        StrSql = "CALL sp_timesheetPR('" & startdate & "','" & enddate & "','" & tb_biometricid.Text & "')"
+        StrSql = "CALL sp_timesheet('" & startdate & "','" & enddate & "','" & tb_biometricid.Text & "','')"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "timesheet")

@@ -414,26 +414,7 @@ Module modConnect
     Sub getPayslip(ByVal current_cutoff As String)
         'adpt.Dispose()
         'use this query string if app is integrated with HRIS
-        StrSql = "SELECT tbl_employee.id_employee, tbl_cutoff.cutoff_id as 'Cutoff', code as 'Company', " _
-                    & "CONCAT(lName, ', ', fName, ' ', LEFT(mName, 1), '.') as Employee, " _
-                    & "tbl_employee.employment_status, " _
-                    & "tbl_employee.basic_salary, " _
-                    & "tbl_payslip.income as 'Basic Pay',  " _
-                    & "tbl_payslip.regot_pay as 'Regular OT', tbl_payslip.holot_pay as 'Holiday OT', tbl_payslip.ot_pay as 'Total OT', " _
-                    & "tbl_payslip.allowances as 'Allowances', " _
-                    & "tbl_payslip.incentives as 'Incentives',  " _
-                    & "tbl_payslip.late_deduct as 'Late', " _
-                    & "tbl_payslip.absent as 'Absent', " _
-                    & "tbl_payslip.undertime_deduct as 'Undertime',  " _
-                    & "tbl_payslip.sss as 'SSS', tbl_payslip.phic as 'PHIC', tbl_payslip.hdmf as 'HDMF', " _
-                    & "tbl_payslip.gross_income as 'Gross Pay', tbl_payslip.loans as 'Loans', " _
-                    & "tbl_payslip.otherdeduct as 'Other Deductions', tbl_payslip.insurance as 'Insurance', " _
-                    & "tbl_payslip.tax as 'Tax', tbl_payslip.net_income as 'Net Pay', tbl_employee.tax_status, tbl_employee.emp_bio_id " _
-                    & "FROM tbl_employee " _
-                    & "LEFT JOIN tbl_payslip LEFT JOIN tbl_cutoff ON tbl_payslip.cutoff_id = tbl_cutoff.cutoff_id " _
-                    & "ON tbl_employee.id_employee = tbl_payslip.employee_id AND tbl_cutoff.cutoff_range = '" & current_cutoff & "' " _
-                    & "LEft JOIN tbl_company ON tbl_employee.company = tbl_company.name  " _
-                    & "WHERE tbl_company.name = '" & current_company & "' AND employment_status NOT IN(' ','Resigned') AND isExcluded = 0 ORDER BY Employee"
+        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','')"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
@@ -463,40 +444,23 @@ Module modConnect
         frmMain.dgv_payroll.Columns(1).Visible = False 'id_employee
         frmMain.dgv_payroll.Columns(2).Visible = False 'cutoff_id
         frmMain.dgv_payroll.Columns(3).Visible = False 'code (company)
-        frmMain.dgv_payroll.Columns(5).Visible = False 'employment_status
-        frmMain.dgv_payroll.Columns(6).Visible = False 'basic/monthly salary
-        frmMain.dgv_payroll.Columns(25).Visible = False 'tax-status
-        frmMain.dgv_payroll.Columns(26).Visible = False 'emp_bio_id
-
+        frmMain.dgv_payroll.Columns(5).Visible = False 'basic/monthly salary
+        frmMain.dgv_payroll.Columns(24).Visible = False 'tax-status
+        frmMain.dgv_payroll.Columns(25).Visible = False 'emp_bio_id
+        frmMain.dgv_payroll.Columns(26).Visible = False 'employment status
         'additional payslip info
         Dim rows = frmMain.dgv_payroll.Rows.Count
         Dim j = 0
         While j <= rows - 1
             'Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
-            computeWage(frmMain.dgv_payroll.Rows(j).Cells(5).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) ' compute wages
-            frmMain.dgv_payroll.Rows(j).Cells(7).Value = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(6).Value.ToString) / 2 ' Basic pay
-            frmMain.dgv_payroll.Rows(j).Cells(8).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0) ' Regular OT
-            frmMain.dgv_payroll.Rows(j).Cells(9).Value = totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(1) ' Holiday OT
-            frmMain.dgv_payroll.Rows(j).Cells(10).Value = frmMain.dgv_payroll.Rows(j).Cells(8).Value + frmMain.dgv_payroll.Rows(j).Cells(9).Value ' Total OT
-            frmMain.dgv_payroll.Rows(j).Cells(11).Value = computeAllowance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'allowances
-            frmMain.dgv_payroll.Rows(j).Cells(12).Value = computeIncentives(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'incentives
-            frmMain.dgv_payroll.Rows(j).Cells(13).Value = ComputeLates(frmMain.dgv_payroll.Rows(j).Cells(25).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'lates 
-            frmMain.dgv_payroll.Rows(j).Cells(14).Value = totalTimesheetDeduct(frmMain.dgv_payroll.Rows(j).Cells(1).Value, frmMain.dgv_payroll.Rows(j).Cells(26).Value)(0) ' absent
-            frmMain.dgv_payroll.Rows(j).Cells(15).Value = ComputeUndertime(frmMain.dgv_payroll.Rows(j).Cells(26).Value, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'undertime
-            frmMain.dgv_payroll.Rows(j).Cells(16).Value = computeSSS(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'sss
-            frmMain.dgv_payroll.Rows(j).Cells(17).Value = computePhilhealth(frmMain.dgv_payroll.Rows(j).Cells(6).Value)(2) 'phic
-            frmMain.dgv_payroll.Rows(j).Cells(18).Value = computeHDMF(frmMain.dgv_payroll.Rows(j).Cells(6).Value) 'hdmf/pag-ibig
-            Dim a As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(7).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(8).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(9).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(10).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(11).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(12).Value)
-            Dim b As Double = Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(13).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(14).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(15).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(16).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(17).Value) + Double.Parse(frmMain.dgv_payroll.Rows(j).Cells(18).Value)
-            frmMain.dgv_payroll.Rows(j).Cells(19).Value = a - b 'gross pay
-            frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
-            frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
-            frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
-            frmMain.dgv_payroll.Rows(j).Cells(23).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(19).Value, frmMain.dgv_payroll.Rows(j).Cells(25).Value) 'tax
-            frmMain.dgv_payroll.Rows(j).Cells(24).Value = frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value - frmMain.dgv_payroll.Rows(j).Cells(23).Value 'net pay
+            computeWage(frmMain.dgv_payroll.Rows(j).Cells(26).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(5).Value.ToString) ' compute wages
+            'frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
+            'frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
+            'frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
+            frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(24).Value) 'tax
+            frmMain.dgv_payroll.Rows(j).Cells(23).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value 'net pay
             j = j + 1
         End While
-
         Close_Connect()
     End Sub
 
@@ -542,7 +506,7 @@ Module modConnect
 
     Function computeTax(ByVal gross_income As Double, ByVal code As String) As Double
         Dim tax As Double = 0
-        Dim status As String = ""
+        Dim status As String = code
         If code.Equals("S") Or code.Equals("M") Then
             status = "S/ME"
         ElseIf code.Equals("S1") Or code.Equals("M1") Then
@@ -554,7 +518,7 @@ Module modConnect
         ElseIf code.Equals("S4") Or code.Equals("M4") Then
             status = "ME4/S4"
         Else
-            status = "Z"
+            status = code
         End If
         If gross_income > 0 Then
             StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
@@ -564,6 +528,7 @@ Module modConnect
             If taxReader.HasRows Then
                 taxReader.Read()
                 tax = taxReader("excempt") + ((Double.Parse(gross_income) - taxReader("salary")) * taxReader("percentage"))
+                Console.Write(taxReader("excempt").ToString & " " & taxReader("salary") & " " & taxReader("percentage").ToString & vbCrLf)
             End If
         End If
         Return tax

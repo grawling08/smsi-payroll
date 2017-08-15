@@ -97,8 +97,17 @@ Partial Class frmEmpDetails
         Me.dgv_emptimesheet = New System.Windows.Forms.DataGridView()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
+        Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_filterloan = New System.Windows.Forms.ToolStripSplitButton()
+        Me.tsb_fullypaid = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsb_ongoing = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_editinsurance = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
         Me.dgv_insurance = New System.Windows.Forms.DataGridView()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -137,15 +146,6 @@ Partial Class frmEmpDetails
         Me.cms_deduct = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddOtherDeductionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_filterloan = New System.Windows.Forms.ToolStripSplitButton()
-        Me.tsb_fullypaid = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsb_ongoing = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_editinsurance = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -273,7 +273,7 @@ Partial Class frmEmpDetails
         Me.GroupBox2.Controls.Add(Me.tb_totalbenefits)
         Me.GroupBox2.Location = New System.Drawing.Point(275, 210)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(270, 180)
+        Me.GroupBox2.Size = New System.Drawing.Size(270, 181)
         Me.GroupBox2.TabIndex = 15
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Additionals"
@@ -560,9 +560,9 @@ Partial Class frmEmpDetails
         Me.btn_savepayslip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_savepayslip.ForeColor = System.Drawing.Color.Red
         Me.btn_savepayslip.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btn_savepayslip.Location = New System.Drawing.Point(282, 396)
+        Me.btn_savepayslip.Location = New System.Drawing.Point(282, 397)
         Me.btn_savepayslip.Name = "btn_savepayslip"
-        Me.btn_savepayslip.Size = New System.Drawing.Size(256, 50)
+        Me.btn_savepayslip.Size = New System.Drawing.Size(256, 49)
         Me.btn_savepayslip.TabIndex = 13
         Me.btn_savepayslip.Text = "S A V E  P A Y S L I P"
         Me.btn_savepayslip.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage
@@ -940,6 +940,53 @@ Partial Class frmEmpDetails
         Me.BindingNavigator1.TabIndex = 1
         Me.BindingNavigator1.Text = "BindingNavigator1"
         '
+        'tsb_loanadd
+        '
+        Me.tsb_loanadd.Image = Global.Payroll2.My.Resources.Resources.add_1
+        Me.tsb_loanadd.Name = "tsb_loanadd"
+        Me.tsb_loanadd.RightToLeftAutoMirrorImage = True
+        Me.tsb_loanadd.Size = New System.Drawing.Size(74, 22)
+        Me.tsb_loanadd.Text = "Add new"
+        '
+        'tsb_loanedit
+        '
+        Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
+        Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_loanedit.Name = "tsb_loanedit"
+        Me.tsb_loanedit.Size = New System.Drawing.Size(47, 22)
+        Me.tsb_loanedit.Text = "Edit"
+        '
+        'tsb_loandelete
+        '
+        Me.tsb_loandelete.Image = Global.Payroll2.My.Resources.Resources.garbage_2
+        Me.tsb_loandelete.Name = "tsb_loandelete"
+        Me.tsb_loandelete.RightToLeftAutoMirrorImage = True
+        Me.tsb_loandelete.Size = New System.Drawing.Size(60, 22)
+        Me.tsb_loandelete.Text = "Delete"
+        '
+        'tsb_filterloan
+        '
+        Me.tsb_filterloan.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsb_filterloan.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tsb_filterloan.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_fullypaid, Me.tsb_ongoing})
+        Me.tsb_filterloan.Image = CType(resources.GetObject("tsb_filterloan.Image"), System.Drawing.Image)
+        Me.tsb_filterloan.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_filterloan.Name = "tsb_filterloan"
+        Me.tsb_filterloan.Size = New System.Drawing.Size(49, 22)
+        Me.tsb_filterloan.Text = "Filter"
+        '
+        'tsb_fullypaid
+        '
+        Me.tsb_fullypaid.Name = "tsb_fullypaid"
+        Me.tsb_fullypaid.Size = New System.Drawing.Size(125, 22)
+        Me.tsb_fullypaid.Text = "Fully Paid"
+        '
+        'tsb_ongoing
+        '
+        Me.tsb_ongoing.Name = "tsb_ongoing"
+        Me.tsb_ongoing.Size = New System.Drawing.Size(125, 22)
+        Me.tsb_ongoing.Text = "On Going"
+        '
         'TabPage5
         '
         Me.TabPage5.Controls.Add(Me.ToolStrip1)
@@ -962,6 +1009,30 @@ Partial Class frmEmpDetails
         Me.ToolStrip1.Size = New System.Drawing.Size(545, 25)
         Me.ToolStrip1.TabIndex = 1
         Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'tsb_addinsureance
+        '
+        Me.tsb_addinsureance.Image = Global.Payroll2.My.Resources.Resources.add_1
+        Me.tsb_addinsureance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_addinsureance.Name = "tsb_addinsureance"
+        Me.tsb_addinsureance.Size = New System.Drawing.Size(76, 22)
+        Me.tsb_addinsureance.Text = "Add New"
+        '
+        'tsb_editinsurance
+        '
+        Me.tsb_editinsurance.Image = Global.Payroll2.My.Resources.Resources.edit_1
+        Me.tsb_editinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_editinsurance.Name = "tsb_editinsurance"
+        Me.tsb_editinsurance.Size = New System.Drawing.Size(47, 22)
+        Me.tsb_editinsurance.Text = "Edit"
+        '
+        'tsb_deleteinsurance
+        '
+        Me.tsb_deleteinsurance.Image = Global.Payroll2.My.Resources.Resources.garbage_2
+        Me.tsb_deleteinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_deleteinsurance.Name = "tsb_deleteinsurance"
+        Me.tsb_deleteinsurance.Size = New System.Drawing.Size(60, 22)
+        Me.tsb_deleteinsurance.Text = "Delete"
         '
         'dgv_insurance
         '
@@ -1367,77 +1438,6 @@ Partial Class frmEmpDetails
         Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
         Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.DeleteToolStripMenuItem.Text = "Delete"
-        '
-        'tsb_loanadd
-        '
-        Me.tsb_loanadd.Image = Global.Payroll2.My.Resources.Resources.add_1
-        Me.tsb_loanadd.Name = "tsb_loanadd"
-        Me.tsb_loanadd.RightToLeftAutoMirrorImage = True
-        Me.tsb_loanadd.Size = New System.Drawing.Size(74, 22)
-        Me.tsb_loanadd.Text = "Add new"
-        '
-        'tsb_loanedit
-        '
-        Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
-        Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_loanedit.Name = "tsb_loanedit"
-        Me.tsb_loanedit.Size = New System.Drawing.Size(47, 22)
-        Me.tsb_loanedit.Text = "Edit"
-        '
-        'tsb_loandelete
-        '
-        Me.tsb_loandelete.Image = Global.Payroll2.My.Resources.Resources.garbage_2
-        Me.tsb_loandelete.Name = "tsb_loandelete"
-        Me.tsb_loandelete.RightToLeftAutoMirrorImage = True
-        Me.tsb_loandelete.Size = New System.Drawing.Size(60, 22)
-        Me.tsb_loandelete.Text = "Delete"
-        '
-        'tsb_filterloan
-        '
-        Me.tsb_filterloan.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsb_filterloan.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.tsb_filterloan.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_fullypaid, Me.tsb_ongoing})
-        Me.tsb_filterloan.Image = CType(resources.GetObject("tsb_filterloan.Image"), System.Drawing.Image)
-        Me.tsb_filterloan.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_filterloan.Name = "tsb_filterloan"
-        Me.tsb_filterloan.Size = New System.Drawing.Size(49, 22)
-        Me.tsb_filterloan.Text = "Filter"
-        '
-        'tsb_fullypaid
-        '
-        Me.tsb_fullypaid.Name = "tsb_fullypaid"
-        Me.tsb_fullypaid.Size = New System.Drawing.Size(125, 22)
-        Me.tsb_fullypaid.Text = "Fully Paid"
-        '
-        'tsb_ongoing
-        '
-        Me.tsb_ongoing.Name = "tsb_ongoing"
-        Me.tsb_ongoing.Size = New System.Drawing.Size(125, 22)
-        Me.tsb_ongoing.Text = "On Going"
-        '
-        'tsb_addinsureance
-        '
-        Me.tsb_addinsureance.Image = Global.Payroll2.My.Resources.Resources.add_1
-        Me.tsb_addinsureance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_addinsureance.Name = "tsb_addinsureance"
-        Me.tsb_addinsureance.Size = New System.Drawing.Size(76, 22)
-        Me.tsb_addinsureance.Text = "Add New"
-        '
-        'tsb_editinsurance
-        '
-        Me.tsb_editinsurance.Image = Global.Payroll2.My.Resources.Resources.edit_1
-        Me.tsb_editinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_editinsurance.Name = "tsb_editinsurance"
-        Me.tsb_editinsurance.Size = New System.Drawing.Size(47, 22)
-        Me.tsb_editinsurance.Text = "Edit"
-        '
-        'tsb_deleteinsurance
-        '
-        Me.tsb_deleteinsurance.Image = Global.Payroll2.My.Resources.Resources.garbage_2
-        Me.tsb_deleteinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_deleteinsurance.Name = "tsb_deleteinsurance"
-        Me.tsb_deleteinsurance.Size = New System.Drawing.Size(60, 22)
-        Me.tsb_deleteinsurance.Text = "Delete"
         '
         'frmEmpDetails
         '
