@@ -449,18 +449,18 @@ Module modConnect
         frmMain.dgv_payroll.Columns(25).Visible = False 'emp_bio_id
         frmMain.dgv_payroll.Columns(26).Visible = False 'employment status
         'additional payslip info
-        Dim rows = frmMain.dgv_payroll.Rows.Count
-        Dim j = 0
-        While j <= rows - 1
-            'Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
-            computeWage(frmMain.dgv_payroll.Rows(j).Cells(26).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(5).Value.ToString) ' compute wages
-            'frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
-            'frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
-            'frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
-            frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(24).Value) 'tax
-            frmMain.dgv_payroll.Rows(j).Cells(23).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value 'net pay
-            j = j + 1
-        End While
+        'Dim rows = frmMain.dgv_payroll.Rows.Count
+        'Dim j = 0
+        'While j <= rows - 1
+        '    'Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
+        '    computeWage(frmMain.dgv_payroll.Rows(j).Cells(26).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(5).Value.ToString) ' compute wages
+        '    frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
+        '    frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
+        '    frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
+        '    frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(24).Value) 'tax
+        '    frmMain.dgv_payroll.Rows(j).Cells(23).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value 'net pay
+        '    j = j + 1
+        'End While
         Close_Connect()
     End Sub
 
@@ -528,7 +528,7 @@ Module modConnect
             If taxReader.HasRows Then
                 taxReader.Read()
                 tax = taxReader("excempt") + ((Double.Parse(gross_income) - taxReader("salary")) * taxReader("percentage"))
-                Console.Write(taxReader("excempt").ToString & " " & taxReader("salary") & " " & taxReader("percentage").ToString & vbCrLf)
+                'Console.Write(taxReader("excempt").ToString & " " & taxReader("salary") & " " & taxReader("percentage").ToString & vbCrLf)
             End If
         End If
         Return tax
