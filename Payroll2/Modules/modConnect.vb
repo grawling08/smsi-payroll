@@ -522,7 +522,7 @@ Module modConnect
         End If
         If gross_income > 0 Then
             StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
-                        & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = '" & occurence & "'"
+                        & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = 'Monthly'"
             QryReadP()
             Dim taxReader As MySqlDataReader = cmd.ExecuteReader
             If taxReader.HasRows Then

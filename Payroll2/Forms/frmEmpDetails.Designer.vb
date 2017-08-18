@@ -23,7 +23,6 @@ Partial Class frmEmpDetails
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmEmpDetails))
         Me.dgv_emploans = New System.Windows.Forms.DataGridView()
         Me.dgv_empleave = New System.Windows.Forms.DataGridView()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
@@ -100,9 +99,6 @@ Partial Class frmEmpDetails
         Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_filterloan = New System.Windows.Forms.ToolStripSplitButton()
-        Me.tsb_fullypaid = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsb_ongoing = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
@@ -557,7 +553,7 @@ Partial Class frmEmpDetails
         '
         'btn_savepayslip
         '
-        Me.btn_savepayslip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_savepayslip.Font = New System.Drawing.Font("Segoe UI", 15.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btn_savepayslip.ForeColor = System.Drawing.Color.Red
         Me.btn_savepayslip.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btn_savepayslip.Location = New System.Drawing.Point(282, 397)
@@ -927,7 +923,7 @@ Partial Class frmEmpDetails
         Me.BindingNavigator1.CountItem = Nothing
         Me.BindingNavigator1.DeleteItem = Nothing
         Me.BindingNavigator1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_loanadd, Me.tsb_loanedit, Me.tsb_loandelete, Me.tsb_filterloan})
+        Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_loanadd, Me.tsb_loanedit, Me.tsb_loandelete})
         Me.BindingNavigator1.Location = New System.Drawing.Point(3, 3)
         Me.BindingNavigator1.MoveFirstItem = Nothing
         Me.BindingNavigator1.MoveLastItem = Nothing
@@ -963,29 +959,6 @@ Partial Class frmEmpDetails
         Me.tsb_loandelete.RightToLeftAutoMirrorImage = True
         Me.tsb_loandelete.Size = New System.Drawing.Size(60, 22)
         Me.tsb_loandelete.Text = "Delete"
-        '
-        'tsb_filterloan
-        '
-        Me.tsb_filterloan.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsb_filterloan.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.tsb_filterloan.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_fullypaid, Me.tsb_ongoing})
-        Me.tsb_filterloan.Image = CType(resources.GetObject("tsb_filterloan.Image"), System.Drawing.Image)
-        Me.tsb_filterloan.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_filterloan.Name = "tsb_filterloan"
-        Me.tsb_filterloan.Size = New System.Drawing.Size(49, 22)
-        Me.tsb_filterloan.Text = "Filter"
-        '
-        'tsb_fullypaid
-        '
-        Me.tsb_fullypaid.Name = "tsb_fullypaid"
-        Me.tsb_fullypaid.Size = New System.Drawing.Size(125, 22)
-        Me.tsb_fullypaid.Text = "Fully Paid"
-        '
-        'tsb_ongoing
-        '
-        Me.tsb_ongoing.Name = "tsb_ongoing"
-        Me.tsb_ongoing.Size = New System.Drawing.Size(125, 22)
-        Me.tsb_ongoing.Text = "On Going"
         '
         'TabPage5
         '
@@ -1599,9 +1572,6 @@ Partial Class frmEmpDetails
     Friend WithEvents tb_totalbenefits As System.Windows.Forms.TextBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents tb_allowance As System.Windows.Forms.TextBox
-    Friend WithEvents tsb_filterloan As System.Windows.Forms.ToolStripSplitButton
-    Friend WithEvents tsb_fullypaid As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents tsb_ongoing As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents cms_deduct As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents AddOtherDeductionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem

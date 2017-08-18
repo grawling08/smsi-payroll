@@ -9,6 +9,7 @@ Public Class frmReport
         ds = New DataSet1
         dt = New DataTable
         adpt.Fill(ds.Tables(0))
+        'ds.Tables(0).Rows(0).Item() = 100
         Dim crystal As New PayrollReport
         crystal.SetDataSource(ds.Tables(0))
         CrystalReportViewer1.ReportSource = crystal

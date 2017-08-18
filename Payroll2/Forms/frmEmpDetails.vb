@@ -84,7 +84,7 @@ Public Class frmEmpDetails
         Dim paysumreader As MySqlDataReader = cmd.ExecuteReader
         If paysumreader.HasRows Then
             paysumreader.Read()
-            tb_income.Text = Math.Round((Double.Parse(monthlysalary) / 2), 2)
+            tb_income.Text = Math.Round((Double.Parse(monthlysalary) / num_occurence), 2)
             tb_late.Text = paysumreader("late").ToString
             tb_absents.Text = paysumreader("absent").ToString
             tb_regularot.Text = paysumreader("regOT").ToString
@@ -93,14 +93,16 @@ Public Class frmEmpDetails
             tb_phic.Text = paysumreader("phic").ToString
             tb_hdmf.Text = paysumreader("hdmf").ToString
             tb_allowance.Text = paysumreader("allowances").ToString
+            tb_loans.Text = paysumreader("loans").ToString
+            tb_insurance.Text = paysumreader("insurance").ToString
         End If
         'get timesheet from hris
         loadtimesheetsp(prevcutoff_fromdate.ToString("yyyy-MM-dd"), prevcutoff_todate.ToString("yyyy-MM-dd"))
         'payroll computations
         computeWage(employmentStatus, monthlysalary)
         tb_undertime.Text = Math.Round(ComputeUndertime(tb_biometricid.Text, id), 2)
-        tb_loans.Text = computeloans(id)
-        tb_insurance.Text = computeInsurance(id)
+        'tb_loans.Text = computeloans(id)
+        'tb_insurance.Text = computeInsurance(id)
         loadincentives(cutoff_id, id)
         loadotherdeduct(cutoff_id, id)
         'computeTotalContributions()
@@ -112,13 +114,16 @@ Public Class frmEmpDetails
             tsb_loanadd.Enabled = False
             tsb_loandelete.Enabled = False
             tsb_loanedit.Enabled = False
+            tsb_addinsureance.Enabled = False
+            tsb_deleteinsurance.Enabled = False
+            tsb_editinsurance.Enabled = False
         End If
     End Sub
 
     Sub computeTotal()
         tb_grosspay.Text = Double.Parse(tb_income.Text) - Double.Parse(tb_late.Text) - Double.Parse(tb_absents.Text) - Double.Parse(tb_undertime.Text) + Double.Parse(tb_regularot.Text) + Double.Parse(tb_holidayot.Text)
         tb_taxableincome.Text = Double.Parse(tb_grosspay.Text) - Double.Parse(tb_sss.Text) - Double.Parse(tb_phic.Text) - Double.Parse(tb_hdmf.Text)
-        tb_tax.Text = Math.Round(computeTax(tb_taxableincome.Text, taxcode), 2)
+        tb_tax.Text = Math.Round(computeTax(Double.Parse(tb_taxableincome.Text) + Double.Parse(tb_income.Text), taxcode) / num_occurence, 2)
         tb_netpaywithtax.Text = Double.Parse(tb_taxableincome.Text) - Double.Parse(tb_tax.Text)
         totalBenefits = 0
         If dgv_incentives.Rows.Count > 0 Then
@@ -501,15 +506,6 @@ Public Class frmEmpDetails
         End If
     End Sub
 
-    Private Sub tsb_fullypaid_Click(sender As System.Object, e As System.EventArgs) Handles tsb_fullypaid.Click
-        If tsb_fullypaid.CheckState = CheckState.Checked Then
-            tsb_fullypaid.Checked = False
-            tsb_filterloan.Text = "Filter"
-        Else
-            tsb_fullypaid.Checked = True
-            tsb_filterloan.Text = "Filter: Fully Paid"
-        End If
-    End Sub
 
     Private Sub dgv_otherdeduct_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles dgv_otherdeduct.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
