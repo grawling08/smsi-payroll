@@ -436,7 +436,7 @@ Module modConnect
             frmMain.dgv_payroll.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             frmMain.dgv_payroll.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             If i > 4 Then
-                frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Format = "N2"
+                'frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Format = "N2"
                 frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             End If
             i = i + 1

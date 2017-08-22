@@ -420,7 +420,7 @@ Public Class frmEmpDetails
                     & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
             QryReadP()
             cmd.ExecuteNonQuery()
-            'save incentives & other dedctions
+            'save incentives & other deductions to HRIS database only
             save_incentives(cutoff_id, id)
             save_otherdeduct(cutoff_id, id)
         Else
@@ -434,7 +434,7 @@ Public Class frmEmpDetails
             QryReadP()
             cmd.ExecuteNonQuery()
             payslip_id = cmd.LastInsertedId.ToString()
-            'save incentives & other deductions
+            'save incentives & other deductions to HRIS database only
             save_incentives(cutoff_id, id)
             save_otherdeduct(cutoff_id, id)
             'save/check loan payments
