@@ -221,6 +221,7 @@ Module modConnect
         If dtareader.HasRows Then
             ifFinished = True
         End If
+        Close_Connect()
         Return ifFinished
     End Function
 
@@ -285,8 +286,10 @@ Module modConnect
         QryReadP()
         Dim dtareader As MySqlDataReader = cmd.ExecuteReader
         If dtareader.HasRows Then
+            Close_Connect()
             Return True
         End If
+        Close_Connect()
         Return False
     End Function
 
@@ -301,6 +304,7 @@ Module modConnect
             prevcutoff_todate = prevcutoffreader("to_date").ToString
             prevcutoff_company = prevcutoffreader("company_id").ToString
         End If
+        Close_Connect()
     End Sub
 #End Region
 
@@ -418,18 +422,20 @@ Module modConnect
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
+        Dim payrollBS As New BindingSource
+        payrollBS.DataSource = ds.Tables(0)
 
-        frmMain.dgv_payroll.DataSource = Nothing
+        'frmMain.dgv_payroll.DataSource = Nothing
         If frmMain.dgv_payroll.Columns.Count > 0 Then
             frmMain.dgv_payroll.Columns.Remove("chk")
         End If
-        frmMain.dgv_payroll.Refresh()
+        'frmMain.dgv_payroll.Refresh()
 
         Dim chk As New DataGridViewCheckBoxColumn()
-        frmMain.dgv_payroll.Columns.Add(chk)
         chk.HeaderText = " "
         chk.Name = "chk"
-        frmMain.dgv_payroll.DataSource = ds.Tables(0)
+        frmMain.dgv_payroll.Columns.Insert(0, chk)
+        frmMain.dgv_payroll.DataSource = payrollBS
         Dim col = frmMain.dgv_payroll.Columns.Count
         Dim i = 0
         While i <= col - 1
@@ -448,19 +454,7 @@ Module modConnect
         frmMain.dgv_payroll.Columns(24).Visible = False 'tax-status
         frmMain.dgv_payroll.Columns(25).Visible = False 'emp_bio_id
         frmMain.dgv_payroll.Columns(26).Visible = False 'employment status
-        'additional payslip info
-        'Dim rows = frmMain.dgv_payroll.Rows.Count
-        'Dim j = 0
-        'While j <= rows - 1
-        '    'Console.Write(If(Not String.IsNullOrEmpty(totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0)), totalOT(frmMain.dgv_payroll.Rows(j).Cells(1).Value)(0).ToString, "None") + vbCrLf)
-        '    computeWage(frmMain.dgv_payroll.Rows(j).Cells(26).Value.ToString, frmMain.dgv_payroll.Rows(j).Cells(5).Value.ToString) ' compute wages
-        '    frmMain.dgv_payroll.Rows(j).Cells(19).Value = computeloans(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'loans
-        '    frmMain.dgv_payroll.Rows(j).Cells(20).Value = computeOtherDeduct(cutoff_id, frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'other deductions
-        '    frmMain.dgv_payroll.Rows(j).Cells(21).Value = computeInsurance(frmMain.dgv_payroll.Rows(j).Cells(1).Value) 'insurance
-        '    frmMain.dgv_payroll.Rows(j).Cells(22).Value = computeTax(frmMain.dgv_payroll.Rows(j).Cells(18).Value, frmMain.dgv_payroll.Rows(j).Cells(24).Value) 'tax
-        '    frmMain.dgv_payroll.Rows(j).Cells(23).Value = frmMain.dgv_payroll.Rows(j).Cells(18).Value - frmMain.dgv_payroll.Rows(j).Cells(19).Value - frmMain.dgv_payroll.Rows(j).Cells(20).Value - frmMain.dgv_payroll.Rows(j).Cells(21).Value - frmMain.dgv_payroll.Rows(j).Cells(22).Value 'net pay
-        '    j = j + 1
-        'End While
+        
         Close_Connect()
     End Sub
 
@@ -476,6 +470,7 @@ Module modConnect
             sssContrib(2) = If(String.IsNullOrEmpty(sssreader("employee").ToString), 0, Math.Round(Double.Parse(sssreader("employee").ToString) / num_occurence, 2))
             sssContrib(3) = If(String.IsNullOrEmpty(sssreader("total").ToString), 0, sssreader("total").ToString)
         End If
+        Close_Connect()
         Return sssContrib
     End Function
 
@@ -491,6 +486,7 @@ Module modConnect
             phicContrib(2) = If(String.IsNullOrEmpty(phicreader("employee").ToString), 0, phicreader("employee").ToString) / num_occurence
             phicContrib(3) = If(String.IsNullOrEmpty(phicreader("total").ToString), 0, phicreader("total").ToString)
         End If
+        Close_Connect()
         Return phicContrib
     End Function
 
@@ -530,6 +526,7 @@ Module modConnect
                 tax = taxReader("excempt") + ((Double.Parse(gross_income) - taxReader("salary")) * taxReader("percentage"))
                 'Console.Write(taxReader("excempt").ToString & " " & taxReader("salary") & " " & taxReader("percentage").ToString & vbCrLf)
             End If
+            Close_Connect()
         End If
         Return tax
     End Function

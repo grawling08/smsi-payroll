@@ -85,16 +85,16 @@ Public Class frmEmpDetails
         If paysumreader.HasRows Then
             paysumreader.Read()
             tb_income.Text = Math.Round((Double.Parse(monthlysalary) / num_occurence), 2)
-            tb_late.Text = paysumreader("late").ToString
-            tb_absents.Text = paysumreader("absent").ToString
-            tb_regularot.Text = paysumreader("regOT").ToString
-            tb_holidayot.Text = paysumreader("holidayOT").ToString
-            tb_sss.Text = paysumreader("sss").ToString
-            tb_phic.Text = paysumreader("phic").ToString
-            tb_hdmf.Text = paysumreader("hdmf").ToString
-            tb_allowance.Text = paysumreader("allowances").ToString
-            tb_loans.Text = paysumreader("loans").ToString
-            tb_insurance.Text = paysumreader("insurance").ToString
+            tb_late.Text = paysumreader("Late").ToString
+            tb_absents.Text = paysumreader("Absent").ToString
+            tb_regularot.Text = paysumreader("Regular OT").ToString
+            tb_holidayot.Text = paysumreader("Holiday OT").ToString
+            tb_sss.Text = paysumreader("SSS").ToString
+            tb_phic.Text = paysumreader("PHIC").ToString
+            tb_hdmf.Text = paysumreader("HDMF").ToString
+            tb_allowance.Text = paysumreader("Allowances").ToString
+            tb_loans.Text = paysumreader("Loans").ToString
+            tb_insurance.Text = paysumreader("Insurance").ToString
         End If
         'get timesheet from hris
         loadtimesheetsp(prevcutoff_fromdate.ToString("yyyy-MM-dd"), prevcutoff_todate.ToString("yyyy-MM-dd"))
@@ -121,7 +121,13 @@ Public Class frmEmpDetails
     End Sub
 
     Sub computeTotal()
-        tb_grosspay.Text = Double.Parse(tb_income.Text) - Double.Parse(tb_late.Text) - Double.Parse(tb_absents.Text) - Double.Parse(tb_undertime.Text) + Double.Parse(tb_regularot.Text) + Double.Parse(tb_holidayot.Text)
+        'If(String.Equals(tb_late.Text,'-'),0,tb_late.Text)
+
+        tb_grosspay.Text = Double.Parse(tb_income.Text) - Double.Parse(If(String.Equals(tb_late.Text, "-"), 0, tb_late.Text)) - _
+                           Double.Parse(If(String.Equals(tb_absents.Text, "-"), 0, tb_absents.Text)) - _
+                           Double.Parse(If(String.Equals(tb_undertime.Text, "-"), 0, tb_undertime.Text)) + _
+                           Double.Parse(If(String.Equals(tb_regularot.Text, "-"), 0, tb_regularot.Text)) + _
+                           Double.Parse(If(String.Equals(tb_holidayot.Text, "-"), 0, tb_holidayot.Text))
         tb_taxableincome.Text = Double.Parse(tb_grosspay.Text) - Double.Parse(tb_sss.Text) - Double.Parse(tb_phic.Text) - Double.Parse(tb_hdmf.Text)
         tb_tax.Text = Math.Round(computeTax(Double.Parse(tb_taxableincome.Text) + Double.Parse(tb_income.Text), taxcode) / num_occurence, 2)
         tb_netpaywithtax.Text = Double.Parse(tb_taxableincome.Text) - Double.Parse(tb_tax.Text)
@@ -137,8 +143,8 @@ Public Class frmEmpDetails
                 otherdeduct += Double.Parse(row.Cells(2).Value.ToString())
             Next
         End If
-        tb_totalbenefits.Text = Double.Parse(tb_allowance.Text) + totalBenefits
-        tb_totaldeductions.Text = otherdeduct + Double.Parse(tb_loans.Text) + Double.Parse(tb_insurance.Text)
+        tb_totalbenefits.Text = Double.Parse(If(String.Equals(tb_allowance.Text, "-"), 0, tb_allowance.Text)) + totalBenefits
+        tb_totaldeductions.Text = otherdeduct + Double.Parse(If(String.Equals(tb_loans.Text, "-"), 0, tb_loans.Text)) + Double.Parse(If(String.Equals(tb_insurance.Text, "-"), 0, tb_insurance.Text))
         tb_netincome.Text = Math.Round(Double.Parse(tb_netpaywithtax.Text) + Double.Parse(tb_totalbenefits.Text) - Double.Parse(tb_totaldeductions.Text), 2)
     End Sub
 
@@ -272,11 +278,13 @@ Public Class frmEmpDetails
     End Sub
     'after cell edit compute net pay
     Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_incentives.CellEndEdit
+        loading.Show()
         computeTotal()
         'save to db
         save_incentives(cutoff_id, id)
         'refresh dgv
         getPayslip(current_cutoff)
+        loading.Close()
     End Sub
     'delete incentives
     Private Sub btn_delincentive_Click(sender As System.Object, e As System.EventArgs) Handles btn_delincentive.Click
@@ -357,11 +365,13 @@ Public Class frmEmpDetails
     End Sub
     'autocompute after cell edit
     Private Sub dgv_otherdeduct_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_otherdeduct.CellEndEdit
+        loading.Show()
         computeTotal()
         'save to db
         save_otherdeduct(cutoff_id, id)
         'refresh dgv
         getPayslip(current_cutoff)
+        loading.Close()
     End Sub
     'save other deductions
     Sub save_otherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)

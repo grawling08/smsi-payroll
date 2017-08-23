@@ -70,6 +70,7 @@ Public Class frmLogin
                 End Select
             End While
         End If
+        Close_Connect()
     End Sub
 
 End Class

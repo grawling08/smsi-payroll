@@ -190,7 +190,7 @@ Public Class frmMain
     End Sub
 
     Private Sub lnk_setcutoff_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnk_setcutoff.LinkClicked
-        'loading.Show()
+        loading.Show()
         If String.IsNullOrWhiteSpace(cb_cutoff.Text) Then
             MessageBox.Show("Add new Cutoff!")
             lnk_addcutoff.Focus()
@@ -230,7 +230,7 @@ Public Class frmMain
         'get initial payslip summary
         getPayslip(current_cutoff)
         loadEmployee()
-        'loading.Close()
+        loading.Close()
         MessageBox.Show("Cutoff changed!")
     End Sub
     Private Sub cb_companylist_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cb_companylist.SelectedIndexChanged
@@ -264,6 +264,7 @@ Public Class frmMain
     End Sub
 
     Private Sub btn_savepayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_savepayroll.Click
+        loading.Show()
         Dim rows = dgv_payroll.Rows.Count
         Dim j = 0
         While j <= rows - 1
@@ -317,9 +318,10 @@ Public Class frmMain
         If app_mode = "integrate" Then
             SavePayslipToHRIS()
         End If
-        MessageBox.Show("Payslip Saved!")
         'load payslip for the current cutoff
         getPayslip(current_cutoff)
+        loading.Close()
+        MessageBox.Show("Payslip Saved!")
     End Sub
 
     Private Sub dgv_payroll_CellClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_payroll.CellClick
