@@ -32,8 +32,8 @@ Partial Class loading
         Me.PictureBox1.Image = Global.Payroll2.My.Resources.Resources._88ff494857722be38d7e01411a429c91
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(496, 303)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox1.Size = New System.Drawing.Size(258, 178)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         Me.PictureBox1.UseWaitCursor = True
@@ -42,7 +42,7 @@ Partial Class loading
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(496, 303)
+        Me.ClientSize = New System.Drawing.Size(258, 178)
         Me.ControlBox = False
         Me.Controls.Add(Me.PictureBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -55,7 +55,6 @@ Partial Class loading
         Me.UseWaitCursor = True
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox

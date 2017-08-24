@@ -114,9 +114,9 @@ Public Class frmEmpDetails
             tsb_loanadd.Enabled = False
             tsb_loandelete.Enabled = False
             tsb_loanedit.Enabled = False
-            tsb_addinsureance.Enabled = False
-            tsb_deleteinsurance.Enabled = False
-            tsb_editinsurance.Enabled = False
+            'tsb_addinsureance.Enabled = False
+            'tsb_deleteinsurance.Enabled = False
+            'tsb_editinsurance.Enabled = False
         End If
     End Sub
 
@@ -253,6 +253,10 @@ Public Class frmEmpDetails
             dgv_insurance.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             i = i + i
         Next
+        dgv_insurance.Columns(0).Visible = False
+        dgv_insurance.Columns(1).Visible = False
+        dgv_insurance.Columns(2).HeaderText = "Insurance"
+        dgv_insurance.Columns(3).HeaderText = "Amount"
         Close_Connect()
     End Sub
 
