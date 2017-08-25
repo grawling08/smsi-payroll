@@ -426,16 +426,16 @@ Module modConnect
         payrollBS.DataSource = ds.Tables(0)
 
         'frmMain.dgv_payroll.DataSource = Nothing
-        If frmMain.dgv_payroll.Columns.Count > 0 Then
-            frmMain.dgv_payroll.Columns.Remove("chk")
-        End If
-        'frmMain.dgv_payroll.Refresh()
+        'If frmMain.dgv_payroll.Columns.Count > 0 Then
+        '    frmMain.dgv_payroll.Columns.Remove("chk")
+        'End If
 
         Dim chk As New DataGridViewCheckBoxColumn()
         chk.HeaderText = " "
         chk.Name = "chk"
         frmMain.dgv_payroll.Columns.Insert(0, chk)
         frmMain.dgv_payroll.DataSource = payrollBS
+
         Dim col = frmMain.dgv_payroll.Columns.Count
         Dim i = 0
         While i <= col - 1

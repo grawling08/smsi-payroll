@@ -97,12 +97,10 @@ Partial Class frmEmpDetails
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
-        Me.tsb_editinsurance = New System.Windows.Forms.ToolStripButton()
         Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
         Me.dgv_insurance = New System.Windows.Forms.DataGridView()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
@@ -142,6 +140,11 @@ Partial Class frmEmpDetails
         Me.cms_deduct = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddOtherDeductionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -941,16 +944,8 @@ Partial Class frmEmpDetails
         Me.tsb_loanadd.Image = Global.Payroll2.My.Resources.Resources.add_1
         Me.tsb_loanadd.Name = "tsb_loanadd"
         Me.tsb_loanadd.RightToLeftAutoMirrorImage = True
-        Me.tsb_loanadd.Size = New System.Drawing.Size(74, 22)
-        Me.tsb_loanadd.Text = "Add new"
-        '
-        'tsb_loanedit
-        '
-        Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
-        Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_loanedit.Name = "tsb_loanedit"
-        Me.tsb_loanedit.Size = New System.Drawing.Size(47, 22)
-        Me.tsb_loanedit.Text = "Edit"
+        Me.tsb_loanadd.Size = New System.Drawing.Size(49, 22)
+        Me.tsb_loanadd.Text = "Add"
         '
         'tsb_loandelete
         '
@@ -975,7 +970,7 @@ Partial Class frmEmpDetails
         'ToolStrip1
         '
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_addinsureance, Me.tsb_editinsurance, Me.tsb_deleteinsurance})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_addinsureance, Me.tsb_deleteinsurance})
         Me.ToolStrip1.Location = New System.Drawing.Point(3, 3)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -988,16 +983,8 @@ Partial Class frmEmpDetails
         Me.tsb_addinsureance.Image = Global.Payroll2.My.Resources.Resources.add_1
         Me.tsb_addinsureance.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.tsb_addinsureance.Name = "tsb_addinsureance"
-        Me.tsb_addinsureance.Size = New System.Drawing.Size(76, 22)
-        Me.tsb_addinsureance.Text = "Add New"
-        '
-        'tsb_editinsurance
-        '
-        Me.tsb_editinsurance.Image = Global.Payroll2.My.Resources.Resources.edit_1
-        Me.tsb_editinsurance.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_editinsurance.Name = "tsb_editinsurance"
-        Me.tsb_editinsurance.Size = New System.Drawing.Size(47, 22)
-        Me.tsb_editinsurance.Text = "Edit"
+        Me.tsb_addinsureance.Size = New System.Drawing.Size(49, 22)
+        Me.tsb_addinsureance.Text = "Add"
         '
         'tsb_deleteinsurance
         '
@@ -1011,14 +998,13 @@ Partial Class frmEmpDetails
         '
         Me.dgv_insurance.AllowUserToAddRows = False
         Me.dgv_insurance.AllowUserToDeleteRows = False
-        Me.dgv_insurance.AllowUserToResizeColumns = False
-        Me.dgv_insurance.AllowUserToResizeRows = False
+        Me.dgv_insurance.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_insurance.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.dgv_insurance.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         Me.dgv_insurance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv_insurance.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.Column9, Me.Column6, Me.Column7})
         Me.dgv_insurance.Location = New System.Drawing.Point(3, 31)
+        Me.dgv_insurance.MultiSelect = False
         Me.dgv_insurance.Name = "dgv_insurance"
-        Me.dgv_insurance.ReadOnly = True
         Me.dgv_insurance.RowHeadersVisible = False
         Me.dgv_insurance.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgv_insurance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -1412,6 +1398,34 @@ Partial Class frmEmpDetails
         Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.DeleteToolStripMenuItem.Text = "Delete"
         '
+        'tsb_loanedit
+        '
+        Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
+        Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_loanedit.Name = "tsb_loanedit"
+        Me.tsb_loanedit.Size = New System.Drawing.Size(47, 22)
+        Me.tsb_loanedit.Text = "Edit"
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "insurance_id"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "id_employee"
+        Me.Column9.Name = "Column9"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Insurance"
+        Me.Column6.Name = "Column6"
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "Amount"
+        Me.Column7.Name = "Column7"
+        '
         'frmEmpDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1540,7 +1554,6 @@ Partial Class frmEmpDetails
     Friend WithEvents BindingNavigator1 As System.Windows.Forms.BindingNavigator
     Friend WithEvents tsb_loanadd As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_loandelete As System.Windows.Forms.ToolStripButton
-    Friend WithEvents tsb_loanedit As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_addtimesheet As System.Windows.Forms.Button
     Friend WithEvents lbl_shift As System.Windows.Forms.Label
     Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
@@ -1551,7 +1564,6 @@ Partial Class frmEmpDetails
     Friend WithEvents dgv_insurance As System.Windows.Forms.DataGridView
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents tsb_addinsureance As System.Windows.Forms.ToolStripButton
-    Friend WithEvents tsb_editinsurance As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsb_deleteinsurance As System.Windows.Forms.ToolStripButton
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents btn_deldeduct As System.Windows.Forms.Button
@@ -1583,4 +1595,9 @@ Partial Class frmEmpDetails
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents tsb_loanedit As System.Windows.Forms.ToolStripButton
+    Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

@@ -220,13 +220,6 @@ Public Class frmMain
         'get previous cutoff days for deductions
         GetPrevCutoff()
 
-        'Dim thread As Threading.Thread
-        'thread = New System.Threading.Thread(AddressOf SyncTimesheet)
-        'thread.Start()
-        'While (thread.IsAlive)
-        '    Application.DoEvents()
-        'End While
-
         'get initial payslip summary
         getPayslip(current_cutoff)
         loadEmployee()

@@ -79,33 +79,51 @@ Public Class frmEmpDetails
         'End If
 
         'load sp_payrollsummary
-        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','" & id & "')"
+        StrSql = "SELECT * FROM tbl_payslip WHERE cutoff_id = '" & cutoff_id & "' AND employee_id = '" & id & "'"
         QryReadP()
-        Dim paysumreader As MySqlDataReader = cmd.ExecuteReader
-        If paysumreader.HasRows Then
-            paysumreader.Read()
+        Dim chkPayslipRdr As MySqlDataReader = cmd.ExecuteReader
+        If chkPayslipRdr.HasRows Then
+            chkPayslipRdr.Read()
+            'display data
             tb_income.Text = Math.Round((Double.Parse(monthlysalary) / num_occurence), 2)
-            tb_late.Text = paysumreader("Late").ToString
-            tb_absents.Text = paysumreader("Absent").ToString
-            tb_regularot.Text = paysumreader("Regular OT").ToString
-            tb_holidayot.Text = paysumreader("Holiday OT").ToString
-            tb_sss.Text = paysumreader("SSS").ToString
-            tb_phic.Text = paysumreader("PHIC").ToString
-            tb_hdmf.Text = paysumreader("HDMF").ToString
-            tb_allowance.Text = paysumreader("Allowances").ToString
-            tb_loans.Text = paysumreader("Loans").ToString
-            tb_insurance.Text = paysumreader("Insurance").ToString
+            tb_late.Text = chkPayslipRdr("Late").ToString
+            tb_absents.Text = chkPayslipRdr("Absent").ToString
+            tb_undertime.Text = chkPayslipRdr("Undertime").ToString
+            tb_regularot.Text = chkPayslipRdr("Regular OT").ToString
+            tb_holidayot.Text = chkPayslipRdr("Holiday OT").ToString
+            tb_sss.Text = chkPayslipRdr("SSS").ToString
+            tb_phic.Text = chkPayslipRdr("PHIC").ToString
+            tb_hdmf.Text = chkPayslipRdr("HDMF").ToString
+            tb_allowance.Text = chkPayslipRdr("Allowances").ToString
+            tb_loans.Text = chkPayslipRdr("Loans").ToString
+            tb_insurance.Text = chkPayslipRdr("Insurance").ToString
+        Else
+            StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','" & id & "')"
+            QryReadP()
+            Dim paysumreader As MySqlDataReader = cmd.ExecuteReader
+            If paysumreader.HasRows Then
+                paysumreader.Read()
+                tb_income.Text = Math.Round((Double.Parse(monthlysalary) / num_occurence), 2)
+                tb_late.Text = paysumreader("Late").ToString
+                tb_absents.Text = paysumreader("Absent").ToString
+                tb_undertime.Text = paysumreader("Undertime").ToString
+                'tb_undertime.Text = Math.Round(ComputeUndertime(tb_biometricid.Text, id), 2)
+                tb_regularot.Text = paysumreader("Regular OT").ToString
+                tb_holidayot.Text = paysumreader("Holiday OT").ToString
+                tb_sss.Text = paysumreader("SSS").ToString
+                tb_phic.Text = paysumreader("PHIC").ToString
+                tb_hdmf.Text = paysumreader("HDMF").ToString
+                tb_allowance.Text = paysumreader("Allowances").ToString
+                tb_loans.Text = paysumreader("Loans").ToString
+                tb_insurance.Text = paysumreader("Insurance").ToString
+            End If
         End If
         'get timesheet from hris
         loadtimesheetsp(prevcutoff_fromdate.ToString("yyyy-MM-dd"), prevcutoff_todate.ToString("yyyy-MM-dd"))
         'payroll computations
         computeWage(employmentStatus, monthlysalary)
-        tb_undertime.Text = Math.Round(ComputeUndertime(tb_biometricid.Text, id), 2)
-        'tb_loans.Text = computeloans(id)
-        'tb_insurance.Text = computeInsurance(id)
         loadincentives(cutoff_id, id)
         loadotherdeduct(cutoff_id, id)
-        'computeTotalContributions()
         computeTotal()
 
         Label33.Text = daysPresent
@@ -241,13 +259,20 @@ Public Class frmEmpDetails
         Next
         Close_Connect()
     End Sub
+
     'employee insurance
     Private Sub GetEmpInsurance(id As String)
+        dgv_insurance.Rows.Clear()
+        dgv_insurance.Refresh()
         StrSql = "SELECT * FROM tbl_insurance WHERE id_employee = '" & id & "'"
         QryReadP()
-        ds = New DataSet()
-        adpt.Fill(ds, "Insurance")
-        dgv_insurance.DataSource = ds.Tables(0)
+        Dim dtareader As MySqlDataReader = cmd.ExecuteReader
+        If dtareader.HasRows Then
+            While dtareader.Read()
+                Dim row As String() = New String() {dtareader("insurance_id").ToString, dtareader("id_employee").ToString, dtareader("insurance_name").ToString, dtareader("amount").ToString}
+                dgv_insurance.Rows.Add(row)
+            End While
+        End If
         Dim col = dgv_insurance.Columns.Count - 1
         For i As Integer = 0 To col
             dgv_insurance.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
@@ -255,9 +280,44 @@ Public Class frmEmpDetails
         Next
         dgv_insurance.Columns(0).Visible = False
         dgv_insurance.Columns(1).Visible = False
-        dgv_insurance.Columns(2).HeaderText = "Insurance"
-        dgv_insurance.Columns(3).HeaderText = "Amount"
         Close_Connect()
+    End Sub
+    'add new insurance
+    Private Sub tsb_addinsureance_Click(sender As System.Object, e As System.EventArgs) Handles tsb_addinsureance.Click
+        Dim row As String() = New String() {"", If(String.IsNullOrWhiteSpace(id.ToString), 0, id), "Edit", "0"}
+        dgv_insurance.Rows.Add(row)
+    End Sub
+    'after cell edit of insurance compute net pay
+    Private Sub dgv_insurance_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_insurance.CellEndEdit
+        loading.Show()
+        computeTotal()
+        'save to db
+        save_insurance(id)
+        'refresh dgv
+        getPayslip(current_cutoff)
+        loading.Close()
+    End Sub
+    'save insurance
+    Sub save_insurance(ByVal id_employee As String)
+        If dgv_insurance.Rows.Count > 0 Then
+            'For Each row In dgv_incentives.CurrentRow
+            If String.IsNullOrWhiteSpace(dgv_insurance.CurrentRow.Cells(0).Value.ToString()) Then
+                StrSql2 = "INSERT INTO tbl_insurance VALUES(0,'" & id_employee & "','" & dgv_insurance.CurrentRow.Cells(2).Value.ToString() & "'," & dgv_insurance.CurrentRow.Cells(3).Value.ToString() & ")"
+            Else
+                StrSql = "SELECT * FROM tbl_insurance WHERE insurance_id = " & dgv_insurance.CurrentRow.Cells(0).Value.ToString()
+                QryReadP()
+                Dim insurancereader As MySqlDataReader = cmd.ExecuteReader
+                If insurancereader.HasRows Then
+                    StrSql2 = "UPDATE tbl_insurance SET insurance_name='" & dgv_insurance.CurrentRow.Cells(2).Value.ToString() & "', amount = " & dgv_insurance.CurrentRow.Cells(3).Value.ToString() & " WHERE insurance_id = " & dgv_insurance.CurrentRow.Cells(0).Value.ToString()
+                Else
+                    StrSql2 = "INSERT INTO tbl_insurance VALUES(0,'" & id_employee & "','" & dgv_insurance.CurrentRow.Cells(2).Value.ToString() & "'," & dgv_insurance.CurrentRow.Cells(3).Value.ToString() & ")"
+                End If
+            End If
+            Connect_Sub("payroll")
+            cmd2 = New MySqlCommand(StrSql2, conn2)
+            cmd2.ExecuteNonQuery()
+            'Next
+        End If
     End Sub
 
     'load incentives
@@ -273,14 +333,14 @@ Public Class frmEmpDetails
                 dgv_incentives.Rows.Add(row)
             End While
         End If
-        'dgv_incentives.Columns(0).Visible = False
+        dgv_incentives.Columns(0).Visible = False
     End Sub
     'add new incentives
     Private Sub btn_addincentive_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_addincentive.Click
         Dim row As String() = New String() {"", "Edit", "0"}
         dgv_incentives.Rows.Add(row)
     End Sub
-    'after cell edit compute net pay
+    'after cell edit of incentives compute net pay
     Private Sub dgv_incentives_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv_incentives.CellEndEdit
         loading.Show()
         computeTotal()
@@ -572,4 +632,6 @@ Public Class frmEmpDetails
             chkbox_excluded.Checked = a
         End If
     End Sub
+
+    
 End Class
