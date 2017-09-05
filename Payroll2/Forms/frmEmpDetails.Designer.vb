@@ -97,12 +97,17 @@ Partial Class frmEmpDetails
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.BindingNavigator1 = New System.Windows.Forms.BindingNavigator(Me.components)
         Me.tsb_loanadd = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
         Me.tsb_loandelete = New System.Windows.Forms.ToolStripButton()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.tsb_addinsureance = New System.Windows.Forms.ToolStripButton()
         Me.tsb_deleteinsurance = New System.Windows.Forms.ToolStripButton()
         Me.dgv_insurance = New System.Windows.Forms.DataGridView()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.dgv_overtime = New System.Windows.Forms.DataGridView()
@@ -140,11 +145,6 @@ Partial Class frmEmpDetails
         Me.cms_deduct = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddOtherDeductionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tsb_loanedit = New System.Windows.Forms.ToolStripButton()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgv_emploans, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_empleave, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
@@ -947,6 +947,14 @@ Partial Class frmEmpDetails
         Me.tsb_loanadd.Size = New System.Drawing.Size(49, 22)
         Me.tsb_loanadd.Text = "Add"
         '
+        'tsb_loanedit
+        '
+        Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
+        Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_loanedit.Name = "tsb_loanedit"
+        Me.tsb_loanedit.Size = New System.Drawing.Size(47, 22)
+        Me.tsb_loanedit.Text = "Edit"
+        '
         'tsb_loandelete
         '
         Me.tsb_loandelete.Image = Global.Payroll2.My.Resources.Resources.garbage_2
@@ -997,7 +1005,6 @@ Partial Class frmEmpDetails
         'dgv_insurance
         '
         Me.dgv_insurance.AllowUserToAddRows = False
-        Me.dgv_insurance.AllowUserToDeleteRows = False
         Me.dgv_insurance.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_insurance.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_insurance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -1010,6 +1017,26 @@ Partial Class frmEmpDetails
         Me.dgv_insurance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgv_insurance.Size = New System.Drawing.Size(545, 420)
         Me.dgv_insurance.TabIndex = 0
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "insurance_id"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "id_employee"
+        Me.Column9.Name = "Column9"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Insurance"
+        Me.Column6.Name = "Column6"
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "Amount"
+        Me.Column7.Name = "Column7"
         '
         'TabPage8
         '
@@ -1397,34 +1424,6 @@ Partial Class frmEmpDetails
         Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
         Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.DeleteToolStripMenuItem.Text = "Delete"
-        '
-        'tsb_loanedit
-        '
-        Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
-        Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_loanedit.Name = "tsb_loanedit"
-        Me.tsb_loanedit.Size = New System.Drawing.Size(47, 22)
-        Me.tsb_loanedit.Text = "Edit"
-        '
-        'Column8
-        '
-        Me.Column8.HeaderText = "insurance_id"
-        Me.Column8.Name = "Column8"
-        '
-        'Column9
-        '
-        Me.Column9.HeaderText = "id_employee"
-        Me.Column9.Name = "Column9"
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Insurance"
-        Me.Column6.Name = "Column6"
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "Amount"
-        Me.Column7.Name = "Column7"
         '
         'frmEmpDetails
         '

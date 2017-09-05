@@ -48,7 +48,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <WarningsAsErrors>
     </WarningsAsErrors>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,6 +61,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -99,11 +100,13 @@
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -124,6 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Forms\frmEditTimesheet.Designer.vb">
+      <DependentUpon>frmEditTimesheet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmEditTimesheet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\loading.Designer.vb">
       <DependentUpon>loading.vb</DependentUpon>
     </Compile>
@@ -143,12 +152,6 @@
     </Compile>
     <Compile Include="Forms\ctrlServerSettings.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\frm1.Designer.vb">
-      <DependentUpon>frm1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frm1.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmCheckAll.Designer.vb">
       <DependentUpon>frmCheckAll.vb</DependentUpon>
@@ -184,12 +187,6 @@
       <DependentUpon>frmAddCutoff.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmAddCutoff.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmEditTimesheet.Designer.vb">
-      <DependentUpon>frmEditTimesheet.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmEditTimesheet.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmLogin.Designer.vb">
@@ -279,16 +276,22 @@
     <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SplashScreen2.Designer.vb">
+      <DependentUpon>SplashScreen2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen2.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmEditTimesheet.resx">
+      <DependentUpon>frmEditTimesheet.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\loading.resx">
       <DependentUpon>loading.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ctrlServerSettings.resx">
       <DependentUpon>ctrlServerSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frm1.resx">
-      <DependentUpon>frm1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCheckAll.resx">
       <DependentUpon>frmCheckAll.vb</DependentUpon>
@@ -313,9 +316,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAddCutoff.resx">
       <DependentUpon>frmAddCutoff.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmEditTimesheet.resx">
-      <DependentUpon>frmEditTimesheet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
@@ -351,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen1.resx">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen2.resx">
+      <DependentUpon>SplashScreen2.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -441,6 +444,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\21325582_1422649307825389_1150794282_n.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -312,6 +312,7 @@ Partial Class frmMain
         Me.lnk_addcutoff.TabIndex = 1
         Me.lnk_addcutoff.TabStop = True
         Me.lnk_addcutoff.Text = "Add Cutoff"
+        Me.lnk_addcutoff.Visible = False
         '
         'lbl_currentcompany
         '

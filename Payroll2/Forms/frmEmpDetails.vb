@@ -98,7 +98,7 @@ Public Class frmEmpDetails
             tb_loans.Text = chkPayslipRdr("Loans").ToString
             tb_insurance.Text = chkPayslipRdr("Insurance").ToString
         Else
-            StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','" & id & "')"
+            StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','" & id & "','empdetails')"
             QryReadP()
             Dim paysumreader As MySqlDataReader = cmd.ExecuteReader
             If paysumreader.HasRows Then
@@ -317,6 +317,23 @@ Public Class frmEmpDetails
             cmd2 = New MySqlCommand(StrSql2, conn2)
             cmd2.ExecuteNonQuery()
             'Next
+        End If
+    End Sub
+    'delete insurance
+    Private Sub tsb_deleteinsurance_Click(sender As System.Object, e As System.EventArgs) Handles tsb_deleteinsurance.Click
+        Console.Write("delete" + vbCrLf)
+        If dgv_insurance.Rows.Count > 0 Then
+            If dgv_insurance.CurrentRow.Cells(0).Value.ToString <> "" Then
+                StrSql = "DELETE FROM tbl_insurance WHERE insurance_id = " & dgv_insurance.CurrentRow.Cells(0).Value.ToString
+                QryReadP()
+                cmd.ExecuteNonQuery()
+            End If
+            dgv_insurance.Rows.Remove(dgv_insurance.SelectedRows(0))
+            GetEmpInsurance(id)
+            computeTotal()
+            getPayslip(current_cutoff)
+        Else
+            MessageBox.Show("No data to delete.")
         End If
     End Sub
 
@@ -633,5 +650,4 @@ Public Class frmEmpDetails
         End If
     End Sub
 
-    
 End Class

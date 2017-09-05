@@ -418,7 +418,7 @@ Module modConnect
     Sub getPayslip(ByVal current_cutoff As String)
         'adpt.Dispose()
         'use this query string if app is integrated with HRIS
-        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','')"
+        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','','dgv')"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
