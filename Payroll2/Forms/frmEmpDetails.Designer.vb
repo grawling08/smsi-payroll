@@ -884,12 +884,14 @@ Partial Class frmEmpDetails
         '
         'btn_addtimesheet
         '
+        Me.btn_addtimesheet.Enabled = False
         Me.btn_addtimesheet.Location = New System.Drawing.Point(422, 3)
         Me.btn_addtimesheet.Name = "btn_addtimesheet"
         Me.btn_addtimesheet.Size = New System.Drawing.Size(75, 23)
         Me.btn_addtimesheet.TabIndex = 3
         Me.btn_addtimesheet.Text = "Add New"
         Me.btn_addtimesheet.UseVisualStyleBackColor = True
+        Me.btn_addtimesheet.Visible = False
         '
         'dgv_emptimesheet
         '
@@ -941,6 +943,7 @@ Partial Class frmEmpDetails
         '
         'tsb_loanadd
         '
+        Me.tsb_loanadd.Enabled = False
         Me.tsb_loanadd.Image = Global.Payroll2.My.Resources.Resources.add_1
         Me.tsb_loanadd.Name = "tsb_loanadd"
         Me.tsb_loanadd.RightToLeftAutoMirrorImage = True
@@ -949,6 +952,7 @@ Partial Class frmEmpDetails
         '
         'tsb_loanedit
         '
+        Me.tsb_loanedit.Enabled = False
         Me.tsb_loanedit.Image = Global.Payroll2.My.Resources.Resources.edit_1
         Me.tsb_loanedit.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.tsb_loanedit.Name = "tsb_loanedit"
@@ -957,6 +961,7 @@ Partial Class frmEmpDetails
         '
         'tsb_loandelete
         '
+        Me.tsb_loandelete.Enabled = False
         Me.tsb_loandelete.Image = Global.Payroll2.My.Resources.Resources.garbage_2
         Me.tsb_loandelete.Name = "tsb_loandelete"
         Me.tsb_loandelete.RightToLeftAutoMirrorImage = True
@@ -1005,6 +1010,7 @@ Partial Class frmEmpDetails
         'dgv_insurance
         '
         Me.dgv_insurance.AllowUserToAddRows = False
+        Me.dgv_insurance.AllowUserToDeleteRows = False
         Me.dgv_insurance.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_insurance.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_insurance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize

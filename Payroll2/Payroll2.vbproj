@@ -48,7 +48,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <WarningsAsErrors>
     </WarningsAsErrors>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -447,6 +447,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\21325582_1422649307825389_1150794282_n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\amaaralogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

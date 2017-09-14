@@ -26,6 +26,10 @@ Module modConnect
     Public prevcutoff_id As Integer
     Public prevcutoff_company As String
 
+    Public Sub Main()
+
+    End Sub
+
     Sub SaveSystemSettings(ByVal Payroll_Connect() As String, ByVal HR_Connect() As String)
         'hris connection setting
         SaveSetting("Payroll System", "Startup", "serverHR", HR_Connect(0))
@@ -425,16 +429,16 @@ Module modConnect
         Dim payrollBS As New BindingSource
         payrollBS.DataSource = ds.Tables(0)
 
-        'frmMain.dgv_payroll.DataSource = Nothing
-        'If frmMain.dgv_payroll.Columns.Count > 0 Then
-        '    frmMain.dgv_payroll.Columns.Remove("chk")
-        'End If
+        frmMain.dgv_payroll.DataSource = Nothing
+        If frmMain.dgv_payroll.Columns.Count > 0 Then
+            frmMain.dgv_payroll.Columns.Remove("chk")
+        End If
 
         Dim chk As New DataGridViewCheckBoxColumn()
         chk.HeaderText = " "
         chk.Name = "chk"
         frmMain.dgv_payroll.Columns.Insert(0, chk)
-        frmMain.dgv_payroll.DataSource = payrollBS
+        frmMain.dgv_payroll.DataSource = ds.Tables(0)
 
         Dim col = frmMain.dgv_payroll.Columns.Count
         Dim i = 0

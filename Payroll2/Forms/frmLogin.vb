@@ -28,10 +28,6 @@ Public Class frmLogin
         End If
     End Sub
 
-    Private Sub Cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel.Click
-        Me.Close()
-    End Sub
-
     Private Sub frmLogin_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim dynamicControl As New ctrlServerSettings
         With dynamicControl

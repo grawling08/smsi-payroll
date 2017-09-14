@@ -86,17 +86,17 @@ Public Class frmEmpDetails
             chkPayslipRdr.Read()
             'display data
             tb_income.Text = Math.Round((Double.Parse(monthlysalary) / num_occurence), 2)
-            tb_late.Text = chkPayslipRdr("Late").ToString
-            tb_absents.Text = chkPayslipRdr("Absent").ToString
-            tb_undertime.Text = chkPayslipRdr("Undertime").ToString
-            tb_regularot.Text = chkPayslipRdr("Regular OT").ToString
-            tb_holidayot.Text = chkPayslipRdr("Holiday OT").ToString
-            tb_sss.Text = chkPayslipRdr("SSS").ToString
-            tb_phic.Text = chkPayslipRdr("PHIC").ToString
-            tb_hdmf.Text = chkPayslipRdr("HDMF").ToString
-            tb_allowance.Text = chkPayslipRdr("Allowances").ToString
-            tb_loans.Text = chkPayslipRdr("Loans").ToString
-            tb_insurance.Text = chkPayslipRdr("Insurance").ToString
+            tb_late.Text = chkPayslipRdr("late_deduct").ToString
+            tb_absents.Text = chkPayslipRdr("absent").ToString
+            tb_undertime.Text = chkPayslipRdr("undertime_deduct").ToString
+            tb_regularot.Text = chkPayslipRdr("regot_pay").ToString
+            tb_holidayot.Text = chkPayslipRdr("holot_pay").ToString
+            tb_sss.Text = chkPayslipRdr("sss").ToString
+            tb_phic.Text = chkPayslipRdr("phic").ToString
+            tb_hdmf.Text = chkPayslipRdr("hdmf").ToString
+            tb_allowance.Text = chkPayslipRdr("allowances").ToString
+            tb_loans.Text = chkPayslipRdr("loans").ToString
+            tb_insurance.Text = chkPayslipRdr("insurance").ToString
         Else
             StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','" & id & "','empdetails')"
             QryReadP()
@@ -128,10 +128,12 @@ Public Class frmEmpDetails
 
         Label33.Text = daysPresent
 
-        If app_mode <> "alone" Then
-            tsb_loanadd.Enabled = False
-            tsb_loandelete.Enabled = False
-            tsb_loanedit.Enabled = False
+        If app_mode = "alone" Then
+            tsb_loanadd.Enabled = True
+            tsb_loandelete.Enabled = True
+            tsb_loanedit.Enabled = True
+            btn_addtimesheet.Enabled = True
+            btn_addtimesheet.Visible = True
             'tsb_addinsureance.Enabled = False
             'tsb_deleteinsurance.Enabled = False
             'tsb_editinsurance.Enabled = False

@@ -83,7 +83,9 @@ Public Class frmMain
     Private Sub btn_loadpayroll_Click(sender As System.Object, e As System.EventArgs) Handles btn_loadpayroll.Click
         'load payslip for the current cutoff
         If current_cutoff <> Nothing Or String.IsNullOrEmpty(current_cutoff) Then
+            loading.Show()
             getPayslip(current_cutoff)
+            loading.Close()
         End If
     End Sub
     'upload timesheet
@@ -294,12 +296,24 @@ Public Class frmMain
             Else
                 'saved new payslip
                 StrSql = "INSERT INTO tbl_payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(1).Value.ToString & "'," & cutoff_id & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," _
-                        & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & ")"
+                        & If(dgv_payroll.Rows(j).Cells(6).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(7).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(8).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(9).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(10).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(11).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(12).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(13).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(14).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(15).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(16).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(17).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(18).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(19).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(20).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(21).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(22).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString)) & "," _
+                        & If(dgv_payroll.Rows(j).Cells(23).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString)) & ")"
                 QryReadP()
                 cmd.ExecuteNonQuery()
             End If
@@ -309,6 +323,7 @@ Public Class frmMain
             j = j + 1
         End While
         If app_mode = "integrate" Then
+            Console.Write("saving to heroku")
             SavePayslipToHRIS()
         End If
         'load payslip for the current cutoff
@@ -390,12 +405,24 @@ Public Class frmMain
                 cmd.ExecuteNonQuery()
             Else
                 StrSql = "INSERT INTO payslip VALUES(0,'" & dgv_payroll.Rows(j).Cells(1).Value.ToString & "','" & frmdate_cutoff.ToString("yyyy-MM-dd") & "','" & todate_cutoff.ToString("yyyy-MM-dd") & "','" & current_company & "'," & CDbl(dgv_payroll.Rows(j).Cells(5).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString) & "," _
-                            & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," & CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString) & ")"
+                            & If(dgv_payroll.Rows(j).Cells(6).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(7).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(8).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(9).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(10).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(11).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(12).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(13).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(14).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(15).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(16).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(17).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(18).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(19).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(20).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(21).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(22).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString)) & "," _
+                            & If(dgv_payroll.Rows(j).Cells(23).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString)) & ")"
                 'Console.Write(StrSql + vbCrLf)
                 QryReadH()
                 cmd.ExecuteNonQuery()

@@ -140,6 +140,7 @@ Partial Class frmMain
         Me.ThMonthToolStripMenuItem.Name = "ThMonthToolStripMenuItem"
         Me.ThMonthToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.ThMonthToolStripMenuItem.Text = "13th Month"
+        Me.ThMonthToolStripMenuItem.Visible = False
         '
         'ToolStripSeparator5
         '
@@ -158,6 +159,7 @@ Partial Class frmMain
         Me.ShiftsToolStripMenuItem.Name = "ShiftsToolStripMenuItem"
         Me.ShiftsToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
         Me.ShiftsToolStripMenuItem.Text = "Shifts"
+        Me.ShiftsToolStripMenuItem.Visible = False
         '
         'SettingsToolStripMenuItem
         '
@@ -297,9 +299,9 @@ Partial Class frmMain
         Me.cb_cutoff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cb_cutoff.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.cb_cutoff.FormattingEnabled = True
-        Me.cb_cutoff.Location = New System.Drawing.Point(3, 60)
+        Me.cb_cutoff.Location = New System.Drawing.Point(6, 60)
         Me.cb_cutoff.Name = "cb_cutoff"
-        Me.cb_cutoff.Size = New System.Drawing.Size(278, 21)
+        Me.cb_cutoff.Size = New System.Drawing.Size(275, 21)
         Me.cb_cutoff.TabIndex = 3
         '
         'lnk_addcutoff
@@ -443,7 +445,7 @@ Partial Class frmMain
         Me.dgv_payroll.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.dgv_payroll.RowHeadersVisible = False
         Me.dgv_payroll.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgv_payroll.Size = New System.Drawing.Size(967, 609)
+        Me.dgv_payroll.Size = New System.Drawing.Size(967, 612)
         Me.dgv_payroll.TabIndex = 8
         '
         'TabControl1

@@ -26,7 +26,7 @@ Namespace My
             MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
             Me.IsSingleInstance = true
             Me.EnableVisualStyles = true
-            Me.SaveMySettingsOnExit = true
+            Me.SaveMySettingsOnExit = false
             Me.ShutDownStyle = Global.Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterAllFormsClose
         End Sub
         
@@ -37,7 +37,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateSplashScreen()
-            Me.SplashScreen = Global.Payroll2.SplashScreen1
+            Me.SplashScreen = Global.Payroll2.SplashScreen2
         End Sub
     End Class
 End Namespace
