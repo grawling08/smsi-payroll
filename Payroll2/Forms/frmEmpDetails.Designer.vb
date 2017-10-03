@@ -193,7 +193,9 @@ Partial Class frmEmpDetails
         '
         Me.dgv_empleave.AllowUserToAddRows = False
         Me.dgv_empleave.AllowUserToDeleteRows = False
+        Me.dgv_empleave.AllowUserToResizeColumns = False
         Me.dgv_empleave.AllowUserToResizeRows = False
+        Me.dgv_empleave.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgv_empleave.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_empleave.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_empleave.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1071,6 +1073,7 @@ Partial Class frmEmpDetails
         Me.dgv_overtime.AllowUserToAddRows = False
         Me.dgv_overtime.AllowUserToDeleteRows = False
         Me.dgv_overtime.AllowUserToResizeRows = False
+        Me.dgv_overtime.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_overtime.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_overtime.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_overtime.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1100,6 +1103,7 @@ Partial Class frmEmpDetails
         Me.dgv_travelorders.AllowUserToDeleteRows = False
         Me.dgv_travelorders.AllowUserToResizeColumns = False
         Me.dgv_travelorders.AllowUserToResizeRows = False
+        Me.dgv_travelorders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_travelorders.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dgv_travelorders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv_travelorders.Dock = System.Windows.Forms.DockStyle.Fill

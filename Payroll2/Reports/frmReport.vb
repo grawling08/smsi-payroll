@@ -4,7 +4,7 @@ Imports CrystalDecisions.Shared
 Public Class frmReport
 
     Private Sub frmReport_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','')"
+        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','','empdetails')"
         QryReadP()
         ds = New DataSet1
         dt = New DataTable

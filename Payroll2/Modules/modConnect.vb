@@ -420,9 +420,8 @@ Module modConnect
 
     'get payslip
     Sub getPayslip(ByVal current_cutoff As String)
-        'adpt.Dispose()
         'use this query string if app is integrated with HRIS
-        StrSql = "CALL `sp_paysummary`('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','','dgv')"
+        StrSql = "CALL sp_paysummary('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','','dgv')"
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
@@ -446,7 +445,6 @@ Module modConnect
             frmMain.dgv_payroll.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             frmMain.dgv_payroll.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             If i > 4 Then
-                'frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Format = "N2"
                 frmMain.dgv_payroll.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             End If
             i = i + 1

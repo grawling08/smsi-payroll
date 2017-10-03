@@ -49,12 +49,13 @@ Partial Class frmSettings
         Me.dgv_sss = New System.Windows.Forms.DataGridView()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.dgv_philhealth = New System.Windows.Forms.DataGridView()
-        Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.dgv_holiday = New System.Windows.Forms.DataGridView()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.group_sync = New System.Windows.Forms.GroupBox()
+        Me.btn_synccutoff = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -67,8 +68,6 @@ Partial Class frmSettings
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.group_export = New System.Windows.Forms.GroupBox()
-        Me.btn_synccutoff = New System.Windows.Forms.Button()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btn_exportpayslip = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -145,7 +144,6 @@ Partial Class frmSettings
         Me.TabControl2.Controls.Add(Me.TabPage5)
         Me.TabControl2.Controls.Add(Me.TabPage6)
         Me.TabControl2.Controls.Add(Me.TabPage7)
-        Me.TabControl2.Controls.Add(Me.TabPage8)
         Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl2.Location = New System.Drawing.Point(3, 3)
         Me.TabControl2.Name = "TabControl2"
@@ -309,16 +307,6 @@ Partial Class frmSettings
         Me.dgv_philhealth.Size = New System.Drawing.Size(373, 257)
         Me.dgv_philhealth.TabIndex = 0
         '
-        'TabPage8
-        '
-        Me.TabPage8.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(379, 263)
-        Me.TabPage8.TabIndex = 3
-        Me.TabPage8.Text = "HDMF"
-        Me.TabPage8.UseVisualStyleBackColor = True
-        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.dgv_holiday)
@@ -405,6 +393,15 @@ Partial Class frmSettings
         Me.group_sync.TabStop = False
         Me.group_sync.Text = "Syncronize"
         '
+        'btn_synccutoff
+        '
+        Me.btn_synccutoff.Location = New System.Drawing.Point(279, 188)
+        Me.btn_synccutoff.Name = "btn_synccutoff"
+        Me.btn_synccutoff.Size = New System.Drawing.Size(84, 23)
+        Me.btn_synccutoff.TabIndex = 2
+        Me.btn_synccutoff.Text = "Sync"
+        Me.btn_synccutoff.UseVisualStyleBackColor = True
+        '
         'Button2
         '
         Me.Button2.Location = New System.Drawing.Point(279, 159)
@@ -413,6 +410,15 @@ Partial Class frmSettings
         Me.Button2.TabIndex = 6
         Me.Button2.Text = "Sync"
         Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(8, 193)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(35, 13)
+        Me.Label5.TabIndex = 0
+        Me.Label5.Text = "Cutoff"
         '
         'Label9
         '
@@ -525,24 +531,6 @@ Partial Class frmSettings
         Me.group_export.TabIndex = 3
         Me.group_export.TabStop = False
         Me.group_export.Text = "Exports"
-        '
-        'btn_synccutoff
-        '
-        Me.btn_synccutoff.Location = New System.Drawing.Point(279, 188)
-        Me.btn_synccutoff.Name = "btn_synccutoff"
-        Me.btn_synccutoff.Size = New System.Drawing.Size(84, 23)
-        Me.btn_synccutoff.TabIndex = 2
-        Me.btn_synccutoff.Text = "Sync"
-        Me.btn_synccutoff.UseVisualStyleBackColor = True
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(8, 193)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(35, 13)
-        Me.Label5.TabIndex = 0
-        Me.Label5.Text = "Cutoff"
         '
         'Label3
         '
@@ -742,7 +730,6 @@ Partial Class frmSettings
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents btn_exportpayslip As System.Windows.Forms.Button
     Friend WithEvents group_export As System.Windows.Forms.GroupBox
-    Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
     Friend WithEvents group_sync As System.Windows.Forms.GroupBox
     Friend WithEvents btn_syncloans As System.Windows.Forms.Button
     Friend WithEvents Label4 As System.Windows.Forms.Label

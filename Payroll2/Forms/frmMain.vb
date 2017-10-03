@@ -272,24 +272,24 @@ Public Class frmMain
                 'payslip_id = dtareader("payslip_id").ToString
                 'edit/update database
                 StrSql = "UPDATE tbl_payslip SET " _
-                        & "income =" & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," _
-                        & "regot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
-                        & "holot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                        & "ot_pay =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
-                        & "allowances =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
-                        & "incentives =" & dgv_payroll.Rows(j).Cells(11).Value.ToString & "," _
-                        & "late_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," _
-                        & "absent =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
-                        & "undertime_deduct =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
-                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
-                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "gross_income =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
-                        & "loans =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
-                        & "otherdeduct =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
-                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
-                        & "net_income =" & dgv_payroll.Rows(j).Cells(23).Value.ToString _
+                        & "income =" & If(dgv_payroll.Rows(j).Cells(6).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString)) & "," _
+                        & "regot_pay =" & If(dgv_payroll.Rows(j).Cells(7).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString)) & "," _
+                        & "holot_pay =" & If(dgv_payroll.Rows(j).Cells(8).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString)) & "," _
+                        & "ot_pay =" & If(dgv_payroll.Rows(j).Cells(9).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString)) & "," _
+                        & "allowances =" & If(dgv_payroll.Rows(j).Cells(10).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString)) & "," _
+                        & "incentives =" & If(dgv_payroll.Rows(j).Cells(11).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString)) & "," _
+                        & "late_deduct =" & If(dgv_payroll.Rows(j).Cells(12).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString)) & "," _
+                        & "absent =" & If(dgv_payroll.Rows(j).Cells(13).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString)) & "," _
+                        & "undertime_deduct =" & If(dgv_payroll.Rows(j).Cells(14).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString)) & "," _
+                        & "sss =" & If(dgv_payroll.Rows(j).Cells(15).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString)) & "," _
+                        & "phic =" & If(dgv_payroll.Rows(j).Cells(16).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString)) & "," _
+                        & "hdmf =" & If(dgv_payroll.Rows(j).Cells(17).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString)) & "," _
+                        & "gross_income =" & If(dgv_payroll.Rows(j).Cells(18).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString)) & "," _
+                        & "loans =" & If(dgv_payroll.Rows(j).Cells(19).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString)) & "," _
+                        & "otherdeduct =" & If(dgv_payroll.Rows(j).Cells(20).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString)) & "," _
+                        & "insurance =" & If(dgv_payroll.Rows(j).Cells(21).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString)) & "," _
+                        & "tax =" & If(dgv_payroll.Rows(j).Cells(22).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString)) & "," _
+                        & "net_income =" & If(dgv_payroll.Rows(j).Cells(23).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString)) _
                         & " WHERE payslip_id = '" & dtareader("payslip_id").ToString & "'"
                 QryReadP()
                 cmd.ExecuteNonQuery()
@@ -381,25 +381,25 @@ Public Class frmMain
                 'payslip_id = dtareader("payslip_id").ToString
                 'edit/update database
                 StrSql = "UPDATE payslip SET " _
-                        & "monthly_rate =" & CDbl(dgv_payroll.Rows(j).Cells(5).Value.ToString) & "," _
-                        & "basic_pay =" & CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString) & "," _
-                        & "regular_ot =" & CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString) & "," _
-                        & "holiday_ot =" & CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString) & "," _
-                        & "total_ot =" & CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString) & "," _
-                        & "additionals =" & CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString) & "," _
-                        & "incentives =" & dgv_payroll.Rows(j).Cells(11).Value.ToString & "," _
-                        & "late =" & CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString) & "," _
-                        & "absent =" & CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString) & "," _
-                        & "undertime =" & CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString) & "," _
-                        & "sss =" & CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString) & "," _
-                        & "phic =" & CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString) & "," _
-                        & "hdmf =" & CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString) & "," _
-                        & "grossIncome =" & dgv_payroll.Rows(j).Cells(18).Value.ToString & "," _
-                        & "loans =" & dgv_payroll.Rows(j).Cells(19).Value.ToString & "," _
-                        & "otherDeductions =" & dgv_payroll.Rows(j).Cells(20).Value.ToString & "," _
-                        & "insurance =" & CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString) & "," _
-                        & "tax =" & CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString) & "," _
-                        & "netIncome =" & dgv_payroll.Rows(j).Cells(23).Value.ToString _
+                        & "monthly_rate =" & If(dgv_payroll.Rows(j).Cells(5).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(5).Value.ToString)) & "," _
+                        & "basic_pay =" & If(dgv_payroll.Rows(j).Cells(6).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(6).Value.ToString)) & "," _
+                        & "regular_ot =" & If(dgv_payroll.Rows(j).Cells(7).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(7).Value.ToString)) & "," _
+                        & "holiday_ot =" & If(dgv_payroll.Rows(j).Cells(8).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(8).Value.ToString)) & "," _
+                        & "total_ot =" & If(dgv_payroll.Rows(j).Cells(9).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(9).Value.ToString)) & "," _
+                        & "allowances =" & If(dgv_payroll.Rows(j).Cells(10).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(10).Value.ToString)) & "," _
+                        & "incentives =" & If(dgv_payroll.Rows(j).Cells(11).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(11).Value.ToString)) & "," _
+                        & "late =" & If(dgv_payroll.Rows(j).Cells(12).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(12).Value.ToString)) & "," _
+                        & "absent =" & If(dgv_payroll.Rows(j).Cells(13).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(13).Value.ToString)) & "," _
+                        & "undertime =" & If(dgv_payroll.Rows(j).Cells(14).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(14).Value.ToString)) & "," _
+                        & "sss =" & If(dgv_payroll.Rows(j).Cells(15).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(15).Value.ToString)) & "," _
+                        & "phic =" & If(dgv_payroll.Rows(j).Cells(16).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(16).Value.ToString)) & "," _
+                        & "hdmf =" & If(dgv_payroll.Rows(j).Cells(17).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(17).Value.ToString)) & "," _
+                        & "grossIncome =" & If(dgv_payroll.Rows(j).Cells(18).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(18).Value.ToString)) & "," _
+                        & "loans =" & If(dgv_payroll.Rows(j).Cells(19).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(19).Value.ToString)) & "," _
+                        & "otherDeductions =" & If(dgv_payroll.Rows(j).Cells(20).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(20).Value.ToString)) & "," _
+                        & "insurance =" & If(dgv_payroll.Rows(j).Cells(21).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(21).Value.ToString)) & "," _
+                        & "tax =" & If(dgv_payroll.Rows(j).Cells(22).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(22).Value.ToString)) & "," _
+                        & "netIncome =" & If(dgv_payroll.Rows(j).Cells(23).Value.ToString = "-", 0, CDbl(dgv_payroll.Rows(j).Cells(23).Value.ToString)) _
                         & " WHERE id = '" & dtareader("id").ToString & "'"
                 QryReadH()
                 cmd.ExecuteNonQuery()
@@ -431,4 +431,7 @@ Public Class frmMain
         End While
     End Sub
 
+    Private Sub ThMonthToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ThMonthToolStripMenuItem.Click
+        frmThMonth.ShowDialog()
+    End Sub
 End Class

@@ -60,9 +60,9 @@ Partial Class frmAbout
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.80874!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.84699!))
-        Me.TableLayoutPanel.Size = New System.Drawing.Size(396, 183)
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.64398!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.65969!))
+        Me.TableLayoutPanel.Size = New System.Drawing.Size(396, 191)
         Me.TableLayoutPanel.TabIndex = 0
         '
         'LabelProductName
@@ -122,7 +122,7 @@ Partial Class frmAbout
         Me.TextBoxDescription.Name = "TextBoxDescription"
         Me.TextBoxDescription.ReadOnly = True
         Me.TextBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBoxDescription.Size = New System.Drawing.Size(387, 75)
+        Me.TextBoxDescription.Size = New System.Drawing.Size(387, 82)
         Me.TextBoxDescription.TabIndex = 0
         Me.TextBoxDescription.TabStop = False
         Me.TextBoxDescription.Text = resources.GetString("TextBoxDescription.Text")
@@ -131,7 +131,7 @@ Partial Class frmAbout
         '
         Me.OKButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.OKButton.Location = New System.Drawing.Point(318, 157)
+        Me.OKButton.Location = New System.Drawing.Point(318, 165)
         Me.OKButton.Name = "OKButton"
         Me.OKButton.Size = New System.Drawing.Size(75, 23)
         Me.OKButton.TabIndex = 0

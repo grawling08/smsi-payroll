@@ -385,7 +385,7 @@ Public Class frmEmpDetails
     End Sub
     'save incentives
     Sub save_incentives(ByVal cutoff_id As String, ByVal id_employee As String)
-        If dgv_otherdeduct.Rows.Count > 0 Then
+        If dgv_incentives.Rows.Count > 0 Then
             'For Each row In dgv_incentives.CurrentRow
             If String.IsNullOrWhiteSpace(dgv_incentives.CurrentRow.Cells(0).Value.ToString()) Then
                 StrSql2 = "INSERT INTO tbl_incentives VALUES(0,'" & cutoff_id & "','" & id_employee & "','" & dgv_incentives.CurrentRow.Cells(1).Value.ToString() & "'," & dgv_incentives.CurrentRow.Cells(2).Value.ToString() & ")"
@@ -409,7 +409,7 @@ Public Class frmEmpDetails
 
     'load other deductions
     Private Sub loadotherdeduct(ByVal cutoff_id As String, ByVal id_employee As String)
-        dgv_otherdeduct.Rows.Clear()
+        'dgv_otherdeduct.Rows.Clear()
         dgv_otherdeduct.Refresh()
         StrSql = "SELECT deduct_id, name as Name, amount as Amount FROM tbl_otherdeductions WHERE cutoff_id = " & cutoff_id & " AND employee_id = " & id_employee
         QryReadP()

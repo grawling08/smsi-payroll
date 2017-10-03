@@ -54,7 +54,7 @@ Public Class frmSettings
             btn_syncloans.Enabled = False
             btn_syncovertime.Enabled = False
         End If
-
+        dgvusersHas1Row()
     End Sub
 
     Sub load_reftables(ByVal table As String)
@@ -110,6 +110,8 @@ Public Class frmSettings
                     dgv_holiday.Columns(i).AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                     i = i + i
                 Next
+                dgv_holiday.Columns(0).Visible = False
+                dgv_holiday.Columns(1).Visible = False
         End Select
     End Sub
 
@@ -390,5 +392,13 @@ Public Class frmSettings
         cmd.ExecuteNonQuery()
         dgv_users.Rows.Remove(dgv_users.SelectedRows(0))
         MessageBox.Show("Deleted!")
+        dgvusersHas1Row()
+    End Sub
+
+    Sub dgvusersHas1Row()
+        If dgv_users.RowCount > 1 Then
+            BindingNavigatorDeleteItem.Enabled = True
+        End If
+        BindingNavigatorDeleteItem.Enabled = False
     End Sub
 End Class
