@@ -39,12 +39,14 @@ Partial Class frmLoans
         Me.dtp_loanend = New System.Windows.Forms.DateTimePicker()
         Me.tb_loanremark = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.cmb_loanstatus = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(13, 13)
+        Me.Label1.Location = New System.Drawing.Point(3, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(62, 13)
         Me.Label1.TabIndex = 0
@@ -52,7 +54,7 @@ Partial Class frmLoans
         '
         'tb_loanname
         '
-        Me.tb_loanname.Location = New System.Drawing.Point(125, 10)
+        Me.tb_loanname.Location = New System.Drawing.Point(125, 6)
         Me.tb_loanname.Name = "tb_loanname"
         Me.tb_loanname.Size = New System.Drawing.Size(150, 20)
         Me.tb_loanname.TabIndex = 1
@@ -60,7 +62,7 @@ Partial Class frmLoans
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(13, 39)
+        Me.Label2.Location = New System.Drawing.Point(3, 35)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(92, 13)
         Me.Label2.TabIndex = 2
@@ -68,7 +70,7 @@ Partial Class frmLoans
         '
         'tb_loancomp
         '
-        Me.tb_loancomp.Location = New System.Drawing.Point(125, 36)
+        Me.tb_loancomp.Location = New System.Drawing.Point(125, 32)
         Me.tb_loancomp.Name = "tb_loancomp"
         Me.tb_loancomp.Size = New System.Drawing.Size(150, 20)
         Me.tb_loancomp.TabIndex = 3
@@ -76,7 +78,7 @@ Partial Class frmLoans
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(13, 65)
+        Me.Label3.Location = New System.Drawing.Point(3, 61)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(43, 13)
         Me.Label3.TabIndex = 4
@@ -84,7 +86,7 @@ Partial Class frmLoans
         '
         'tb_loanamount
         '
-        Me.tb_loanamount.Location = New System.Drawing.Point(125, 62)
+        Me.tb_loanamount.Location = New System.Drawing.Point(125, 58)
         Me.tb_loanamount.Name = "tb_loanamount"
         Me.tb_loanamount.Size = New System.Drawing.Size(150, 20)
         Me.tb_loanamount.TabIndex = 5
@@ -92,7 +94,7 @@ Partial Class frmLoans
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(13, 91)
+        Me.Label4.Location = New System.Drawing.Point(3, 87)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(31, 13)
         Me.Label4.TabIndex = 6
@@ -100,7 +102,7 @@ Partial Class frmLoans
         '
         'tb_loanterm
         '
-        Me.tb_loanterm.Location = New System.Drawing.Point(125, 88)
+        Me.tb_loanterm.Location = New System.Drawing.Point(125, 84)
         Me.tb_loanterm.Name = "tb_loanterm"
         Me.tb_loanterm.Size = New System.Drawing.Size(150, 20)
         Me.tb_loanterm.TabIndex = 7
@@ -108,7 +110,7 @@ Partial Class frmLoans
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(13, 117)
+        Me.Label5.Location = New System.Drawing.Point(3, 113)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(104, 13)
         Me.Label5.TabIndex = 8
@@ -116,7 +118,7 @@ Partial Class frmLoans
         '
         'tb_loanamort
         '
-        Me.tb_loanamort.Location = New System.Drawing.Point(125, 114)
+        Me.tb_loanamort.Location = New System.Drawing.Point(125, 110)
         Me.tb_loanamort.Name = "tb_loanamort"
         Me.tb_loanamort.Size = New System.Drawing.Size(150, 20)
         Me.tb_loanamort.TabIndex = 9
@@ -124,7 +126,7 @@ Partial Class frmLoans
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(13, 143)
+        Me.Label6.Location = New System.Drawing.Point(3, 142)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(55, 13)
         Me.Label6.TabIndex = 10
@@ -133,7 +135,7 @@ Partial Class frmLoans
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(13, 169)
+        Me.Label7.Location = New System.Drawing.Point(3, 168)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(52, 13)
         Me.Label7.TabIndex = 12
@@ -142,7 +144,7 @@ Partial Class frmLoans
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(16, 195)
+        Me.Label9.Location = New System.Drawing.Point(3, 217)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(49, 13)
         Me.Label9.TabIndex = 16
@@ -151,7 +153,7 @@ Partial Class frmLoans
         'dtp_loanstart
         '
         Me.dtp_loanstart.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtp_loanstart.Location = New System.Drawing.Point(125, 140)
+        Me.dtp_loanstart.Location = New System.Drawing.Point(125, 136)
         Me.dtp_loanstart.Name = "dtp_loanstart"
         Me.dtp_loanstart.Size = New System.Drawing.Size(150, 20)
         Me.dtp_loanstart.TabIndex = 11
@@ -159,14 +161,14 @@ Partial Class frmLoans
         'dtp_loanend
         '
         Me.dtp_loanend.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtp_loanend.Location = New System.Drawing.Point(125, 166)
+        Me.dtp_loanend.Location = New System.Drawing.Point(125, 162)
         Me.dtp_loanend.Name = "dtp_loanend"
         Me.dtp_loanend.Size = New System.Drawing.Size(150, 20)
         Me.dtp_loanend.TabIndex = 13
         '
         'tb_loanremark
         '
-        Me.tb_loanremark.Location = New System.Drawing.Point(125, 192)
+        Me.tb_loanremark.Location = New System.Drawing.Point(125, 214)
         Me.tb_loanremark.Multiline = True
         Me.tb_loanremark.Name = "tb_loanremark"
         Me.tb_loanremark.Size = New System.Drawing.Size(150, 68)
@@ -174,23 +176,44 @@ Partial Class frmLoans
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(200, 266)
+        Me.Button1.Location = New System.Drawing.Point(200, 288)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 18
         Me.Button1.Text = "Save"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(3, 191)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(37, 13)
+        Me.Label8.TabIndex = 14
+        Me.Label8.Text = "Status"
+        '
+        'cmb_loanstatus
+        '
+        Me.cmb_loanstatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_loanstatus.FormattingEnabled = True
+        Me.cmb_loanstatus.Items.AddRange(New Object() {"Paid", "Unpaid"})
+        Me.cmb_loanstatus.Location = New System.Drawing.Point(125, 188)
+        Me.cmb_loanstatus.Name = "cmb_loanstatus"
+        Me.cmb_loanstatus.Size = New System.Drawing.Size(150, 21)
+        Me.cmb_loanstatus.TabIndex = 15
+        '
         'frmLoans
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(289, 301)
+        Me.ClientSize = New System.Drawing.Size(281, 317)
+        Me.Controls.Add(Me.cmb_loanstatus)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.dtp_loanend)
         Me.Controls.Add(Me.dtp_loanstart)
         Me.Controls.Add(Me.tb_loanremark)
         Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.tb_loanamort)
@@ -228,4 +251,6 @@ Partial Class frmLoans
     Friend WithEvents dtp_loanend As System.Windows.Forms.DateTimePicker
     Friend WithEvents tb_loanremark As System.Windows.Forms.TextBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents cmb_loanstatus As System.Windows.Forms.ComboBox
 End Class

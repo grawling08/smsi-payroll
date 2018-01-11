@@ -4,13 +4,14 @@ Public Class frmLoans
     Dim employee_id, loan_id As String
     Public Sub New(Optional ByVal emp_id As String = "", Optional ByVal loan_id As String = "")
         MyBase.New()
-        employee_id = loan_id
+        Me.employee_id = emp_id
         Me.loan_id = loan_id
         InitializeComponent()
     End Sub
 
     Private Sub frmLoans_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         StrSql = "SELECT * FROM tbl_loans WHERE employee_id ='" & employee_id & "' AND loan_id ='" & loan_id & "'"
+        Console.Write(StrSql)
         QryReadP()
         Dim loanreader As MySqlDataReader = cmd.ExecuteReader
         If loanreader.HasRows Then
@@ -28,17 +29,17 @@ Public Class frmLoans
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         If loan_id = "" Then
-            StrSql = "INSERT INTO tbl_loans(employee_id,loantype,lendingCompany,amount,term,monthlyAmortization,startDate,endDate,remarks) " _
-                        & "VALUES('" & employee_id & "','" & tb_loanname.Text & "','" & tb_loancomp.Text & "','" & tb_loanamount.Text & "','" _
-                        & "','" & tb_loanterm.Text & "','" & tb_loanamort.Text & "','" _
-                        & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & tb_loanremark.Text & "')"
+            StrSql = "INSERT INTO tbl_loans(employee_id,loan_type,lendingCompany,amount,term,monthlyAmortization,startDate,endDate,status,remarks) " _
+                        & "VALUES(" & employee_id & ",'" & tb_loanname.Text & "','" & tb_loancomp.Text & "','" & tb_loanamount.Text & "'," _
+                        & "'" & tb_loanterm.Text & "','" & tb_loanamort.Text & "','" _
+                        & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & cmb_loanstatus.Text & "','" & tb_loanremark.Text & "')"
         Else
             StrSql = "UPDATE tbl_loans SET loantype = '" & tb_loanname.Text & "', lendingCompany = '" & tb_loancomp.Text & "', " _
                         & " amount = '" & tb_loanamount.Text & "', term = '" & tb_loanterm.Text & "', monthlyAmortization = '" & tb_loanamort.Text & "' " _
                         & " startDate = '" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "', " _
-                        & " endDate = '" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "', remarks = '" & tb_loanremark.Text & "' WHERE loan_id =" & loan_id
+                        & " endDate = '" & DateTime.Parse(dtp_loanstart.Text).ToString("yyyy-MM-dd") & "','" & cmb_loanstatus.Text & "', remarks = '" & tb_loanremark.Text & "' WHERE loan_id =" & loan_id
         End If
-        Console.Write(StrSql)
+        'Console.Write(StrSql)
         QryReadP()
         Try
             cmd.ExecuteNonQuery()

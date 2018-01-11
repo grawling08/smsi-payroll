@@ -124,6 +124,9 @@ Public Class frmEmpDetails
         computeWage(employmentStatus, monthlysalary)
         loadincentives(cutoff_id, id)
         loadotherdeduct(cutoff_id, id)
+        tb_hdmf.Text = computeHDMF(monthlysalary)
+        tb_phic.Text = computePhilhealth(monthlysalary)(2)
+        tb_sss.Text = computeSSS(monthlysalary)(2)
         computeTotal()
 
         Label33.Text = daysPresent
@@ -149,7 +152,7 @@ Public Class frmEmpDetails
                            Double.Parse(If(String.Equals(tb_regularot.Text, "-"), 0, tb_regularot.Text)) + _
                            Double.Parse(If(String.Equals(tb_holidayot.Text, "-"), 0, tb_holidayot.Text))
         tb_taxableincome.Text = Double.Parse(tb_grosspay.Text) - Double.Parse(tb_sss.Text) - Double.Parse(tb_phic.Text) - Double.Parse(tb_hdmf.Text)
-        tb_tax.Text = Math.Round(computeTax(Double.Parse(tb_taxableincome.Text) + Double.Parse(tb_income.Text), taxcode) / num_occurence, 2)
+        tb_tax.Text = Math.Round(computeTax(Double.Parse(tb_taxableincome.Text)), 2)
         tb_netpaywithtax.Text = Double.Parse(tb_taxableincome.Text) - Double.Parse(tb_tax.Text)
         totalBenefits = 0
         If dgv_incentives.Rows.Count > 0 Then
@@ -170,6 +173,7 @@ Public Class frmEmpDetails
 
     Sub loadtimesheetsp(ByVal startdate As String, ByVal enddate As String)
         StrSql = "CALL sp_timesheet('" & startdate & "','" & enddate & "','" & tb_biometricid.Text & "','')"
+        Console.Write(StrSql)
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "timesheet")
@@ -218,7 +222,7 @@ Public Class frmEmpDetails
     'employee loans
     Public Sub GetEmployeeLoans(ByVal EmpID As String)
         StrSql = "SELECT loan_id, loan_type AS 'Loan', lendingCompany AS 'Lending Company', amount AS 'Amount', term AS 'Term', monthlyAmortization AS 'Monthly Amortization', startDate AS 'From', endDate AS 'To', remarks AS 'Remarks' " _
-                    & "FROM tbl_loans WHERE employee_id = '" & EmpID & "' "
+                    & "FROM tbl_loans WHERE employee_id = '" & EmpID & "' AND status = 'Unpaid' "
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Loans")
@@ -228,7 +232,7 @@ Public Class frmEmpDetails
             dgv_emploans.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
             i = i + i
         Next
-        dgv_emploans.Columns(0).Visible = False
+        'dgv_emploans.Columns(0).Visible = False
         Close_Connect()
     End Sub
     'employee leave applications

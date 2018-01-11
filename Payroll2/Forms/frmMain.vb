@@ -103,7 +103,6 @@ Public Class frmMain
         openFileDialog1.RestoreDirectory = True
 
         If openFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            'Try
             myStream = openFileDialog1.OpenFile()
             If (myStream IsNot Nothing) Then
                 Dim FileName As String = openFileDialog1.FileName
@@ -153,9 +152,6 @@ Public Class frmMain
                     End Using
                 End If
             End If
-            'Catch Exc As Exception
-            'Console.Write(Exc.InnerException.ToString)
-            'End Try
             myStream.Close()
             SaveRawAttendance(dta)
             frmUploadedTimesheet.ShowDialog()

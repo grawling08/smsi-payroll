@@ -422,6 +422,7 @@ Module modConnect
     Sub getPayslip(ByVal current_cutoff As String)
         'use this query string if app is integrated with HRIS
         StrSql = "CALL sp_paysummary('" & current_company & "', '" & cutoff_id & "', '" & prevcutoff_id & "','','dgv')"
+        Console.Write(StrSql)
         QryReadP()
         ds = New DataSet()
         adpt.Fill(ds, "Payroll")
@@ -462,38 +463,51 @@ Module modConnect
 
     Function computeSSS(ByVal basic_pay As Double) As String()
         Dim sssContrib() As String = {0, 0, 0, 0}
-        StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & basic_pay
-        QryReadP()
-        Dim sssreader As MySqlDataReader = cmd.ExecuteReader
-        If sssreader.HasRows Then
-            sssreader.Read()
-            sssContrib(0) = If(String.IsNullOrEmpty(sssreader("salary").ToString), 0, sssreader("salary").ToString)
-            sssContrib(1) = If(String.IsNullOrEmpty(sssreader("employer").ToString), 0, Math.Round(Double.Parse(sssreader("employer").ToString) / num_occurence, 2))
-            sssContrib(2) = If(String.IsNullOrEmpty(sssreader("employee").ToString), 0, Math.Round(Double.Parse(sssreader("employee").ToString) / num_occurence, 2))
-            sssContrib(3) = If(String.IsNullOrEmpty(sssreader("total").ToString), 0, sssreader("total").ToString)
+        Dim a As String() = todate_cutoff.ToString.Split(" ")
+        Dim b As String() = a(0).ToString.Split("/")
+        If CInt(b(1)) >= 28 And CInt(b(1)) <= 31 Then
+            StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_sss WHERE salary <= " & basic_pay
+            QryReadP()
+            Dim sssreader As MySqlDataReader = cmd.ExecuteReader
+            If sssreader.HasRows Then
+                sssreader.Read()
+                sssContrib(0) = If(String.IsNullOrEmpty(sssreader("salary").ToString), 0, sssreader("salary").ToString)
+                sssContrib(1) = If(String.IsNullOrEmpty(sssreader("employer").ToString), 0, Math.Round(Double.Parse(sssreader("employer").ToString), 2))
+                sssContrib(2) = If(String.IsNullOrEmpty(sssreader("employee").ToString), 0, Math.Round(Double.Parse(sssreader("employee").ToString), 2))
+                sssContrib(3) = If(String.IsNullOrEmpty(sssreader("total").ToString), 0, sssreader("total").ToString)
+            End If
+            Close_Connect()
         End If
-        Close_Connect()
         Return sssContrib
     End Function
 
     Function computePhilhealth(ByVal basic_pay As Double) As String()
         Dim phicContrib() As String = {0, 0, 0, 0}
-        StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_philhealth WHERE salary <= " & basic_pay
-        QryReadP()
-        Dim phicreader As MySqlDataReader = cmd.ExecuteReader
-        If phicreader.HasRows Then
-            phicreader.Read()
-            phicContrib(0) = If(String.IsNullOrEmpty(phicreader("salary").ToString), 0, phicreader("salary").ToString)
-            phicContrib(1) = If(String.IsNullOrEmpty(phicreader("employer").ToString), 0, phicreader("employer").ToString) / num_occurence
-            phicContrib(2) = If(String.IsNullOrEmpty(phicreader("employee").ToString), 0, phicreader("employee").ToString) / num_occurence
-            phicContrib(3) = If(String.IsNullOrEmpty(phicreader("total").ToString), 0, phicreader("total").ToString)
+        Dim a As String() = todate_cutoff.ToString.Split(" ")
+        Dim b As String() = a(0).ToString.Split("/")
+        If CInt(b(1)) = 15 Then
+            StrSql = "SELECT MAX(salary) AS salary, MAX(employer) AS employer, MAX(employee) AS employee, MAX(total) AS total FROM tblref_philhealth WHERE salary <= " & basic_pay
+            QryReadP()
+            Dim phicreader As MySqlDataReader = cmd.ExecuteReader
+            If phicreader.HasRows Then
+                phicreader.Read()
+                phicContrib(0) = If(String.IsNullOrEmpty(phicreader("salary").ToString), 0, phicreader("salary").ToString)
+                phicContrib(1) = If(String.IsNullOrEmpty(phicreader("employer").ToString), 0, phicreader("employer").ToString)
+                phicContrib(2) = If(String.IsNullOrEmpty(phicreader("employee").ToString), 0, phicreader("employee").ToString)
+                phicContrib(3) = If(String.IsNullOrEmpty(phicreader("total").ToString), 0, phicreader("total").ToString)
+            End If
+            Close_Connect()
         End If
-        Close_Connect()
         Return phicContrib
     End Function
 
     Function computeHDMF(ByVal basic_pay As Double) As Double
-        Dim hdmfContrib As Double = 50
+        Dim hdmfContrib As Double = 0
+        Dim a As String() = todate_cutoff.ToString.Split(" ")
+        Dim b As String() = a(0).ToString.Split("/")
+        If CInt(b(1)) = 15 Then
+            hdmfContrib = 100
+        End If
         'If (basic_pay / num_occurence) > 1500 Then
         '    hdmfContrib = 5000 * 0.01
         'Else
@@ -502,31 +516,46 @@ Module modConnect
         Return hdmfContrib
     End Function
 
-    Function computeTax(ByVal gross_income As Double, ByVal code As String) As Double
+    Function computeTax(ByVal gross_income As Double) As Double
         Dim tax As Double = 0
-        Dim status As String = code
-        If code.Equals("S") Or code.Equals("M") Then
-            status = "S/ME"
-        ElseIf code.Equals("S1") Or code.Equals("M1") Then
-            status = "ME1/S1"
-        ElseIf code.Equals("S2") Or code.Equals("M2") Then
-            status = "ME2/S2"
-        ElseIf code.Equals("S3") Or code.Equals("M3") Then
-            status = "ME3/S3"
-        ElseIf code.Equals("S4") Or code.Equals("M4") Then
-            status = "ME4/S4"
-        Else
-            status = code
-        End If
+        'Dim status As String = code
+        'If code.Equals("S") Or code.Equals("M") Then
+        '    status = "S/ME"
+        'ElseIf code.Equals("S1") Or code.Equals("M1") Then
+        '    status = "ME1/S1"
+        'ElseIf code.Equals("S2") Or code.Equals("M2") Then
+        '    status = "ME2/S2"
+        'ElseIf code.Equals("S3") Or code.Equals("M3") Then
+        '    status = "ME3/S3"
+        'ElseIf code.Equals("S4") Or code.Equals("M4") Then
+        '    status = "ME4/S4"
+        'Else
+        '    status = code
+        'End If
+        'If gross_income > 0 Then
+        '    StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
+        '                & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = 'Monthly'"
+        '    QryReadP()
+        '    Dim taxReader As MySqlDataReader = cmd.ExecuteReader
+        '    If taxReader.HasRows Then
+        '        taxReader.Read()
+        '        tax = taxReader("excempt") + ((Double.Parse(gross_income) - taxReader("salary")) * taxReader("percentage"))
+        '        'Console.Write(taxReader("excempt").ToString & " " & taxReader("salary") & " " & taxReader("percentage").ToString & vbCrLf)
+        '    End If
+        '    Close_Connect()
+        'End If
         If gross_income > 0 Then
-            StrSql = "SELECT MAX(salary) as salary, MAX(percentage) as percentage, MAX(excemption) as excempt FROM tblref_tax " _
-                        & "WHERE status = '" & status & "' And salary <= " & gross_income & " AND occurence = 'Monthly'"
+            StrSql = "SELECT  MAX(comprange) as comprange, MAX(withholdtax) as withholdtax, MAX(withholdpercent) as withholdpercent FROM tblref_taxtrain " _
+                        & "WHERE comprange <= " & gross_income & " AND occurence = '" & occurence & "';"
             QryReadP()
             Dim taxReader As MySqlDataReader = cmd.ExecuteReader
             If taxReader.HasRows Then
                 taxReader.Read()
-                tax = taxReader("excempt") + ((Double.Parse(gross_income) - taxReader("salary")) * taxReader("percentage"))
-                'Console.Write(taxReader("excempt").ToString & " " & taxReader("salary") & " " & taxReader("percentage").ToString & vbCrLf)
+                If Not taxReader("comprange") = 0 Then
+                    Dim d = Double.Parse(gross_income) - taxReader("comprange")
+                    tax = d + (d * taxReader("withholdpercent"))
+                    Console.Write(d.ToString & " - " & tax & vbCrLf)
+                End If
             End If
             Close_Connect()
         End If
